@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>demo on Pixelpig&#39;s blog</title>
-    <link>https://example.org/tags/demo/</link>
+    <link>https://pixeldin.github.io/tags/demo/</link>
     <description>Recent content in demo on Pixelpig&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 01 Jan 2021 03:40:05 +0800</lastBuildDate><atom:link href="https://example.org/tags/demo/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 01 Jan 2021 03:40:05 +0800</lastBuildDate><atom:link href="https://pixeldin.github.io/tags/demo/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>hello-pixelpig</title>
-      <link>https://example.org/2021/01/hello-pixelpig/</link>
+      <link>https://pixeldin.github.io/2021/01/hello-pixelpig/</link>
       <pubDate>Fri, 01 Jan 2021 03:40:05 +0800</pubDate>
       
-      <guid>https://example.org/2021/01/hello-pixelpig/</guid>
+      <guid>https://pixeldin.github.io/2021/01/hello-pixelpig/</guid>
       <description>&lt;p&gt;不要通过共享内存来通信(互斥锁同步)，而要用通信来共享内存。&lt;/p&gt;</description>
     </item>
     
