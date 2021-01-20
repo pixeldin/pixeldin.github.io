@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>flag on Pixelpig&#39;s blog</title>
+    <link>/tags/flag/</link>
+    <description>Recent content in flag on Pixelpig&#39;s blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 20 Apr 2020 00:00:00 +0000</lastBuildDate><atom:link href="/tags/flag/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>聊一聊Go编写的命令行工具类</title>
+      <link>/2020/04/%E8%81%8A%E4%B8%80%E8%81%8Ago%E7%BC%96%E5%86%99%E7%9A%84%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%B7%A5%E5%85%B7%E7%B1%BB/</link>
+      <pubDate>Mon, 20 Apr 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/2020/04/%E8%81%8A%E4%B8%80%E8%81%8Ago%E7%BC%96%E5%86%99%E7%9A%84%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%B7%A5%E5%85%B7%E7%B1%BB/</guid>
+      <description>&lt;p&gt;Go原生在flag包提供了一个命令行工具类，它可以让我们执行类似命令行的赋参操作，经常被运用于工具类，特别是数据处理过程，可以方便我们进行参数可视化注解。&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

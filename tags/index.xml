@@ -2,89 +2,143 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Tags on Pixelpig&#39;s blog</title>
-    <link>https://pixeldin.github.io/tags/</link>
+    <link>/tags/</link>
     <description>Recent content in Tags on Pixelpig&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 18 Jan 2021 03:40:05 +0800</lastBuildDate><atom:link href="https://pixeldin.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 18 Jan 2021 03:40:05 +0800</lastBuildDate><atom:link href="/tags/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>Go</title>
-      <link>https://pixeldin.github.io/tags/go/</link>
+      <title>Concurrent</title>
+      <link>/tags/concurrent/</link>
       <pubDate>Mon, 18 Jan 2021 03:40:05 +0800</pubDate>
       
-      <guid>https://pixeldin.github.io/tags/go/</guid>
+      <guid>/tags/concurrent/</guid>
       <description></description>
     </item>
     
     <item>
-      <title>并发</title>
-      <link>https://pixeldin.github.io/tags/%E5%B9%B6%E5%8F%91/</link>
+      <title>生产者消费者</title>
+      <link>/tags/%E7%94%9F%E4%BA%A7%E8%80%85%E6%B6%88%E8%B4%B9%E8%80%85/</link>
       <pubDate>Mon, 18 Jan 2021 03:40:05 +0800</pubDate>
       
-      <guid>https://pixeldin.github.io/tags/%E5%B9%B6%E5%8F%91/</guid>
+      <guid>/tags/%E7%94%9F%E4%BA%A7%E8%80%85%E6%B6%88%E8%B4%B9%E8%80%85/</guid>
       <description></description>
     </item>
     
     <item>
-      <title>计算机</title>
-      <link>https://pixeldin.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA/</link>
+      <title>管道通信</title>
+      <link>/tags/%E7%AE%A1%E9%81%93%E9%80%9A%E4%BF%A1/</link>
       <pubDate>Mon, 18 Jan 2021 03:40:05 +0800</pubDate>
       
-      <guid>https://pixeldin.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA/</guid>
+      <guid>/tags/%E7%AE%A1%E9%81%93%E9%80%9A%E4%BF%A1/</guid>
       <description></description>
     </item>
     
     <item>
-      <title>social</title>
-      <link>https://pixeldin.github.io/tags/social/</link>
-      <pubDate>Fri, 15 Jan 2021 00:00:00 +0000</pubDate>
+      <title>Gin</title>
+      <link>/tags/gin/</link>
+      <pubDate>Sat, 16 May 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://pixeldin.github.io/tags/social/</guid>
+      <guid>/tags/gin/</guid>
       <description></description>
     </item>
     
     <item>
-      <title>demo</title>
-      <link>https://pixeldin.github.io/tags/demo/</link>
-      <pubDate>Fri, 01 Jan 2021 03:40:05 +0800</pubDate>
+      <title>cmd</title>
+      <link>/tags/cmd/</link>
+      <pubDate>Mon, 20 Apr 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://pixeldin.github.io/tags/demo/</guid>
+      <guid>/tags/cmd/</guid>
       <description></description>
     </item>
     
     <item>
-      <title>hexo</title>
-      <link>https://pixeldin.github.io/tags/hexo/</link>
-      <pubDate>Fri, 01 Jan 2021 03:40:05 +0800</pubDate>
+      <title>flag</title>
+      <link>/tags/flag/</link>
+      <pubDate>Mon, 20 Apr 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://pixeldin.github.io/tags/hexo/</guid>
+      <guid>/tags/flag/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>MPG</title>
+      <link>/tags/mpg/</link>
+      <pubDate>Sat, 18 Apr 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/mpg/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>协程</title>
+      <link>/tags/%E5%8D%8F%E7%A8%8B/</link>
+      <pubDate>Sat, 18 Apr 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/%E5%8D%8F%E7%A8%8B/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>系统调度</title>
+      <link>/tags/%E7%B3%BB%E7%BB%9F%E8%B0%83%E5%BA%A6/</link>
+      <pubDate>Sat, 18 Apr 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/%E7%B3%BB%E7%BB%9F%E8%B0%83%E5%BA%A6/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>堆栈</title>
+      <link>/tags/%E5%A0%86%E6%A0%88/</link>
+      <pubDate>Thu, 16 Apr 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/%E5%A0%86%E6%A0%88/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>指针</title>
+      <link>/tags/%E6%8C%87%E9%92%88/</link>
+      <pubDate>Thu, 16 Apr 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/%E6%8C%87%E9%92%88/</guid>
       <description></description>
     </item>
     
     <item>
       <title>github theme</title>
-      <link>https://pixeldin.github.io/tags/github-theme/</link>
+      <link>/tags/github-theme/</link>
       <pubDate>Mon, 23 Mar 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://pixeldin.github.io/tags/github-theme/</guid>
+      <guid>/tags/github-theme/</guid>
       <description></description>
     </item>
     
     <item>
       <title>highlight code</title>
-      <link>https://pixeldin.github.io/tags/highlight-code/</link>
+      <link>/tags/highlight-code/</link>
       <pubDate>Mon, 23 Mar 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://pixeldin.github.io/tags/highlight-code/</guid>
+      <guid>/tags/highlight-code/</guid>
       <description></description>
     </item>
     
     <item>
       <title>test</title>
-      <link>https://pixeldin.github.io/tags/test/</link>
+      <link>/tags/test/</link>
       <pubDate>Mon, 23 Mar 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://pixeldin.github.io/tags/test/</guid>
+      <guid>/tags/test/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>social</title>
+      <link>/tags/social/</link>
+      <pubDate>Sun, 15 Mar 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/social/</guid>
       <description></description>
     </item>
     
