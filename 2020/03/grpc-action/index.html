@@ -17,7 +17,7 @@
 <meta name="twitter:title" content="Grpc action">
 <meta property="og:url" content="/2020/03/grpc-action/">
 <meta property="twitter:url" content="/2020/03/grpc-action/">
-<meta property="og:site_name" content="Pixelpig&#39;s blog">
+<meta property="og:site_name" content="Pixelpig的个人博客">
 <meta property="og:description" content="RPC：远程过程调用">
 <meta name="twitter:description" content="RPC：远程过程调用">
 <meta property="og:locale" content="zh-cn">
@@ -55,8 +55,8 @@
 
 
 
-  <meta property="og:image" content="http://qn7lpk7om.hn-bkt.clouddn.com/pig.jpg">
-  <meta property="twitter:image" content="http://qn7lpk7om.hn-bkt.clouddn.com/pig.jpg">
+  <meta property="og:image" content="/img/pig.jpg">
+  <meta property="twitter:image" content="/img/pig.jpg">
 
 
     <title>Grpc action</title>
@@ -89,7 +89,7 @@
       <header id="header" data-behavior="5">
   <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
   <div class="header-title">
-    <a class="header-title-link" href="/">Pixelpig&#39;s blog</a>
+    <a class="header-title-link" href="/">Pixelpig的个人博客</a>
   </div>
   
     
@@ -99,7 +99,7 @@
     
     
       
-        <img class="header-picture" src="http://qn7lpk7om.hn-bkt.clouddn.com/pig.jpg" alt="作者的图片" />
+        <img class="header-picture" src="/img/pig.jpg" alt="作者的图片" />
       
     
     </a>
@@ -111,7 +111,7 @@
     
       <div class="sidebar-profile">
         <a href="/#about">
-          <img class="sidebar-profile-picture" src="http://qn7lpk7om.hn-bkt.clouddn.com/pig.jpg" alt="作者的图片" />
+          <img class="sidebar-profile-picture" src="/img/pig.jpg" alt="作者的图片" />
         </a>
         <h4 class="sidebar-profile-name">pixelpig</h4>
         
@@ -175,16 +175,6 @@
     </ul>
     <ul class="sidebar-buttons">
       
-  <li class="sidebar-button">
-    
-      <a class="sidebar-button-link " href="/https://github.com/pixeldin">
-    
-      <i class="sidebar-button-icon fa fa-lg fa-github"></i>
-      
-      <span class="sidebar-button-desc">GitHub</span>
-    </a>
-  </li>
-
 
     </ul>
     <ul class="sidebar-buttons">
@@ -241,7 +231,7 @@
 <li>HTTP1.0</li>
 <li>HTTP1.1 - 至今</li>
 <li>HTTP2.0的优势<br>
-(<a href="https://www.youtube.com/watch?v=hNFM2pDGwKI&amp;list=WL&amp;index=2&amp;t=1271s">https://www.youtube.com/watch?v=hNFM2pDGwKI&amp;list=WL&amp;index=2&amp;t=1271s</a>)
+(<a href="https://www.yt.com/watch?v=hNFM2pDGwKI&amp;list=WL&amp;index=2&amp;t=1271s">https://www.yt.com/watch?v=hNFM2pDGwKI&amp;list=WL&amp;index=2&amp;t=1271s</a>)
 <ul>
 <li>二进制传输</li>
 <li>缓存相同的Header，只传输改变的参数(不止重复请求被缓存起来，而且每次请求都被压缩，所以性能能显著提升。)</li>
@@ -320,12 +310,6 @@
     <ul class="post-actions post-action-share" >
       
       
-        <li class="post-action">
-          <a class="post-action-btn btn btn--default" href="#disqus_thread">
-            <i class="fa fa-comment-o"></i>
-          </a>
-        </li>
-      
       <li class="post-action">
         
           <a class="post-action-btn btn btn--default" href="#">
@@ -338,10 +322,6 @@
 </div>
 
             
-              
-                <div id="disqus_thread">
-  <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-</div>
               
             
           </div>
@@ -381,12 +361,6 @@
     <ul class="post-actions post-action-share" >
       
       
-        <li class="post-action">
-          <a class="post-action-btn btn btn--default" href="#disqus_thread">
-            <i class="fa fa-comment-o"></i>
-          </a>
-        </li>
-      
       <li class="post-action">
         
           <a class="post-action-btn btn btn--default" href="#">
@@ -403,12 +377,6 @@
   <i id="btn-close-shareoptions" class="fa fa-close"></i>
   <ul class="share-options">
     
-      <li class="share-option">
-        <a class="share-option-btn" target="new" href="https://twitter.com/intent/tweet?text=%2F2020%2F03%2Fgrpc-action%2F">
-          <i class="fa fa-twitter"></i><span>分享到 Twitter</span>
-        </a>
-      </li>
-    
   </ul>
 </div>
 <div id="share-options-mask" class="share-options-mask"></div>
@@ -420,7 +388,7 @@
       <i class="fa fa-remove"></i>
     </div>
     
-      <img id="about-card-picture" src="http://qn7lpk7om.hn-bkt.clouddn.com/pig.jpg" alt="作者的图片" />
+      <img id="about-card-picture" src="/img/pig.jpg" alt="作者的图片" />
     
     <h4 id="about-card-name">pixelpig</h4>
     
@@ -447,7 +415,9 @@
 
     
   
-    <div id="cover" style="background-image:url('http://qn7lpk7om.hn-bkt.clouddn.com/cover.jpg');"></div>
+    
+      <div id="cover" style="background-image:url('/img/cover.jpg');"></div>
+    
   
 
 
@@ -491,28 +461,6 @@ $(document).ready(function() {
 
 
   
-    
-      <script>
-        var disqus_config = function () {
-          this.page.url = '\/2020\/03\/grpc-action\/';
-          
-            this.page.identifier = '\/2020\/03\/grpc-action\/'
-          
-        };
-        (function() {
-          
-          
-          if (window.location.hostname == "localhost") {
-            return;
-          }
-          var d = document, s = d.createElement('script');
-          var disqus_shortname = 'utteranc';
-          s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-
-          s.setAttribute('data-timestamp', +new Date());
-          (d.head || d.body).appendChild(s);
-        })();
-      </script>
     
   
 
