@@ -9,6 +9,15 @@
     <lastBuildDate>Sun, 18 Oct 2020 00:00:00 +0000</lastBuildDate><atom:link href="/tags/mpg/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>聊一聊操作系统线程调度与Go协程</title>
+      <link>/bk/%E8%81%8A%E4%B8%80%E8%81%8A%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%BA%BF%E7%A8%8B%E8%B0%83%E5%BA%A6%E4%B8%8Ego%E5%8D%8F%E7%A8%8B/</link>
+      <pubDate>Sun, 18 Oct 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/bk/%E8%81%8A%E4%B8%80%E8%81%8A%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%BA%BF%E7%A8%8B%E8%B0%83%E5%BA%A6%E4%B8%8Ego%E5%8D%8F%E7%A8%8B/</guid>
+      <description>&lt;p&gt;我们计算机上面跑的每个任务，都是操作系统层面的资源分配，从启动进程到创建线程，在核数固定的情况下，多线程并发地执行。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>聊一聊操作系统线程调度与Go协程</title>
       <link>/2020/10/%E8%81%8A%E4%B8%80%E8%81%8A%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%BA%BF%E7%A8%8B%E8%B0%83%E5%BA%A6%E4%B8%8Ego%E5%8D%8F%E7%A8%8B/</link>
       <pubDate>Sun, 18 Oct 2020 00:00:00 +0000</pubDate>
       

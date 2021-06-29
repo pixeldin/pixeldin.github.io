@@ -9,6 +9,15 @@
     <lastBuildDate>Thu, 20 Feb 2020 00:00:00 +0000</lastBuildDate><atom:link href="/tags/cmd/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>聊一聊Go编写的命令行工具类</title>
+      <link>/bk/%E8%81%8A%E4%B8%80%E8%81%8Ago%E7%BC%96%E5%86%99%E7%9A%84%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%B7%A5%E5%85%B7%E7%B1%BB/</link>
+      <pubDate>Thu, 20 Feb 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/bk/%E8%81%8A%E4%B8%80%E8%81%8Ago%E7%BC%96%E5%86%99%E7%9A%84%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%B7%A5%E5%85%B7%E7%B1%BB/</guid>
+      <description>&lt;p&gt;Go原生在flag包提供了一个命令行工具类，它可以让我们执行类似命令行的赋参操作，经常被运用于工具类，特别是数据处理过程，可以方便我们进行参数可视化注解。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>聊一聊Go编写的命令行工具类</title>
       <link>/2020/02/%E8%81%8A%E4%B8%80%E8%81%8Ago%E7%BC%96%E5%86%99%E7%9A%84%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%B7%A5%E5%85%B7%E7%B1%BB/</link>
       <pubDate>Thu, 20 Feb 2020 00:00:00 +0000</pubDate>
       
