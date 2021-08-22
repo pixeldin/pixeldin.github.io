@@ -4,7 +4,52 @@
   
   <url>
     <loc>/categories/</loc>
-    <lastmod>2021-06-29T00:00:00+00:00</lastmod>
+    <lastmod>2021-07-29T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tags/circuit-breaker/</loc>
+    <lastmod>2021-07-29T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/categories/go/</loc>
+    <lastmod>2021-07-29T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/</loc>
+    <lastmod>2021-07-29T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/post/</loc>
+    <lastmod>2021-07-29T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tags/</loc>
+    <lastmod>2021-07-29T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tags/%E5%BF%AB%E9%80%9F%E5%A4%B1%E8%B4%A5/</loc>
+    <lastmod>2021-07-29T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tags/%E7%86%94%E6%96%AD%E5%99%A8/</loc>
+    <lastmod>2021-07-29T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/categories/%E7%BD%91%E5%85%B3%E4%B8%AD%E9%97%B4%E4%BB%B6/</loc>
+    <lastmod>2021-07-29T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/2021/07/%E8%81%8A%E4%B8%80%E8%81%8Ago%E5%AE%9E%E7%8E%B0%E7%9A%84%E7%AE%80%E5%8D%95%E6%8E%A5%E5%8F%A3%E7%86%94%E6%96%AD%E5%99%A8/</loc>
+    <lastmod>2021-07-29T00:00:00+00:00</lastmod>
   </url>
   
   <url>
@@ -13,27 +58,7 @@
   </url>
   
   <url>
-    <loc>/categories/go/</loc>
-    <lastmod>2021-06-29T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
     <loc>/tags/http-header/</loc>
-    <lastmod>2021-06-29T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/</loc>
-    <lastmod>2021-06-29T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/post/</loc>
-    <lastmod>2021-06-29T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/tags/</loc>
     <lastmod>2021-06-29T00:00:00+00:00</lastmod>
   </url>
   
@@ -193,6 +218,46 @@
   </url>
   
   <url>
+    <loc>/draft/</loc>
+    <lastmod>2020-03-23T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/categories/features/</loc>
+    <lastmod>2020-03-23T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tags/github-theme/</loc>
+    <lastmod>2020-03-23T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tags/highlight-code/</loc>
+    <lastmod>2020-03-23T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/draft/highlighted-code-showcase/</loc>
+    <lastmod>2020-03-23T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tags/test/</loc>
+    <lastmod>2020-03-23T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/categories/tranquilpeak/</loc>
+    <lastmod>2020-03-23T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/bk/%E8%8D%89%E7%A8%BF/</loc>
+    <lastmod>2020-03-23T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>/tags/errors/</loc>
     <lastmod>2020-03-15T00:00:00+00:00</lastmod>
   </url>
@@ -310,6 +375,14 @@
   <url>
     <loc>/categories/%E5%8F%8D%E5%B0%84/</loc>
     <lastmod>2019-03-15T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/1/01/</loc>
+  </url>
+  
+  <url>
+    <loc>/1/01/</loc>
   </url>
   
   <url>

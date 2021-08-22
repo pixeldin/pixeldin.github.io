@@ -6,13 +6,22 @@
     <description>Recent content in Categories on Pixelpig&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 29 Jun 2021 00:00:00 +0000</lastBuildDate><atom:link href="/categories/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 29 Jul 2021 00:00:00 +0000</lastBuildDate><atom:link href="/categories/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Go</title>
       <link>/categories/go/</link>
-      <pubDate>Tue, 29 Jun 2021 00:00:00 +0000</pubDate>
+      <pubDate>Thu, 29 Jul 2021 00:00:00 +0000</pubDate>
       
       <guid>/categories/go/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>网关中间件</title>
+      <link>/categories/%E7%BD%91%E5%85%B3%E4%B8%AD%E9%97%B4%E4%BB%B6/</link>
+      <pubDate>Thu, 29 Jul 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/categories/%E7%BD%91%E5%85%B3%E4%B8%AD%E9%97%B4%E4%BB%B6/</guid>
       <description></description>
     </item>
     
@@ -58,6 +67,24 @@
       <pubDate>Sun, 18 Oct 2020 00:00:00 +0000</pubDate>
       
       <guid>/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>features</title>
+      <link>/categories/features/</link>
+      <pubDate>Mon, 23 Mar 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/categories/features/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>tranquilpeak</title>
+      <link>/categories/tranquilpeak/</link>
+      <pubDate>Mon, 23 Mar 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/categories/tranquilpeak/</guid>
       <description></description>
     </item>
     

@@ -53,6 +53,15 @@
     </item>
     
     <item>
+      <title>草稿highlighted code showcase</title>
+      <link>/bk/%E8%8D%89%E7%A8%BF/</link>
+      <pubDate>Mon, 23 Mar 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/bk/%E8%8D%89%E7%A8%BF/</guid>
+      <description>&lt;p&gt;Tranquilpeak Hugo theme have its own theme to highlight source code. It&amp;rsquo;s based on GitHub theme: simple and elegant. Check out how it sublimate source codes.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
       <title>Grpc action</title>
       <link>/bk/grpc-action/</link>
       <pubDate>Sun, 15 Mar 2020 00:00:00 +0000</pubDate>
