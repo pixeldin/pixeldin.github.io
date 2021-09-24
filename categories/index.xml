@@ -71,24 +71,6 @@
     </item>
     
     <item>
-      <title>features</title>
-      <link>/categories/features/</link>
-      <pubDate>Mon, 23 Mar 2020 00:00:00 +0000</pubDate>
-      
-      <guid>/categories/features/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>tranquilpeak</title>
-      <link>/categories/tranquilpeak/</link>
-      <pubDate>Mon, 23 Mar 2020 00:00:00 +0000</pubDate>
-      
-      <guid>/categories/tranquilpeak/</guid>
-      <description></description>
-    </item>
-    
-    <item>
       <title>命令行编程</title>
       <link>/categories/%E5%91%BD%E4%BB%A4%E8%A1%8C%E7%BC%96%E7%A8%8B/</link>
       <pubDate>Thu, 20 Feb 2020 00:00:00 +0000</pubDate>
@@ -112,15 +94,6 @@
       <pubDate>Sun, 11 Aug 2019 00:00:00 +0000</pubDate>
       
       <guid>/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>线程</title>
-      <link>/categories/%E7%BA%BF%E7%A8%8B/</link>
-      <pubDate>Mon, 15 Jul 2019 00:00:00 +0000</pubDate>
-      
-      <guid>/categories/%E7%BA%BF%E7%A8%8B/</guid>
       <description></description>
     </item>
     

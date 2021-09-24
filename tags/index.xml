@@ -161,33 +161,6 @@
     </item>
     
     <item>
-      <title>github theme</title>
-      <link>/tags/github-theme/</link>
-      <pubDate>Mon, 23 Mar 2020 00:00:00 +0000</pubDate>
-      
-      <guid>/tags/github-theme/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>highlight code</title>
-      <link>/tags/highlight-code/</link>
-      <pubDate>Mon, 23 Mar 2020 00:00:00 +0000</pubDate>
-      
-      <guid>/tags/highlight-code/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>test</title>
-      <link>/tags/test/</link>
-      <pubDate>Mon, 23 Mar 2020 00:00:00 +0000</pubDate>
-      
-      <guid>/tags/test/</guid>
-      <description></description>
-    </item>
-    
-    <item>
       <title>errors</title>
       <link>/tags/errors/</link>
       <pubDate>Sun, 15 Mar 2020 00:00:00 +0000</pubDate>
@@ -197,11 +170,11 @@
     </item>
     
     <item>
-      <title>social</title>
-      <link>/tags/social/</link>
+      <title>RPC</title>
+      <link>/tags/rpc/</link>
       <pubDate>Sun, 15 Mar 2020 00:00:00 +0000</pubDate>
       
-      <guid>/tags/social/</guid>
+      <guid>/tags/rpc/</guid>
       <description></description>
     </item>
     

@@ -70,7 +70,7 @@
 
     <title>聊一聊操作系统线程调度与Go协程</title>
 
-    <link rel="icon" href="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/blog/static/pixel.ico">
+    <link rel="icon" href="/favicon.png">
     
 
     
@@ -453,7 +453,7 @@ ok      HelloGo/basic/Multi     8.623s
 }
 </code></pre><p>上面的注释表明了偷窃各个部分的优先级，只有1/61的时间会去检查全局队列。<br>
 <strong>优先级：本地队列 &gt; 其他P的队列 &gt; 全局队列</strong></p>
-<p>根据这张我从别处偷来的这张图，此时<strong>P2</strong>的本地队列已经是空的，所以这个时候<strong>P2</strong>即将要从<strong>P1</strong>偷走3个<strong>G</strong> 
+<p>根据这张我从别处偷来的这张图，此时<strong>P2</strong>的本地队列已经是空的，所以这个时候<strong>P2</strong>即将要从<strong>P1</strong>偷走3个<strong>G</strong>
 <img src="https://rakyll.org/img/scheduler-stealing.png" alt="Steal from rakyll.png"></p>
 <hr>
 <h3 id="总结">总结</h3>
@@ -504,14 +504,14 @@ Ardanlabs素质三连：  <br>
                 <a class="post-action-btn btn btn--default tooltip--top" href="/2021/01/go%E5%8D%8F%E7%A8%8B%E9%97%B4%E9%80%9A%E4%BF%A1%E4%B9%8B%E7%94%9F%E4%BA%A7%E8%80%85-%E6%B6%88%E8%B4%B9%E8%80%85%E6%A8%A1%E5%9E%8B/" data-tooltip="Go协程间通信之生产者-消费者模型">
               
                   <i class="fa fa-angle-left"></i>
-                  <span class="hide-xs hide-sm text-small icon-ml">上一篇</span>
+                  <span class="hide-xs hide-sm text-small icon-ml">下一篇</span>
                 </a>
             </li>
             <li class="post-action">
               
                 <a class="post-action-btn btn btn--default tooltip--top" href="/2020/06/%E8%81%8A%E4%B8%80%E8%81%8Ago%E7%9A%84context%E4%B8%8A%E4%B8%8B%E6%96%87/" data-tooltip="聊一聊Go的Context上下文">
               
-                  <span class="hide-xs hide-sm text-small icon-mr">下一篇</span>
+                  <span class="hide-xs hide-sm text-small icon-mr">上一篇</span>
                   <i class="fa fa-angle-right"></i>
                 </a>
             </li>
@@ -562,14 +562,14 @@ Ardanlabs素质三连：  <br>
                 <a class="post-action-btn btn btn--default tooltip--top" href="/2021/01/go%E5%8D%8F%E7%A8%8B%E9%97%B4%E9%80%9A%E4%BF%A1%E4%B9%8B%E7%94%9F%E4%BA%A7%E8%80%85-%E6%B6%88%E8%B4%B9%E8%80%85%E6%A8%A1%E5%9E%8B/" data-tooltip="Go协程间通信之生产者-消费者模型">
               
                   <i class="fa fa-angle-left"></i>
-                  <span class="hide-xs hide-sm text-small icon-ml">上一篇</span>
+                  <span class="hide-xs hide-sm text-small icon-ml">下一篇</span>
                 </a>
             </li>
             <li class="post-action">
               
                 <a class="post-action-btn btn btn--default tooltip--top" href="/2020/06/%E8%81%8A%E4%B8%80%E8%81%8Ago%E7%9A%84context%E4%B8%8A%E4%B8%8B%E6%96%87/" data-tooltip="聊一聊Go的Context上下文">
               
-                  <span class="hide-xs hide-sm text-small icon-mr">下一篇</span>
+                  <span class="hide-xs hide-sm text-small icon-mr">上一篇</span>
                   <i class="fa fa-angle-right"></i>
                 </a>
             </li>
