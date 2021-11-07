@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>HA on Pixelpig&#39;s blog</title>
+    <link>/categories/ha/</link>
+    <description>Recent content in HA on Pixelpig&#39;s blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Wed, 29 Sep 2021 00:00:00 +0000</lastBuildDate><atom:link href="/categories/ha/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>聊一聊Go服务的优雅下线</title>
+      <link>/2021/09/%E8%81%8A%E4%B8%80%E8%81%8Ago%E6%9C%8D%E5%8A%A1%E7%9A%84%E4%BC%98%E9%9B%85%E4%B8%8B%E7%BA%BF/</link>
+      <pubDate>Wed, 29 Sep 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/2021/09/%E8%81%8A%E4%B8%80%E8%81%8Ago%E6%9C%8D%E5%8A%A1%E7%9A%84%E4%BC%98%E9%9B%85%E4%B8%8B%E7%BA%BF/</guid>
+      <description>&lt;p&gt;从高可用到优雅关闭/重启，细化到程序下线/重启等操作，在Go里面有哪些处理方式呢？今天我们来聊聊go程序的优雅关闭&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>
