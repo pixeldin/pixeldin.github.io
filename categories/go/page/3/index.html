@@ -13,10 +13,10 @@
 
 <meta property="og:description" content="pixelpig&#39;s personal blog">
 <meta property="og:type" content="website">
-<meta property="og:title" content="进程通信">
-<meta name="twitter:title" content="进程通信">
-<meta property="og:url" content="/tags/%E8%BF%9B%E7%A8%8B%E9%80%9A%E4%BF%A1/">
-<meta property="twitter:url" content="/tags/%E8%BF%9B%E7%A8%8B%E9%80%9A%E4%BF%A1/">
+<meta property="og:title" content="Go">
+<meta name="twitter:title" content="Go">
+<meta property="og:url" content="/categories/go/">
+<meta property="twitter:url" content="/categories/go/">
 <meta property="og:site_name" content="Pixelpig&#39;s blog">
 <meta property="og:description" content="pixelpig&#39;s personal blog">
 <meta name="twitter:description" content="pixelpig&#39;s personal blog">
@@ -39,16 +39,16 @@
   <meta property="twitter:image" content="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/pig.jpg">
 
 
-    <title>进程通信</title>
+    <title>Go</title>
 
     <link rel="icon" href="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/blog/static/pixel.ico">
     
-      <link rel="alternate" type="application/rss+xml" title="RSS" href="/tags/%E8%BF%9B%E7%A8%8B%E9%80%9A%E4%BF%A1/index.xml">
+      <link rel="alternate" type="application/rss+xml" title="RSS" href="/categories/go/index.xml">
     
 
     
 
-    <link rel="canonical" href="/tags/%E8%BF%9B%E7%A8%8B%E9%80%9A%E4%BF%A1/">
+    <link rel="canonical" href="/categories/go/">
 
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
@@ -181,26 +181,30 @@
               
   
     
+      
+        
+      
+    
   
 
 
   
 
-<article class="postShorten postShorten--thumbnailimg-left" itemscope itemType="http://schema.org/BlogPosting">
+<article class="postShorten postShorten--thumbnailimg-bottom" itemscope itemType="http://schema.org/BlogPosting">
   <div class="postShorten-wrap">
     
     <div class="postShorten-header">
       <h1 class="postShorten-title" itemprop="headline">
-        <a class="link-unstyled" href="/2021/10/%E8%81%8A%E4%B8%80%E8%81%8Ago%E6%9C%8D%E5%8A%A1%E7%9A%84%E4%BC%98%E9%9B%85%E5%A4%84%E7%90%86%E4%BA%8C-%E4%BC%98%E9%9B%85%E9%87%8D%E5%90%AF/">
-          聊一聊Go服务的优雅处理(二)--优雅重启
+        <a class="link-unstyled" href="/2020/02/%E8%81%8A%E4%B8%80%E8%81%8Ago%E7%BC%96%E5%86%99%E7%9A%84%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%B7%A5%E5%85%B7%E7%B1%BB/">
+          聊一聊Go编写的命令行工具类
         </a>
       </h1>
       
   <div class="postShorten-meta post-meta">
     
-      <time itemprop="datePublished" datetime="2021-10-23T00:00:00Z">
+      <time itemprop="datePublished" datetime="2020-02-20T00:00:00Z">
         
-  十月 23, 2021
+  二月 20, 2020
 
       </time>
     
@@ -211,7 +215,9 @@
     
       <a class="category-link" href="/categories/go">Go</a>, 
     
-      <a class="category-link" href="/categories/ha">HA</a>
+      <a class="category-link" href="/categories/%e5%91%bd%e4%bb%a4%e8%a1%8c%e7%bc%96%e7%a8%8b">命令行编程</a>, 
+    
+      <a class="category-link" href="/categories/%e5%90%8e%e7%ab%af">后端</a>
     
   
 
@@ -220,85 +226,36 @@
     </div>
     <div class="postShorten-excerpt" itemprop="articleBody">
       
-        <p>上一次我们聊到Go程序如何优雅关闭，今天我们来聊一聊优雅重启。</p>
+        <p>Go原生在flag包提供了一个命令行工具类，它可以让我们执行类似命令行的赋参操作，经常被运用于工具类，特别是数据处理过程，可以方便我们进行参数可视化注解。</p>
       
       <p>
-        <a href="/2021/10/%E8%81%8A%E4%B8%80%E8%81%8Ago%E6%9C%8D%E5%8A%A1%E7%9A%84%E4%BC%98%E9%9B%85%E5%A4%84%E7%90%86%E4%BA%8C-%E4%BC%98%E9%9B%85%E9%87%8D%E5%90%AF/" class="postShorten-excerpt_link link">阅读全文</a>
+        <a href="/2020/02/%E8%81%8A%E4%B8%80%E8%81%8Ago%E7%BC%96%E5%86%99%E7%9A%84%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%B7%A5%E5%85%B7%E7%B1%BB/" class="postShorten-excerpt_link link">阅读全文</a>
         
       </p>
     </div>
   </div>
   
-    <a href="/2021/10/%E8%81%8A%E4%B8%80%E8%81%8Ago%E6%9C%8D%E5%8A%A1%E7%9A%84%E4%BC%98%E9%9B%85%E5%A4%84%E7%90%86%E4%BA%8C-%E4%BC%98%E9%9B%85%E9%87%8D%E5%90%AF/">
-      <div class="postShorten-thumbnailimg">
-        <img alt="" itemprop="image" src="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/blog/graceful/restart.png"/>
-      </div>
-    </a>
-  
-</article>
-
-            
-              
-  
-    
-  
-
-
-  
-
-<article class="postShorten postShorten--thumbnailimg-left" itemscope itemType="http://schema.org/BlogPosting">
-  <div class="postShorten-wrap">
-    
-    <div class="postShorten-header">
-      <h1 class="postShorten-title" itemprop="headline">
-        <a class="link-unstyled" href="/2021/09/%E8%81%8A%E4%B8%80%E8%81%8Ago%E6%9C%8D%E5%8A%A1%E7%9A%84%E4%BC%98%E9%9B%85%E5%A4%84%E7%90%86%E4%B8%80-%E4%BC%98%E9%9B%85%E4%B8%8B%E7%BA%BF/">
-          聊一聊Go服务的优雅处理(一)--优雅下线
-        </a>
-      </h1>
-      
-  <div class="postShorten-meta post-meta">
-    
-      <time itemprop="datePublished" datetime="2021-09-29T00:00:00Z">
-        
-  九月 29, 2021
-
-      </time>
-    
-    
-  
-  
-    <span>发布在</span>
-    
-      <a class="category-link" href="/categories/go">Go</a>, 
-    
-      <a class="category-link" href="/categories/ha">HA</a>
-    
-  
-
-  </div>
-
-    </div>
-    <div class="postShorten-excerpt" itemprop="articleBody">
-      
-        <p>从高可用到优雅关闭/重启，细化到程序下线/重启等操作，在Go里面有哪些处理方式呢？今天我们来聊聊go程序的优雅关闭</p>
-      
-      <p>
-        <a href="/2021/09/%E8%81%8A%E4%B8%80%E8%81%8Ago%E6%9C%8D%E5%8A%A1%E7%9A%84%E4%BC%98%E9%9B%85%E5%A4%84%E7%90%86%E4%B8%80-%E4%BC%98%E9%9B%85%E4%B8%8B%E7%BA%BF/" class="postShorten-excerpt_link link">阅读全文</a>
-        
-      </p>
-    </div>
-  </div>
-  
-    <a href="/2021/09/%E8%81%8A%E4%B8%80%E8%81%8Ago%E6%9C%8D%E5%8A%A1%E7%9A%84%E4%BC%98%E9%9B%85%E5%A4%84%E7%90%86%E4%B8%80-%E4%BC%98%E9%9B%85%E4%B8%8B%E7%BA%BF/">
-      <div class="postShorten-thumbnailimg">
-        <img alt="" itemprop="image" src="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/blog/graceful/lastgreen.png"/>
-      </div>
-    </a>
-  
 </article>
 
             
             
+  <div class="pagination-bar">
+    <ul class="pagination">
+      
+        
+          <li class="pagination-prev">
+            <a class="btn btn--default btn--small" href="/categories/go/page/2/">
+              <i class="fa fa-angle-left text-base icon-mr"></i>
+              <span>上一页</span>
+            </a>
+          </li>
+        
+        
+      
+      <li class="pagination-number">第 3 页 共 3 页</li>
+    </ul>
+  </div>
+
 
           </section>
         

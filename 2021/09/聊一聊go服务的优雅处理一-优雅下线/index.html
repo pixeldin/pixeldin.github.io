@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="generator" content="Hugo 0.80.0 with theme Tranquilpeak 0.4.8-BETA">
+<meta name="author" content="pixelpig">
+<meta name="keywords" content="">
+<meta name="description" content="从高可用到优雅关闭/重启，细化到程序下线/重启等操作，在Go里面有哪些处理方式呢？今天我们来聊聊go程序的优雅关闭">
+
+
+<meta property="og:description" content="从高可用到优雅关闭/重启，细化到程序下线/重启等操作，在Go里面有哪些处理方式呢？今天我们来聊聊go程序的优雅关闭">
+<meta property="og:type" content="article">
+<meta property="og:title" content="聊一聊Go服务的优雅处理(一)--优雅下线">
+<meta name="twitter:title" content="聊一聊Go服务的优雅处理(一)--优雅下线">
+<meta property="og:url" content="/2021/09/%E8%81%8A%E4%B8%80%E8%81%8Ago%E6%9C%8D%E5%8A%A1%E7%9A%84%E4%BC%98%E9%9B%85%E5%A4%84%E7%90%86%E4%B8%80-%E4%BC%98%E9%9B%85%E4%B8%8B%E7%BA%BF/">
+<meta property="twitter:url" content="/2021/09/%E8%81%8A%E4%B8%80%E8%81%8Ago%E6%9C%8D%E5%8A%A1%E7%9A%84%E4%BC%98%E9%9B%85%E5%A4%84%E7%90%86%E4%B8%80-%E4%BC%98%E9%9B%85%E4%B8%8B%E7%BA%BF/">
+<meta property="og:site_name" content="Pixelpig&#39;s blog">
+<meta property="og:description" content="从高可用到优雅关闭/重启，细化到程序下线/重启等操作，在Go里面有哪些处理方式呢？今天我们来聊聊go程序的优雅关闭">
+<meta name="twitter:description" content="从高可用到优雅关闭/重启，细化到程序下线/重启等操作，在Go里面有哪些处理方式呢？今天我们来聊聊go程序的优雅关闭">
+<meta property="og:locale" content="zh-cn">
+
+  
+    <meta property="article:published_time" content="2021-09-29T00:00:00">
+  
+  
+    <meta property="article:modified_time" content="2021-09-29T00:00:00">
+  
+  
+  
+    
+      <meta property="article:section" content="Go">
+    
+      <meta property="article:section" content="HA">
+    
+  
+  
+    
+      <meta property="article:tag" content="服务治理">
+    
+      <meta property="article:tag" content="进程通信">
+    
+      <meta property="article:tag" content="优雅关闭">
+    
+  
+
+
+<meta name="twitter:card" content="summary">
+
+
+
+
+
+
+
+  <meta property="og:image" content="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/blog/graceful/lastgreen.png">
+  <meta property="twitter:image" content="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/blog/graceful/lastgreen.png">
+
+
+
+
+
+  <meta property="og:image" content="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/pig.jpg">
+  <meta property="twitter:image" content="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/pig.jpg">
+
+
+    <title>聊一聊Go服务的优雅处理(一)--优雅下线</title>
+
+    <link rel="icon" href="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/blog/static/pixel.ico">
+    
+
+    
+
+    <link rel="canonical" href="/2021/09/%E8%81%8A%E4%B8%80%E8%81%8Ago%E6%9C%8D%E5%8A%A1%E7%9A%84%E4%BC%98%E9%9B%85%E5%A4%84%E7%90%86%E4%B8%80-%E4%BC%98%E9%9B%85%E4%B8%8B%E7%BA%BF/">
+
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/jquery.fancybox.min.css" integrity="sha256-vuXZ9LGmmwtjqFX1F+EKin1ThZMub58gKULUyf0qECk=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/helpers/jquery.fancybox-thumbs.min.css" integrity="sha256-SEa4XYAHihTcEP1f5gARTB2K26Uk8PsndQYHQC1f4jU=" crossorigin="anonymous" />
+    
+    
+    <link rel="stylesheet" href="/css/style-twzjdbqhmnnacqs0pwwdzcdbt8yhv8giawvjqjmyfoqnvazl0dalmnhdkvp7.min.css" />
+    
+    
+
+    
+      
+    
+    
+  </head>
+
+  <body>
+    <div id="blog">
+      <header id="header" data-behavior="5">
+  <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+  <div class="header-title">
+    <a class="header-title-link" href="/">Pixelpig&#39;s blog</a>
+  </div>
+  
+    
+      <a class="header-right-picture "
+         href="/#about">
+    
+    
+    
+      
+        <img class="header-picture" src="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/pig.jpg" alt="作者的图片" />
+      
+    
+    </a>
+  
+</header>
+
+      <nav id="sidebar" data-behavior="5">
+  <div class="sidebar-container">
+    
+      <div class="sidebar-profile">
+        <a href="/#about">
+          <img class="sidebar-profile-picture" src="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/pig.jpg" alt="作者的图片" />
+        </a>
+        <h4 class="sidebar-profile-name">pixelpig</h4>
+        
+          <h5 class="sidebar-profile-bio">Stay hungry, stay foolish <strong>:）</strong></h5>
+        
+      </div>
+    
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-home"></i>
+      
+      <span class="sidebar-button-desc">首页</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/categories">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-bookmark"></i>
+      
+      <span class="sidebar-button-desc">分类</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/tags">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
+      
+      <span class="sidebar-button-desc">标签</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/archives">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-archive"></i>
+      
+      <span class="sidebar-button-desc">归档</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/#about">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-question"></i>
+      
+      <span class="sidebar-button-desc">关于</span>
+    </a>
+  </li>
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+
+    </ul>
+  </div>
+</nav>
+
+      
+
+      <div id="main" data-behavior="5"
+        class="
+               hasCoverMetaIn
+               ">
+        <article class="post" itemscope itemType="http://schema.org/BlogPosting">
+          
+          
+            <div class="post-header main-content-wrap text-center">
+  
+    <h1 class="post-title" itemprop="headline">
+      聊一聊Go服务的优雅处理(一)--优雅下线
+    </h1>
+  
+  
+  <div class="postShorten-meta post-meta">
+    
+      <time itemprop="datePublished" datetime="2021-09-29T00:00:00Z">
+        
+  九月 29, 2021
+
+      </time>
+    
+    
+  
+  
+    <span>发布在</span>
+    
+      <a class="category-link" href="/categories/go">Go</a>, 
+    
+      <a class="category-link" href="/categories/ha">HA</a>
+    
+  
+
+  </div>
+
+</div>
+          
+          <div class="post-content markdown" itemprop="articleBody">
+            <div class="main-content-wrap">
+              <p>从高可用到优雅关闭/重启，细化到程序下线/重启等操作，在Go里面有哪些处理方式呢？今天我们来聊聊go程序的优雅关闭</p>
+<p><img src="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/blog/graceful/recover.png" alt="recover"></p>
+<h3 id="前言">前言</h3>
+<p>最近服务高可用的重要性越来越大，高可用通常指的是通过故障转移到冗余模块，如主备切换等相应操作，用来保证系统对外提供可用性，而细化到程序下线/重启等操作，在Go里面有哪些处理方式呢？今天我们来聊聊Go程序的优雅关闭与重启，如何让程序在关闭或者重启之前对旧的连接进行处理，尽量做到无感知切换。</p>
+<h3 id="概念引入">概念引入</h3>
+<h4 id="进程间通讯方式">进程间通讯方式</h4>
+<p>我们知道进程通信有几种常用的方式：</p>
+<ul>
+<li>管道</li>
+<li>信号量</li>
+<li>网络socket</li>
+<li>共享内存</li>
+</ul>
+<p>今天我们先来聊一聊信号量，比如P/V信号量，常常用于进程在访问临界区时候，用于唤醒或等待临界区的其他进程，信号量本质上是操作系统发送的一个中断机制，除了P/V信号量，还有常见的场景比如我们在中断按下<code>Ctrl+C</code>用于通知进程退出，会发送一个interrupt信号，也叫SIGINT。</p>
+<p>在Go里面，windows平台下的信号量语义如下：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">const</span> (
+	<span style="color:#75715e">// More invented values for signals
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">SIGHUP</span>  = <span style="color:#a6e22e">Signal</span>(<span style="color:#ae81ff">0x1</span>)
+	<span style="color:#a6e22e">SIGINT</span>  = <span style="color:#a6e22e">Signal</span>(<span style="color:#ae81ff">0x2</span>)
+	<span style="color:#a6e22e">SIGQUIT</span> = <span style="color:#a6e22e">Signal</span>(<span style="color:#ae81ff">0x3</span>)
+	<span style="color:#a6e22e">SIGILL</span>  = <span style="color:#a6e22e">Signal</span>(<span style="color:#ae81ff">0x4</span>)
+	<span style="color:#a6e22e">SIGTRAP</span> = <span style="color:#a6e22e">Signal</span>(<span style="color:#ae81ff">0x5</span>)
+	<span style="color:#a6e22e">SIGABRT</span> = <span style="color:#a6e22e">Signal</span>(<span style="color:#ae81ff">0x6</span>)
+	<span style="color:#a6e22e">SIGBUS</span>  = <span style="color:#a6e22e">Signal</span>(<span style="color:#ae81ff">0x7</span>)
+	<span style="color:#a6e22e">SIGFPE</span>  = <span style="color:#a6e22e">Signal</span>(<span style="color:#ae81ff">0x8</span>)
+	<span style="color:#a6e22e">SIGKILL</span> = <span style="color:#a6e22e">Signal</span>(<span style="color:#ae81ff">0x9</span>)
+	<span style="color:#a6e22e">SIGSEGV</span> = <span style="color:#a6e22e">Signal</span>(<span style="color:#ae81ff">0xb</span>)
+	<span style="color:#a6e22e">SIGPIPE</span> = <span style="color:#a6e22e">Signal</span>(<span style="color:#ae81ff">0xd</span>)
+	<span style="color:#a6e22e">SIGALRM</span> = <span style="color:#a6e22e">Signal</span>(<span style="color:#ae81ff">0xe</span>)
+	<span style="color:#a6e22e">SIGTERM</span> = <span style="color:#a6e22e">Signal</span>(<span style="color:#ae81ff">0xf</span>)
+)
+
+<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">signals</span> = [<span style="color:#f92672">...</span>]<span style="color:#66d9ef">string</span>{
+	<span style="color:#ae81ff">1</span>:  <span style="color:#e6db74">&#34;hangup&#34;</span>,
+	<span style="color:#ae81ff">2</span>:  <span style="color:#e6db74">&#34;interrupt&#34;</span>,
+	<span style="color:#ae81ff">3</span>:  <span style="color:#e6db74">&#34;quit&#34;</span>,
+	<span style="color:#ae81ff">4</span>:  <span style="color:#e6db74">&#34;illegal instruction&#34;</span>,
+	<span style="color:#ae81ff">5</span>:  <span style="color:#e6db74">&#34;trace/breakpoint trap&#34;</span>,
+	<span style="color:#ae81ff">6</span>:  <span style="color:#e6db74">&#34;aborted&#34;</span>,
+	<span style="color:#ae81ff">7</span>:  <span style="color:#e6db74">&#34;bus error&#34;</span>,
+	<span style="color:#ae81ff">8</span>:  <span style="color:#e6db74">&#34;floating point exception&#34;</span>,
+	<span style="color:#ae81ff">9</span>:  <span style="color:#e6db74">&#34;killed&#34;</span>,
+	<span style="color:#ae81ff">10</span>: <span style="color:#e6db74">&#34;user defined signal 1&#34;</span>,
+	<span style="color:#ae81ff">11</span>: <span style="color:#e6db74">&#34;segmentation fault&#34;</span>,
+	<span style="color:#ae81ff">12</span>: <span style="color:#e6db74">&#34;user defined signal 2&#34;</span>,
+	<span style="color:#ae81ff">13</span>: <span style="color:#e6db74">&#34;broken pipe&#34;</span>,
+	<span style="color:#ae81ff">14</span>: <span style="color:#e6db74">&#34;alarm clock&#34;</span>,
+	<span style="color:#ae81ff">15</span>: <span style="color:#e6db74">&#34;terminated&#34;</span>,
+}
+</code></pre></div><p>使用15个数字以十六进制表示，那么我们接着看，在go里面，是怎么监听系统信号量的呢？</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">Notify</span>(<span style="color:#a6e22e">c</span> <span style="color:#66d9ef">chan</span><span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">os</span>.<span style="color:#a6e22e">Signal</span>, <span style="color:#a6e22e">sig</span> <span style="color:#f92672">...</span><span style="color:#a6e22e">os</span>.<span style="color:#a6e22e">Signal</span>) {
+	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">c</span> <span style="color:#f92672">==</span> <span style="color:#66d9ef">nil</span> {
+		panic(<span style="color:#e6db74">&#34;os/signal: Notify using nil channel&#34;</span>)
+	}
+	<span style="color:#75715e">// 省略部分代码...
+</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">add</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">func</span>(<span style="color:#a6e22e">n</span> <span style="color:#66d9ef">int</span>) {
+		<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">n</span> &lt; <span style="color:#ae81ff">0</span> {
+			<span style="color:#66d9ef">return</span>
+		}
+		<span style="color:#66d9ef">if</span> !<span style="color:#a6e22e">h</span>.<span style="color:#a6e22e">want</span>(<span style="color:#a6e22e">n</span>) {
+			<span style="color:#a6e22e">h</span>.<span style="color:#a6e22e">set</span>(<span style="color:#a6e22e">n</span>)
+			<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">handlers</span>.<span style="color:#a6e22e">ref</span>[<span style="color:#a6e22e">n</span>] <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span> {
+				<span style="color:#a6e22e">enableSignal</span>(<span style="color:#a6e22e">n</span>)
+
+				<span style="color:#75715e">// 单例启动监听，保证程序启动之前注册相应的处理逻辑
+</span><span style="color:#75715e"></span>				<span style="color:#a6e22e">watchSignalLoopOnce</span>.<span style="color:#a6e22e">Do</span>(<span style="color:#66d9ef">func</span>() {
+					<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">watchSignalLoop</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+					    <span style="color:#75715e">// 新建协程轮询监听
+</span><span style="color:#75715e"></span>						<span style="color:#66d9ef">go</span> <span style="color:#a6e22e">watchSignalLoop</span>()
+					}
+				})
+			}
+			<span style="color:#a6e22e">handlers</span>.<span style="color:#a6e22e">ref</span>[<span style="color:#a6e22e">n</span>]<span style="color:#f92672">++</span>
+		}
+	}
+	<span style="color:#75715e">// 省略部分代码...
+</span><span style="color:#75715e"></span>}
+</code></pre></div><p>其中的<code>watchSignalLoop</code>在unix版本中，是一个轮询函数，</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">loop</span>() {
+	<span style="color:#66d9ef">for</span> {
+		<span style="color:#a6e22e">process</span>(<span style="color:#a6e22e">syscall</span>.<span style="color:#a6e22e">Signal</span>(<span style="color:#a6e22e">signal_recv</span>()))
+	}
+}
+
+<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">init</span>() {
+	<span style="color:#a6e22e">watchSignalLoop</span> = <span style="color:#a6e22e">loop</span>
+}
+</code></pre></div><p>至此我们知道了信号量注册和监听的大致过程了，通过注册一个与目标信号量的上下文，异步创建一个协程进行系统信号监听。</p>
+<hr>
+<p>接下来我们拿<code>interrupt</code>来举例，监听系统的中断请求，在Go中可以用如下方式注册：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#75715e">// 注册返回绑定了os.Interrupt的ctx
+</span><span style="color:#75715e"></span><span style="color:#a6e22e">ctx</span>, <span style="color:#a6e22e">stop</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">signal</span>.<span style="color:#a6e22e">NotifyContext</span>(<span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">Background</span>(), <span style="color:#a6e22e">os</span>.<span style="color:#a6e22e">Interrupt</span>)
+
+<span style="color:#75715e">//...
+</span><span style="color:#75715e"></span>
+<span style="color:#75715e">// 其中stop()函数用于解绑上下文与信号量
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">defer</span> <span style="color:#a6e22e">stop</span>()
+</code></pre></div><p>通过监听<code>os.Interrupt</code>返回的上下文之后，如果系统调用中断，该ctx会执行终止，也就是<code>ctx.Done()</code>，我们可以利用这个作为我们后续处理的信号量。</p>
+<h4 id="优雅关闭">优雅关闭</h4>
+<p>拿到中断信号量之后，我们来看下如何优雅退出，来看下这个函数</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#75715e">// Shutdown gracefully shuts down the server without interrupting any
+</span><span style="color:#75715e">// active connections. Shutdown works by first closing all open
+</span><span style="color:#75715e">// listeners, then closing all idle connections, and then waiting
+</span><span style="color:#75715e">// indefinitely for connections to return to idle and then shut down.
+</span><span style="color:#75715e">// If the provided context expires before the shutdown is complete,
+</span><span style="color:#75715e">// Shutdown returns the context&#39;s error, otherwise it returns any
+</span><span style="color:#75715e">// error returned from closing the Server&#39;s underlying Listener(s).
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">srv</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Server</span>) <span style="color:#a6e22e">Shutdown</span>(<span style="color:#a6e22e">ctx</span> <span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">Context</span>) <span style="color:#66d9ef">error</span> {
+    <span style="color:#75715e">// ...
+</span><span style="color:#75715e"></span>}
+</code></pre></div><p>从注释可以看到，<code>Shutdown()</code>执行会先关闭打开连接，然后关闭空闲连接，接着等待已使用连接变成空闲连接，才会执行关闭。此外，如果传入的<code>ctx</code>上下文在执行关闭前发生过期，则<code>Shutdown()</code>会返回相应错误。</p>
+<p>所以我们可以利用<code>Shutdown()</code>，让程序在中断处，执行最后收尾工作，另外用上下文的生命周期来把控收尾的缓冲期。</p>
+<p><strong>代码示例:</strong></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">var</span> (
+    <span style="color:#a6e22e">server</span> <span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">Server</span>
+)
+
+<span style="color:#75715e">// 优雅停止demo
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+	<span style="color:#75715e">// 注册返回绑定了os.Interrupt的ctx
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">ctx</span>, <span style="color:#a6e22e">stop</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">signal</span>.<span style="color:#a6e22e">NotifyContext</span>(<span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">Background</span>(), <span style="color:#a6e22e">os</span>.<span style="color:#a6e22e">Interrupt</span>)
+	<span style="color:#66d9ef">defer</span> <span style="color:#a6e22e">stop</span>()
+
+	<span style="color:#a6e22e">server</span> = <span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">Server</span>{
+		<span style="color:#a6e22e">Addr</span>: <span style="color:#e6db74">&#34;:8080&#34;</span>,
+	}
+
+	<span style="color:#75715e">// 注册路由
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">HandleFunc</span>(<span style="color:#e6db74">&#34;/&#34;</span>, <span style="color:#66d9ef">func</span>(<span style="color:#a6e22e">w</span> <span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">ResponseWriter</span>, <span style="color:#a6e22e">r</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">Request</span>) {
+		<span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Sleep</span>(<span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Second</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">3</span>)
+		<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Fprint</span>(<span style="color:#a6e22e">w</span>, <span style="color:#e6db74">&#34;Hello World&#34;</span>)
+	})
+
+	<span style="color:#75715e">// 启动监听
+</span><span style="color:#75715e"></span>	<span style="color:#66d9ef">go</span> <span style="color:#a6e22e">server</span>.<span style="color:#a6e22e">ListenAndServe</span>()
+
+	<span style="color:#75715e">// 触发interrupt信号
+</span><span style="color:#75715e"></span>	<span style="color:#f92672">&lt;-</span><span style="color:#a6e22e">ctx</span>.<span style="color:#a6e22e">Done</span>()
+
+	<span style="color:#75715e">// 解绑上下文与信号量
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">stop</span>()
+	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;shutting down gracefully, press Ctrl+C again to force&#34;</span>)
+
+	<span style="color:#75715e">// 最后10秒回收连接
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">timeoutCtx</span>, <span style="color:#a6e22e">cancelFunc</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">WithTimeout</span>(<span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">Background</span>(), <span style="color:#ae81ff">10</span><span style="color:#f92672">*</span><span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Second</span>)
+	<span style="color:#66d9ef">defer</span> <span style="color:#a6e22e">cancelFunc</span>()
+
+	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">server</span>.<span style="color:#a6e22e">Shutdown</span>(<span style="color:#a6e22e">timeoutCtx</span>); <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+		<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">err</span>)
+	}
+
+}
+</code></pre></div><ol>
+<li>注册一个简单的路由请求，等待3秒之后返回“Hello World”</li>
+<li>绑定系统信号量<code>Signal.SIGNINT</code>到上下文</li>
+<li>通过上下文感知中断</li>
+<li>新建10秒生存期的上下文</li>
+<li>传入带生命周期的上下文至<code>Shutdown()</code>函数，用于控制收尾</li>
+</ol>
+<p><strong>输出示例</strong><br>
+启动程序并且按下<code>Ctrl+C</code>，在没有请求的情况下，程序快速终止。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ go run main.go
+2021/11/06 23:58:03 接收到SIGINT信号, 执行优雅停止, 等待收尾...
+2021/11/06 23:58:03 程序关闭完成.
+</code></pre></div><p>接着我们在程序启动之后执行请求让其耗时处理</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ curl 127.0.0.1:8080
+Hello World
+</code></pre></div><p>并在服务端按下<code>Ctrl+C</code></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ go run main.go
+2021/11/06 23:58:33 接收到SIGINT信号, 执行优雅停止, 等待收尾...
+2021/11/06 23:58:35 程序关闭完成.
+</code></pre></div><p>可以看到日志输出，程序不再是立即退出，而是等待请求终止才会关闭。<br>
+而假如说我们调整请求执行逻辑耗时更长，当处理时长超过<code>shutdown</code>函数绑定的上下文周期，则程序会返回一个上下文超时的错误。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">2021/11/07 00:02:46 接收到SIGINT信号, 执行优雅停止, 等待收尾...
+2021/11/07 00:02:51 优雅停止错误: context deadline exceeded
+</code></pre></div><h4 id="抛砖引玉">抛砖引玉</h4>
+<p>以上就是优雅退出的大致实现，关于可拓展的想法：<br>
+上述主要是一个优雅下线之前的处理，生产场景下，服务下线或者不可用还有其他的具体检测措施，比如<strong>心跳包超时丢失</strong>，k8s中服务下线可以通过轮询周期<strong>监听一个本地文件/句柄</strong>来判断等，其实信号量只是我们感知程序中断的一种方式，基于服务下线，我们知道了最终可以使用<code>Shutdown()</code>来执行收尾。<br>
+此外，当执行收尾之后，如果遇到关联上下文已经超时的情况<code>context deadline exceeded</code>，业务处理层一般可以归档未处理完成的请求，放入重试队列或者以写日志的形式记录下来，作为后续修复凭据。</p>
+<h3 id="参考链接">参考链接</h3>
+<p><a href="https://millhouse.dev/posts/graceful-shutdowns-in-golang-with-signal-notify-context">Graceful Shutdowns in Golang with signal.NotifyContext</a></p>
+              
+            </div>
+          </div>
+          <div id="post-footer" class="post-footer main-content-wrap">
+            
+              
+                
+                
+                  <div class="post-footer-tags">
+                    <span class="text-color-light text-small">标签</span><br/>
+                    
+  <a class="tag tag--primary tag--small" href="/tags/%E6%9C%8D%E5%8A%A1%E6%B2%BB%E7%90%86/">服务治理</a>
+
+  <a class="tag tag--primary tag--small" href="/tags/%E8%BF%9B%E7%A8%8B%E9%80%9A%E4%BF%A1/">进程通信</a>
+
+  <a class="tag tag--primary tag--small" href="/tags/%E4%BC%98%E9%9B%85%E5%85%B3%E9%97%AD/">优雅关闭</a>
+
+                  </div>
+                
+              
+            
+            <div class="post-actions-wrap">
+  
+      <nav >
+        <ul class="post-actions post-action-nav">
+          
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="/2021/10/%E8%81%8A%E4%B8%80%E8%81%8Ago%E6%9C%8D%E5%8A%A1%E7%9A%84%E4%BC%98%E9%9B%85%E5%A4%84%E7%90%86%E4%BA%8C-%E4%BC%98%E9%9B%85%E9%87%8D%E5%90%AF/" data-tooltip="聊一聊Go服务的优雅处理(二)--优雅重启">
+              
+                  <i class="fa fa-angle-left"></i>
+                  <span class="hide-xs hide-sm text-small icon-ml">下一篇</span>
+                </a>
+            </li>
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="/2021/08/%E8%81%8A%E4%B8%80%E8%81%8Ago%E7%BD%91%E7%BB%9C%E6%A1%86%E6%9E%B6gin%E4%B9%8B%E5%A6%82%E4%BD%95%E5%AE%9A%E5%88%B6%E9%80%9A%E7%94%A8%E6%8B%A6%E6%88%AA%E5%99%A8/" data-tooltip="聊一聊Go网络框架Gin之如何定制通用拦截器">
+              
+                  <span class="hide-xs hide-sm text-small icon-mr">上一篇</span>
+                  <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+          
+        </ul>
+      </nav>
+    <ul class="post-actions post-action-share" >
+      
+        <li class="post-action hide-lg hide-md hide-sm">
+          <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
+            <i class="fa fa-share-alt"></i>
+          </a>
+        </li>
+        
+      
+      
+      <li class="post-action">
+        
+          <a class="post-action-btn btn btn--default" href="#">
+        
+          <i class="fa fa-list"></i>
+        </a>
+      </li>
+    </ul>
+  
+</div>
+
+            
+              
+            
+          </div>
+        </article>
+        <footer id="footer" class="main-content-wrap">
+  <span class="copyrights">
+    &copy; 2021 <a href="https://github.com/pixeldin">pixeldin</a>. All Rights Reserved
+  </span>
+</footer>
+
+      </div>
+      <div id="bottom-bar" class="post-bottom-bar" data-behavior="5">
+        <div class="post-actions-wrap">
+  
+      <nav >
+        <ul class="post-actions post-action-nav">
+          
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="/2021/10/%E8%81%8A%E4%B8%80%E8%81%8Ago%E6%9C%8D%E5%8A%A1%E7%9A%84%E4%BC%98%E9%9B%85%E5%A4%84%E7%90%86%E4%BA%8C-%E4%BC%98%E9%9B%85%E9%87%8D%E5%90%AF/" data-tooltip="聊一聊Go服务的优雅处理(二)--优雅重启">
+              
+                  <i class="fa fa-angle-left"></i>
+                  <span class="hide-xs hide-sm text-small icon-ml">下一篇</span>
+                </a>
+            </li>
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="/2021/08/%E8%81%8A%E4%B8%80%E8%81%8Ago%E7%BD%91%E7%BB%9C%E6%A1%86%E6%9E%B6gin%E4%B9%8B%E5%A6%82%E4%BD%95%E5%AE%9A%E5%88%B6%E9%80%9A%E7%94%A8%E6%8B%A6%E6%88%AA%E5%99%A8/" data-tooltip="聊一聊Go网络框架Gin之如何定制通用拦截器">
+              
+                  <span class="hide-xs hide-sm text-small icon-mr">上一篇</span>
+                  <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+          
+        </ul>
+      </nav>
+    <ul class="post-actions post-action-share" >
+      
+        <li class="post-action hide-lg hide-md hide-sm">
+          <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
+            <i class="fa fa-share-alt"></i>
+          </a>
+        </li>
+        
+      
+      
+      <li class="post-action">
+        
+          <a class="post-action-btn btn btn--default" href="#">
+        
+          <i class="fa fa-list"></i>
+        </a>
+      </li>
+    </ul>
+  
+</div>
+
+      </div>
+      <div id="share-options-bar" class="share-options-bar" data-behavior="5">
+  <i id="btn-close-shareoptions" class="fa fa-close"></i>
+  <ul class="share-options">
+    
+  </ul>
+</div>
+<div id="share-options-mask" class="share-options-mask"></div>
+    </div>
+    
+    <div id="about">
+  <div id="about-card">
+    <div id="about-btn-close">
+      <i class="fa fa-remove"></i>
+    </div>
+    
+      <img id="about-card-picture" src="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/pig.jpg" alt="作者的图片" />
+    
+    <h4 id="about-card-name">pixelpig</h4>
+    
+      <div id="about-card-bio">Stay hungry, stay foolish <strong>:）</strong></div>
+    
+    
+      <div id="about-card-job">
+        <i class="fa fa-briefcase"></i>
+        <br/>
+        后端开发@珠海金山
+      </div>
+    
+    
+      <div id="about-card-location">
+        <i class="fa fa-map-marker"></i>
+        <br/>
+        CHINA-ZH
+      </div>
+    
+  </div>
+</div>
+
+    
+
+    
+  
+    <div id="cover" style="background-image:url('https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/cover.jpg');"></div>
+  
+
+
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js" integrity="sha256-/BfiIkHlHoVihZdc6TFuj7MmJ0TWcWsMXkeDFwhi0zw=" crossorigin="anonymous"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.7/js/jquery.fancybox.min.js" integrity="sha256-GEAnjcTqVP+vBp3SSc8bEDQqvWAZMiHyUSIorrWwH50=" crossorigin="anonymous"></script>
+
+
+<script src="/js/script-pcw6v3xilnxydl1vddzazdverrnn9ctynvnxgwho987mfyqkuylcb1nlt.min.js"></script>
+
+
+<script lang="javascript">
+window.onload = updateMinWidth;
+window.onresize = updateMinWidth;
+document.getElementById("sidebar").addEventListener("transitionend", updateMinWidth);
+function updateMinWidth() {
+  var sidebar = document.getElementById("sidebar");
+  var main = document.getElementById("main");
+  main.style.minWidth = "";
+  var w1 = getComputedStyle(main).getPropertyValue("min-width");
+  var w2 = getComputedStyle(sidebar).getPropertyValue("width");
+  var w3 = getComputedStyle(sidebar).getPropertyValue("left");
+  main.style.minWidth = `calc(${w1} - ${w2} - ${w3})`;
+}
+</script>
+
+<script>
+$(document).ready(function() {
+  hljs.configure({ classPrefix: '', useBR: false });
+  $('pre.code-highlight > code, pre > code').each(function(i, block) {
+    if (!$(this).hasClass('codeblock')) {
+      $(this).addClass('codeblock');
+    }
+    hljs.highlightBlock(block);
+  });
+});
+</script>
+
+
+  
+    
+  
+
+
+
+
+    
+  </body>
+</html>
+

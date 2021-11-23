@@ -6,20 +6,20 @@
     <description>Recent content in Tags on Pixelpig&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 29 Sep 2021 00:00:00 +0000</lastBuildDate><atom:link href="/tags/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 23 Oct 2021 00:00:00 +0000</lastBuildDate><atom:link href="/tags/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>优雅关闭</title>
-      <link>/tags/%E4%BC%98%E9%9B%85%E5%85%B3%E9%97%AD/</link>
-      <pubDate>Wed, 29 Sep 2021 00:00:00 +0000</pubDate>
+      <title>优雅重启</title>
+      <link>/tags/%E4%BC%98%E9%9B%85%E9%87%8D%E5%90%AF/</link>
+      <pubDate>Sat, 23 Oct 2021 00:00:00 +0000</pubDate>
       
-      <guid>/tags/%E4%BC%98%E9%9B%85%E5%85%B3%E9%97%AD/</guid>
+      <guid>/tags/%E4%BC%98%E9%9B%85%E9%87%8D%E5%90%AF/</guid>
       <description></description>
     </item>
     
     <item>
       <title>服务治理</title>
       <link>/tags/%E6%9C%8D%E5%8A%A1%E6%B2%BB%E7%90%86/</link>
-      <pubDate>Wed, 29 Sep 2021 00:00:00 +0000</pubDate>
+      <pubDate>Sat, 23 Oct 2021 00:00:00 +0000</pubDate>
       
       <guid>/tags/%E6%9C%8D%E5%8A%A1%E6%B2%BB%E7%90%86/</guid>
       <description></description>
@@ -28,9 +28,18 @@
     <item>
       <title>进程通信</title>
       <link>/tags/%E8%BF%9B%E7%A8%8B%E9%80%9A%E4%BF%A1/</link>
-      <pubDate>Wed, 29 Sep 2021 00:00:00 +0000</pubDate>
+      <pubDate>Sat, 23 Oct 2021 00:00:00 +0000</pubDate>
       
       <guid>/tags/%E8%BF%9B%E7%A8%8B%E9%80%9A%E4%BF%A1/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>优雅关闭</title>
+      <link>/tags/%E4%BC%98%E9%9B%85%E5%85%B3%E9%97%AD/</link>
+      <pubDate>Wed, 29 Sep 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/%E4%BC%98%E9%9B%85%E5%85%B3%E9%97%AD/</guid>
       <description></description>
     </item>
     

@@ -4,32 +4,52 @@
   
   <url>
     <loc>/categories/</loc>
-    <lastmod>2021-09-29T00:00:00+00:00</lastmod>
+    <lastmod>2021-10-23T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>/categories/go/</loc>
-    <lastmod>2021-09-29T00:00:00+00:00</lastmod>
+    <lastmod>2021-10-23T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>/categories/ha/</loc>
-    <lastmod>2021-09-29T00:00:00+00:00</lastmod>
+    <lastmod>2021-10-23T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>/</loc>
-    <lastmod>2021-09-29T00:00:00+00:00</lastmod>
+    <lastmod>2021-10-23T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>/post/</loc>
-    <lastmod>2021-09-29T00:00:00+00:00</lastmod>
+    <lastmod>2021-10-23T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>/tags/</loc>
-    <lastmod>2021-09-29T00:00:00+00:00</lastmod>
+    <lastmod>2021-10-23T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tags/%E4%BC%98%E9%9B%85%E9%87%8D%E5%90%AF/</loc>
+    <lastmod>2021-10-23T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tags/%E6%9C%8D%E5%8A%A1%E6%B2%BB%E7%90%86/</loc>
+    <lastmod>2021-10-23T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/2021/10/%E8%81%8A%E4%B8%80%E8%81%8Ago%E6%9C%8D%E5%8A%A1%E7%9A%84%E4%BC%98%E9%9B%85%E5%A4%84%E7%90%86%E4%BA%8C-%E4%BC%98%E9%9B%85%E9%87%8D%E5%90%AF/</loc>
+    <lastmod>2021-10-23T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tags/%E8%BF%9B%E7%A8%8B%E9%80%9A%E4%BF%A1/</loc>
+    <lastmod>2021-10-23T00:00:00+00:00</lastmod>
   </url>
   
   <url>
@@ -38,17 +58,7 @@
   </url>
   
   <url>
-    <loc>/tags/%E6%9C%8D%E5%8A%A1%E6%B2%BB%E7%90%86/</loc>
-    <lastmod>2021-09-29T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/2021/09/%E8%81%8A%E4%B8%80%E8%81%8Ago%E6%9C%8D%E5%8A%A1%E7%9A%84%E4%BC%98%E9%9B%85%E4%B8%8B%E7%BA%BF/</loc>
-    <lastmod>2021-09-29T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/tags/%E8%BF%9B%E7%A8%8B%E9%80%9A%E4%BF%A1/</loc>
+    <loc>/2021/09/%E8%81%8A%E4%B8%80%E8%81%8Ago%E6%9C%8D%E5%8A%A1%E7%9A%84%E4%BC%98%E9%9B%85%E5%A4%84%E7%90%86%E4%B8%80-%E4%BC%98%E9%9B%85%E4%B8%8B%E7%BA%BF/</loc>
     <lastmod>2021-09-29T00:00:00+00:00</lastmod>
   </url>
   
