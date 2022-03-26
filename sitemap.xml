@@ -4,31 +4,51 @@
   
   <url>
     <loc>/categories/</loc>
-    <lastmod>2021-10-23T00:00:00+00:00</lastmod>
+    <lastmod>2022-02-11T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tags/debug/</loc>
+    <lastmod>2022-02-11T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>/categories/go/</loc>
-    <lastmod>2021-10-23T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/categories/ha/</loc>
-    <lastmod>2021-10-23T00:00:00+00:00</lastmod>
+    <lastmod>2022-02-11T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>/</loc>
-    <lastmod>2021-10-23T00:00:00+00:00</lastmod>
+    <lastmod>2022-02-11T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>/post/</loc>
-    <lastmod>2021-10-23T00:00:00+00:00</lastmod>
+    <lastmod>2022-02-11T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>/tags/</loc>
+    <lastmod>2022-02-11T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tags/%E5%8D%8F%E7%A8%8B/</loc>
+    <lastmod>2022-02-11T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/categories/%E5%90%8E%E7%AB%AF/</loc>
+    <lastmod>2022-02-11T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/2022/02/%E8%81%8A%E4%B8%80%E8%81%8Ago%E7%9A%84%E5%8D%8F%E7%A8%8B%E6%B3%84%E9%9C%B2/</loc>
+    <lastmod>2022-02-11T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/categories/ha/</loc>
     <lastmod>2021-10-23T00:00:00+00:00</lastmod>
   </url>
   
@@ -184,16 +204,6 @@
   
   <url>
     <loc>/tags/mpg/</loc>
-    <lastmod>2020-10-18T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/tags/%E5%8D%8F%E7%A8%8B/</loc>
-    <lastmod>2020-10-18T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/categories/%E5%90%8E%E7%AB%AF/</loc>
     <lastmod>2020-10-18T00:00:00+00:00</lastmod>
   </url>
   

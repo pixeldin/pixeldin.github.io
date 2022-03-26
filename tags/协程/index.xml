@@ -6,7 +6,16 @@
     <description>Recent content in 协程 on Pixelpig&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 18 Oct 2020 00:00:00 +0000</lastBuildDate><atom:link href="/tags/%E5%8D%8F%E7%A8%8B/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 11 Feb 2022 00:00:00 +0000</lastBuildDate><atom:link href="/tags/%E5%8D%8F%E7%A8%8B/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>聊一聊Go的协程泄露</title>
+      <link>/2022/02/%E8%81%8A%E4%B8%80%E8%81%8Ago%E7%9A%84%E5%8D%8F%E7%A8%8B%E6%B3%84%E9%9C%B2/</link>
+      <pubDate>Fri, 11 Feb 2022 00:00:00 +0000</pubDate>
+      
+      <guid>/2022/02/%E8%81%8A%E4%B8%80%E8%81%8Ago%E7%9A%84%E5%8D%8F%E7%A8%8B%E6%B3%84%E9%9C%B2/</guid>
+      <description>&lt;p&gt;协程在Go里面是一个常见的概念，伴随着go程序的生命周期开始至结束。今天来聊一聊Go的协程泄露。&lt;/p&gt;</description>
+    </item>
+    
     <item>
       <title>聊一聊操作系统线程调度与Go协程</title>
       <link>/2020/10/%E8%81%8A%E4%B8%80%E8%81%8A%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%BA%BF%E7%A8%8B%E8%B0%83%E5%BA%A6%E4%B8%8Ego%E5%8D%8F%E7%A8%8B/</link>

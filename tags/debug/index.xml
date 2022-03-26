@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>debug on Pixelpig&#39;s blog</title>
+    <link>/tags/debug/</link>
+    <description>Recent content in debug on Pixelpig&#39;s blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 11 Feb 2022 00:00:00 +0000</lastBuildDate><atom:link href="/tags/debug/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>聊一聊Go的协程泄露</title>
+      <link>/2022/02/%E8%81%8A%E4%B8%80%E8%81%8Ago%E7%9A%84%E5%8D%8F%E7%A8%8B%E6%B3%84%E9%9C%B2/</link>
+      <pubDate>Fri, 11 Feb 2022 00:00:00 +0000</pubDate>
+      
+      <guid>/2022/02/%E8%81%8A%E4%B8%80%E8%81%8Ago%E7%9A%84%E5%8D%8F%E7%A8%8B%E6%B3%84%E9%9C%B2/</guid>
+      <description>&lt;p&gt;协程在Go里面是一个常见的概念，伴随着go程序的生命周期开始至结束。今天来聊一聊Go的协程泄露。&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>
