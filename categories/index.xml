@@ -6,29 +6,29 @@
     <description>Recent content in Categories on Pixelpig&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 11 Feb 2022 00:00:00 +0000</lastBuildDate><atom:link href="/categories/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 31 Jan 2022 00:00:00 +0000</lastBuildDate><atom:link href="/categories/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Go</title>
       <link>/categories/go/</link>
-      <pubDate>Fri, 11 Feb 2022 00:00:00 +0000</pubDate>
+      <pubDate>Mon, 31 Jan 2022 00:00:00 +0000</pubDate>
       
       <guid>/categories/go/</guid>
       <description></description>
     </item>
     
     <item>
-      <title>后端</title>
-      <link>/categories/%E5%90%8E%E7%AB%AF/</link>
-      <pubDate>Fri, 11 Feb 2022 00:00:00 +0000</pubDate>
+      <title>网关中间件</title>
+      <link>/categories/%E7%BD%91%E5%85%B3%E4%B8%AD%E9%97%B4%E4%BB%B6/</link>
+      <pubDate>Mon, 31 Jan 2022 00:00:00 +0000</pubDate>
       
-      <guid>/categories/%E5%90%8E%E7%AB%AF/</guid>
+      <guid>/categories/%E7%BD%91%E5%85%B3%E4%B8%AD%E9%97%B4%E4%BB%B6/</guid>
       <description></description>
     </item>
     
     <item>
       <title>HA</title>
       <link>/categories/ha/</link>
-      <pubDate>Sat, 23 Oct 2021 00:00:00 +0000</pubDate>
+      <pubDate>Thu, 23 Dec 2021 00:00:00 +0000</pubDate>
       
       <guid>/categories/ha/</guid>
       <description></description>
@@ -37,18 +37,18 @@
     <item>
       <title>gin</title>
       <link>/categories/gin/</link>
-      <pubDate>Fri, 27 Aug 2021 00:00:00 +0000</pubDate>
+      <pubDate>Fri, 15 Oct 2021 00:00:00 +0000</pubDate>
       
       <guid>/categories/gin/</guid>
       <description></description>
     </item>
     
     <item>
-      <title>网关中间件</title>
-      <link>/categories/%E7%BD%91%E5%85%B3%E4%B8%AD%E9%97%B4%E4%BB%B6/</link>
-      <pubDate>Sat, 31 Jul 2021 00:00:00 +0000</pubDate>
+      <title>后端</title>
+      <link>/categories/%E5%90%8E%E7%AB%AF/</link>
+      <pubDate>Sat, 11 Sep 2021 00:00:00 +0000</pubDate>
       
-      <guid>/categories/%E7%BD%91%E5%85%B3%E4%B8%AD%E9%97%B4%E4%BB%B6/</guid>
+      <guid>/categories/%E5%90%8E%E7%AB%AF/</guid>
       <description></description>
     </item>
     
