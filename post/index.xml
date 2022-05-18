@@ -6,7 +6,16 @@
     <description>Recent content in Posts on Pixelpig&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 17 Mar 2022 00:00:00 +0000</lastBuildDate><atom:link href="/post/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 23 Apr 2022 00:00:00 +0000</lastBuildDate><atom:link href="/post/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>聊一聊Go的原生高性能对象复用池sync.Pool</title>
+      <link>/2022/04/%E8%81%8A%E4%B8%80%E8%81%8Ago%E7%9A%84%E5%8E%9F%E7%94%9F%E9%AB%98%E6%80%A7%E8%83%BD%E5%AF%B9%E8%B1%A1%E5%A4%8D%E7%94%A8%E6%B1%A0sync.pool/</link>
+      <pubDate>Sat, 23 Apr 2022 00:00:00 +0000</pubDate>
+      
+      <guid>/2022/04/%E8%81%8A%E4%B8%80%E8%81%8Ago%E7%9A%84%E5%8E%9F%E7%94%9F%E9%AB%98%E6%80%A7%E8%83%BD%E5%AF%B9%E8%B1%A1%E5%A4%8D%E7%94%A8%E6%B1%A0sync.pool/</guid>
+      <description>&lt;p&gt;池化操作在计算机领域层出不穷，如连接池、线程\协程池、工作池。我们要知道，之所以引入资源池，本质上是为了复用资源。&lt;/p&gt;</description>
+    </item>
+    
     <item>
       <title>聊一聊Go的协程信息和如何预防泄露</title>
       <link>/2022/03/%E8%81%8A%E4%B8%80%E8%81%8Ago%E7%9A%84%E5%8D%8F%E7%A8%8B%E4%BF%A1%E6%81%AF%E5%92%8C%E5%A6%82%E4%BD%95%E9%A2%84%E9%98%B2%E6%B3%84%E9%9C%B2/</link>
@@ -26,11 +35,11 @@
     </item>
     
     <item>
-      <title>聊一聊TCP流中的组包拆包</title>
-      <link>/2022/02/%E8%81%8A%E4%B8%80%E8%81%8Atcp%E6%B5%81%E4%B8%AD%E7%9A%84%E7%BB%84%E5%8C%85%E6%8B%86%E5%8C%85/</link>
+      <title>聊一聊网络编程TCP流的组包拆包</title>
+      <link>/2022/02/%E8%81%8A%E4%B8%80%E8%81%8A%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8Btcp%E6%B5%81%E7%9A%84%E7%BB%84%E5%8C%85%E6%8B%86%E5%8C%85/</link>
       <pubDate>Fri, 04 Feb 2022 00:00:00 +0000</pubDate>
       
-      <guid>/2022/02/%E8%81%8A%E4%B8%80%E8%81%8Atcp%E6%B5%81%E4%B8%AD%E7%9A%84%E7%BB%84%E5%8C%85%E6%8B%86%E5%8C%85/</guid>
+      <guid>/2022/02/%E8%81%8A%E4%B8%80%E8%81%8A%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8Btcp%E6%B5%81%E7%9A%84%E7%BB%84%E5%8C%85%E6%8B%86%E5%8C%85/</guid>
       <description>&lt;p&gt;众所周知，包体传输是网络通信中不可或缺的一部分，无论是应用层HTTP包的&lt;code&gt;header&lt;/code&gt;或者&lt;code&gt;body&lt;/code&gt;，还是传输层TCP的流式数据，都是对数据的分组与拆解。&lt;/p&gt;</description>
     </item>
     
@@ -185,15 +194,6 @@
       
       <guid>/2019/03/java%E5%8F%8D%E5%B0%84%E6%9C%BA%E5%88%B6%E5%92%8C%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F%E7%9A%84%E5%BA%94%E7%94%A8/</guid>
       <description>&lt;p&gt;RPC：远程过程调用&lt;/p&gt;</description>
-    </item>
-    
-    <item>
-      <title></title>
-      <link>/1/01/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>/1/01/</guid>
-      <description>pixelblog 个人博客归档</description>
     </item>
     
   </channel>

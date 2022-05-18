@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="generator" content="Hugo 0.80.0 with theme Tranquilpeak 0.4.8-BETA">
+<meta name="author" content="pixelpig">
+<meta name="keywords" content="">
+<meta name="description" content="池化操作在计算机领域层出不穷，如连接池、线程\协程池、工作池。我们要知道，之所以引入资源池，本质上是为了复用资源。">
+
+
+<meta property="og:description" content="池化操作在计算机领域层出不穷，如连接池、线程\协程池、工作池。我们要知道，之所以引入资源池，本质上是为了复用资源。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="聊一聊Go的原生高性能对象复用池sync.Pool">
+<meta name="twitter:title" content="聊一聊Go的原生高性能对象复用池sync.Pool">
+<meta property="og:url" content="/2022/04/%E8%81%8A%E4%B8%80%E8%81%8Ago%E7%9A%84%E5%8E%9F%E7%94%9F%E9%AB%98%E6%80%A7%E8%83%BD%E5%AF%B9%E8%B1%A1%E5%A4%8D%E7%94%A8%E6%B1%A0sync.pool/">
+<meta property="twitter:url" content="/2022/04/%E8%81%8A%E4%B8%80%E8%81%8Ago%E7%9A%84%E5%8E%9F%E7%94%9F%E9%AB%98%E6%80%A7%E8%83%BD%E5%AF%B9%E8%B1%A1%E5%A4%8D%E7%94%A8%E6%B1%A0sync.pool/">
+<meta property="og:site_name" content="Pixelpig&#39;s blog">
+<meta property="og:description" content="池化操作在计算机领域层出不穷，如连接池、线程\协程池、工作池。我们要知道，之所以引入资源池，本质上是为了复用资源。">
+<meta name="twitter:description" content="池化操作在计算机领域层出不穷，如连接池、线程\协程池、工作池。我们要知道，之所以引入资源池，本质上是为了复用资源。">
+<meta property="og:locale" content="zh-cn">
+
+  
+    <meta property="article:published_time" content="2022-04-23T00:00:00">
+  
+  
+    <meta property="article:modified_time" content="2022-04-23T00:00:00">
+  
+  
+  
+    
+      <meta property="article:section" content="Go">
+    
+      <meta property="article:section" content="缓存">
+    
+  
+  
+    
+      <meta property="article:tag" content="对象池">
+    
+      <meta property="article:tag" content="伪共享">
+    
+      <meta property="article:tag" content="sync.Pool">
+    
+  
+
+
+<meta name="twitter:card" content="summary">
+
+
+
+
+
+
+
+  <meta property="og:image" content="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/blog/sync-pool/sync-pool-icon.png">
+  <meta property="twitter:image" content="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/blog/sync-pool/sync-pool-icon.png">
+
+
+
+
+
+  <meta property="og:image" content="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/pig.jpg">
+  <meta property="twitter:image" content="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/pig.jpg">
+
+
+    <title>聊一聊Go的原生高性能对象复用池sync.Pool</title>
+
+    <link rel="icon" href="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/blog/static/pixel.ico">
+    
+
+    
+
+    <link rel="canonical" href="/2022/04/%E8%81%8A%E4%B8%80%E8%81%8Ago%E7%9A%84%E5%8E%9F%E7%94%9F%E9%AB%98%E6%80%A7%E8%83%BD%E5%AF%B9%E8%B1%A1%E5%A4%8D%E7%94%A8%E6%B1%A0sync.pool/">
+
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/jquery.fancybox.min.css" integrity="sha256-vuXZ9LGmmwtjqFX1F+EKin1ThZMub58gKULUyf0qECk=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/helpers/jquery.fancybox-thumbs.min.css" integrity="sha256-SEa4XYAHihTcEP1f5gARTB2K26Uk8PsndQYHQC1f4jU=" crossorigin="anonymous" />
+    
+    
+    <link rel="stylesheet" href="/css/style-twzjdbqhmnnacqs0pwwdzcdbt8yhv8giawvjqjmyfoqnvazl0dalmnhdkvp7.min.css" />
+    
+    
+
+    
+      
+    
+    
+  </head>
+
+  <body>
+    <div id="blog">
+      <header id="header" data-behavior="5">
+  <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+  <div class="header-title">
+    <a class="header-title-link" href="/">Pixelpig&#39;s blog</a>
+  </div>
+  
+    
+      <a class="header-right-picture "
+         href="/#about">
+    
+    
+    
+      
+        <img class="header-picture" src="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/pig.jpg" alt="作者的图片" />
+      
+    
+    </a>
+  
+</header>
+
+      <nav id="sidebar" data-behavior="5">
+  <div class="sidebar-container">
+    
+      <div class="sidebar-profile">
+        <a href="/#about">
+          <img class="sidebar-profile-picture" src="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/pig.jpg" alt="作者的图片" />
+        </a>
+        <h4 class="sidebar-profile-name">pixelpig</h4>
+        
+          <h5 class="sidebar-profile-bio">Stay hungry, stay foolish <strong>:）</strong></h5>
+        
+      </div>
+    
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-home"></i>
+      
+      <span class="sidebar-button-desc">首页</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/categories">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-bookmark"></i>
+      
+      <span class="sidebar-button-desc">分类</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/tags">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
+      
+      <span class="sidebar-button-desc">标签</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/archives">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-archive"></i>
+      
+      <span class="sidebar-button-desc">归档</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/#about">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-question"></i>
+      
+      <span class="sidebar-button-desc">关于</span>
+    </a>
+  </li>
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+
+    </ul>
+  </div>
+</nav>
+
+      
+
+      <div id="main" data-behavior="5"
+        class="
+               hasCoverMetaIn
+               ">
+        <article class="post" itemscope itemType="http://schema.org/BlogPosting">
+          
+          
+            <div class="post-header main-content-wrap text-center">
+  
+    <h1 class="post-title" itemprop="headline">
+      聊一聊Go的原生高性能对象复用池sync.Pool
+    </h1>
+  
+  
+  <div class="postShorten-meta post-meta">
+    
+      <time itemprop="datePublished" datetime="2022-04-23T00:00:00Z">
+        
+  四月 23, 2022
+
+      </time>
+    
+    
+  
+  
+    <span>发布在</span>
+    
+      <a class="category-link" href="/categories/go">Go</a>, 
+    
+      <a class="category-link" href="/categories/%e7%bc%93%e5%ad%98">缓存</a>
+    
+  
+
+  </div>
+
+</div>
+          
+          <div class="post-content markdown" itemprop="articleBody">
+            <div class="main-content-wrap">
+              <p>池化操作在计算机领域层出不穷，如连接池、线程\协程池、工作池。我们要知道，之所以引入资源池，本质上是为了复用资源。</p>
+<p><img src="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/blog/sync-pool/sync-pool-cover.png" alt="对象池"></p>
+<h2 id="前言">前言</h2>
+<p>池化操作在计算机领域层出不穷，如连接池、线程\协程池、工作池。我们要知道，之所以引入资源池，本质上是为了复用资源，减少多余的申请或者创建操作，事先分配好部分资源并把它管理起来。今天来聊一聊<code>Go</code>原生库<code>sync.Pool</code>的使用场景和内部实现。</p>
+<h2 id="syncpool解决了什么问题">Sync.Pool解决了什么问题？</h2>
+<p>先说结论，它是一个临时存储，可复用的对象池，适用于频繁申请使用的对象，常常用来减轻GC负担。</p>
+<h2 id="syncpool的用法">Sync.Pool的用法</h2>
+<h3 id="常见用法">常见用法：</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">TestSyncPool</span>(<span style="color:#a6e22e">t</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">testing</span>.<span style="color:#a6e22e">T</span>) {
+    <span style="color:#75715e">// 定义对象初始化的方式
+</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">mp</span> <span style="color:#f92672">:=</span> <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">sync</span>.<span style="color:#a6e22e">Pool</span>{
+        <span style="color:#a6e22e">New</span>: <span style="color:#66d9ef">func</span>() <span style="color:#66d9ef">interface</span>{} {
+            <span style="color:#a6e22e">t</span>.<span style="color:#a6e22e">Log</span>(<span style="color:#e6db74">&#34;create instance&#34;</span>)
+            <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>
+        }}
+
+    <span style="color:#75715e">// 获取
+</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">ist</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">mp</span>.<span style="color:#a6e22e">Get</span>()
+    <span style="color:#a6e22e">t</span>.<span style="color:#a6e22e">Log</span>(<span style="color:#e6db74">&#34;ist = &#34;</span>, <span style="color:#a6e22e">ist</span>)
+    <span style="color:#a6e22e">ist</span> = <span style="color:#ae81ff">10</span>
+
+    <span style="color:#75715e">// 归还
+</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">mp</span>.<span style="color:#a6e22e">Put</span>(<span style="color:#a6e22e">ist</span>)
+    <span style="color:#a6e22e">ist</span> = <span style="color:#a6e22e">mp</span>.<span style="color:#a6e22e">Get</span>()
+    <span style="color:#a6e22e">t</span>.<span style="color:#a6e22e">Log</span>(<span style="color:#e6db74">&#34;ist = &#34;</span>, <span style="color:#a6e22e">ist</span>)
+
+    <span style="color:#a6e22e">mp</span>.<span style="color:#a6e22e">Put</span>(<span style="color:#a6e22e">ist</span>)
+    <span style="color:#a6e22e">runtime</span>.<span style="color:#a6e22e">GC</span>()
+    <span style="color:#75715e">// 执行gc之后，对象会暂存到victim，关于victim下文会解释这里先理解成一个回收站
+</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">ist</span> = <span style="color:#a6e22e">mp</span>.<span style="color:#a6e22e">Get</span>()
+    <span style="color:#a6e22e">t</span>.<span style="color:#a6e22e">Log</span>(<span style="color:#e6db74">&#34;ist = &#34;</span>, <span style="color:#a6e22e">ist</span>)
+}
+</code></pre></div><p><strong>运行：</strong></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#f92672">===</span> RUN   TestSyncPool
+    heypool_test.go:12: create instance
+    heypool_test.go:17: ist <span style="color:#f92672">=</span>  <span style="color:#ae81ff">0</span>
+    heypool_test.go:22: ist <span style="color:#f92672">=</span>  <span style="color:#ae81ff">10</span>
+    heypool_test.go:27: ist <span style="color:#f92672">=</span>  <span style="color:#ae81ff">10</span>  <span style="color:#f92672">(</span>如果获取的P和Put<span style="color:#f92672">()</span>操作的P是同一个,则首次GC之后仍然可以拿到10<span style="color:#f92672">)</span>
+--- PASS: TestSyncPool <span style="color:#f92672">(</span>0.00s<span style="color:#f92672">)</span>
+PASS
+</code></pre></div><p>看起来似乎和缓存池用法无异，但是我们看官方Get()函数的注释，</p>
+<blockquote>
+<p>Get may choose to ignore the pool and treat it as empty.<br>
+Callers should not assume any relation between values passed to Put and
+the values returned by Get.</p>
+</blockquote>
+<p>这里我们先不深入探究，仅仅看注释，告知我们不能在put和get两个操作作关联假设，由于<strong>我们无法保证GC触发和对象池的回收状态，因此sync.Pool不适合作为数据库连接池等场景。</strong></p>
+<h3 id="官方示例">官方示例：</h3>
+<p>这是一个官方测试用例的写法，我们可以预测<code>sync.Pool</code>的使用意图</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">TestPool</span>(<span style="color:#a6e22e">t</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">testing</span>.<span style="color:#a6e22e">T</span>) {
+    <span style="color:#75715e">// 临时禁用系统触发GC
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">defer</span> <span style="color:#a6e22e">debug</span>.<span style="color:#a6e22e">SetGCPercent</span>(<span style="color:#a6e22e">debug</span>.<span style="color:#a6e22e">SetGCPercent</span>(<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>))
+    <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">p</span> <span style="color:#a6e22e">Pool</span>
+    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">Get</span>() <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+        <span style="color:#a6e22e">t</span>.<span style="color:#a6e22e">Fatal</span>(<span style="color:#e6db74">&#34;expected empty&#34;</span>)
+    }
+
+    <span style="color:#75715e">// 让运行协程挂在当前P上面，确保对象池和程序读写一一对应
+</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">Runtime_procPin</span>()
+    <span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">Put</span>(<span style="color:#e6db74">&#34;a&#34;</span>)
+    <span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">Put</span>(<span style="color:#e6db74">&#34;b&#34;</span>)
+    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">g</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">Get</span>(); <span style="color:#a6e22e">g</span> <span style="color:#f92672">!=</span> <span style="color:#e6db74">&#34;a&#34;</span> {
+        <span style="color:#a6e22e">t</span>.<span style="color:#a6e22e">Fatalf</span>(<span style="color:#e6db74">&#34;got %#v; want a&#34;</span>, <span style="color:#a6e22e">g</span>)
+    }
+    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">g</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">Get</span>(); <span style="color:#a6e22e">g</span> <span style="color:#f92672">!=</span> <span style="color:#e6db74">&#34;b&#34;</span> {
+        <span style="color:#a6e22e">t</span>.<span style="color:#a6e22e">Fatalf</span>(<span style="color:#e6db74">&#34;got %#v; want b&#34;</span>, <span style="color:#a6e22e">g</span>)
+    }
+    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">g</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">Get</span>(); <span style="color:#a6e22e">g</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+        <span style="color:#a6e22e">t</span>.<span style="color:#a6e22e">Fatalf</span>(<span style="color:#e6db74">&#34;got %#v; want nil&#34;</span>, <span style="color:#a6e22e">g</span>)
+    }
+    <span style="color:#a6e22e">Runtime_procUnpin</span>()
+
+    <span style="color:#66d9ef">for</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">0</span>; <span style="color:#a6e22e">i</span> &lt; <span style="color:#ae81ff">100</span>; <span style="color:#a6e22e">i</span><span style="color:#f92672">++</span> {
+        <span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">Put</span>(<span style="color:#e6db74">&#34;c&#34;</span>)
+    }
+    <span style="color:#75715e">// 由于存在victim过度结构，在gc之后对象池还没清空
+</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">runtime</span>.<span style="color:#a6e22e">GC</span>()
+    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">g</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">Get</span>(); <span style="color:#a6e22e">g</span> <span style="color:#f92672">!=</span> <span style="color:#e6db74">&#34;c&#34;</span> {
+        <span style="color:#a6e22e">t</span>.<span style="color:#a6e22e">Fatalf</span>(<span style="color:#e6db74">&#34;got %#v; want c after GC&#34;</span>, <span style="color:#a6e22e">g</span>)
+    }
+    <span style="color:#75715e">// 从测试代码断言来看，第二次gc会真正淘汰victim
+</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">runtime</span>.<span style="color:#a6e22e">GC</span>()
+    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">g</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">Get</span>(); <span style="color:#a6e22e">g</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+        <span style="color:#a6e22e">t</span>.<span style="color:#a6e22e">Fatalf</span>(<span style="color:#e6db74">&#34;got %#v; want nil after second GC&#34;</span>, <span style="color:#a6e22e">g</span>)
+    }
+}
+</code></pre></div><h3 id="基准测试">基准测试</h3>
+<p>我们来看下引入<code>sync.Pool</code>前后性能的对比：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Pixel</span> <span style="color:#66d9ef">struct</span> {
+    <span style="color:#a6e22e">a</span> <span style="color:#66d9ef">int</span>
+}
+
+<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">pool</span> = <span style="color:#a6e22e">sync</span>.<span style="color:#a6e22e">Pool</span>{
+    <span style="color:#a6e22e">New</span>: <span style="color:#66d9ef">func</span>() <span style="color:#66d9ef">interface</span>{} { <span style="color:#66d9ef">return</span> new(<span style="color:#a6e22e">Pixel</span>) },
+}
+
+<span style="color:#75715e">//go:noinline
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">inc</span>(<span style="color:#a6e22e">s</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Pixel</span>) { <span style="color:#a6e22e">s</span>.<span style="color:#a6e22e">a</span><span style="color:#f92672">++</span> }
+
+<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">BenchmarkWithoutPool</span>(<span style="color:#a6e22e">b</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">testing</span>.<span style="color:#a6e22e">B</span>) {
+    <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">s</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Pixel</span>
+    <span style="color:#66d9ef">for</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">0</span>; <span style="color:#a6e22e">i</span> &lt; <span style="color:#a6e22e">b</span>.<span style="color:#a6e22e">N</span>; <span style="color:#a6e22e">i</span><span style="color:#f92672">++</span> {
+        <span style="color:#a6e22e">s</span> = <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">Pixel</span>{<span style="color:#a6e22e">a</span>: <span style="color:#ae81ff">1</span>}
+        <span style="color:#a6e22e">b</span>.<span style="color:#a6e22e">StopTimer</span>()
+        <span style="color:#a6e22e">inc</span>(<span style="color:#a6e22e">s</span>)
+        <span style="color:#a6e22e">b</span>.<span style="color:#a6e22e">StartTimer</span>()
+    }
+}
+
+<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">BenchmarkWithPool</span>(<span style="color:#a6e22e">b</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">testing</span>.<span style="color:#a6e22e">B</span>) {
+    <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">s</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Pixel</span>
+    <span style="color:#66d9ef">for</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">0</span>; <span style="color:#a6e22e">i</span> &lt; <span style="color:#a6e22e">b</span>.<span style="color:#a6e22e">N</span>; <span style="color:#a6e22e">i</span><span style="color:#f92672">++</span> {
+        <span style="color:#a6e22e">s</span> = <span style="color:#a6e22e">pool</span>.<span style="color:#a6e22e">Get</span>().(<span style="color:#f92672">*</span><span style="color:#a6e22e">Pixel</span>)
+        <span style="color:#a6e22e">s</span>.<span style="color:#a6e22e">a</span> = <span style="color:#ae81ff">1</span>
+        <span style="color:#a6e22e">b</span>.<span style="color:#a6e22e">StopTimer</span>()
+        <span style="color:#a6e22e">inc</span>(<span style="color:#a6e22e">s</span>)
+        <span style="color:#a6e22e">b</span>.<span style="color:#a6e22e">StartTimer</span>()
+        <span style="color:#a6e22e">pool</span>.<span style="color:#a6e22e">Put</span>(<span style="color:#a6e22e">s</span>)
+    }
+}
+</code></pre></div><p><strong>输出：</strong></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ go test -bench<span style="color:#f92672">=</span>.
+goos: windows
+goarch: amd64
+pkg: HelloGo/basic/pool/sync
+cpu: Intel<span style="color:#f92672">(</span>R<span style="color:#f92672">)</span> Core<span style="color:#f92672">(</span>TM<span style="color:#f92672">)</span> i7-4710MQ CPU @ 2.50GHz
+BenchmarkWithoutPool-8           <span style="color:#ae81ff">4817011</span>               271.9 ns/op
+BenchmarkWithPool-8             <span style="color:#ae81ff">12893811</span>               107.9 ns/op
+PASS
+ok      HelloGo/basic/pool/sync 472.933s
+</code></pre></div><h2 id="syncpool是如何设计的">Sync.Pool是如何设计的？</h2>
+<p>在探究内部实现之前，我们先来提取一些概念。</p>
+<h3 id="1-gmp协作">1. GMP协作</h3>
+<p>我们都知道在Go中协程的调度的GMP模型（可参考专栏之前的总结笔记：<a href="https://juejin.cn/post/6844904052686323725">聊一聊操作系统线程调度与Go协程</a>），每个处理核心<strong>P</strong>都有自己的协程<strong>G</strong>任务队列，<code>sync.Pool</code>底层的<code>Get()</code>对象获取函数，就是通过本地私有队列和共享队列进行获取的。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">p</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Pool</span>) <span style="color:#a6e22e">Get</span>() <span style="color:#66d9ef">interface</span>{} {
+    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">race</span>.<span style="color:#a6e22e">Enabled</span> {
+        <span style="color:#a6e22e">race</span>.<span style="color:#a6e22e">Disable</span>()
+    }
+    <span style="color:#75715e">// 指定当前访问的P，确保在同一个对象池
+</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">l</span>, <span style="color:#a6e22e">pid</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">pin</span>()
+    <span style="color:#a6e22e">x</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">l</span>.<span style="color:#a6e22e">private</span>
+    <span style="color:#a6e22e">l</span>.<span style="color:#a6e22e">private</span> = <span style="color:#66d9ef">nil</span>
+    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">x</span> <span style="color:#f92672">==</span> <span style="color:#66d9ef">nil</span> {
+        <span style="color:#75715e">// 如果当前私有队列为空，则尝试从共享池pop出
+</span><span style="color:#75715e"></span>        <span style="color:#a6e22e">x</span>, <span style="color:#a6e22e">_</span> = <span style="color:#a6e22e">l</span>.<span style="color:#a6e22e">shared</span>.<span style="color:#a6e22e">popHead</span>()
+        <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">x</span> <span style="color:#f92672">==</span> <span style="color:#66d9ef">nil</span> {
+            <span style="color:#75715e">// 共享池为空，则去其他P池窃取
+</span><span style="color:#75715e"></span>            <span style="color:#a6e22e">x</span> = <span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">getSlow</span>(<span style="color:#a6e22e">pid</span>)
+        }
+    }
+    <span style="color:#a6e22e">runtime_procUnpin</span>()
+    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">race</span>.<span style="color:#a6e22e">Enabled</span> {
+        <span style="color:#a6e22e">race</span>.<span style="color:#a6e22e">Enable</span>()
+        <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">x</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+            <span style="color:#a6e22e">race</span>.<span style="color:#a6e22e">Acquire</span>(<span style="color:#a6e22e">poolRaceAddr</span>(<span style="color:#a6e22e">x</span>))
+        }
+    }
+    <span style="color:#75715e">// 私有空间获取为空，窃取为空，则调用初始化构造对象
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">x</span> <span style="color:#f92672">==</span> <span style="color:#66d9ef">nil</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">New</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+        <span style="color:#a6e22e">x</span> = <span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">New</span>()
+    }
+    <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">x</span>
+}
+</code></pre></div><h3 id="2-多级缓存">2. 多级缓存</h3>
+<p>在操作系统组件中，从CPU寄存器到物理磁盘，从一个CPU周期到L1/2/3缓存，再到主存、再到文件系统，单次访问的操作时间量级愈发增大，多级缓存这个思路在计算机领域很早就被引入。</p>
+<blockquote>
+<p>As hardware architecture and technology advanced, processor performance and frequency grew much faster than memory cycle times, leading to a large gap in performance. The problem of increasing memory latency, relative to processor speed, has been dealt with by adding high speed cache memory.</p>
+<blockquote>
+<p>随着硬件升级CPU处理速度已经远超缓存加载周期，所以尽量让CPU快速取到缓存能有效提升性能。</p>
+</blockquote>
+</blockquote>
+<p>我们来看下<code>sync.Pool</code>的内部成员：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Pool</span> <span style="color:#66d9ef">struct</span> {
+    <span style="color:#a6e22e">noCopy</span> <span style="color:#a6e22e">noCopy</span>
+
+    <span style="color:#a6e22e">local</span>     <span style="color:#a6e22e">unsafe</span>.<span style="color:#a6e22e">Pointer</span> <span style="color:#75715e">// 当前P指定的对象地址
+</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">localSize</span> <span style="color:#66d9ef">uintptr</span>        <span style="color:#75715e">// size of the local array
+</span><span style="color:#75715e"></span>
+    <span style="color:#a6e22e">victim</span>     <span style="color:#a6e22e">unsafe</span>.<span style="color:#a6e22e">Pointer</span> <span style="color:#75715e">// 当前P首次淘汰的过度区间
+</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">victimSize</span> <span style="color:#66d9ef">uintptr</span>        <span style="color:#75715e">// size of victims array
+</span><span style="color:#75715e"></span>    
+    <span style="color:#a6e22e">New</span> <span style="color:#66d9ef">func</span>() <span style="color:#66d9ef">interface</span>{}
+}
+</code></pre></div><p>通过<code>victim</code>牺牲池，过度暂存首次被回收的对象，让程序在申请对象之前尽量复用，使用起来更加“<strong>平滑</strong>”。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">init</span>() {
+    <span style="color:#75715e">// sync.Pool启动注册GC执行逻辑
+</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">runtime_registerPoolCleanup</span>(<span style="color:#a6e22e">poolCleanup</span>)
+}
+
+<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">poolCleanup</span>() {
+    <span style="color:#75715e">// 当GC触发执行时候，把回收站的旧对象池清空
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">for</span> <span style="color:#a6e22e">_</span>, <span style="color:#a6e22e">p</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">range</span> <span style="color:#a6e22e">oldPools</span> {
+        <span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">victim</span> = <span style="color:#66d9ef">nil</span>
+        <span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">victimSize</span> = <span style="color:#ae81ff">0</span>
+    }
+
+    <span style="color:#75715e">// 把本来要被淘汰的对象暂存到victim
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">for</span> <span style="color:#a6e22e">_</span>, <span style="color:#a6e22e">p</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">range</span> <span style="color:#a6e22e">allPools</span> {
+        <span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">victim</span> = <span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">local</span>
+        <span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">victimSize</span> = <span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">localSize</span>
+        <span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">local</span> = <span style="color:#66d9ef">nil</span>
+        <span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">localSize</span> = <span style="color:#ae81ff">0</span>
+    }
+
+    <span style="color:#a6e22e">oldPools</span>, <span style="color:#a6e22e">allPools</span> = <span style="color:#a6e22e">allPools</span>, <span style="color:#66d9ef">nil</span>
+}
+</code></pre></div><p>在启动时候注册GC处理逻辑，可以看到<code>victim</code>机制其实借鉴了其他语言的<strong>分代回收</strong>思想，在清理对象之前会暂存起来，提高复用的几率。</p>
+<hr>
+<p>经过上面的拆解，我们可以得知在多个P的对象池获取优先级，如下图所示：</p>
+<p><img src="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/blog/sync-pool/sync-pool-get-seq.png" alt="sync-pool-get-seq.png"></p>
+<p>可以看到由于每个P都是独立的，所以①私有池、②牺牲池、⑤初始化创建是当前<strong>P</strong>独占的，只有③是有可能被其他P所共享的，所以关于③共享的操作需要加锁。</p>
+<h3 id="3无锁lock-free">3.无锁Lock-free</h3>
+<p>我们来看下<code>Sync.Pool</code>是怎么处理③的</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">d</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">poolDequeue</span>) <span style="color:#a6e22e">popHead</span>() (<span style="color:#66d9ef">interface</span>{}, <span style="color:#66d9ef">bool</span>) {
+    <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">slot</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">eface</span>
+    <span style="color:#66d9ef">for</span> {
+        <span style="color:#75715e">// 获取原子变量判断当前共享队列的区间
+</span><span style="color:#75715e"></span>        <span style="color:#a6e22e">ptrs</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">atomic</span>.<span style="color:#a6e22e">LoadUint64</span>(<span style="color:#f92672">&amp;</span><span style="color:#a6e22e">d</span>.<span style="color:#a6e22e">headTail</span>)
+        <span style="color:#a6e22e">head</span>, <span style="color:#a6e22e">tail</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">d</span>.<span style="color:#a6e22e">unpack</span>(<span style="color:#a6e22e">ptrs</span>)
+        <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">tail</span> <span style="color:#f92672">==</span> <span style="color:#a6e22e">head</span> {
+            <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>, <span style="color:#66d9ef">false</span>
+        }       
+        <span style="color:#a6e22e">head</span><span style="color:#f92672">--</span>
+        <span style="color:#a6e22e">ptrs2</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">d</span>.<span style="color:#a6e22e">pack</span>(<span style="color:#a6e22e">head</span>, <span style="color:#a6e22e">tail</span>)
+        <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">atomic</span>.<span style="color:#a6e22e">CompareAndSwapUint64</span>(<span style="color:#f92672">&amp;</span><span style="color:#a6e22e">d</span>.<span style="color:#a6e22e">headTail</span>, <span style="color:#a6e22e">ptrs</span>, <span style="color:#a6e22e">ptrs2</span>) {
+            <span style="color:#75715e">// 使用CAS，基于乐观期望的自旋锁设计           
+</span><span style="color:#75715e"></span>            <span style="color:#a6e22e">slot</span> = <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">d</span>.<span style="color:#a6e22e">vals</span>[<span style="color:#a6e22e">head</span><span style="color:#f92672">&amp;</span>uint32(len(<span style="color:#a6e22e">d</span>.<span style="color:#a6e22e">vals</span>)<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>)]
+            <span style="color:#75715e">// 获得执行权后跳出
+</span><span style="color:#75715e"></span>            <span style="color:#66d9ef">break</span>
+        }
+    }
+    <span style="color:#75715e">// ...
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">val</span>, <span style="color:#66d9ef">true</span>
+}
+</code></pre></div><p>通过使用乐观期望的自旋锁，比读写锁更加的轻量级，达到近似无锁的设计。</p>
+<h3 id="4-伪共享">4. <strong>伪共享</strong></h3>
+<p>第四个概念是关于伪共享，什么是伪共享呢，其实说的是当我们要更新一个变量的值时候，CPU在读取加载内存块时(行加载)，由于局部性访问原理，在寻址空间是连续的情况下，加载变量进行操作时会同时覆盖到其他变量地址空间，这个时候每个P要顾虑到我的变量有没有被其他变量的连续区间影响，<strong>因为同一块地址空间中，当有并发读写时候会产生冲突，如下图所示：</strong></p>
+<p><img src="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/blog/sync-pool/false-share.png" alt="false-share.png"></p>
+<p>为了避免，可以想到的有两种处理方式：</p>
+<ul>
+<li>
+<p>排他互斥：即每次保证只有一个<strong>P</strong>进行操作，独占式处理，对性能有较大影响</p>
+</li>
+<li>
+<p>内存对齐：即使用填充位，在存储变量的时候，给连续地址空间填上占位符，保证当前操作的变量区间和指令寻址空间是一致的，即不用担心其他变量地址越界问题。</p>
+<p><img src="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/blog/sync-pool/fixed-false-share.png" alt="fixed-false-share.png"></p>
+</li>
+</ul>
+<p>个人觉得第二种方式更加符合<code>Go</code>并发的哲学处理：<strong>不要用共享内存来通信，而要用通信来共享内存。</strong></p>
+<p>那在<code>sync.Pool</code>是怎么做的呢？</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#75715e">// Local per-P Pool appendix.
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">poolLocalInternal</span> <span style="color:#66d9ef">struct</span> {
+    <span style="color:#a6e22e">private</span> <span style="color:#66d9ef">interface</span>{} <span style="color:#75715e">// 私有P标志位
+</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">shared</span>  <span style="color:#a6e22e">poolChain</span>   <span style="color:#75715e">// 本地P指向的队列
+</span><span style="color:#75715e"></span>}
+
+<span style="color:#66d9ef">type</span> <span style="color:#a6e22e">poolLocal</span> <span style="color:#66d9ef">struct</span> {
+    <span style="color:#a6e22e">poolLocalInternal</span>
+
+    <span style="color:#75715e">// 填充字节数组，使用128倍数来访问地址区间
+</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">pad</span> [<span style="color:#ae81ff">128</span> <span style="color:#f92672">-</span> <span style="color:#a6e22e">unsafe</span>.<span style="color:#a6e22e">Sizeof</span>(<span style="color:#a6e22e">poolLocalInternal</span>{})<span style="color:#f92672">%</span><span style="color:#ae81ff">128</span>]<span style="color:#66d9ef">byte</span>
+}
+</code></pre></div><p>可以看到<code>poolLocal</code>有个<code>pad</code>内部成员，其中<code>poolLocal</code> 其实是<code>sync.Pool</code>内部local指针指向的内存块，通过128大小区间(64位系统的倍数)来访问，每次对象池寻址都是和CPU单次指令操作区间是一致的，这样子从而避免了“伪共享问题”，如上图所示。</p>
+<h2 id="总结">总结：</h2>
+<p>以上我们从GMP模型、多级缓存、伪共享等概念对<code>Sync.Pool</code>进行分析，知道了其内部的获取优先级，也知道了它是如何解决多个<strong>P</strong>冲突，并使用<strong>CAS</strong>来减轻锁操作的负担的。</p>
+<p>可以感觉到<strong>无论是从宏观上还是细节实现，Go都是在默默地遵循着一定的设计规范。</strong></p>
+<h2 id="参考链接">参考链接</h2>
+<ul>
+<li>Explore Go sync.Pool as Cache<br>
+<a href="https://medium.com/geekculture/go-sync-pool-as-cache-in-kubernetes-4e247c52e732">https://medium.com/geekculture/go-sync-pool-as-cache-in-kubernetes-4e247c52e732</a></li>
+<li>深度分析 Golang sync.Pool 底层原理<br>
+<a href="https://www.cyhone.com/articles/think-in-sync-pool/">https://www.cyhone.com/articles/think-in-sync-pool/</a></li>
+<li>Go: Understand the Design of Sync.Pool<br>
+<a href="https://medium.com/a-journey-with-go/go-understand-the-design-of-sync-pool-2dde3024e277">https://medium.com/a-journey-with-go/go-understand-the-design-of-sync-pool-2dde3024e277</a></li>
+</ul>
+              
+            </div>
+          </div>
+          <div id="post-footer" class="post-footer main-content-wrap">
+            
+              
+                
+                
+                  <div class="post-footer-tags">
+                    <span class="text-color-light text-small">标签</span><br/>
+                    
+  <a class="tag tag--primary tag--small" href="/tags/%E5%AF%B9%E8%B1%A1%E6%B1%A0/">对象池</a>
+
+  <a class="tag tag--primary tag--small" href="/tags/%E4%BC%AA%E5%85%B1%E4%BA%AB/">伪共享</a>
+
+  <a class="tag tag--primary tag--small" href="/tags/sync.pool/">sync.Pool</a>
+
+                  </div>
+                
+              
+            
+            <div class="post-actions-wrap">
+  
+      <nav >
+        <ul class="post-actions post-action-nav">
+          
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--disabled">
+              
+                  <i class="fa fa-angle-left"></i>
+                  <span class="hide-xs hide-sm text-small icon-ml">下一篇</span>
+                </a>
+            </li>
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="/2022/03/%E8%81%8A%E4%B8%80%E8%81%8Ago%E7%9A%84%E5%8D%8F%E7%A8%8B%E4%BF%A1%E6%81%AF%E5%92%8C%E5%A6%82%E4%BD%95%E9%A2%84%E9%98%B2%E6%B3%84%E9%9C%B2/" data-tooltip="聊一聊Go的协程信息和如何预防泄露">
+              
+                  <span class="hide-xs hide-sm text-small icon-mr">上一篇</span>
+                  <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+          
+        </ul>
+      </nav>
+    <ul class="post-actions post-action-share" >
+      
+        <li class="post-action hide-lg hide-md hide-sm">
+          <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
+            <i class="fa fa-share-alt"></i>
+          </a>
+        </li>
+        
+      
+      
+      <li class="post-action">
+        
+          <a class="post-action-btn btn btn--default" href="#">
+        
+          <i class="fa fa-list"></i>
+        </a>
+      </li>
+    </ul>
+  
+</div>
+
+            
+              
+            
+          </div>
+        </article>
+        <footer id="footer" class="main-content-wrap">
+  <span class="copyrights">
+    &copy; 2022 <a href="https://github.com/pixeldin">pixeldin</a>. All Rights Reserved
+  </span>
+</footer>
+
+      </div>
+      <div id="bottom-bar" class="post-bottom-bar" data-behavior="5">
+        <div class="post-actions-wrap">
+  
+      <nav >
+        <ul class="post-actions post-action-nav">
+          
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--disabled">
+              
+                  <i class="fa fa-angle-left"></i>
+                  <span class="hide-xs hide-sm text-small icon-ml">下一篇</span>
+                </a>
+            </li>
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="/2022/03/%E8%81%8A%E4%B8%80%E8%81%8Ago%E7%9A%84%E5%8D%8F%E7%A8%8B%E4%BF%A1%E6%81%AF%E5%92%8C%E5%A6%82%E4%BD%95%E9%A2%84%E9%98%B2%E6%B3%84%E9%9C%B2/" data-tooltip="聊一聊Go的协程信息和如何预防泄露">
+              
+                  <span class="hide-xs hide-sm text-small icon-mr">上一篇</span>
+                  <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+          
+        </ul>
+      </nav>
+    <ul class="post-actions post-action-share" >
+      
+        <li class="post-action hide-lg hide-md hide-sm">
+          <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
+            <i class="fa fa-share-alt"></i>
+          </a>
+        </li>
+        
+      
+      
+      <li class="post-action">
+        
+          <a class="post-action-btn btn btn--default" href="#">
+        
+          <i class="fa fa-list"></i>
+        </a>
+      </li>
+    </ul>
+  
+</div>
+
+      </div>
+      <div id="share-options-bar" class="share-options-bar" data-behavior="5">
+  <i id="btn-close-shareoptions" class="fa fa-close"></i>
+  <ul class="share-options">
+    
+  </ul>
+</div>
+<div id="share-options-mask" class="share-options-mask"></div>
+    </div>
+    
+    <div id="about">
+  <div id="about-card">
+    <div id="about-btn-close">
+      <i class="fa fa-remove"></i>
+    </div>
+    
+      <img id="about-card-picture" src="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/pig.jpg" alt="作者的图片" />
+    
+    <h4 id="about-card-name">pixelpig</h4>
+    
+      <div id="about-card-bio">Stay hungry, stay foolish <strong>:）</strong></div>
+    
+    
+      <div id="about-card-job">
+        <i class="fa fa-briefcase"></i>
+        <br/>
+        后端开发@广州虎牙
+      </div>
+    
+    
+      <div id="about-card-location">
+        <i class="fa fa-map-marker"></i>
+        <br/>
+        CHINA-ZH
+      </div>
+    
+  </div>
+</div>
+
+    
+
+    
+  
+    <div id="cover" style="background-image:url('https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/cover.jpg');"></div>
+  
+
+
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js" integrity="sha256-/BfiIkHlHoVihZdc6TFuj7MmJ0TWcWsMXkeDFwhi0zw=" crossorigin="anonymous"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.7/js/jquery.fancybox.min.js" integrity="sha256-GEAnjcTqVP+vBp3SSc8bEDQqvWAZMiHyUSIorrWwH50=" crossorigin="anonymous"></script>
+
+
+<script src="/js/script-pcw6v3xilnxydl1vddzazdverrnn9ctynvnxgwho987mfyqkuylcb1nlt.min.js"></script>
+
+
+<script lang="javascript">
+window.onload = updateMinWidth;
+window.onresize = updateMinWidth;
+document.getElementById("sidebar").addEventListener("transitionend", updateMinWidth);
+function updateMinWidth() {
+  var sidebar = document.getElementById("sidebar");
+  var main = document.getElementById("main");
+  main.style.minWidth = "";
+  var w1 = getComputedStyle(main).getPropertyValue("min-width");
+  var w2 = getComputedStyle(sidebar).getPropertyValue("width");
+  var w3 = getComputedStyle(sidebar).getPropertyValue("left");
+  main.style.minWidth = `calc(${w1} - ${w2} - ${w3})`;
+}
+</script>
+
+<script>
+$(document).ready(function() {
+  hljs.configure({ classPrefix: '', useBR: false });
+  $('pre.code-highlight > code, pre > code').each(function(i, block) {
+    if (!$(this).hasClass('codeblock')) {
+      $(this).addClass('codeblock');
+    }
+    hljs.highlightBlock(block);
+  });
+});
+</script>
+
+
+  
+    
+  
+
+
+
+
+    
+  </body>
+</html>
+
