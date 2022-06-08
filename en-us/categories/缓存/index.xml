@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>缓存 on Pixelpig&#39;s blog</title>
+    <link>/en-us/categories/%E7%BC%93%E5%AD%98/</link>
+    <description>Recent content in 缓存 on Pixelpig&#39;s blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 23 Apr 2022 00:00:00 +0000</lastBuildDate><atom:link href="/en-us/categories/%E7%BC%93%E5%AD%98/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>聊一聊Go的原生高性能对象复用池sync.Pool</title>
+      <link>/en-us/%E8%81%8A%E4%B8%80%E8%81%8Ago%E7%9A%84%E5%8E%9F%E7%94%9F%E9%AB%98%E6%80%A7%E8%83%BD%E5%AF%B9%E8%B1%A1%E5%A4%8D%E7%94%A8%E6%B1%A0sync.pool/</link>
+      <pubDate>Sat, 23 Apr 2022 00:00:00 +0000</pubDate>
+      
+      <guid>/en-us/%E8%81%8A%E4%B8%80%E8%81%8Ago%E7%9A%84%E5%8E%9F%E7%94%9F%E9%AB%98%E6%80%A7%E8%83%BD%E5%AF%B9%E8%B1%A1%E5%A4%8D%E7%94%A8%E6%B1%A0sync.pool/</guid>
+      <description>&lt;p&gt;池化操作在计算机领域层出不穷，如连接池、线程\协程池、工作池。我们要知道，之所以引入资源池，本质上是为了复用资源。&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

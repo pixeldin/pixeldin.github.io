@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>TCP on Pixelpig&#39;s blog</title>
+    <link>/zh/tags/tcp/</link>
+    <description>Recent content in TCP on Pixelpig&#39;s blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 04 Feb 2022 00:00:00 +0000</lastBuildDate><atom:link href="/zh/tags/tcp/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>聊一聊网络编程TCP流的组包拆包</title>
+      <link>/zh/2022/02/%E8%81%8A%E4%B8%80%E8%81%8A%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8Btcp%E6%B5%81%E7%9A%84%E7%BB%84%E5%8C%85%E6%8B%86%E5%8C%85/</link>
+      <pubDate>Fri, 04 Feb 2022 00:00:00 +0000</pubDate>
+      
+      <guid>/zh/2022/02/%E8%81%8A%E4%B8%80%E8%81%8A%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8Btcp%E6%B5%81%E7%9A%84%E7%BB%84%E5%8C%85%E6%8B%86%E5%8C%85/</guid>
+      <description>&lt;p&gt;众所周知，包体传输是网络通信中不可或缺的一部分，无论是应用层HTTP包的&lt;code&gt;header&lt;/code&gt;或者&lt;code&gt;body&lt;/code&gt;，还是传输层TCP的流式数据，都是对数据的分组与拆解。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>聊一聊网络编程TCP流的组包拆包</title>
+      <link>/zh/2022/02/%E8%81%8A%E4%B8%80%E8%81%8A%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8Btcp%E6%B5%81%E7%9A%84%E7%BB%84%E5%8C%85%E6%8B%86%E5%8C%85/</link>
+      <pubDate>Fri, 04 Feb 2022 00:00:00 +0000</pubDate>
+      
+      <guid>/zh/2022/02/%E8%81%8A%E4%B8%80%E8%81%8A%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8Btcp%E6%B5%81%E7%9A%84%E7%BB%84%E5%8C%85%E6%8B%86%E5%8C%85/</guid>
+      <description>&lt;p&gt;众所周知，包体传输是网络通信中不可或缺的一部分，无论是应用层HTTP包的&lt;code&gt;header&lt;/code&gt;或者&lt;code&gt;body&lt;/code&gt;，还是传输层TCP的流式数据，都是对数据的分组与拆解。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>聊一聊Go网络编程(二)--TCP连接管理</title>
+      <link>/zh/2021/05/%E8%81%8A%E4%B8%80%E8%81%8Ago%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B%E4%BA%8C-tcp%E8%BF%9E%E6%8E%A5%E7%AE%A1%E7%90%86/</link>
+      <pubDate>Sun, 16 May 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/zh/2021/05/%E8%81%8A%E4%B8%80%E8%81%8Ago%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B%E4%BA%8C-tcp%E8%BF%9E%E6%8E%A5%E7%AE%A1%E7%90%86/</guid>
+      <description>&lt;p&gt;上一篇我们聊到在Go中是如何发起一个TCP连接的，以及列举一个全双工的Demo，这次接着填补上一节留下的坑，连接池管理。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>聊一聊Go网络编程(二)--TCP连接管理</title>
+      <link>/zh/2021/05/%E8%81%8A%E4%B8%80%E8%81%8Ago%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B%E4%BA%8C-tcp%E8%BF%9E%E6%8E%A5%E7%AE%A1%E7%90%86/</link>
+      <pubDate>Sun, 16 May 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/zh/2021/05/%E8%81%8A%E4%B8%80%E8%81%8Ago%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B%E4%BA%8C-tcp%E8%BF%9E%E6%8E%A5%E7%AE%A1%E7%90%86/</guid>
+      <description>&lt;p&gt;上一篇我们聊到在Go中是如何发起一个TCP连接的，以及列举一个全双工的Demo，这次接着填补上一节留下的坑，连接池管理。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>聊一聊Go网络编程(一)--TCP通信</title>
+      <link>/zh/2021/05/%E8%81%8A%E4%B8%80%E8%81%8Ago%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B%E4%B8%80-tcp%E9%80%9A%E4%BF%A1/</link>
+      <pubDate>Sat, 15 May 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/zh/2021/05/%E8%81%8A%E4%B8%80%E8%81%8Ago%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B%E4%B8%80-tcp%E9%80%9A%E4%BF%A1/</guid>
+      <description>&lt;p&gt;在网络分层的七层协议中，我们知道TCP处于HTTP层的下方，本质上HTTP连接是基于底层的TCP连接建立的。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>聊一聊Go网络编程(一)--TCP通信</title>
+      <link>/zh/2021/05/%E8%81%8A%E4%B8%80%E8%81%8Ago%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B%E4%B8%80-tcp%E9%80%9A%E4%BF%A1/</link>
+      <pubDate>Sat, 15 May 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/zh/2021/05/%E8%81%8A%E4%B8%80%E8%81%8Ago%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B%E4%B8%80-tcp%E9%80%9A%E4%BF%A1/</guid>
+      <description>&lt;p&gt;在网络分层的七层协议中，我们知道TCP处于HTTP层的下方，本质上HTTP连接是基于底层的TCP连接建立的。&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>
