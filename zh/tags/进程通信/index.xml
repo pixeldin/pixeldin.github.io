@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>进程通信 on Pixelpig&#39;s blog</title>
+    <title>进程通信 on pixelpig - tech</title>
     <link>/zh/tags/%E8%BF%9B%E7%A8%8B%E9%80%9A%E4%BF%A1/</link>
-    <description>Recent content in 进程通信 on Pixelpig&#39;s blog</description>
+    <description>Recent content in 进程通信 on pixelpig - tech</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language>
+    <language>zh-cn</language>
     <lastBuildDate>Thu, 23 Dec 2021 00:00:00 +0000</lastBuildDate><atom:link href="/zh/tags/%E8%BF%9B%E7%A8%8B%E9%80%9A%E4%BF%A1/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>聊一聊Go服务的优雅处理(二)--优雅重启</title>
@@ -14,24 +14,6 @@
       
       <guid>/zh/2021/12/%E8%81%8A%E4%B8%80%E8%81%8Ago%E6%9C%8D%E5%8A%A1%E7%9A%84%E4%BC%98%E9%9B%85%E5%A4%84%E7%90%86%E4%BA%8C-%E4%BC%98%E9%9B%85%E9%87%8D%E5%90%AF/</guid>
       <description>&lt;p&gt;上一次我们聊到Go程序如何优雅关闭，今天我们来聊一聊优雅重启。&lt;/p&gt;</description>
-    </item>
-    
-    <item>
-      <title>聊一聊Go服务的优雅处理(二)--优雅重启</title>
-      <link>/zh/2021/12/%E8%81%8A%E4%B8%80%E8%81%8Ago%E6%9C%8D%E5%8A%A1%E7%9A%84%E4%BC%98%E9%9B%85%E5%A4%84%E7%90%86%E4%BA%8C-%E4%BC%98%E9%9B%85%E9%87%8D%E5%90%AF/</link>
-      <pubDate>Thu, 23 Dec 2021 00:00:00 +0000</pubDate>
-      
-      <guid>/zh/2021/12/%E8%81%8A%E4%B8%80%E8%81%8Ago%E6%9C%8D%E5%8A%A1%E7%9A%84%E4%BC%98%E9%9B%85%E5%A4%84%E7%90%86%E4%BA%8C-%E4%BC%98%E9%9B%85%E9%87%8D%E5%90%AF/</guid>
-      <description>&lt;p&gt;上一次我们聊到Go程序如何优雅关闭，今天我们来聊一聊优雅重启。&lt;/p&gt;</description>
-    </item>
-    
-    <item>
-      <title>聊一聊Go服务的优雅处理(一)--优雅下线</title>
-      <link>/zh/2021/11/%E8%81%8A%E4%B8%80%E8%81%8Ago%E6%9C%8D%E5%8A%A1%E7%9A%84%E4%BC%98%E9%9B%85%E5%A4%84%E7%90%86%E4%B8%80-%E4%BC%98%E9%9B%85%E4%B8%8B%E7%BA%BF/</link>
-      <pubDate>Tue, 02 Nov 2021 00:00:00 +0000</pubDate>
-      
-      <guid>/zh/2021/11/%E8%81%8A%E4%B8%80%E8%81%8Ago%E6%9C%8D%E5%8A%A1%E7%9A%84%E4%BC%98%E9%9B%85%E5%A4%84%E7%90%86%E4%B8%80-%E4%BC%98%E9%9B%85%E4%B8%8B%E7%BA%BF/</guid>
-      <description>&lt;p&gt;从高可用到优雅关闭/重启，细化到程序下线/重启等操作，在Go里面有哪些处理方式呢？今天我们来聊聊go程序的优雅关闭&lt;/p&gt;</description>
     </item>
     
     <item>

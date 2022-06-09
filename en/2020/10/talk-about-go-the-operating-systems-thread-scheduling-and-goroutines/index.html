@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="generator" content="Hugo 0.80.0 with theme Tranquilpeak 0.4.8-BETA">
+<meta name="author" content="pixelpig">
+<meta name="keywords" content="">
+<meta name="description" content="
+Every task running on our computer is resource allocation at the operating system level. From starting a process to creating a thread, with a fixed number of cores, multiple threads execute concurrently.">
+
+
+<meta property="og:description" content="
+Every task running on our computer is resource allocation at the operating system level. From starting a process to creating a thread, with a fixed number of cores, multiple threads execute concurrently.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Talk about Go: The operating system&#39;s thread scheduling and Goroutines">
+<meta name="twitter:title" content="Talk about Go: The operating system&#39;s thread scheduling and Goroutines">
+<meta property="og:url" content="/en/2020/10/talk-about-go-the-operating-systems-thread-scheduling-and-goroutines/">
+<meta property="twitter:url" content="/en/2020/10/talk-about-go-the-operating-systems-thread-scheduling-and-goroutines/">
+<meta property="og:site_name" content="pixelpig - tech">
+<meta property="og:description" content="
+Every task running on our computer is resource allocation at the operating system level. From starting a process to creating a thread, with a fixed number of cores, multiple threads execute concurrently.">
+<meta name="twitter:description" content="
+Every task running on our computer is resource allocation at the operating system level. From starting a process to creating a thread, with a fixed number of cores, multiple threads execute concurrently.">
+<meta property="og:locale" content="en">
+
+  
+    <meta property="article:published_time" content="2020-10-18T00:00:00">
+  
+  
+    <meta property="article:modified_time" content="2020-10-18T00:00:00">
+  
+  
+  
+    
+      <meta property="article:section" content="Go">
+    
+      <meta property="article:section" content="OS">
+    
+      <meta property="article:section" content="backend">
+    
+  
+  
+    
+      <meta property="article:tag" content="Goroutine">
+    
+  
+
+
+<meta name="twitter:card" content="summary">
+
+  <meta name="twitter:site" content="@pixelpigpigpig">
+
+
+  <meta name="twitter:creator" content="@pixelpigpigpig">
+
+
+
+
+
+
+  <meta property="og:image" content="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/go-schedule.png">
+  <meta property="twitter:image" content="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/go-schedule.png">
+
+
+
+
+
+  <meta property="og:image" content="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/pig.jpg">
+  <meta property="twitter:image" content="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/pig.jpg">
+
+
+    <title>Talk about Go: The operating system&#39;s thread scheduling and Goroutines</title>
+
+    <link rel="icon" href="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/blog/static/pixel.ico">
+    
+
+    
+
+    <link rel="canonical" href="/en/2020/10/talk-about-go-the-operating-systems-thread-scheduling-and-goroutines/">
+
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/jquery.fancybox.min.css" integrity="sha256-vuXZ9LGmmwtjqFX1F+EKin1ThZMub58gKULUyf0qECk=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/helpers/jquery.fancybox-thumbs.min.css" integrity="sha256-SEa4XYAHihTcEP1f5gARTB2K26Uk8PsndQYHQC1f4jU=" crossorigin="anonymous" />
+    
+    
+    <link rel="stylesheet" href="/css/style-twzjdbqhmnnacqs0pwwdzcdbt8yhv8giawvjqjmyfoqnvazl0dalmnhdkvp7.min.css" />
+    
+    
+
+    
+      
+    
+    
+  </head>
+
+  <body>
+    <div id="blog">
+      <header id="header" data-behavior="5">
+  <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+  <div class="header-title">
+    <a class="header-title-link" href="/en/">pixelpig - tech</a>
+  </div>
+  
+    
+      <a class="header-right-picture "
+         href="/#about">
+    
+    
+    
+      
+        <img class="header-picture" src="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/pig.jpg" alt="Author&#39;s picture" />
+      
+    
+    </a>
+  
+</header>
+
+      <nav id="sidebar" data-behavior="5">
+  <div class="sidebar-container">
+    
+      <div class="sidebar-profile">
+        <a href="/#about">
+          <img class="sidebar-profile-picture" src="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/pig.jpg" alt="Author&#39;s picture" />
+        </a>
+        <h4 class="sidebar-profile-name">pixelpig</h4>
+        
+          <h5 class="sidebar-profile-bio">a backend development living in GD, China. Stay hungry, stay foolish <strong>:）</strong></h5>
+        
+      </div>
+    
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/zh">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-language"></i>
+      
+      <span class="sidebar-button-desc">简/中</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/en/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-home"></i>
+      
+      <span class="sidebar-button-desc">Home</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/en/categories">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-bookmark"></i>
+      
+      <span class="sidebar-button-desc">Categories</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/en/tags">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
+      
+      <span class="sidebar-button-desc">Tags</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/en/archives">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-archive"></i>
+      
+      <span class="sidebar-button-desc">Archives</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/en/#about">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-question"></i>
+      
+      <span class="sidebar-button-desc">About me</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/en/https:/twitter.com/pixelpigpigpig">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-twitter"></i>
+      
+      <span class="sidebar-button-desc">Twitter</span>
+    </a>
+  </li>
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+
+    </ul>
+  </div>
+</nav>
+
+      
+
+      <div id="main" data-behavior="5"
+        class="
+               hasCoverMetaIn
+               ">
+        <article class="post" itemscope itemType="http://schema.org/BlogPosting">
+          
+          
+            <div class="post-header main-content-wrap text-left">
+  
+    <h1 class="post-title" itemprop="headline">
+      Talk about Go: The operating system&#39;s thread scheduling and Goroutines
+    </h1>
+  
+  
+  <div class="postShorten-meta post-meta">
+    
+      <time itemprop="datePublished" datetime="2020-10-18T00:00:00Z">
+        
+  October 18, 2020
+
+      </time>
+    
+    
+  
+  
+    <span>in</span>
+    
+      <a class="category-link" href="/en/categories/go">Go</a>, 
+    
+      <a class="category-link" href="/en/categories/os">OS</a>, 
+    
+      <a class="category-link" href="/en/categories/backend">backend</a>
+    
+  
+
+  </div>
+
+</div>
+          
+          <div class="post-content markdown" itemprop="articleBody">
+            <div class="main-content-wrap">
+              <p><img src="https://miro.medium.com/max/2271/1*Y3cMxHqERb1htaJ0GbgixQ.png" alt="Steal goroutine#ref by Renee French"></p>
+<p>Every task running on our computer is resource allocation at the operating system level. From starting a process to creating a thread, with a fixed number of cores, multiple threads execute concurrently.</p>
+<h3 id="foreword">Foreword</h3>
+<p><strong>Go goroutine</strong> is a more fine-grained resource than system threads, lightweight and easy to switch. I read some related articles in the past few days, this time I try to go from the operating system to the Go goroutine, and briefly talk about them How it is related and my personal understanding.</p>
+<h3 id="basic-concept">Basic Concept</h3>
+<h4 id="operating-systemos">Operating System(OS)</h4>
+<p>The operating system is responsible for the scheduling of the underlying hardware. It allocates CPU, memory, and disk resources, and allocates different threads to execute on different CPU cores to ensure that each program executes as expected. Every program we submit eventually translates into a series of instructions that the operating system recognizes.</p>
+<h4 id="thread">Thread</h4>
+<p>The above converted series of instructions, the operating system will help us execute through threads, in essence, threads are <code>a path of execution</code>, an executable program path.
+A thread has the following three states:</p>
+<ul>
+<li><strong>Running</strong>：being executed, ideally all threads are in this state</li>
+<li><strong>Ready</strong>：it can be switched to running at any time, and that call&rsquo;s <strong>context switching</strong>, it requires a certain price.</li>
+<li><strong>Waiting</strong>：It needs to wait for resource allocation or IO (network/device) blocking, and it needs to be ready to run. This is the last thing that users want to see, and it has become the performance bottleneck of most programs.</li>
+</ul>
+<h4 id="system-scheduler">System Scheduler</h4>
+<p>The scheduler shoulders a huge mission, mainly to schedule the relationship between the CPU and the thread to ensure that no CPU will be idle. Imagine that the CPU is the hamster in the hamster cage. Once the scheduler finds that there are hamsters(<strong>CPU</strong>) dozing off, just push them to the wheels (<strong>thread</strong>) and run without stopping for a moment. After all, the computing power of the CPU is very powerful, and one millisecond of idleness is a huge waste.<br>
+On a 4-core machine, there are only 4 hamsters (quad cores), which wheel (thread) runs first depends on the priority of the wheel (thread). The scheduler shoulders the mission of strategizing, not only to reduce the delay of urging the hamster to run, but also to ensure that no tasks can be left unexecuted all the time. If the thread has not been processed by the hamster, it is called <strong>starvation</strong>.</p>
+<h4 id="cooperativepreemptive">Cooperative/Preemptive</h4>
+<p>Cooperative and Preemptive is the multitasking operation strategies in the OS. The differences between the two scheduling strategies are as follows:</p>
+<ul>
+<li>Cooperative scheduling: allows tasks to be executed until the task actively informs the scheduler to switch, giving up resources</li>
+<li>Preemptive scheduling: allows tasks to be broken by the scheduler during execution, and the scheduler decides the next task to run</li>
+</ul>
+<h4 id="task-type">Task Type</h4>
+<p>Different tasks have different requirements on system resources</p>
+<ul>
+<li>
+<p><strong>I/O frequent switching</strong>：<br>
+<strong>IO</strong> refers to Input/Output, input and output waiting. This kind of job waiting for resource <strong>input/output</strong>, the main bottleneck is whether resources are allocated in place, such as system calls/file IO, etc., the thread switching time is far less than the IO device/network delay, and the main shortcoming lies in waiting for I/O /O, instead of thread context switching, so more threads can be allocated to perform pre-combat preparations during the period when the &ldquo;ammunition&rdquo; has not been delivered.</p>
+</li>
+<li>
+<p><strong>computationally intensive</strong>：<br>
+This kind of task mainly consumes CPU, such as calculating the Nth bit of pi with a thread. If a large number of threads are allocated to it, the system must not only ensure that each thread shares the computing state, but not consider the occurrence of dirty read/dirty write operations, but also need to perform thread switching frequently, which will cause a lot of waste of time, and the thread restarts every time. Wake up must be in <strong>Program Counter</strong> to find the location of the next execution instruction. In the case of a fixed number of cores, allocating too many threads will not worth the loss.</p>
+<blockquote>
+<p>If your program is focused on CPU-Bound work, then context switches are going to be a performance nightmare. Since the Thead always has work to do, the context switch is stopping that work from progressing.</p>
+</blockquote>
+<p>But in some case, such as <strong>Map-Reduce</strong>, which refers to first splitting and then aggregation. When your computing task can be divided into many modules, if the different execution order of each module will not affect the final result, try to &ldquo;break them one by one&rdquo;, and finally re-converge, if the tasks can be reasonably allocated, multi-threading is definitely an advantage on a single thread.</p>
+</li>
+</ul>
+<p>Let&rsquo;s try to compare the performance differences between the two in different scenarios by listing a few simple Go programs and processing them through single/multi-coroutines.</p>
+<h5 id="map-reduce">Map-Reduce：</h5>
+<p>This example is relatively simple, our goal is to accumulate an arithmetic sequence</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">PIXEL_ARRAY</span> []<span style="color:#66d9ef">int</span>
+<span style="color:#75715e">// initialize an arithmetic sequence, and then try to sum it by the single-goroutine/multi-goroutine function for accumulation
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">init</span>()  {
+  <span style="color:#66d9ef">for</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">1</span>; <span style="color:#a6e22e">i</span> <span style="color:#f92672">&lt;=</span> <span style="color:#ae81ff">100000</span>; <span style="color:#a6e22e">i</span><span style="color:#f92672">++</span> {
+    <span style="color:#a6e22e">PIXEL_ARRAY</span> = append(<span style="color:#a6e22e">PIXEL_ARRAY</span>, <span style="color:#a6e22e">i</span>)
+  }
+}
+</code></pre></div><p>Later, we use the single-goroutine/multi-goroutine version to distinguish the two implementations</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#75715e">// Single-goroutine brute force version
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">SumWithSingle</span>(<span style="color:#a6e22e">arr</span> []<span style="color:#66d9ef">int</span>) <span style="color:#66d9ef">int32</span> {
+  <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">sum</span> <span style="color:#66d9ef">int32</span>  
+  <span style="color:#66d9ef">for</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">0</span>; <span style="color:#a6e22e">i</span> &lt; len(<span style="color:#a6e22e">arr</span>); <span style="color:#a6e22e">i</span><span style="color:#f92672">++</span> {
+    <span style="color:#a6e22e">sum</span> <span style="color:#f92672">+=</span> int32(<span style="color:#a6e22e">arr</span>[<span style="color:#a6e22e">i</span>])
+  }
+  <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">sum</span>
+}
+
+<span style="color:#75715e">// Multi-goroutine version
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">SumWithMulti</span>(<span style="color:#a6e22e">arr</span> []<span style="color:#66d9ef">int</span>, <span style="color:#a6e22e">gNum</span> <span style="color:#66d9ef">int</span>) <span style="color:#66d9ef">int32</span> {
+  <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">wg</span> <span style="color:#a6e22e">sync</span>.<span style="color:#a6e22e">WaitGroup</span>
+  <span style="color:#75715e">// each goroutine equally calculates the slice interval allocated by itself
+</span><span style="color:#75715e"></span>  <span style="color:#a6e22e">wg</span>.<span style="color:#a6e22e">Add</span>(<span style="color:#a6e22e">gNum</span>)
+
+  <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">sum</span> <span style="color:#66d9ef">int32</span>
+  <span style="color:#75715e">// average length of each task
+</span><span style="color:#75715e"></span>  <span style="color:#a6e22e">div</span> <span style="color:#f92672">:=</span> len(<span style="color:#a6e22e">arr</span>) <span style="color:#f92672">/</span> <span style="color:#a6e22e">gNum</span>  
+  
+  <span style="color:#66d9ef">for</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">0</span>; <span style="color:#a6e22e">i</span> &lt; <span style="color:#a6e22e">gNum</span>; <span style="color:#a6e22e">i</span><span style="color:#f92672">++</span> {
+    <span style="color:#a6e22e">Left</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">*</span> <span style="color:#a6e22e">div</span>
+    <span style="color:#a6e22e">Right</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">Left</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">div</span>
+    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">==</span> <span style="color:#a6e22e">gNum</span> {
+      <span style="color:#a6e22e">Right</span> = len(<span style="color:#a6e22e">arr</span>)
+    }
+    <span style="color:#66d9ef">go</span> <span style="color:#66d9ef">func</span>() {
+      <span style="color:#75715e">// separate summarize for each goroutine
+</span><span style="color:#75715e"></span>      <span style="color:#a6e22e">ps</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">0</span>
+      <span style="color:#66d9ef">for</span> <span style="color:#a6e22e">_</span>, <span style="color:#a6e22e">value</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">range</span> <span style="color:#a6e22e">arr</span>[<span style="color:#a6e22e">Left</span>:<span style="color:#a6e22e">Right</span>] {
+        <span style="color:#a6e22e">ps</span> <span style="color:#f92672">+=</span> <span style="color:#a6e22e">value</span>
+      }      
+      <span style="color:#a6e22e">atomic</span>.<span style="color:#a6e22e">AddInt32</span>(<span style="color:#f92672">&amp;</span><span style="color:#a6e22e">sum</span>, int32(<span style="color:#a6e22e">ps</span>))
+      <span style="color:#a6e22e">wg</span>.<span style="color:#a6e22e">Done</span>()
+    }()
+  }
+
+  <span style="color:#75715e">// wait for each goroutine to complete the calculation
+</span><span style="color:#75715e"></span>  <span style="color:#a6e22e">wg</span>.<span style="color:#a6e22e">Wait</span>()
+  <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">sum</span>
+}
+</code></pre></div><h4 id="performance-analysis">Performance Analysis</h4>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#f92672">import</span> <span style="color:#e6db74">&#34;testing&#34;</span>
+
+<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">PIXEL_ARRAY</span> []<span style="color:#66d9ef">int</span>
+
+<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">init</span>()  {
+  <span style="color:#66d9ef">for</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">1</span>; <span style="color:#a6e22e">i</span> <span style="color:#f92672">&lt;=</span> <span style="color:#ae81ff">100000</span>; <span style="color:#a6e22e">i</span><span style="color:#f92672">++</span> {
+    <span style="color:#a6e22e">PIXEL_ARRAY</span> = append(<span style="color:#a6e22e">PIXEL_ARRAY</span>, <span style="color:#a6e22e">i</span>)
+  }
+}
+
+<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">BenchmarkSumWithSingle</span>(<span style="color:#a6e22e">b</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">testing</span>.<span style="color:#a6e22e">B</span>) {
+  <span style="color:#66d9ef">for</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">0</span>; <span style="color:#a6e22e">i</span> &lt; <span style="color:#a6e22e">b</span>.<span style="color:#a6e22e">N</span>; <span style="color:#a6e22e">i</span><span style="color:#f92672">++</span> {
+    <span style="color:#a6e22e">SumWithSingle</span>(<span style="color:#a6e22e">PIXEL_ARRAY</span>)
+  }
+}
+
+<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">BenchmarkSumWithMulti</span>(<span style="color:#a6e22e">b</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">testing</span>.<span style="color:#a6e22e">B</span>) {
+  <span style="color:#66d9ef">for</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">0</span>; <span style="color:#a6e22e">i</span> &lt; <span style="color:#a6e22e">b</span>.<span style="color:#a6e22e">N</span>; <span style="color:#a6e22e">i</span><span style="color:#f92672">++</span> {
+    <span style="color:#a6e22e">SumWithMulti</span>(<span style="color:#a6e22e">PIXEL_ARRAY</span>, <span style="color:#ae81ff">10</span>)
+  }
+}
+</code></pre></div><p><strong>Output：</strong><br>
+On a 4-core computer, start 10 coroutines for concurrent processing. For this example, multi-coroutines are better than single-coroutines, which is as out expectations.</p>
+<pre><code>$ GOGC=off go test -run none -bench . -benchtime 3s
+goos: windows
+goarch: amd64
+pkg: HelloGo/basic/Multi
+BenchmarkSumWithSingle-4           50000             63583 ns/op
+BenchmarkSumWithMulti-4           100000             39216 ns/op
+PASS
+ok      HelloGo/basic/Multi     8.623s
+</code></pre><hr>
+<p>At the operating system level, the execution order of each thread is not guaranteed. In Go, the same goes for coroutines. Taking the previous example as an example, the <strong>Map</strong> operation of <strong>Map-Reduce</strong> is to cut the arithmetic sequence, and the execution time of the different <strong>Go goroutine</strong> allocated to the task is uncertain, it is possible <code>1+2+3+...</code>, or <code>21+22+23+...</code></p>
+<p>If the program wants to control the order of execution of the corresponding threads, it needs to add scheduling instructions in the upper layer of the operating system, such as programming languages, such as ++ atomic operations, synchronization locks, mutex ++, and the performance of the program is also related to the granularity of the lock. There is a relationship, and this related knowledge can be used as a future expansion.</p>
+<p>The implementation of <strong>Go scheduler</strong> is based on the concepts of operating system scheduling. Later, we will try to go to a higher level (user mode) and analyze from the perspective of how <strong>Go</strong> coroutines are scheduled.</p>
+<hr>
+<h3 id="go-scheduler">Go Scheduler</h3>
+<p>As we all know, the Go scheduler has the following main components:</p>
+<ul>
+<li>M: Worker thread, created by P and associated with <strong>OS thread</strong>, can be understood as M is <strong>OS thread</strong></li>
+<li>P: Context, the resources required to process the code, the number of creation is related to the number of CPU cores, each P will be allocated an <strong>OS thread</strong> (M)</li>
+<li>G: The current goroutine, if associated with the <strong>OS thread</strong> (M), represents the <strong>go</strong> code that is about to be executed or is being executed. <strong>G</strong> can find them in two queues, the local/global queue, which we&rsquo;ll talk about later.</li>
+</ul>
+<blockquote>
+<p>At any time, M goroutines need to be scheduled on N OS threads that runs on at most GOMAXPROCS numbers of processors.</p>
+</blockquote>
+<h4 id="p-the-logic-cpu-core">P: the logic CPU core</h4>
+<p>The P of <strong>GO</strong> is related to the number of your CPU cores. Note that this is not the real number of CPUs, it is the number of <strong>logical CPU</strong>. Looking at the task manager, in the case of a 4 core CPU, if your machine has hyperthreading (i7 processor), and each physical core has two threads, then it means that there are logically 8 available in the Go program The number of processors, <strong>logical CPU</strong> should be 8.<br>
+That is, the <strong>P</strong> mentioned above.</p>
+<p>My current machine is (i5 processor), one thread per core, so the number of logical CPUs (<strong>P</strong>) output below is 4, <strong>When multiple threads are started, my machine can at most It supports 4 system threads in parallel, and the extra threads are concurrent.</strong>
+You can see the number of logical <strong>P</strong> by executing the following Go code on your machine:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+
+<span style="color:#f92672">import</span> (
+  <span style="color:#e6db74">&#34;fmt&#34;</span>
+  <span style="color:#e6db74">&#34;runtime&#34;</span>
+)
+
+<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+    <span style="color:#75715e">// NumCPU returns the number of logical
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">// CPUs usable by the current process.
+</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">runtime</span>.<span style="color:#a6e22e">NumCPU</span>())
+}
+</code></pre></div><p>Each <strong>P</strong> will allocate a system thread <strong>M</strong>, which is equivalent to saying that in the Go program on this machine, I have 4 <strong>system threads</strong> that can be used to perform my tasks, each of which is Independently linked to one of the cores, <strong>P</strong>.</p>
+<p>M <strong>Go coroutines</strong> will be allocated on N <strong>system threads</strong>, each G to be run must be associated with <strong>P</strong> (logical CPU), the program can interfere with the number of <code>GOMAXPROCS</code>, to control the maximum number of <strong>P</strong> that can be used.</p>
+<p>The following diagram may be more intuitive: <br>
+<img src="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/scheduler-P-M-G.png" alt="GMP.png"></p>
+<p>In <strong>Go</strong>, each context <strong>P</strong> will allocate a local goroutine queue (<strong>LRQ</strong>), called **Local Run Queue **, a <strong>M</strong> must be associated with all The required resources <strong>P</strong> can run the corresponding <strong>G</strong> queue, just as each <strong>thread</strong> queue at the operating system level needs to be allocated and associated with <strong>CPU</strong> to be executed, just like we mention above, the wheel (<strong>M</strong>) needs to be driven by the hamster (<strong>P</strong>) to execute (run the <strong>G</strong> goroutine task).</p>
+<p>As shown below:
+<img src="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/scheduler-concepts.png" alt="P-M-G">
+<strong>P1, P2</strong> are relatively fixed, <strong>M</strong> and <strong>G</strong> can be selected with the scheduler allocation.</p>
+<hr>
+<h4 id="switching-of-go-coroutines">Switching of Go coroutines</h4>
+<p>After understanding some of the above concepts, now let&rsquo;s look at <strong>Go</strong> how to switch the goroutine. As mentioned earlier in the article, if too many threads are created, due to the uncertainty of system scheduling, the threads cannot be executed and may be starved for a long time. In the same way, the <strong>Go</strong> goroutine will also have the phenomenon of &ldquo;pulling over&rdquo;, so the <strong>Go scheduler</strong> needs some conditions to trigger the goroutine switch, so as to avoid stopping the car and stop starting.</p>
+<blockquote>
+<p>The specific switch it is the disconnection and reconnection between the <strong>P-M-G</strong> by <strong>Go scheduler</strong>.</p>
+</blockquote>
+<p>The following scenarios may cause the scheduler to make a decision on the execution context, i.e. the switch of the go goroutine:</p>
+<ul>
+<li>go keyword, create a new goroutine</li>
+<li>garbage collection</li>
+<li>system call</li>
+<li>Synchronization/mutex/<code>Gosched()</code> etc.</li>
+</ul>
+<h4 id="example">Example</h4>
+<p>a simple and relatively common example, we try to interfere with the Go scheduler by limiting the number of logical CPUs.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+
+    <span style="color:#75715e">// Set at most 1 P can be associated
+</span><span style="color:#75715e"></span>  <span style="color:#a6e22e">runtime</span>.<span style="color:#a6e22e">GOMAXPROCS</span>(<span style="color:#ae81ff">1</span>)
+  <span style="color:#66d9ef">go</span> <span style="color:#66d9ef">func</span>() {
+    <span style="color:#66d9ef">for</span> {
+      <span style="color:#75715e">// Keep idling
+</span><span style="color:#75715e"></span>      <span style="color:#75715e">// if there are no other function calls, the goroutine will not switch under a single processor
+</span><span style="color:#75715e"></span>      ;
+    }
+  }()
+
+  <span style="color:#a6e22e">runtime</span>.<span style="color:#a6e22e">Gosched</span>()
+  println(<span style="color:#e6db74">&#34;main done.&#34;</span>)
+}
+</code></pre></div><p>We set the number of logical CPUs for this run through <code>runtime.GOMAXPROCS(1)</code>, which means that the available P is only 1, it can only be assigned to one goroutine at most for execution at the same time. If this program is executed, since the main goroutine executes the concession <strong>Gosched()</strong>, the Go goroutine that has obtained the right to run will be executed. Since the goroutine executes empty statements in an infinite loop, the program will not have any output, and another goroutine does not get the chance to run, so the program will never exit.</p>
+<p>Note that this is different from the above <code>runtime.NumCPU(int)</code> method, <code>NumCPU()</code> directly calls the system method at startup, so it will not change after the setting of <strong>GOMAXPROCS</strong><code> The original return value of NumCPU()</code>, <code>GOMAXPROCS</code> only limits the number of <strong>P</strong> at this run time.</p>
+<h3 id="goroutine-stealing">Goroutine stealing</h3>
+<p>From the perspective of the Go scheduler, the execution of goroutine tasks is a bit fast and some slow. Since my duty is not to let the CPU idle, I must steal some tasks from others to run when I have time.</p>
+<p>Quoted from<a href="https://medium.com/a-journey-with-go/go-work-stealing-in-go-scheduler-d439231be64d">：Go: Work-Stealing in Go Scheduler</a></p>
+<p>There are two queues mentioned earlier, the global/local queue:</p>
+<ul>
+<li>Local queue: refers to the Go goroutine queue (<strong>LRQ</strong>) associated with the current context <strong>P</strong>, the local queue, the maximum value of each local goroutine queue in the go1.13 version is 256, more than 256 will be put into the global queue. The local queue can be stolen by other <strong>P</strong>. In some cases, when a <strong>P</strong> finds that the local <strong>G</strong> queue is empty, it will steal other <strong>P</strong> The local queue of <strong>P</strong> will steal half of the <strong>G</strong> from other <strong>P</strong>&rsquo;s local queue each time.</li>
+<li>Global queue: In other cases, when there is an idle <strong>P</strong> and finds that other <strong>P</strong> local queues have no <strong>G</strong> to steal, it will try to get the <strong>G</strong> of the global queue. implement.</li>
+</ul>
+<pre><code>runtime.schedule() {
+    // only 1/61 of the time, check the global runnable queue for a G.
+    // if not found, check the local queue.
+    // if not found,
+    //     try to steal from other Ps.
+    //     if not, check the global runnable queue.
+    //     if not found, poll network.
+}
+</code></pre><p>The comments above indicate the priority of stealing the various parts, and only 1/61 of the time will go to check the global queue.
+<strong>Priority: local queue &gt; other P&rsquo;s queue &gt; global queue</strong></p>
+<p>At this time, the local queue of <strong>P2</strong> is already empty, so at this time <strong>P2</strong> is about to steal 3 <strong>G</strong> from <strong>P1</strong>
+<img src="https://rakyll.org/img/scheduler-stealing.png" alt="Quoted from rakyll.png"></p>
+<hr>
+<h3 id="summary">Summary</h3>
+<p>The idea of Go scheduling is based on the above-mentioned system scheduling. In the final analysis, the goroutine switching in Go is the disconnection and reconnection between P-M-G. Therefore, the switching of the G goroutine in the current thread M is like the switching of the thread on the CPU from the perspective of the system.</p>
+<blockquote>
+<p>Your workload is naturally stopped and this allows a different Goroutine to leverage the same OS/hardware thread efficiently instead of letting the OS/hardware thread sit idle.</p>
+</blockquote>
+<p><strong>Because goroutines are smaller and more lightweight than threads, Go goroutine switching will cost less than OS direct thread switching.</strong></p>
+<h3 id="reference-link">Reference link</h3>
+<p><strong>Scheduling In Go : Part II - Go Scheduler</strong><br>
+Ardanlabs excellent series:<br>
+<a href="https://www.ardanlabs.com/blog/2018/08/scheduling-in-go-part2.html">https://www.ardanlabs.com/blog/2018/08/scheduling-in-go-part2.html</a><br>
+<strong>dotGo 2017 - JBD - Go&rsquo;s work stealing scheduler</strong><br>
+<a href="https://www.youtube.com/watch?v=Yx6FBsGNOp4">https://www.youtube.com/watch?v=Yx6FBsGNOp4</a><br>
+<strong>Go: Goroutine and Preemption</strong><br>
+<a href="https://medium.com/a-journey-with-go/go-goroutine-and-preemption-d6bc2aa2f4b7">https://medium.com/a-journey-with-go/go-goroutine-and-preemption-d6bc2aa2f4b7</a><br>
+<strong>Go&rsquo;s work-stealing scheduler</strong><br>
+<a href="https://rakyll.org/scheduler/">https://rakyll.org/scheduler/</a></p>
+              
+            </div>
+          </div>
+          <div id="post-footer" class="post-footer main-content-wrap">
+            
+              
+                
+                
+                  <div class="post-footer-tags">
+                    <span class="text-color-light text-small">TAGGED IN</span><br/>
+                    
+  <a class="tag tag--primary tag--small" href="/en/tags/goroutine/">Goroutine</a>
+
+                  </div>
+                
+              
+            
+            <div class="post-actions-wrap">
+  
+      <nav >
+        <ul class="post-actions post-action-nav">
+          
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="/en/2021/01/go%E5%8D%8F%E7%A8%8B%E9%97%B4%E9%80%9A%E4%BF%A1%E4%B9%8B%E7%94%9F%E4%BA%A7%E8%80%85-%E6%B6%88%E8%B4%B9%E8%80%85%E6%A8%A1%E5%9E%8B/" data-tooltip="Go协程间通信之生产者-消费者模型">
+              
+                  <i class="fa fa-angle-left"></i>
+                  <span class="hide-xs hide-sm text-small icon-ml">NEXT</span>
+                </a>
+            </li>
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="/en/2020/06/%E8%81%8A%E4%B8%80%E8%81%8Ago%E7%9A%84context%E4%B8%8A%E4%B8%8B%E6%96%87/" data-tooltip="聊一聊Go的Context上下文">
+              
+                  <span class="hide-xs hide-sm text-small icon-mr">PREVIOUS</span>
+                  <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+          
+        </ul>
+      </nav>
+    <ul class="post-actions post-action-share" >
+      
+        <li class="post-action hide-lg hide-md hide-sm">
+          <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
+            <i class="fa fa-share-alt"></i>
+          </a>
+        </li>
+        
+      
+      
+      <li class="post-action">
+        
+          <a class="post-action-btn btn btn--default" href="#">
+        
+          <i class="fa fa-list"></i>
+        </a>
+      </li>
+    </ul>
+  
+</div>
+
+            
+              
+            
+          </div>
+        </article>
+        <footer id="footer" class="main-content-wrap">
+  <span class="copyrights">
+    &copy; 2022 <a href="https://github.com/pixeldin">pixeldin</a>. All Rights Reserved
+  </span>
+</footer>
+
+      </div>
+      <div id="bottom-bar" class="post-bottom-bar" data-behavior="5">
+        <div class="post-actions-wrap">
+  
+      <nav >
+        <ul class="post-actions post-action-nav">
+          
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="/en/2021/01/go%E5%8D%8F%E7%A8%8B%E9%97%B4%E9%80%9A%E4%BF%A1%E4%B9%8B%E7%94%9F%E4%BA%A7%E8%80%85-%E6%B6%88%E8%B4%B9%E8%80%85%E6%A8%A1%E5%9E%8B/" data-tooltip="Go协程间通信之生产者-消费者模型">
+              
+                  <i class="fa fa-angle-left"></i>
+                  <span class="hide-xs hide-sm text-small icon-ml">NEXT</span>
+                </a>
+            </li>
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="/en/2020/06/%E8%81%8A%E4%B8%80%E8%81%8Ago%E7%9A%84context%E4%B8%8A%E4%B8%8B%E6%96%87/" data-tooltip="聊一聊Go的Context上下文">
+              
+                  <span class="hide-xs hide-sm text-small icon-mr">PREVIOUS</span>
+                  <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+          
+        </ul>
+      </nav>
+    <ul class="post-actions post-action-share" >
+      
+        <li class="post-action hide-lg hide-md hide-sm">
+          <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
+            <i class="fa fa-share-alt"></i>
+          </a>
+        </li>
+        
+      
+      
+      <li class="post-action">
+        
+          <a class="post-action-btn btn btn--default" href="#">
+        
+          <i class="fa fa-list"></i>
+        </a>
+      </li>
+    </ul>
+  
+</div>
+
+      </div>
+      <div id="share-options-bar" class="share-options-bar" data-behavior="5">
+  <i id="btn-close-shareoptions" class="fa fa-close"></i>
+  <ul class="share-options">
+    
+  </ul>
+</div>
+<div id="share-options-mask" class="share-options-mask"></div>
+    </div>
+    
+    <div id="about">
+  <div id="about-card">
+    <div id="about-btn-close">
+      <i class="fa fa-remove"></i>
+    </div>
+    
+      <img id="about-card-picture" src="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/pig.jpg" alt="Author&#39;s picture" />
+    
+    <h4 id="about-card-name">pixelpig</h4>
+    
+      <div id="about-card-bio">a backend development living in GD, China. Stay hungry, stay foolish <strong>:）</strong></div>
+    
+    
+      <div id="about-card-job">
+        <i class="fa fa-briefcase"></i>
+        <br/>
+        Golang developer@Huya
+      </div>
+    
+    
+      <div id="about-card-location">
+        <i class="fa fa-map-marker"></i>
+        <br/>
+        CHINA-GD
+      </div>
+    
+  </div>
+</div>
+
+    
+
+    
+  
+    <div id="cover" style="background-image:url('https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/cover.jpg');"></div>
+  
+
+
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js" integrity="sha256-/BfiIkHlHoVihZdc6TFuj7MmJ0TWcWsMXkeDFwhi0zw=" crossorigin="anonymous"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.7/js/jquery.fancybox.min.js" integrity="sha256-GEAnjcTqVP+vBp3SSc8bEDQqvWAZMiHyUSIorrWwH50=" crossorigin="anonymous"></script>
+
+
+<script src="/js/script-pcw6v3xilnxydl1vddzazdverrnn9ctynvnxgwho987mfyqkuylcb1nlt.min.js"></script>
+
+
+<script lang="javascript">
+window.onload = updateMinWidth;
+window.onresize = updateMinWidth;
+document.getElementById("sidebar").addEventListener("transitionend", updateMinWidth);
+function updateMinWidth() {
+  var sidebar = document.getElementById("sidebar");
+  var main = document.getElementById("main");
+  main.style.minWidth = "";
+  var w1 = getComputedStyle(main).getPropertyValue("min-width");
+  var w2 = getComputedStyle(sidebar).getPropertyValue("width");
+  var w3 = getComputedStyle(sidebar).getPropertyValue("left");
+  main.style.minWidth = `calc(${w1} - ${w2} - ${w3})`;
+}
+</script>
+
+<script>
+$(document).ready(function() {
+  hljs.configure({ classPrefix: '', useBR: false });
+  $('pre.code-highlight > code, pre > code').each(function(i, block) {
+    if (!$(this).hasClass('codeblock')) {
+      $(this).addClass('codeblock');
+    }
+    hljs.highlightBlock(block);
+  });
+});
+</script>
+
+
+  
+    
+  
+
+
+
+
+    
+  </body>
+</html>
+

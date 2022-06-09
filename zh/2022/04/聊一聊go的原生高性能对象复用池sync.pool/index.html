@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en-us">
+<html lang="zh-cn">
   <head>
     
     <meta charset="UTF-8">
@@ -17,7 +17,7 @@
 <meta name="twitter:title" content="聊一聊Go的原生高性能对象复用池sync.Pool">
 <meta property="og:url" content="/zh/2022/04/%E8%81%8A%E4%B8%80%E8%81%8Ago%E7%9A%84%E5%8E%9F%E7%94%9F%E9%AB%98%E6%80%A7%E8%83%BD%E5%AF%B9%E8%B1%A1%E5%A4%8D%E7%94%A8%E6%B1%A0sync.pool/">
 <meta property="twitter:url" content="/zh/2022/04/%E8%81%8A%E4%B8%80%E8%81%8Ago%E7%9A%84%E5%8E%9F%E7%94%9F%E9%AB%98%E6%80%A7%E8%83%BD%E5%AF%B9%E8%B1%A1%E5%A4%8D%E7%94%A8%E6%B1%A0sync.pool/">
-<meta property="og:site_name" content="Pixelpig&#39;s blog">
+<meta property="og:site_name" content="pixelpig - tech">
 <meta property="og:description" content="池化操作在计算机领域层出不穷，如连接池、线程\协程池、工作池。我们要知道，之所以引入资源池，本质上是为了复用资源。">
 <meta name="twitter:description" content="池化操作在计算机领域层出不穷，如连接池、线程\协程池、工作池。我们要知道，之所以引入资源池，本质上是为了复用资源。">
 <meta property="og:locale" content="zh">
@@ -49,6 +49,10 @@
 
 <meta name="twitter:card" content="summary">
 
+  <meta name="twitter:site" content="@pixelpigpigpig">
+
+
+  <meta name="twitter:creator" content="@pixelpigpigpig">
 
 
 
@@ -96,7 +100,7 @@
       <header id="header" data-behavior="5">
   <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
   <div class="header-title">
-    <a class="header-title-link" href="/zh/">Pixelpig&#39;s blog</a>
+    <a class="header-title-link" href="/zh/">pixelpig - tech</a>
   </div>
   
     
@@ -106,7 +110,7 @@
     
     
       
-        <img class="header-picture" src="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/pig.jpg" alt="Author&#39;s picture" />
+        <img class="header-picture" src="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/pig.jpg" alt="作者的图片" />
       
     
     </a>
@@ -118,11 +122,11 @@
     
       <div class="sidebar-profile">
         <a href="/#about">
-          <img class="sidebar-profile-picture" src="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/pig.jpg" alt="Author&#39;s picture" />
+          <img class="sidebar-profile-picture" src="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/pig.jpg" alt="作者的图片" />
         </a>
         <h4 class="sidebar-profile-name">pixelpig</h4>
         
-          <h5 class="sidebar-profile-bio">Stay hungry, stay foolish <strong>:）</strong></h5>
+          <h5 class="sidebar-profile-bio">a backend development living in GD, China. Stay hungry, stay foolish <strong>:）</strong></h5>
         
       </div>
     
@@ -130,11 +134,71 @@
       
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="/en-us">
+      <a class="sidebar-button-link " href="/en">
     
       <i class="sidebar-button-icon fa fa-lg fa-language"></i>
       
-      <span class="sidebar-button-desc">简体中文</span>
+      <span class="sidebar-button-desc">English</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/zh/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-home"></i>
+      
+      <span class="sidebar-button-desc">首页</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/zh/categories">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-bookmark"></i>
+      
+      <span class="sidebar-button-desc">分类</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/zh/tags">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
+      
+      <span class="sidebar-button-desc">标签</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/zh/archives">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-archive"></i>
+      
+      <span class="sidebar-button-desc">归档</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/zh/#about">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-question"></i>
+      
+      <span class="sidebar-button-desc">关于我</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/zh/https:/weibo.com/u/1837780507">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-weibo"></i>
+      
+      <span class="sidebar-button-desc">微博</span>
     </a>
   </li>
 
@@ -171,14 +235,14 @@
     
       <time itemprop="datePublished" datetime="2022-04-23T00:00:00Z">
         
-  April 23, 2022
+  四月 23, 2022
 
       </time>
     
     
   
   
-    <span>in</span>
+    <span>发布在</span>
     
       <a class="category-link" href="/zh/categories/go">Go</a>, 
     
@@ -476,7 +540,7 @@ ok      HelloGo/basic/pool/sync 472.933s
                 
                 
                   <div class="post-footer-tags">
-                    <span class="text-color-light text-small">TAGGED IN</span><br/>
+                    <span class="text-color-light text-small">标签</span><br/>
                     
   <a class="tag tag--primary tag--small" href="/zh/tags/%E5%AF%B9%E8%B1%A1%E6%B1%A0/">对象池</a>
 
@@ -495,17 +559,17 @@ ok      HelloGo/basic/pool/sync 472.933s
           
             <li class="post-action">
               
-                <a class="post-action-btn btn btn--default tooltip--top" href="/zh/2022/04/%E8%81%8A%E4%B8%80%E8%81%8Ago%E7%9A%84%E5%8E%9F%E7%94%9F%E9%AB%98%E6%80%A7%E8%83%BD%E5%AF%B9%E8%B1%A1%E5%A4%8D%E7%94%A8%E6%B1%A0sync.pool/" data-tooltip="聊一聊Go的原生高性能对象复用池sync.Pool">
+                <a class="post-action-btn btn btn--disabled">
               
                   <i class="fa fa-angle-left"></i>
-                  <span class="hide-xs hide-sm text-small icon-ml">NEXT</span>
+                  <span class="hide-xs hide-sm text-small icon-ml">下一篇</span>
                 </a>
             </li>
             <li class="post-action">
               
                 <a class="post-action-btn btn btn--default tooltip--top" href="/zh/2022/03/%E8%81%8A%E4%B8%80%E8%81%8Ago%E7%9A%84%E5%8D%8F%E7%A8%8B%E4%BF%A1%E6%81%AF%E5%92%8C%E5%A6%82%E4%BD%95%E9%A2%84%E9%98%B2%E6%B3%84%E9%9C%B2/" data-tooltip="聊一聊Go的协程信息和如何预防泄露">
               
-                  <span class="hide-xs hide-sm text-small icon-mr">PREVIOUS</span>
+                  <span class="hide-xs hide-sm text-small icon-mr">上一篇</span>
                   <i class="fa fa-angle-right"></i>
                 </a>
             </li>
@@ -553,17 +617,17 @@ ok      HelloGo/basic/pool/sync 472.933s
           
             <li class="post-action">
               
-                <a class="post-action-btn btn btn--default tooltip--top" href="/zh/2022/04/%E8%81%8A%E4%B8%80%E8%81%8Ago%E7%9A%84%E5%8E%9F%E7%94%9F%E9%AB%98%E6%80%A7%E8%83%BD%E5%AF%B9%E8%B1%A1%E5%A4%8D%E7%94%A8%E6%B1%A0sync.pool/" data-tooltip="聊一聊Go的原生高性能对象复用池sync.Pool">
+                <a class="post-action-btn btn btn--disabled">
               
                   <i class="fa fa-angle-left"></i>
-                  <span class="hide-xs hide-sm text-small icon-ml">NEXT</span>
+                  <span class="hide-xs hide-sm text-small icon-ml">下一篇</span>
                 </a>
             </li>
             <li class="post-action">
               
                 <a class="post-action-btn btn btn--default tooltip--top" href="/zh/2022/03/%E8%81%8A%E4%B8%80%E8%81%8Ago%E7%9A%84%E5%8D%8F%E7%A8%8B%E4%BF%A1%E6%81%AF%E5%92%8C%E5%A6%82%E4%BD%95%E9%A2%84%E9%98%B2%E6%B3%84%E9%9C%B2/" data-tooltip="聊一聊Go的协程信息和如何预防泄露">
               
-                  <span class="hide-xs hide-sm text-small icon-mr">PREVIOUS</span>
+                  <span class="hide-xs hide-sm text-small icon-mr">上一篇</span>
                   <i class="fa fa-angle-right"></i>
                 </a>
             </li>
@@ -607,24 +671,24 @@ ok      HelloGo/basic/pool/sync 472.933s
       <i class="fa fa-remove"></i>
     </div>
     
-      <img id="about-card-picture" src="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/pig.jpg" alt="Author&#39;s picture" />
+      <img id="about-card-picture" src="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/pig.jpg" alt="作者的图片" />
     
     <h4 id="about-card-name">pixelpig</h4>
     
-      <div id="about-card-bio">Stay hungry, stay foolish <strong>:）</strong></div>
+      <div id="about-card-bio">a backend development living in GD, China. Stay hungry, stay foolish <strong>:）</strong></div>
     
     
       <div id="about-card-job">
         <i class="fa fa-briefcase"></i>
         <br/>
-        后端开发@广州虎牙
+        Golang developer@Huya
       </div>
     
     
       <div id="about-card-location">
         <i class="fa fa-map-marker"></i>
         <br/>
-        CHINA-ZH
+        CHINA-GD
       </div>
     
   </div>

@@ -1,30 +1,12 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>并发 on Pixelpig&#39;s blog</title>
+    <title>并发 on pixelpig - tech</title>
     <link>/zh/categories/%E5%B9%B6%E5%8F%91/</link>
-    <description>Recent content in 并发 on Pixelpig&#39;s blog</description>
+    <description>Recent content in 并发 on pixelpig - tech</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language>
-    <lastBuildDate>Sun, 15 May 2022 00:00:00 +0000</lastBuildDate><atom:link href="/zh/categories/%E5%B9%B6%E5%8F%91/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>多语言-EN-Grpc action</title>
-      <link>/zh/2022/05/%E5%A4%9A%E8%AF%AD%E8%A8%80-en-grpc-action/</link>
-      <pubDate>Sun, 15 May 2022 00:00:00 +0000</pubDate>
-      
-      <guid>/zh/2022/05/%E5%A4%9A%E8%AF%AD%E8%A8%80-en-grpc-action/</guid>
-      <description>&lt;p&gt;RPC：远程过程调用简写&lt;/p&gt;</description>
-    </item>
-    
-    <item>
-      <title>聊一聊Go实现的多协程下载器: gopeed-core</title>
-      <link>/zh/2021/06/%E8%81%8A%E4%B8%80%E8%81%8Ago%E5%AE%9E%E7%8E%B0%E7%9A%84%E5%A4%9A%E5%8D%8F%E7%A8%8B%E4%B8%8B%E8%BD%BD%E5%99%A8-gopeed-core/</link>
-      <pubDate>Tue, 29 Jun 2021 00:00:00 +0000</pubDate>
-      
-      <guid>/zh/2021/06/%E8%81%8A%E4%B8%80%E8%81%8Ago%E5%AE%9E%E7%8E%B0%E7%9A%84%E5%A4%9A%E5%8D%8F%E7%A8%8B%E4%B8%8B%E8%BD%BD%E5%99%A8-gopeed-core/</guid>
-      <description>&lt;p&gt;之前在Github社区偶然发现一个Go实现的下载器，作为个人学习的一个参照模板，这里要感谢一下作者monkeyWie(网名)的开源项目&lt;a href=&#34;github.com/monkeyWie/gopeed-core&#34;&gt;gopeed-core&lt;/a&gt;。&lt;/p&gt;</description>
-    </item>
-    
+    <language>zh-cn</language>
+    <lastBuildDate>Tue, 29 Jun 2021 00:00:00 +0000</lastBuildDate><atom:link href="/zh/categories/%E5%B9%B6%E5%8F%91/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>聊一聊Go实现的多协程下载器: gopeed-core</title>
       <link>/zh/2021/06/%E8%81%8A%E4%B8%80%E8%81%8Ago%E5%AE%9E%E7%8E%B0%E7%9A%84%E5%A4%9A%E5%8D%8F%E7%A8%8B%E4%B8%8B%E8%BD%BD%E5%99%A8-gopeed-core/</link>
@@ -41,42 +23,6 @@
       
       <guid>/zh/2021/01/go%E5%8D%8F%E7%A8%8B%E9%97%B4%E9%80%9A%E4%BF%A1%E4%B9%8B%E7%94%9F%E4%BA%A7%E8%80%85-%E6%B6%88%E8%B4%B9%E8%80%85%E6%A8%A1%E5%9E%8B/</guid>
       <description>&lt;p&gt;不要通过共享内存来通信(互斥锁同步)，而要用通信来共享内存。&lt;/p&gt;</description>
-    </item>
-    
-    <item>
-      <title>Go协程间通信之生产者-消费者模型</title>
-      <link>/zh/2021/01/go%E5%8D%8F%E7%A8%8B%E9%97%B4%E9%80%9A%E4%BF%A1%E4%B9%8B%E7%94%9F%E4%BA%A7%E8%80%85-%E6%B6%88%E8%B4%B9%E8%80%85%E6%A8%A1%E5%9E%8B/</link>
-      <pubDate>Mon, 18 Jan 2021 03:40:05 +0800</pubDate>
-      
-      <guid>/zh/2021/01/go%E5%8D%8F%E7%A8%8B%E9%97%B4%E9%80%9A%E4%BF%A1%E4%B9%8B%E7%94%9F%E4%BA%A7%E8%80%85-%E6%B6%88%E8%B4%B9%E8%80%85%E6%A8%A1%E5%9E%8B/</guid>
-      <description>&lt;p&gt;不要通过共享内存来通信(互斥锁同步)，而要用通信来共享内存。&lt;/p&gt;</description>
-    </item>
-    
-    <item>
-      <title>Grpc action</title>
-      <link>/zh/2020/03/grpc-action/</link>
-      <pubDate>Sun, 15 Mar 2020 00:00:00 +0000</pubDate>
-      
-      <guid>/zh/2020/03/grpc-action/</guid>
-      <description>&lt;p&gt;RPC：远程过程调用简写&lt;/p&gt;</description>
-    </item>
-    
-    <item>
-      <title>Grpc action</title>
-      <link>/zh/2020/03/grpc-action/</link>
-      <pubDate>Sun, 15 Mar 2020 00:00:00 +0000</pubDate>
-      
-      <guid>/zh/2020/03/grpc-action/</guid>
-      <description>&lt;p&gt;RPC：远程过程调用简写&lt;/p&gt;</description>
-    </item>
-    
-    <item>
-      <title>简述 Java线程池以及使用</title>
-      <link>/zh/2019/07/%E7%AE%80%E8%BF%B0-java%E7%BA%BF%E7%A8%8B%E6%B1%A0%E4%BB%A5%E5%8F%8A%E4%BD%BF%E7%94%A8/</link>
-      <pubDate>Mon, 15 Jul 2019 00:00:00 +0000</pubDate>
-      
-      <guid>/zh/2019/07/%E7%AE%80%E8%BF%B0-java%E7%BA%BF%E7%A8%8B%E6%B1%A0%E4%BB%A5%E5%8F%8A%E4%BD%BF%E7%94%A8/</guid>
-      <description>&lt;p&gt;线程池可以避免频繁创建销毁线程，提高性能。常见如数据库的连接池。&lt;/p&gt;</description>
     </item>
     
     <item>

@@ -1,21 +1,12 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Posts on Pixelpig&#39;s blog</title>
+    <title>Posts on pixelpig - tech</title>
     <link>/zh/post/</link>
-    <description>Recent content in Posts on Pixelpig&#39;s blog</description>
+    <description>Recent content in Posts on pixelpig - tech</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language>
-    <lastBuildDate>Sun, 15 May 2022 00:00:00 +0000</lastBuildDate><atom:link href="/zh/post/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>多语言-EN-Grpc action</title>
-      <link>/zh/2022/05/%E5%A4%9A%E8%AF%AD%E8%A8%80-en-grpc-action/</link>
-      <pubDate>Sun, 15 May 2022 00:00:00 +0000</pubDate>
-      
-      <guid>/zh/2022/05/%E5%A4%9A%E8%AF%AD%E8%A8%80-en-grpc-action/</guid>
-      <description>&lt;p&gt;RPC：远程过程调用简写&lt;/p&gt;</description>
-    </item>
-    
+    <language>zh-cn</language>
+    <lastBuildDate>Sat, 23 Apr 2022 00:00:00 +0000</lastBuildDate><atom:link href="/zh/post/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>聊一聊Go的原生高性能对象复用池sync.Pool</title>
       <link>/zh/2022/04/%E8%81%8A%E4%B8%80%E8%81%8Ago%E7%9A%84%E5%8E%9F%E7%94%9F%E9%AB%98%E6%80%A7%E8%83%BD%E5%AF%B9%E8%B1%A1%E5%A4%8D%E7%94%A8%E6%B1%A0sync.pool/</link>
@@ -23,24 +14,6 @@
       
       <guid>/zh/2022/04/%E8%81%8A%E4%B8%80%E8%81%8Ago%E7%9A%84%E5%8E%9F%E7%94%9F%E9%AB%98%E6%80%A7%E8%83%BD%E5%AF%B9%E8%B1%A1%E5%A4%8D%E7%94%A8%E6%B1%A0sync.pool/</guid>
       <description>&lt;p&gt;池化操作在计算机领域层出不穷，如连接池、线程\协程池、工作池。我们要知道，之所以引入资源池，本质上是为了复用资源。&lt;/p&gt;</description>
-    </item>
-    
-    <item>
-      <title>聊一聊Go的原生高性能对象复用池sync.Pool</title>
-      <link>/zh/2022/04/%E8%81%8A%E4%B8%80%E8%81%8Ago%E7%9A%84%E5%8E%9F%E7%94%9F%E9%AB%98%E6%80%A7%E8%83%BD%E5%AF%B9%E8%B1%A1%E5%A4%8D%E7%94%A8%E6%B1%A0sync.pool/</link>
-      <pubDate>Sat, 23 Apr 2022 00:00:00 +0000</pubDate>
-      
-      <guid>/zh/2022/04/%E8%81%8A%E4%B8%80%E8%81%8Ago%E7%9A%84%E5%8E%9F%E7%94%9F%E9%AB%98%E6%80%A7%E8%83%BD%E5%AF%B9%E8%B1%A1%E5%A4%8D%E7%94%A8%E6%B1%A0sync.pool/</guid>
-      <description>&lt;p&gt;池化操作在计算机领域层出不穷，如连接池、线程\协程池、工作池。我们要知道，之所以引入资源池，本质上是为了复用资源。&lt;/p&gt;</description>
-    </item>
-    
-    <item>
-      <title>聊一聊Go的协程信息和如何预防泄露</title>
-      <link>/zh/2022/03/%E8%81%8A%E4%B8%80%E8%81%8Ago%E7%9A%84%E5%8D%8F%E7%A8%8B%E4%BF%A1%E6%81%AF%E5%92%8C%E5%A6%82%E4%BD%95%E9%A2%84%E9%98%B2%E6%B3%84%E9%9C%B2/</link>
-      <pubDate>Thu, 17 Mar 2022 00:00:00 +0000</pubDate>
-      
-      <guid>/zh/2022/03/%E8%81%8A%E4%B8%80%E8%81%8Ago%E7%9A%84%E5%8D%8F%E7%A8%8B%E4%BF%A1%E6%81%AF%E5%92%8C%E5%A6%82%E4%BD%95%E9%A2%84%E9%98%B2%E6%B3%84%E9%9C%B2/</guid>
-      <description>&lt;p&gt;协程在Go里面是一个常见的概念，伴随着go程序的生命周期开始至结束。今天来聊一聊Go的协程泄露。&lt;/p&gt;</description>
     </item>
     
     <item>
@@ -62,39 +35,12 @@
     </item>
     
     <item>
-      <title>聊一聊Go实现的接口熔断器: Circuit Breaker</title>
-      <link>/zh/2022/02/%E8%81%8A%E4%B8%80%E8%81%8Ago%E5%AE%9E%E7%8E%B0%E7%9A%84%E6%8E%A5%E5%8F%A3%E7%86%94%E6%96%AD%E5%99%A8-circuit-breaker/</link>
-      <pubDate>Fri, 25 Feb 2022 00:00:00 +0000</pubDate>
-      
-      <guid>/zh/2022/02/%E8%81%8A%E4%B8%80%E8%81%8Ago%E5%AE%9E%E7%8E%B0%E7%9A%84%E6%8E%A5%E5%8F%A3%E7%86%94%E6%96%AD%E5%99%A8-circuit-breaker/</guid>
-      <description>&lt;p&gt;在微服务链路中，熔断是指在短时间内接口出现&lt;strong&gt;多次异常/超时&lt;/strong&gt;(&lt;strong&gt;错误率过高&lt;/strong&gt;)，通过对接口&lt;strong&gt;快速失败&lt;/strong&gt;，避免上游反复重试以至于下游被压垮的一种保护策略。&lt;/p&gt;</description>
-    </item>
-    
-    <item>
       <title>聊一聊网络编程TCP流的组包拆包</title>
       <link>/zh/2022/02/%E8%81%8A%E4%B8%80%E8%81%8A%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8Btcp%E6%B5%81%E7%9A%84%E7%BB%84%E5%8C%85%E6%8B%86%E5%8C%85/</link>
       <pubDate>Fri, 04 Feb 2022 00:00:00 +0000</pubDate>
       
       <guid>/zh/2022/02/%E8%81%8A%E4%B8%80%E8%81%8A%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8Btcp%E6%B5%81%E7%9A%84%E7%BB%84%E5%8C%85%E6%8B%86%E5%8C%85/</guid>
       <description>&lt;p&gt;众所周知，包体传输是网络通信中不可或缺的一部分，无论是应用层HTTP包的&lt;code&gt;header&lt;/code&gt;或者&lt;code&gt;body&lt;/code&gt;，还是传输层TCP的流式数据，都是对数据的分组与拆解。&lt;/p&gt;</description>
-    </item>
-    
-    <item>
-      <title>聊一聊网络编程TCP流的组包拆包</title>
-      <link>/zh/2022/02/%E8%81%8A%E4%B8%80%E8%81%8A%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8Btcp%E6%B5%81%E7%9A%84%E7%BB%84%E5%8C%85%E6%8B%86%E5%8C%85/</link>
-      <pubDate>Fri, 04 Feb 2022 00:00:00 +0000</pubDate>
-      
-      <guid>/zh/2022/02/%E8%81%8A%E4%B8%80%E8%81%8A%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8Btcp%E6%B5%81%E7%9A%84%E7%BB%84%E5%8C%85%E6%8B%86%E5%8C%85/</guid>
-      <description>&lt;p&gt;众所周知，包体传输是网络通信中不可或缺的一部分，无论是应用层HTTP包的&lt;code&gt;header&lt;/code&gt;或者&lt;code&gt;body&lt;/code&gt;，还是传输层TCP的流式数据，都是对数据的分组与拆解。&lt;/p&gt;</description>
-    </item>
-    
-    <item>
-      <title>聊一聊Go服务的优雅处理(二)--优雅重启</title>
-      <link>/zh/2021/12/%E8%81%8A%E4%B8%80%E8%81%8Ago%E6%9C%8D%E5%8A%A1%E7%9A%84%E4%BC%98%E9%9B%85%E5%A4%84%E7%90%86%E4%BA%8C-%E4%BC%98%E9%9B%85%E9%87%8D%E5%90%AF/</link>
-      <pubDate>Thu, 23 Dec 2021 00:00:00 +0000</pubDate>
-      
-      <guid>/zh/2021/12/%E8%81%8A%E4%B8%80%E8%81%8Ago%E6%9C%8D%E5%8A%A1%E7%9A%84%E4%BC%98%E9%9B%85%E5%A4%84%E7%90%86%E4%BA%8C-%E4%BC%98%E9%9B%85%E9%87%8D%E5%90%AF/</guid>
-      <description>&lt;p&gt;上一次我们聊到Go程序如何优雅关闭，今天我们来聊一聊优雅重启。&lt;/p&gt;</description>
     </item>
     
     <item>
@@ -116,39 +62,12 @@
     </item>
     
     <item>
-      <title>聊一聊Go服务的优雅处理(一)--优雅下线</title>
-      <link>/zh/2021/11/%E8%81%8A%E4%B8%80%E8%81%8Ago%E6%9C%8D%E5%8A%A1%E7%9A%84%E4%BC%98%E9%9B%85%E5%A4%84%E7%90%86%E4%B8%80-%E4%BC%98%E9%9B%85%E4%B8%8B%E7%BA%BF/</link>
-      <pubDate>Tue, 02 Nov 2021 00:00:00 +0000</pubDate>
-      
-      <guid>/zh/2021/11/%E8%81%8A%E4%B8%80%E8%81%8Ago%E6%9C%8D%E5%8A%A1%E7%9A%84%E4%BC%98%E9%9B%85%E5%A4%84%E7%90%86%E4%B8%80-%E4%BC%98%E9%9B%85%E4%B8%8B%E7%BA%BF/</guid>
-      <description>&lt;p&gt;从高可用到优雅关闭/重启，细化到程序下线/重启等操作，在Go里面有哪些处理方式呢？今天我们来聊聊go程序的优雅关闭&lt;/p&gt;</description>
-    </item>
-    
-    <item>
       <title>聊一聊Go网络框架Gin之如何定制通用拦截器</title>
       <link>/zh/2021/10/%E8%81%8A%E4%B8%80%E8%81%8Ago%E7%BD%91%E7%BB%9C%E6%A1%86%E6%9E%B6gin%E4%B9%8B%E5%A6%82%E4%BD%95%E5%AE%9A%E5%88%B6%E9%80%9A%E7%94%A8%E6%8B%A6%E6%88%AA%E5%99%A8/</link>
       <pubDate>Fri, 15 Oct 2021 00:00:00 +0000</pubDate>
       
       <guid>/zh/2021/10/%E8%81%8A%E4%B8%80%E8%81%8Ago%E7%BD%91%E7%BB%9C%E6%A1%86%E6%9E%B6gin%E4%B9%8B%E5%A6%82%E4%BD%95%E5%AE%9A%E5%88%B6%E9%80%9A%E7%94%A8%E6%8B%A6%E6%88%AA%E5%99%A8/</guid>
       <description>&lt;p&gt;middleware，常常用于作为请求头/请求体校验、缓存、限流等核心组件的关卡&amp;quot;安检&amp;quot;。&lt;/p&gt;</description>
-    </item>
-    
-    <item>
-      <title>聊一聊Go网络框架Gin之如何定制通用拦截器</title>
-      <link>/zh/2021/10/%E8%81%8A%E4%B8%80%E8%81%8Ago%E7%BD%91%E7%BB%9C%E6%A1%86%E6%9E%B6gin%E4%B9%8B%E5%A6%82%E4%BD%95%E5%AE%9A%E5%88%B6%E9%80%9A%E7%94%A8%E6%8B%A6%E6%88%AA%E5%99%A8/</link>
-      <pubDate>Fri, 15 Oct 2021 00:00:00 +0000</pubDate>
-      
-      <guid>/zh/2021/10/%E8%81%8A%E4%B8%80%E8%81%8Ago%E7%BD%91%E7%BB%9C%E6%A1%86%E6%9E%B6gin%E4%B9%8B%E5%A6%82%E4%BD%95%E5%AE%9A%E5%88%B6%E9%80%9A%E7%94%A8%E6%8B%A6%E6%88%AA%E5%99%A8/</guid>
-      <description>&lt;p&gt;middleware，常常用于作为请求头/请求体校验、缓存、限流等核心组件的关卡&amp;quot;安检&amp;quot;。&lt;/p&gt;</description>
-    </item>
-    
-    <item>
-      <title>聊一聊Go实现的多协程下载器: gopeed-core</title>
-      <link>/zh/2021/06/%E8%81%8A%E4%B8%80%E8%81%8Ago%E5%AE%9E%E7%8E%B0%E7%9A%84%E5%A4%9A%E5%8D%8F%E7%A8%8B%E4%B8%8B%E8%BD%BD%E5%99%A8-gopeed-core/</link>
-      <pubDate>Tue, 29 Jun 2021 00:00:00 +0000</pubDate>
-      
-      <guid>/zh/2021/06/%E8%81%8A%E4%B8%80%E8%81%8Ago%E5%AE%9E%E7%8E%B0%E7%9A%84%E5%A4%9A%E5%8D%8F%E7%A8%8B%E4%B8%8B%E8%BD%BD%E5%99%A8-gopeed-core/</guid>
-      <description>&lt;p&gt;之前在Github社区偶然发现一个Go实现的下载器，作为个人学习的一个参照模板，这里要感谢一下作者monkeyWie(网名)的开源项目&lt;a href=&#34;github.com/monkeyWie/gopeed-core&#34;&gt;gopeed-core&lt;/a&gt;。&lt;/p&gt;</description>
     </item>
     
     <item>
@@ -170,39 +89,12 @@
     </item>
     
     <item>
-      <title>聊一聊Go网络编程(二)--TCP连接管理</title>
-      <link>/zh/2021/05/%E8%81%8A%E4%B8%80%E8%81%8Ago%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B%E4%BA%8C-tcp%E8%BF%9E%E6%8E%A5%E7%AE%A1%E7%90%86/</link>
-      <pubDate>Sun, 16 May 2021 00:00:00 +0000</pubDate>
-      
-      <guid>/zh/2021/05/%E8%81%8A%E4%B8%80%E8%81%8Ago%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B%E4%BA%8C-tcp%E8%BF%9E%E6%8E%A5%E7%AE%A1%E7%90%86/</guid>
-      <description>&lt;p&gt;上一篇我们聊到在Go中是如何发起一个TCP连接的，以及列举一个全双工的Demo，这次接着填补上一节留下的坑，连接池管理。&lt;/p&gt;</description>
-    </item>
-    
-    <item>
       <title>聊一聊Go网络编程(一)--TCP通信</title>
       <link>/zh/2021/05/%E8%81%8A%E4%B8%80%E8%81%8Ago%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B%E4%B8%80-tcp%E9%80%9A%E4%BF%A1/</link>
       <pubDate>Sat, 15 May 2021 00:00:00 +0000</pubDate>
       
       <guid>/zh/2021/05/%E8%81%8A%E4%B8%80%E8%81%8Ago%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B%E4%B8%80-tcp%E9%80%9A%E4%BF%A1/</guid>
       <description>&lt;p&gt;在网络分层的七层协议中，我们知道TCP处于HTTP层的下方，本质上HTTP连接是基于底层的TCP连接建立的。&lt;/p&gt;</description>
-    </item>
-    
-    <item>
-      <title>聊一聊Go网络编程(一)--TCP通信</title>
-      <link>/zh/2021/05/%E8%81%8A%E4%B8%80%E8%81%8Ago%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B%E4%B8%80-tcp%E9%80%9A%E4%BF%A1/</link>
-      <pubDate>Sat, 15 May 2021 00:00:00 +0000</pubDate>
-      
-      <guid>/zh/2021/05/%E8%81%8A%E4%B8%80%E8%81%8Ago%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B%E4%B8%80-tcp%E9%80%9A%E4%BF%A1/</guid>
-      <description>&lt;p&gt;在网络分层的七层协议中，我们知道TCP处于HTTP层的下方，本质上HTTP连接是基于底层的TCP连接建立的。&lt;/p&gt;</description>
-    </item>
-    
-    <item>
-      <title>Go协程间通信之生产者-消费者模型</title>
-      <link>/zh/2021/01/go%E5%8D%8F%E7%A8%8B%E9%97%B4%E9%80%9A%E4%BF%A1%E4%B9%8B%E7%94%9F%E4%BA%A7%E8%80%85-%E6%B6%88%E8%B4%B9%E8%80%85%E6%A8%A1%E5%9E%8B/</link>
-      <pubDate>Mon, 18 Jan 2021 03:40:05 +0800</pubDate>
-      
-      <guid>/zh/2021/01/go%E5%8D%8F%E7%A8%8B%E9%97%B4%E9%80%9A%E4%BF%A1%E4%B9%8B%E7%94%9F%E4%BA%A7%E8%80%85-%E6%B6%88%E8%B4%B9%E8%80%85%E6%A8%A1%E5%9E%8B/</guid>
-      <description>&lt;p&gt;不要通过共享内存来通信(互斥锁同步)，而要用通信来共享内存。&lt;/p&gt;</description>
     </item>
     
     <item>
@@ -224,39 +116,12 @@
     </item>
     
     <item>
-      <title>聊一聊操作系统线程调度与Go协程</title>
-      <link>/zh/2020/10/%E8%81%8A%E4%B8%80%E8%81%8A%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%BA%BF%E7%A8%8B%E8%B0%83%E5%BA%A6%E4%B8%8Ego%E5%8D%8F%E7%A8%8B/</link>
-      <pubDate>Sun, 18 Oct 2020 00:00:00 +0000</pubDate>
-      
-      <guid>/zh/2020/10/%E8%81%8A%E4%B8%80%E8%81%8A%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%BA%BF%E7%A8%8B%E8%B0%83%E5%BA%A6%E4%B8%8Ego%E5%8D%8F%E7%A8%8B/</guid>
-      <description>&lt;p&gt;我们计算机上面跑的每个任务，都是操作系统层面的资源分配，从启动进程到创建线程，在核数固定的情况下，多线程并发地执行。&lt;/p&gt;</description>
-    </item>
-    
-    <item>
       <title>聊一聊Go的Context上下文</title>
       <link>/zh/2020/06/%E8%81%8A%E4%B8%80%E8%81%8Ago%E7%9A%84context%E4%B8%8A%E4%B8%8B%E6%96%87/</link>
       <pubDate>Fri, 19 Jun 2020 00:00:00 +0000</pubDate>
       
       <guid>/zh/2020/06/%E8%81%8A%E4%B8%80%E8%81%8Ago%E7%9A%84context%E4%B8%8A%E4%B8%8B%E6%96%87/</guid>
       <description>&lt;p&gt;前面在“聊一聊http框架&lt;strong&gt;httprouter&lt;/strong&gt;”的时候，提到了上下文的概念&lt;/p&gt;</description>
-    </item>
-    
-    <item>
-      <title>聊一聊Go的Context上下文</title>
-      <link>/zh/2020/06/%E8%81%8A%E4%B8%80%E8%81%8Ago%E7%9A%84context%E4%B8%8A%E4%B8%8B%E6%96%87/</link>
-      <pubDate>Fri, 19 Jun 2020 00:00:00 +0000</pubDate>
-      
-      <guid>/zh/2020/06/%E8%81%8A%E4%B8%80%E8%81%8Ago%E7%9A%84context%E4%B8%8A%E4%B8%8B%E6%96%87/</guid>
-      <description>&lt;p&gt;前面在“聊一聊http框架&lt;strong&gt;httprouter&lt;/strong&gt;”的时候，提到了上下文的概念&lt;/p&gt;</description>
-    </item>
-    
-    <item>
-      <title>聊一聊Gin Web框架之前，看一眼httprouter</title>
-      <link>/zh/2020/06/%E8%81%8A%E4%B8%80%E8%81%8Agin-web%E6%A1%86%E6%9E%B6%E4%B9%8B%E5%89%8D%E7%9C%8B%E4%B8%80%E7%9C%BChttprouter/</link>
-      <pubDate>Tue, 16 Jun 2020 00:00:00 +0000</pubDate>
-      
-      <guid>/zh/2020/06/%E8%81%8A%E4%B8%80%E8%81%8Agin-web%E6%A1%86%E6%9E%B6%E4%B9%8B%E5%89%8D%E7%9C%8B%E4%B8%80%E7%9C%BChttprouter/</guid>
-      <description>&lt;p&gt;前言: Gin的词源是金酒, 又称琴酒, 是来自荷兰的一种烈性酒。&lt;/p&gt;</description>
     </item>
     
     <item>
@@ -278,57 +143,12 @@
     </item>
     
     <item>
-      <title>聊一聊堆、栈与Go语言的指针</title>
-      <link>/zh/2020/04/%E8%81%8A%E4%B8%80%E8%81%8A%E5%A0%86%E6%A0%88%E4%B8%8Ego%E8%AF%AD%E8%A8%80%E7%9A%84%E6%8C%87%E9%92%88/</link>
-      <pubDate>Thu, 16 Apr 2020 00:00:00 +0000</pubDate>
-      
-      <guid>/zh/2020/04/%E8%81%8A%E4%B8%80%E8%81%8A%E5%A0%86%E6%A0%88%E4%B8%8Ego%E8%AF%AD%E8%A8%80%E7%9A%84%E6%8C%87%E9%92%88/</guid>
-      <description>&lt;p&gt;堆、栈在计算机领域是亘古不变的热门话题，归根结底它们都是操作系统层面的内存划分。&lt;/p&gt;</description>
-    </item>
-    
-    <item>
-      <title>Grpc action</title>
-      <link>/zh/2020/03/grpc-action/</link>
-      <pubDate>Sun, 15 Mar 2020 00:00:00 +0000</pubDate>
-      
-      <guid>/zh/2020/03/grpc-action/</guid>
-      <description>&lt;p&gt;RPC：远程过程调用简写&lt;/p&gt;</description>
-    </item>
-    
-    <item>
-      <title>Grpc action</title>
-      <link>/zh/2020/03/grpc-action/</link>
-      <pubDate>Sun, 15 Mar 2020 00:00:00 +0000</pubDate>
-      
-      <guid>/zh/2020/03/grpc-action/</guid>
-      <description>&lt;p&gt;RPC：远程过程调用简写&lt;/p&gt;</description>
-    </item>
-    
-    <item>
       <title>聊一聊Go语言的error处理</title>
       <link>/zh/2020/03/%E8%81%8A%E4%B8%80%E8%81%8Ago%E8%AF%AD%E8%A8%80%E7%9A%84error%E5%A4%84%E7%90%86/</link>
       <pubDate>Sun, 15 Mar 2020 00:00:00 +0000</pubDate>
       
       <guid>/zh/2020/03/%E8%81%8A%E4%B8%80%E8%81%8Ago%E8%AF%AD%E8%A8%80%E7%9A%84error%E5%A4%84%E7%90%86/</guid>
       <description>&lt;p&gt;在Go语言中，错误处理是一个常见的操作&lt;/p&gt;</description>
-    </item>
-    
-    <item>
-      <title>聊一聊Go语言的error处理</title>
-      <link>/zh/2020/03/%E8%81%8A%E4%B8%80%E8%81%8Ago%E8%AF%AD%E8%A8%80%E7%9A%84error%E5%A4%84%E7%90%86/</link>
-      <pubDate>Sun, 15 Mar 2020 00:00:00 +0000</pubDate>
-      
-      <guid>/zh/2020/03/%E8%81%8A%E4%B8%80%E8%81%8Ago%E8%AF%AD%E8%A8%80%E7%9A%84error%E5%A4%84%E7%90%86/</guid>
-      <description>&lt;p&gt;在Go语言中，错误处理是一个常见的操作&lt;/p&gt;</description>
-    </item>
-    
-    <item>
-      <title>聊一聊Go编写的命令行工具类</title>
-      <link>/zh/2020/02/%E8%81%8A%E4%B8%80%E8%81%8Ago%E7%BC%96%E5%86%99%E7%9A%84%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%B7%A5%E5%85%B7%E7%B1%BB/</link>
-      <pubDate>Thu, 20 Feb 2020 00:00:00 +0000</pubDate>
-      
-      <guid>/zh/2020/02/%E8%81%8A%E4%B8%80%E8%81%8Ago%E7%BC%96%E5%86%99%E7%9A%84%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%B7%A5%E5%85%B7%E7%B1%BB/</guid>
-      <description>&lt;p&gt;Go原生在flag包提供了一个命令行工具类，它可以让我们执行类似命令行的赋参操作，经常被运用于工具类，特别是数据处理过程，可以方便我们进行参数可视化注解。&lt;/p&gt;</description>
     </item>
     
     <item>
@@ -350,39 +170,12 @@
     </item>
     
     <item>
-      <title>浅谈 Java单例模式</title>
-      <link>/zh/2019/08/%E6%B5%85%E8%B0%88-java%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/</link>
-      <pubDate>Sun, 11 Aug 2019 00:00:00 +0000</pubDate>
-      
-      <guid>/zh/2019/08/%E6%B5%85%E8%B0%88-java%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/</guid>
-      <description>&lt;p&gt;相信在设计模式中有一个经常提到的概念：&lt;strong&gt;单例模式&lt;/strong&gt;，为什么它经常出现在面试话题中，因为它的应用场景十分广泛。&lt;/p&gt;</description>
-    </item>
-    
-    <item>
       <title>简述 Java线程池以及使用</title>
       <link>/zh/2019/07/%E7%AE%80%E8%BF%B0-java%E7%BA%BF%E7%A8%8B%E6%B1%A0%E4%BB%A5%E5%8F%8A%E4%BD%BF%E7%94%A8/</link>
       <pubDate>Mon, 15 Jul 2019 00:00:00 +0000</pubDate>
       
       <guid>/zh/2019/07/%E7%AE%80%E8%BF%B0-java%E7%BA%BF%E7%A8%8B%E6%B1%A0%E4%BB%A5%E5%8F%8A%E4%BD%BF%E7%94%A8/</guid>
       <description>&lt;p&gt;线程池可以避免频繁创建销毁线程，提高性能。常见如数据库的连接池。&lt;/p&gt;</description>
-    </item>
-    
-    <item>
-      <title>简述 Java线程池以及使用</title>
-      <link>/zh/2019/07/%E7%AE%80%E8%BF%B0-java%E7%BA%BF%E7%A8%8B%E6%B1%A0%E4%BB%A5%E5%8F%8A%E4%BD%BF%E7%94%A8/</link>
-      <pubDate>Mon, 15 Jul 2019 00:00:00 +0000</pubDate>
-      
-      <guid>/zh/2019/07/%E7%AE%80%E8%BF%B0-java%E7%BA%BF%E7%A8%8B%E6%B1%A0%E4%BB%A5%E5%8F%8A%E4%BD%BF%E7%94%A8/</guid>
-      <description>&lt;p&gt;线程池可以避免频繁创建销毁线程，提高性能。常见如数据库的连接池。&lt;/p&gt;</description>
-    </item>
-    
-    <item>
-      <title>Java反射机制和代理模式的应用</title>
-      <link>/zh/2019/03/java%E5%8F%8D%E5%B0%84%E6%9C%BA%E5%88%B6%E5%92%8C%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F%E7%9A%84%E5%BA%94%E7%94%A8/</link>
-      <pubDate>Fri, 15 Mar 2019 00:00:00 +0000</pubDate>
-      
-      <guid>/zh/2019/03/java%E5%8F%8D%E5%B0%84%E6%9C%BA%E5%88%B6%E5%92%8C%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F%E7%9A%84%E5%BA%94%E7%94%A8/</guid>
-      <description>&lt;p&gt;RPC：远程过程调用&lt;/p&gt;</description>
     </item>
     
     <item>

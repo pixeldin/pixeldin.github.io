@@ -1,27 +1,18 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Categories on Pixelpig&#39;s blog</title>
+    <title>Categories on pixelpig - tech</title>
     <link>/zh/categories/</link>
-    <description>Recent content in Categories on Pixelpig&#39;s blog</description>
+    <description>Recent content in Categories on pixelpig - tech</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language>
-    <lastBuildDate>Sun, 15 May 2022 00:00:00 +0000</lastBuildDate><atom:link href="/zh/categories/index.xml" rel="self" type="application/rss+xml" />
+    <language>zh-cn</language>
+    <lastBuildDate>Sat, 23 Apr 2022 00:00:00 +0000</lastBuildDate><atom:link href="/zh/categories/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Go</title>
       <link>/zh/categories/go/</link>
-      <pubDate>Sun, 15 May 2022 00:00:00 +0000</pubDate>
+      <pubDate>Sat, 23 Apr 2022 00:00:00 +0000</pubDate>
       
       <guid>/zh/categories/go/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>并发</title>
-      <link>/zh/categories/%E5%B9%B6%E5%8F%91/</link>
-      <pubDate>Sun, 15 May 2022 00:00:00 +0000</pubDate>
-      
-      <guid>/zh/categories/%E5%B9%B6%E5%8F%91/</guid>
       <description></description>
     </item>
     
@@ -76,6 +67,15 @@
       <pubDate>Fri, 15 Oct 2021 00:00:00 +0000</pubDate>
       
       <guid>/zh/categories/gin/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>并发</title>
+      <link>/zh/categories/%E5%B9%B6%E5%8F%91/</link>
+      <pubDate>Tue, 29 Jun 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/zh/categories/%E5%B9%B6%E5%8F%91/</guid>
       <description></description>
     </item>
     

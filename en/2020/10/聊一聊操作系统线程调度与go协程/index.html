@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="generator" content="Hugo 0.80.0 with theme Tranquilpeak 0.4.8-BETA">
+<meta name="author" content="pixelpig">
+<meta name="keywords" content="">
+<meta name="description" content="我们计算机上面跑的每个任务，都是操作系统层面的资源分配，从启动进程到创建线程，在核数固定的情况下，多线程并发地执行。">
+
+
+<meta property="og:description" content="我们计算机上面跑的每个任务，都是操作系统层面的资源分配，从启动进程到创建线程，在核数固定的情况下，多线程并发地执行。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="聊一聊操作系统线程调度与Go协程">
+<meta name="twitter:title" content="聊一聊操作系统线程调度与Go协程">
+<meta property="og:url" content="/en/2020/10/%E8%81%8A%E4%B8%80%E8%81%8A%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%BA%BF%E7%A8%8B%E8%B0%83%E5%BA%A6%E4%B8%8Ego%E5%8D%8F%E7%A8%8B/">
+<meta property="twitter:url" content="/en/2020/10/%E8%81%8A%E4%B8%80%E8%81%8A%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%BA%BF%E7%A8%8B%E8%B0%83%E5%BA%A6%E4%B8%8Ego%E5%8D%8F%E7%A8%8B/">
+<meta property="og:site_name" content="pixelpig - tech">
+<meta property="og:description" content="我们计算机上面跑的每个任务，都是操作系统层面的资源分配，从启动进程到创建线程，在核数固定的情况下，多线程并发地执行。">
+<meta name="twitter:description" content="我们计算机上面跑的每个任务，都是操作系统层面的资源分配，从启动进程到创建线程，在核数固定的情况下，多线程并发地执行。">
+<meta property="og:locale" content="en">
+
+  
+    <meta property="article:published_time" content="2020-10-18T00:00:00">
+  
+  
+    <meta property="article:modified_time" content="2020-10-18T00:00:00">
+  
+  
+  
+    
+      <meta property="article:section" content="Go">
+    
+      <meta property="article:section" content="操作系统">
+    
+      <meta property="article:section" content="后端">
+    
+  
+  
+    
+      <meta property="article:tag" content="协程">
+    
+      <meta property="article:tag" content="系统调度">
+    
+      <meta property="article:tag" content="MPG">
+    
+  
+
+
+<meta name="twitter:card" content="summary">
+
+  <meta name="twitter:site" content="@pixelpigpigpig">
+
+
+  <meta name="twitter:creator" content="@pixelpigpigpig">
+
+
+
+
+
+
+  <meta property="og:image" content="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/go-schedule.png">
+  <meta property="twitter:image" content="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/go-schedule.png">
+
+
+
+
+
+  <meta property="og:image" content="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/pig.jpg">
+  <meta property="twitter:image" content="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/pig.jpg">
+
+
+    <title>聊一聊操作系统线程调度与Go协程</title>
+
+    <link rel="icon" href="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/blog/static/pixel.ico">
+    
+
+    
+
+    <link rel="canonical" href="/en/2020/10/%E8%81%8A%E4%B8%80%E8%81%8A%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%BA%BF%E7%A8%8B%E8%B0%83%E5%BA%A6%E4%B8%8Ego%E5%8D%8F%E7%A8%8B/">
+
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/jquery.fancybox.min.css" integrity="sha256-vuXZ9LGmmwtjqFX1F+EKin1ThZMub58gKULUyf0qECk=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/helpers/jquery.fancybox-thumbs.min.css" integrity="sha256-SEa4XYAHihTcEP1f5gARTB2K26Uk8PsndQYHQC1f4jU=" crossorigin="anonymous" />
+    
+    
+    <link rel="stylesheet" href="/css/style-twzjdbqhmnnacqs0pwwdzcdbt8yhv8giawvjqjmyfoqnvazl0dalmnhdkvp7.min.css" />
+    
+    
+
+    
+      
+    
+    
+  </head>
+
+  <body>
+    <div id="blog">
+      <header id="header" data-behavior="5">
+  <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+  <div class="header-title">
+    <a class="header-title-link" href="/en/">pixelpig - tech</a>
+  </div>
+  
+    
+      <a class="header-right-picture "
+         href="/#about">
+    
+    
+    
+      
+        <img class="header-picture" src="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/pig.jpg" alt="Author&#39;s picture" />
+      
+    
+    </a>
+  
+</header>
+
+      <nav id="sidebar" data-behavior="5">
+  <div class="sidebar-container">
+    
+      <div class="sidebar-profile">
+        <a href="/#about">
+          <img class="sidebar-profile-picture" src="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/pig.jpg" alt="Author&#39;s picture" />
+        </a>
+        <h4 class="sidebar-profile-name">pixelpig</h4>
+        
+          <h5 class="sidebar-profile-bio">a backend development living in GD, China. Stay hungry, stay foolish <strong>:）</strong></h5>
+        
+      </div>
+    
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/zh">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-language"></i>
+      
+      <span class="sidebar-button-desc">简/中</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/en/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-home"></i>
+      
+      <span class="sidebar-button-desc">Home</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/en/categories">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-bookmark"></i>
+      
+      <span class="sidebar-button-desc">Categories</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/en/tags">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
+      
+      <span class="sidebar-button-desc">Tags</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/en/archives">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-archive"></i>
+      
+      <span class="sidebar-button-desc">Archives</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/en/#about">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-question"></i>
+      
+      <span class="sidebar-button-desc">About me</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/en/https:/twitter.com/pixelpigpigpig">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-twitter"></i>
+      
+      <span class="sidebar-button-desc">Twitter</span>
+    </a>
+  </li>
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+
+    </ul>
+  </div>
+</nav>
+
+      
+
+      <div id="main" data-behavior="5"
+        class="
+               hasCoverMetaIn
+               ">
+        <article class="post" itemscope itemType="http://schema.org/BlogPosting">
+          
+          
+            <div class="post-header main-content-wrap text-left">
+  
+    <h1 class="post-title" itemprop="headline">
+      聊一聊操作系统线程调度与Go协程
+    </h1>
+  
+  
+  <div class="postShorten-meta post-meta">
+    
+      <time itemprop="datePublished" datetime="2020-10-18T00:00:00Z">
+        
+  October 18, 2020
+
+      </time>
+    
+    
+  
+  
+    <span>in</span>
+    
+      <a class="category-link" href="/en/categories/go">Go</a>, 
+    
+      <a class="category-link" href="/en/categories/%e6%93%8d%e4%bd%9c%e7%b3%bb%e7%bb%9f">操作系统</a>, 
+    
+      <a class="category-link" href="/en/categories/%e5%90%8e%e7%ab%af">后端</a>
+    
+  
+
+  </div>
+
+</div>
+          
+          <div class="post-content markdown" itemprop="articleBody">
+            <div class="main-content-wrap">
+              <p>我们计算机上面跑的每个任务，都是操作系统层面的资源分配，从启动进程到创建线程，在核数固定的情况下，多线程并发地执行。</p>
+<h3 id="前言">前言</h3>
+<p>我们计算机上面跑的每个任务，都是操作系统层面的资源分配，从启动进程到创建线程，在核数固定的情况下，多线程并发地执行。<strong>Go协程</strong>是一个比系统线程更细粒度的资源，轻量级和易切换。<br>
+这几天看了一些相关的文章，这次尝试从操作系统到Go协程，简单聊聊它们是如何关联上的以及我个人的理解。</p>
+<h3 id="基本概念">基本概念</h3>
+<h4 id="操作系统os">操作系统(OS)</h4>
+<p>操作系统负责着底层硬件的调度，它分配CPU，内存，磁盘的资源，并且替我们分配不同线程在不同CPU核的执行，保证各个程序如预期的指令进行执行。我们提交的每个程序，最终都会转换成一系列给操作系统识别的指令。</p>
+<h4 id="线程thread">线程(Thread)</h4>
+<p>上述经过转换的一系列指令，操作系统会通过线程来帮我们执行，本质上线程是<code>a path of execution</code>，一段可执行的程序路径。<br>
+线程有下面三个状态：</p>
+<ul>
+<li><strong>运行中</strong>：正在执行任务，理想状态是所有线程都处于这个状态。</li>
+<li><strong>就绪</strong>：可以随时加入运行，从就绪到运行的状态切换，叫做<strong>上下文切换</strong>，它需要一定的代价。</li>
+<li><strong>等待就绪</strong>：需要等待资源分配或者IO(网络/设备)阻塞中，需要经过就绪才能运行，这是在用户角度最不想看到的，它成为了程序大部分的性能瓶颈。</li>
+</ul>
+<h4 id="系统调度器">系统调度器</h4>
+<p>调度器肩负着巨大的使命，主要在于调度CPU与线程关系，保证不会有CPU闲下来，想象一下CPU就是仓鼠笼子里面的仓鼠，调度器一旦发现有仓鼠(<strong>CPU</strong>)在打瞌睡，就推动它们到轮子(<strong>线程</strong>)上跑，一刻也不能停。毕竟CPU的运算能力是很强悍的，一毫秒的空闲都是巨大的浪费。<br>
+往细处说，仓鼠只有4只(四核)，哪个轮子(线程)优先跑，取决于轮子(线程)的优先级。调度器肩负着运筹帷幄的使命，既要减少催促仓鼠跑动的延迟，同时还要保证不能有任务一直得不到执行，线程如果一直得不到仓鼠处理被称作“<strong>饥饿现象</strong>”。</p>
+<h4 id="协作式抢占式">协作式/抢占式</h4>
+<p>协作式（Cooperative）和抢占式（Preemptive）调度是OS中多任务运行策略。这两种调度方法的区别如下：</p>
+<ul>
+<li>协作式调度允许任务执行直到任务主动通知调度器进行切换，让出资源；</li>
+<li>抢占式调度允许任务在执行过程中被调度器break，调度器来决定下一个运行的任务；</li>
+</ul>
+<h4 id="任务类型">任务类型</h4>
+<p>不同的任务对系统资源有不同的要求</p>
+<ul>
+<li>
+<p><strong>I/O频繁切换</strong>：<br>
+未雨绸缪，<strong>IO</strong>指的是Input/Output，输入输出等待。这种等待资源<strong>输入/输出</strong>的job，主要瓶颈在资源是否分配到位，比如系统调用/文件IO等，其线程切换的时间远远小于IO设备/网络延迟，主要短板在于等待I/O，而不是线程上下文切换，因此可以分配较多线程，在“粮草”还没送到的这段时间，执行作战前的准备。</p>
+</li>
+<li>
+<p><strong>计算密集型</strong>：<br>
+这种任务主要耗CPU，比如用一个线程计算圆周率π的第N位。如果分配大量的线程给它，系统既要保证各个线程对计算状态的共享，先不考虑会发生脏读/脏写操作，还需要频繁进行线程切换，这会造成大量时间浪费，线程每次重新唤醒都要在<strong>程序计数器</strong>(PC)寻找下一个执行指令的位置，在核数固定的情况下，分配过多线程会有事倍功半的效果。</p>
+<blockquote>
+<p>If your program is focused on CPU-Bound work, then context switches are going to be a performance nightmare. Since the Thead always has work to do, the context switch is stopping that work from progressing.</p>
+</blockquote>
+<p>当然也有例外的情况，比如<strong>Map-Reduce</strong>，指的是先拆分后聚合。当你的计算任务可以拆分成很多模块，在各个模块不同执行顺序不会影响最终结果的情况下，尝试“逐个击破”，最终再汇聚的情况，如果能合理分配任务，多线程肯定是优于单线程的。</p>
+</li>
+</ul>
+<p>后面尝试通过列举几个<strong>Go</strong>的简单程序，通过单/多协程处理，比对两者在不同情景的性能差异情况。</p>
+<h5 id="map-reduce">Map-Reduce：</h5>
+<p>这个例子比较简单，我们目标是累加一个等差数列</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">PIXEL_ARRAY</span> []<span style="color:#66d9ef">int</span>
+<span style="color:#75715e">//初始化一个等差数列，后面尝试将等差数列传到单协程/多协程函数进行累加
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">init</span>()  {
+  <span style="color:#66d9ef">for</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">1</span>; <span style="color:#a6e22e">i</span> <span style="color:#f92672">&lt;=</span> <span style="color:#ae81ff">100000</span>; <span style="color:#a6e22e">i</span><span style="color:#f92672">++</span> {
+    <span style="color:#a6e22e">PIXEL_ARRAY</span> = append(<span style="color:#a6e22e">PIXEL_ARRAY</span>, <span style="color:#a6e22e">i</span>)
+  }
+}
+</code></pre></div><p>后面我们用单协程/多协程版本，区分开两个实现方式</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#75715e">//单协程暴力版本
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">SumWithSingle</span>(<span style="color:#a6e22e">arr</span> []<span style="color:#66d9ef">int</span>) <span style="color:#66d9ef">int32</span> {
+  <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">sum</span> <span style="color:#66d9ef">int32</span>
+  <span style="color:#75715e">//遍历累加，相当暴力！
+</span><span style="color:#75715e"></span>  <span style="color:#66d9ef">for</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">0</span>; <span style="color:#a6e22e">i</span> &lt; len(<span style="color:#a6e22e">arr</span>); <span style="color:#a6e22e">i</span><span style="color:#f92672">++</span> {
+    <span style="color:#a6e22e">sum</span> <span style="color:#f92672">+=</span> int32(<span style="color:#a6e22e">arr</span>[<span style="color:#a6e22e">i</span>])
+  }
+  <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">sum</span>
+}
+
+<span style="color:#75715e">//多协程版本，每个协程均等计算自己分配的切片区间， gNum是起多少个协程并发处理
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">SumWithMulti</span>(<span style="color:#a6e22e">arr</span> []<span style="color:#66d9ef">int</span>, <span style="color:#a6e22e">gNum</span> <span style="color:#66d9ef">int</span>) <span style="color:#66d9ef">int32</span> {
+  <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">wg</span> <span style="color:#a6e22e">sync</span>.<span style="color:#a6e22e">WaitGroup</span>
+  <span style="color:#75715e">//用于等待gNum个协程执行完
+</span><span style="color:#75715e"></span>  <span style="color:#a6e22e">wg</span>.<span style="color:#a6e22e">Add</span>(<span style="color:#a6e22e">gNum</span>)
+
+  <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">sum</span> <span style="color:#66d9ef">int32</span>
+  <span style="color:#75715e">//各个任务的平均长度
+</span><span style="color:#75715e"></span>  <span style="color:#a6e22e">div</span> <span style="color:#f92672">:=</span> len(<span style="color:#a6e22e">arr</span>) <span style="color:#f92672">/</span> <span style="color:#a6e22e">gNum</span>
+  
+  <span style="color:#75715e">//注意切割长度需要向上取整，此处非本demo侧重点，为了简单化一律使用整除切开原数组.
+</span><span style="color:#75715e"></span>  <span style="color:#75715e">//div := int(math.Ceil(float64(float64(len(arr)) / float64(gNum))))
+</span><span style="color:#75715e"></span>  
+  <span style="color:#66d9ef">for</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">0</span>; <span style="color:#a6e22e">i</span> &lt; <span style="color:#a6e22e">gNum</span>; <span style="color:#a6e22e">i</span><span style="color:#f92672">++</span> {
+    <span style="color:#a6e22e">Left</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">*</span> <span style="color:#a6e22e">div</span>
+    <span style="color:#a6e22e">Right</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">Left</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">div</span>
+    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">==</span> <span style="color:#a6e22e">gNum</span> {
+      <span style="color:#a6e22e">Right</span> = len(<span style="color:#a6e22e">arr</span>)
+    }
+    <span style="color:#66d9ef">go</span> <span style="color:#66d9ef">func</span>() {
+        <span style="color:#75715e">//每个协程独立的汇总
+</span><span style="color:#75715e"></span>      <span style="color:#a6e22e">ps</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">0</span>
+      <span style="color:#66d9ef">for</span> <span style="color:#a6e22e">_</span>, <span style="color:#a6e22e">value</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">range</span> <span style="color:#a6e22e">arr</span>[<span style="color:#a6e22e">Left</span>:<span style="color:#a6e22e">Right</span>] {
+        <span style="color:#a6e22e">ps</span> <span style="color:#f92672">+=</span> <span style="color:#a6e22e">value</span>
+      }
+      <span style="color:#75715e">//处理完累积到全局变量，由于仅有累加操作,可以用原子加实现互斥, 这里无需加锁.
+</span><span style="color:#75715e"></span>      <span style="color:#a6e22e">atomic</span>.<span style="color:#a6e22e">AddInt32</span>(<span style="color:#f92672">&amp;</span><span style="color:#a6e22e">sum</span>, int32(<span style="color:#a6e22e">ps</span>))
+      <span style="color:#a6e22e">wg</span>.<span style="color:#a6e22e">Done</span>()
+    }()
+  }
+
+  <span style="color:#75715e">//等待各个子协程计算完毕
+</span><span style="color:#75715e"></span>  <span style="color:#a6e22e">wg</span>.<span style="color:#a6e22e">Wait</span>()
+  <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">sum</span>
+}
+</code></pre></div><h4 id="性能分析">性能分析</h4>
+<p>下面尝试用BenchMark分析性能，输出如下：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#f92672">import</span> <span style="color:#e6db74">&#34;testing&#34;</span>
+
+<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">PIXEL_ARRAY</span> []<span style="color:#66d9ef">int</span>
+
+<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">init</span>()  {
+  <span style="color:#66d9ef">for</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">1</span>; <span style="color:#a6e22e">i</span> <span style="color:#f92672">&lt;=</span> <span style="color:#ae81ff">100000</span>; <span style="color:#a6e22e">i</span><span style="color:#f92672">++</span> {
+    <span style="color:#a6e22e">PIXEL_ARRAY</span> = append(<span style="color:#a6e22e">PIXEL_ARRAY</span>, <span style="color:#a6e22e">i</span>)
+  }
+}
+
+<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">BenchmarkSumWithSingle</span>(<span style="color:#a6e22e">b</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">testing</span>.<span style="color:#a6e22e">B</span>) {
+  <span style="color:#66d9ef">for</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">0</span>; <span style="color:#a6e22e">i</span> &lt; <span style="color:#a6e22e">b</span>.<span style="color:#a6e22e">N</span>; <span style="color:#a6e22e">i</span><span style="color:#f92672">++</span> {
+    <span style="color:#a6e22e">SumWithSingle</span>(<span style="color:#a6e22e">PIXEL_ARRAY</span>)
+  }
+}
+
+<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">BenchmarkSumWithMulti</span>(<span style="color:#a6e22e">b</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">testing</span>.<span style="color:#a6e22e">B</span>) {
+  <span style="color:#66d9ef">for</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">0</span>; <span style="color:#a6e22e">i</span> &lt; <span style="color:#a6e22e">b</span>.<span style="color:#a6e22e">N</span>; <span style="color:#a6e22e">i</span><span style="color:#f92672">++</span> {
+    <span style="color:#a6e22e">SumWithMulti</span>(<span style="color:#a6e22e">PIXEL_ARRAY</span>, <span style="color:#ae81ff">10</span>)
+  }
+}
+</code></pre></div><p><strong>结果示例：</strong><br>
+在4核电脑上，启动10个协程去并发处理，针对这个例子多协程是优于单协程的，符合预期。</p>
+<pre><code>$ GOGC=off go test -run none -bench . -benchtime 3s
+goos: windows
+goarch: amd64
+pkg: HelloGo/basic/Multi
+BenchmarkSumWithSingle-4           50000             63583 ns/op
+BenchmarkSumWithMulti-4           100000             39216 ns/op
+PASS
+ok      HelloGo/basic/Multi     8.623s
+</code></pre><p>在操作系统层面，每个线程的执行先后顺序是无法保证的。Go中，协程也是如此。拿上个例子来说，<strong>Map-Reduce</strong>的<strong>Map</strong>操作是切开等差数列，分配到任务的不同<strong>Go协程</strong>执行时间是不确定的，有可能<code>1+2+3+...</code>, 也有可能是<code>21+22+23+...</code></p>
+<p>如果程序要控制相应线程执行的顺序，需要在操作系统的上一层，比如编程语言中加入调度指令，如++原子操作，同步锁，互斥量++，程序的性能也和锁的粒度有关系，这个相关知识可以作为以后拓展。</p>
+<p><strong>Go调度器</strong>的实现是基于操作系统调度这些理念实现的，后面我们尝试往更高层(用户态)走，以<strong>Go</strong>协程是如何被调度的角度来分析。</p>
+<hr>
+<h3 id="go-scheduler">Go Scheduler</h3>
+<p>众所周知，Go调度器有下面几个主要的组件：</p>
+<ul>
+<li>M: 工作线程, 由P创建，关联上<strong>OS线程</strong>，可以理解为M就是<strong>OS线程</strong></li>
+<li>P: 上下文，处理代码的所需资源, 创建数量与CPU核数相关，每个P会分配一个<strong>OS线程</strong>(M)</li>
+<li>G: 当前go协程，如果关联上<strong>OS线程</strong>(M)，代表即将或者正在执行的<strong>go</strong>代码。<strong>G</strong>可以在两个队列中找到它们，本地/全局队列，我们后面再细谈。</li>
+</ul>
+<blockquote>
+<p>At any time, M goroutines need to be scheduled on N OS threads that runs on at most GOMAXPROCS numbers of processors.</p>
+</blockquote>
+<h4 id="p逻辑cpu">P，逻辑CPU</h4>
+<p><strong>GO</strong>的P和你的CPU核心数量有关，注意这里并不是真正CPU数量，是++逻辑CPU数量++。查看任务管理器，在4核CPU的情况下，假如说你的机器具备超线程(i7处理器)，每个物理核有两个线程，那么意味着在Go程序里逻辑上有8个可用的处理器，<strong>逻辑CPU</strong>数量应该是8。即上面所提到的<strong>P</strong>。<br>
+我当前机器是(i5处理器)，每个核一个线程，所以下面输出的逻辑CPU(<strong>P</strong>)数量是4，<strong>这代表当启动多个线程的时候，我的机器最多可以支持并行4个系统线程，多出来的线程就是并发了。</strong><br>
+可以通过在你的机器执行下列Go代码，看下逻辑<strong>P</strong>的数量，</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+
+<span style="color:#f92672">import</span> (
+  <span style="color:#e6db74">&#34;fmt&#34;</span>
+  <span style="color:#e6db74">&#34;runtime&#34;</span>
+)
+
+<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+    <span style="color:#75715e">// NumCPU returns the number of logical
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">// CPUs usable by the current process.
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">//我的机器输出 4
+</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">runtime</span>.<span style="color:#a6e22e">NumCPU</span>())
+}
+</code></pre></div><p>每一个<strong>P</strong>会分配一个系统线程<strong>M</strong>，相当于说在这个机器的Go程序中，我有4个<strong>系统线程</strong>可以用来执行我的任务，每个都独立与其中一个核，<strong>P</strong>挂钩。</p>
+<p>M个<strong>Go协程</strong>会分配在N个<strong>系统线程</strong>上，每个要运行的G都必须关联上<strong>P</strong>(逻辑CPU)，程序可以干涉<code>GOMAXPROCS</code>的数量，以控制最多有多少个<strong>P</strong>可以使用。</p>
+<p>下面用图示可能会更加直观：<br>
+<img src="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/scheduler-P-M-G.png" alt="Go全局与本地协程队列.png"></p>
+<p>在<strong>Go</strong>中，每个上下文<strong>P</strong>会分配一个本地的协程队列(<strong>LRQ</strong>)，叫做<strong>Local Run Queue <strong>，一个</strong>M</strong>必须关联所需的资源<strong>P</strong>才能运行相应的<strong>G</strong>队列，正如操作系统层面上每个<strong>线程</strong>队列需要分配关联上<strong>CPU</strong>才能得到执行，类比前面的栗子，轮子(<strong>M</strong>)需要仓鼠(<strong>P</strong>)去带动，才能执行(跑<strong>G</strong>协程任务)。</p>
+<p>如下图所示：
+<img src="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/scheduler-concepts.png" alt="P-M-G">
+<strong>P1，P2</strong>是相对固定的，<strong>M</strong>和<strong>G</strong>是可以随调度器分配选择的。</p>
+<hr>
+<h4 id="go协程的切换">Go协程的切换</h4>
+<p>理解完上面的一些概念之后，现在我们看下<strong>Go</strong>是如何对协程进行切换，文章前面提到，假如线程创建过多，由于系统调度的不确定性，线程得不到执行，可能会长期处于饥饿。同理<strong>Go</strong>协程也会有“靠边停车”的现象，所以<strong>Go调度器</strong>需要一些的条件来触发协程切换，避免停完车就不再启动了，具体的切换本质上就是<strong>Go调度器</strong>对<strong>P-M-G</strong>三者之间的断开与重连。</p>
+<p>下列情景可能会让调度器对执行上下文，即go协程的切换做出决定：</p>
+<ul>
+<li>go关键字，创建新的协程</li>
+<li>垃圾回收</li>
+<li>系统调用</li>
+<li>同步/互斥/<code>Gosched()</code>等操作</li>
+</ul>
+<h4 id="程序示例">程序示例：</h4>
+<p>下面展示一个简单而且比较常见的例子，我们通过限制逻辑CPU的个数，尝试干涉Go调度器。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+
+    <span style="color:#75715e">//设置最多一个P可以关联上
+</span><span style="color:#75715e"></span>  <span style="color:#a6e22e">runtime</span>.<span style="color:#a6e22e">GOMAXPROCS</span>(<span style="color:#ae81ff">1</span>)
+  <span style="color:#66d9ef">go</span> <span style="color:#66d9ef">func</span>() {
+    <span style="color:#66d9ef">for</span> {
+      <span style="color:#75715e">//保持空转,如果没有其他函数调用,在单个处理器下该协程不会切换
+</span><span style="color:#75715e"></span>      ;
+    }
+  }()
+
+  <span style="color:#75715e">//尝试切换协程
+</span><span style="color:#75715e"></span>  <span style="color:#a6e22e">runtime</span>.<span style="color:#a6e22e">Gosched</span>()
+  println(<span style="color:#e6db74">&#34;main done.&#34;</span>)
+}
+</code></pre></div><p>我们通过<code>runtime.GOMAXPROCS(1)</code>设置本次运行的逻辑CPU个数，代表可用的P只有1，意味着最多只能同时分配给一个协程去执行。如果执行这个程序，由于主协程执行了让步<strong>Gosched()</strong>，获得运行权的的Go协程会得到执行，由于该协程在死循环一直执行空语句，导致程序不会有任何输出，而且主协程得不到运行权，所以这个程序永远不会退出。</p>
+<p>题外话：注意这里区别于上面的<code>runtime.NumCPU(int)</code>方法，<code>NumCPU()</code>是在启动时候直接调用系统方法，所以和经过<strong>GOMAXPROCS</strong>的设置之后，并不会改变<code>NumCPU()</code>原有的返回值，<code>GOMAXPROCS</code>仅是对本次运行时<strong>P</strong>数量进行限制。</p>
+<h3 id="协程偷窃">协程偷窃</h3>
+<p>从Go调度器角度看，执行的协程任务有点快有的慢，既然我的职责是不能让CPU空闲，那当我有空的时候，我肯定要从别人那里偷一些任务来跑。<br>
+<img src="https://miro.medium.com/max/2271/1*Y3cMxHqERb1htaJ0GbgixQ.png" alt="协程任务偷取#created by Renee French">
+是的，是明目张胆的偷！我觉得这张图很贴切，所以我把这张图也偷来了哈哈哈。<br>
+原文参考<a href="https://medium.com/a-journey-with-go/go-work-stealing-in-go-scheduler-d439231be64d">：Go: Work-Stealing in Go Scheduler</a> (可能需要科学上网)</p>
+<p>前面提到两个队列，全局/本地队列：</p>
+<ul>
+<li>本地队列：指的是当前上下文<strong>P</strong>关联上的Go协程队列(<strong>LRQ</strong>)，本地队列，在go1.13版本每个本地协程队列的最大值是256，超过256就会放到全局队列里面去。本地队列是可以被其他<strong>P</strong>偷走的，在某些情况下，当有<strong>P</strong>发现本地的<strong>G</strong>队列空了，就会去偷其他<strong>P</strong>的本地队列，每次会从其它<strong>P</strong>的本地队列里面偷走一半的<strong>G</strong>。</li>
+<li>全局队列：在其他情况，当有空闲<strong>P</strong>发现其他<strong>P</strong>的本地队列没有<strong>G</strong>可以偷的情况下，会尝试获取全局队列的<strong>G</strong>去执行。</li>
+</ul>
+<pre><code>runtime.schedule() {
+    // only 1/61 of the time, check the global runnable queue for a G.
+    // if not found, check the local queue.
+    // if not found,
+    //     try to steal from other Ps.
+    //     if not, check the global runnable queue.
+    //     if not found, poll network.
+}
+</code></pre><p>上面的注释表明了偷窃各个部分的优先级，只有1/61的时间会去检查全局队列。<br>
+<strong>优先级：本地队列 &gt; 其他P的队列 &gt; 全局队列</strong></p>
+<p>根据这张我从别处偷来的这张图，此时<strong>P2</strong>的本地队列已经是空的，所以这个时候<strong>P2</strong>即将要从<strong>P1</strong>偷走3个<strong>G</strong>
+<img src="https://rakyll.org/img/scheduler-stealing.png" alt="Steal from rakyll.png"></p>
+<hr>
+<h3 id="总结">总结</h3>
+<p>Go调度的思想是基于上述系统调度实现的，归根结底Go中的协程切换是<strong>P-M-G</strong>三者之间的断开与重连。所以G协程在当前线程M的切换，就像从系统角度看，线程在CPU上面的切换。</p>
+<blockquote>
+<p>Your workload is naturally stopped and this allows a different Goroutine to leverage the same OS/hardware thread efficiently instead of letting the OS/hardware thread sit idle.</p>
+</blockquote>
+<p><strong>因为Go协程比线程粒度更小，更加轻量级，所以Go协程切换会比OS直接切换线程代价更小。</strong></p>
+<p>到这里只是浅尝辄止的梳理Go调度的情况，大家如果有兴趣深入挖掘的话可以参考郝林老师的《Go并发编程实战》，或者直接看源码，相关的Go调度策略可以在<code>src/runtime/proc.go</code>找到。</p>
+<h3 id="参考链接">参考链接</h3>
+<p><strong>Scheduling In Go : Part II - Go Scheduler</strong><br>
+Ardanlabs素质三连：  <br>
+<a href="https://www.ardanlabs.com/blog/2018/08/scheduling-in-go-part2.html">https://www.ardanlabs.com/blog/2018/08/scheduling-in-go-part2.html</a><br>
+<strong>dotGo 2017 - JBD - Go&rsquo;s work stealing scheduler</strong><br>
+<a href="https://www.youtube.com/watch?v=Yx6FBsGNOp4">https://www.youtube.com/watch?v=Yx6FBsGNOp4</a><br>
+<strong>Go: Goroutine and Preemption</strong><br>
+<a href="https://medium.com/a-journey-with-go/go-goroutine-and-preemption-d6bc2aa2f4b7">https://medium.com/a-journey-with-go/go-goroutine-and-preemption-d6bc2aa2f4b7</a><br>
+<strong>Go&rsquo;s work-stealing scheduler</strong><br>
+<a href="https://rakyll.org/scheduler/">https://rakyll.org/scheduler/</a></p>
+              
+            </div>
+          </div>
+          <div id="post-footer" class="post-footer main-content-wrap">
+            
+              
+                
+                
+                  <div class="post-footer-tags">
+                    <span class="text-color-light text-small">TAGGED IN</span><br/>
+                    
+  <a class="tag tag--primary tag--small" href="/en/tags/%E5%8D%8F%E7%A8%8B/">协程</a>
+
+  <a class="tag tag--primary tag--small" href="/en/tags/%E7%B3%BB%E7%BB%9F%E8%B0%83%E5%BA%A6/">系统调度</a>
+
+  <a class="tag tag--primary tag--small" href="/en/tags/mpg/">MPG</a>
+
+                  </div>
+                
+              
+            
+            <div class="post-actions-wrap">
+  
+      <nav >
+        <ul class="post-actions post-action-nav">
+          
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="/en/2021/01/go%E5%8D%8F%E7%A8%8B%E9%97%B4%E9%80%9A%E4%BF%A1%E4%B9%8B%E7%94%9F%E4%BA%A7%E8%80%85-%E6%B6%88%E8%B4%B9%E8%80%85%E6%A8%A1%E5%9E%8B/" data-tooltip="Go协程间通信之生产者-消费者模型">
+              
+                  <i class="fa fa-angle-left"></i>
+                  <span class="hide-xs hide-sm text-small icon-ml">NEXT</span>
+                </a>
+            </li>
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="/en/2020/06/%E8%81%8A%E4%B8%80%E8%81%8Ago%E7%9A%84context%E4%B8%8A%E4%B8%8B%E6%96%87/" data-tooltip="聊一聊Go的Context上下文">
+              
+                  <span class="hide-xs hide-sm text-small icon-mr">PREVIOUS</span>
+                  <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+          
+        </ul>
+      </nav>
+    <ul class="post-actions post-action-share" >
+      
+        <li class="post-action hide-lg hide-md hide-sm">
+          <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
+            <i class="fa fa-share-alt"></i>
+          </a>
+        </li>
+        
+      
+      
+      <li class="post-action">
+        
+          <a class="post-action-btn btn btn--default" href="#">
+        
+          <i class="fa fa-list"></i>
+        </a>
+      </li>
+    </ul>
+  
+</div>
+
+            
+              
+            
+          </div>
+        </article>
+        <footer id="footer" class="main-content-wrap">
+  <span class="copyrights">
+    &copy; 2022 <a href="https://github.com/pixeldin">pixeldin</a>. All Rights Reserved
+  </span>
+</footer>
+
+      </div>
+      <div id="bottom-bar" class="post-bottom-bar" data-behavior="5">
+        <div class="post-actions-wrap">
+  
+      <nav >
+        <ul class="post-actions post-action-nav">
+          
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="/en/2021/01/go%E5%8D%8F%E7%A8%8B%E9%97%B4%E9%80%9A%E4%BF%A1%E4%B9%8B%E7%94%9F%E4%BA%A7%E8%80%85-%E6%B6%88%E8%B4%B9%E8%80%85%E6%A8%A1%E5%9E%8B/" data-tooltip="Go协程间通信之生产者-消费者模型">
+              
+                  <i class="fa fa-angle-left"></i>
+                  <span class="hide-xs hide-sm text-small icon-ml">NEXT</span>
+                </a>
+            </li>
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="/en/2020/06/%E8%81%8A%E4%B8%80%E8%81%8Ago%E7%9A%84context%E4%B8%8A%E4%B8%8B%E6%96%87/" data-tooltip="聊一聊Go的Context上下文">
+              
+                  <span class="hide-xs hide-sm text-small icon-mr">PREVIOUS</span>
+                  <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+          
+        </ul>
+      </nav>
+    <ul class="post-actions post-action-share" >
+      
+        <li class="post-action hide-lg hide-md hide-sm">
+          <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
+            <i class="fa fa-share-alt"></i>
+          </a>
+        </li>
+        
+      
+      
+      <li class="post-action">
+        
+          <a class="post-action-btn btn btn--default" href="#">
+        
+          <i class="fa fa-list"></i>
+        </a>
+      </li>
+    </ul>
+  
+</div>
+
+      </div>
+      <div id="share-options-bar" class="share-options-bar" data-behavior="5">
+  <i id="btn-close-shareoptions" class="fa fa-close"></i>
+  <ul class="share-options">
+    
+  </ul>
+</div>
+<div id="share-options-mask" class="share-options-mask"></div>
+    </div>
+    
+    <div id="about">
+  <div id="about-card">
+    <div id="about-btn-close">
+      <i class="fa fa-remove"></i>
+    </div>
+    
+      <img id="about-card-picture" src="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/pig.jpg" alt="Author&#39;s picture" />
+    
+    <h4 id="about-card-name">pixelpig</h4>
+    
+      <div id="about-card-bio">a backend development living in GD, China. Stay hungry, stay foolish <strong>:）</strong></div>
+    
+    
+      <div id="about-card-job">
+        <i class="fa fa-briefcase"></i>
+        <br/>
+        Golang developer@Huya
+      </div>
+    
+    
+      <div id="about-card-location">
+        <i class="fa fa-map-marker"></i>
+        <br/>
+        CHINA-GD
+      </div>
+    
+  </div>
+</div>
+
+    
+
+    
+  
+    <div id="cover" style="background-image:url('https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/cover.jpg');"></div>
+  
+
+
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js" integrity="sha256-/BfiIkHlHoVihZdc6TFuj7MmJ0TWcWsMXkeDFwhi0zw=" crossorigin="anonymous"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.7/js/jquery.fancybox.min.js" integrity="sha256-GEAnjcTqVP+vBp3SSc8bEDQqvWAZMiHyUSIorrWwH50=" crossorigin="anonymous"></script>
+
+
+<script src="/js/script-pcw6v3xilnxydl1vddzazdverrnn9ctynvnxgwho987mfyqkuylcb1nlt.min.js"></script>
+
+
+<script lang="javascript">
+window.onload = updateMinWidth;
+window.onresize = updateMinWidth;
+document.getElementById("sidebar").addEventListener("transitionend", updateMinWidth);
+function updateMinWidth() {
+  var sidebar = document.getElementById("sidebar");
+  var main = document.getElementById("main");
+  main.style.minWidth = "";
+  var w1 = getComputedStyle(main).getPropertyValue("min-width");
+  var w2 = getComputedStyle(sidebar).getPropertyValue("width");
+  var w3 = getComputedStyle(sidebar).getPropertyValue("left");
+  main.style.minWidth = `calc(${w1} - ${w2} - ${w3})`;
+}
+</script>
+
+<script>
+$(document).ready(function() {
+  hljs.configure({ classPrefix: '', useBR: false });
+  $('pre.code-highlight > code, pre > code').each(function(i, block) {
+    if (!$(this).hasClass('codeblock')) {
+      $(this).addClass('codeblock');
+    }
+    hljs.highlightBlock(block);
+  });
+});
+</script>
+
+
+  
+    
+  
+
+
+
+
+    
+  </body>
+</html>
+

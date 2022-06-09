@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en-us">
+<html lang="zh-cn">
   <head>
     
     <meta charset="UTF-8">
@@ -17,7 +17,7 @@
 <meta name="twitter:title" content="简述 Java线程池以及使用">
 <meta property="og:url" content="/zh/2019/07/%E7%AE%80%E8%BF%B0-java%E7%BA%BF%E7%A8%8B%E6%B1%A0%E4%BB%A5%E5%8F%8A%E4%BD%BF%E7%94%A8/">
 <meta property="twitter:url" content="/zh/2019/07/%E7%AE%80%E8%BF%B0-java%E7%BA%BF%E7%A8%8B%E6%B1%A0%E4%BB%A5%E5%8F%8A%E4%BD%BF%E7%94%A8/">
-<meta property="og:site_name" content="Pixelpig&#39;s blog">
+<meta property="og:site_name" content="pixelpig - tech">
 <meta property="og:description" content="线程池可以避免频繁创建销毁线程，提高性能。常见如数据库的连接池。">
 <meta name="twitter:description" content="线程池可以避免频繁创建销毁线程，提高性能。常见如数据库的连接池。">
 <meta property="og:locale" content="zh">
@@ -45,6 +45,10 @@
 
 <meta name="twitter:card" content="summary">
 
+  <meta name="twitter:site" content="@pixelpigpigpig">
+
+
+  <meta name="twitter:creator" content="@pixelpigpigpig">
 
 
 
@@ -89,7 +93,7 @@
       <header id="header" data-behavior="5">
   <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
   <div class="header-title">
-    <a class="header-title-link" href="/zh/">Pixelpig&#39;s blog</a>
+    <a class="header-title-link" href="/zh/">pixelpig - tech</a>
   </div>
   
     
@@ -99,7 +103,7 @@
     
     
       
-        <img class="header-picture" src="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/pig.jpg" alt="Author&#39;s picture" />
+        <img class="header-picture" src="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/pig.jpg" alt="作者的图片" />
       
     
     </a>
@@ -111,11 +115,11 @@
     
       <div class="sidebar-profile">
         <a href="/#about">
-          <img class="sidebar-profile-picture" src="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/pig.jpg" alt="Author&#39;s picture" />
+          <img class="sidebar-profile-picture" src="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/pig.jpg" alt="作者的图片" />
         </a>
         <h4 class="sidebar-profile-name">pixelpig</h4>
         
-          <h5 class="sidebar-profile-bio">Stay hungry, stay foolish <strong>:）</strong></h5>
+          <h5 class="sidebar-profile-bio">a backend development living in GD, China. Stay hungry, stay foolish <strong>:）</strong></h5>
         
       </div>
     
@@ -123,11 +127,71 @@
       
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="/en-us">
+      <a class="sidebar-button-link " href="/en">
     
       <i class="sidebar-button-icon fa fa-lg fa-language"></i>
       
-      <span class="sidebar-button-desc">简体中文</span>
+      <span class="sidebar-button-desc">English</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/zh/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-home"></i>
+      
+      <span class="sidebar-button-desc">首页</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/zh/categories">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-bookmark"></i>
+      
+      <span class="sidebar-button-desc">分类</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/zh/tags">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
+      
+      <span class="sidebar-button-desc">标签</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/zh/archives">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-archive"></i>
+      
+      <span class="sidebar-button-desc">归档</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/zh/#about">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-question"></i>
+      
+      <span class="sidebar-button-desc">关于我</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/zh/https:/weibo.com/u/1837780507">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-weibo"></i>
+      
+      <span class="sidebar-button-desc">微博</span>
     </a>
   </li>
 
@@ -164,14 +228,14 @@
     
       <time itemprop="datePublished" datetime="2019-07-15T00:00:00Z">
         
-  July 15, 2019
+  七月 15, 2019
 
       </time>
     
     
   
   
-    <span>in</span>
+    <span>发布在</span>
     
       <a class="category-link" href="/zh/categories/java">Java</a>, 
     
@@ -499,7 +563,7 @@ public class MutilThreadTask {
                 
                 
                   <div class="post-footer-tags">
-                    <span class="text-color-light text-small">TAGGED IN</span><br/>
+                    <span class="text-color-light text-small">标签</span><br/>
                     
   <a class="tag tag--primary tag--small" href="/zh/tags/%E7%BA%BF%E7%A8%8B/">线程</a>
 
@@ -514,17 +578,17 @@ public class MutilThreadTask {
           
             <li class="post-action">
               
-                <a class="post-action-btn btn btn--default tooltip--top" href="/zh/2019/07/%E7%AE%80%E8%BF%B0-java%E7%BA%BF%E7%A8%8B%E6%B1%A0%E4%BB%A5%E5%8F%8A%E4%BD%BF%E7%94%A8/" data-tooltip="简述 Java线程池以及使用">
+                <a class="post-action-btn btn btn--default tooltip--top" href="/zh/2019/08/%E6%B5%85%E8%B0%88-java%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/" data-tooltip="浅谈 Java单例模式">
               
                   <i class="fa fa-angle-left"></i>
-                  <span class="hide-xs hide-sm text-small icon-ml">NEXT</span>
+                  <span class="hide-xs hide-sm text-small icon-ml">下一篇</span>
                 </a>
             </li>
             <li class="post-action">
               
                 <a class="post-action-btn btn btn--default tooltip--top" href="/zh/2019/03/java%E5%8F%8D%E5%B0%84%E6%9C%BA%E5%88%B6%E5%92%8C%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F%E7%9A%84%E5%BA%94%E7%94%A8/" data-tooltip="Java反射机制和代理模式的应用">
               
-                  <span class="hide-xs hide-sm text-small icon-mr">PREVIOUS</span>
+                  <span class="hide-xs hide-sm text-small icon-mr">上一篇</span>
                   <i class="fa fa-angle-right"></i>
                 </a>
             </li>
@@ -565,17 +629,17 @@ public class MutilThreadTask {
           
             <li class="post-action">
               
-                <a class="post-action-btn btn btn--default tooltip--top" href="/zh/2019/07/%E7%AE%80%E8%BF%B0-java%E7%BA%BF%E7%A8%8B%E6%B1%A0%E4%BB%A5%E5%8F%8A%E4%BD%BF%E7%94%A8/" data-tooltip="简述 Java线程池以及使用">
+                <a class="post-action-btn btn btn--default tooltip--top" href="/zh/2019/08/%E6%B5%85%E8%B0%88-java%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/" data-tooltip="浅谈 Java单例模式">
               
                   <i class="fa fa-angle-left"></i>
-                  <span class="hide-xs hide-sm text-small icon-ml">NEXT</span>
+                  <span class="hide-xs hide-sm text-small icon-ml">下一篇</span>
                 </a>
             </li>
             <li class="post-action">
               
                 <a class="post-action-btn btn btn--default tooltip--top" href="/zh/2019/03/java%E5%8F%8D%E5%B0%84%E6%9C%BA%E5%88%B6%E5%92%8C%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F%E7%9A%84%E5%BA%94%E7%94%A8/" data-tooltip="Java反射机制和代理模式的应用">
               
-                  <span class="hide-xs hide-sm text-small icon-mr">PREVIOUS</span>
+                  <span class="hide-xs hide-sm text-small icon-mr">上一篇</span>
                   <i class="fa fa-angle-right"></i>
                 </a>
             </li>
@@ -612,24 +676,24 @@ public class MutilThreadTask {
       <i class="fa fa-remove"></i>
     </div>
     
-      <img id="about-card-picture" src="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/pig.jpg" alt="Author&#39;s picture" />
+      <img id="about-card-picture" src="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/pig.jpg" alt="作者的图片" />
     
     <h4 id="about-card-name">pixelpig</h4>
     
-      <div id="about-card-bio">Stay hungry, stay foolish <strong>:）</strong></div>
+      <div id="about-card-bio">a backend development living in GD, China. Stay hungry, stay foolish <strong>:）</strong></div>
     
     
       <div id="about-card-job">
         <i class="fa fa-briefcase"></i>
         <br/>
-        后端开发@广州虎牙
+        Golang developer@Huya
       </div>
     
     
       <div id="about-card-location">
         <i class="fa fa-map-marker"></i>
         <br/>
-        CHINA-ZH
+        CHINA-GD
       </div>
     
   </div>
