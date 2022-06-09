@@ -1,0 +1,821 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="generator" content="Hugo 0.80.0 with theme Tranquilpeak 0.4.8-BETA">
+<meta name="author" content="pixelpig">
+<meta name="keywords" content="">
+<meta name="description" content="在网络分层的七层协议中，我们知道TCP处于HTTP层的下方，本质上HTTP连接是基于底层的TCP连接建立的。">
+
+
+<meta property="og:description" content="在网络分层的七层协议中，我们知道TCP处于HTTP层的下方，本质上HTTP连接是基于底层的TCP连接建立的。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="聊一聊Go网络编程(一)--TCP通信">
+<meta name="twitter:title" content="聊一聊Go网络编程(一)--TCP通信">
+<meta property="og:url" content="/en/2021/05/%E8%81%8A%E4%B8%80%E8%81%8Ago%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B%E4%B8%80-tcp%E9%80%9A%E4%BF%A1/">
+<meta property="twitter:url" content="/en/2021/05/%E8%81%8A%E4%B8%80%E8%81%8Ago%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B%E4%B8%80-tcp%E9%80%9A%E4%BF%A1/">
+<meta property="og:site_name" content="pixelpig - tech">
+<meta property="og:description" content="在网络分层的七层协议中，我们知道TCP处于HTTP层的下方，本质上HTTP连接是基于底层的TCP连接建立的。">
+<meta name="twitter:description" content="在网络分层的七层协议中，我们知道TCP处于HTTP层的下方，本质上HTTP连接是基于底层的TCP连接建立的。">
+<meta property="og:locale" content="en">
+
+  
+    <meta property="article:published_time" content="2021-05-15T00:00:00">
+  
+  
+    <meta property="article:modified_time" content="2021-05-15T00:00:00">
+  
+  
+  
+    
+      <meta property="article:section" content="Go">
+    
+      <meta property="article:section" content="网络编程">
+    
+  
+  
+    
+      <meta property="article:tag" content="TCP">
+    
+  
+
+
+<meta name="twitter:card" content="summary">
+
+  <meta name="twitter:site" content="@pixelpigpigpig">
+
+
+  <meta name="twitter:creator" content="@pixelpigpigpig">
+
+
+
+
+
+
+  <meta property="og:image" content="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/blog/net-1.png">
+  <meta property="twitter:image" content="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/blog/net-1.png">
+
+
+
+
+
+  <meta property="og:image" content="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/pig.jpg">
+  <meta property="twitter:image" content="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/pig.jpg">
+
+
+    <title>聊一聊Go网络编程(一)--TCP通信</title>
+
+    <link rel="icon" href="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/blog/static/pixel.ico">
+    
+
+    
+
+    <link rel="canonical" href="/en/2021/05/%E8%81%8A%E4%B8%80%E8%81%8Ago%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B%E4%B8%80-tcp%E9%80%9A%E4%BF%A1/">
+
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/jquery.fancybox.min.css" integrity="sha256-vuXZ9LGmmwtjqFX1F+EKin1ThZMub58gKULUyf0qECk=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/helpers/jquery.fancybox-thumbs.min.css" integrity="sha256-SEa4XYAHihTcEP1f5gARTB2K26Uk8PsndQYHQC1f4jU=" crossorigin="anonymous" />
+    
+    
+    <link rel="stylesheet" href="/css/style-twzjdbqhmnnacqs0pwwdzcdbt8yhv8giawvjqjmyfoqnvazl0dalmnhdkvp7.min.css" />
+    
+    
+
+    
+      
+    
+    
+  </head>
+
+  <body>
+    <div id="blog">
+      <header id="header" data-behavior="5">
+  <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+  <div class="header-title">
+    <a class="header-title-link" href="/en/">pixelpig - tech</a>
+  </div>
+  
+    
+      <a class="header-right-picture "
+         href="/#about">
+    
+    
+    
+      
+        <img class="header-picture" src="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/pig.jpg" alt="Author&#39;s picture" />
+      
+    
+    </a>
+  
+</header>
+
+      <nav id="sidebar" data-behavior="5">
+  <div class="sidebar-container">
+    
+      <div class="sidebar-profile">
+        <a href="/#about">
+          <img class="sidebar-profile-picture" src="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/pig.jpg" alt="Author&#39;s picture" />
+        </a>
+        <h4 class="sidebar-profile-name">pixelpig</h4>
+        
+          <h5 class="sidebar-profile-bio">a backend development living in GD, China. Stay hungry, stay foolish <strong>:）</strong></h5>
+        
+      </div>
+    
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/zh">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-language"></i>
+      
+      <span class="sidebar-button-desc">简/中</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/en/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-home"></i>
+      
+      <span class="sidebar-button-desc">Home</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/en/categories">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-bookmark"></i>
+      
+      <span class="sidebar-button-desc">Categories</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/en/tags">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
+      
+      <span class="sidebar-button-desc">Tags</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/en/archives">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-archive"></i>
+      
+      <span class="sidebar-button-desc">Archives</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/en/#about">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-question"></i>
+      
+      <span class="sidebar-button-desc">About me</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/en/https:/twitter.com/pixelpigpigpig">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-twitter"></i>
+      
+      <span class="sidebar-button-desc">Twitter</span>
+    </a>
+  </li>
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+
+    </ul>
+  </div>
+</nav>
+
+      
+
+      <div id="main" data-behavior="5"
+        class="
+               hasCoverMetaIn
+               ">
+        <article class="post" itemscope itemType="http://schema.org/BlogPosting">
+          
+          
+            <div class="post-header main-content-wrap text-left">
+  
+    <h1 class="post-title" itemprop="headline">
+      聊一聊Go网络编程(一)--TCP通信
+    </h1>
+  
+  
+  <div class="postShorten-meta post-meta">
+    
+      <time itemprop="datePublished" datetime="2021-05-15T00:00:00Z">
+        
+  May 15, 2021
+
+      </time>
+    
+    
+  
+  
+    <span>in</span>
+    
+      <a class="category-link" href="/en/categories/go">Go</a>, 
+    
+      <a class="category-link" href="/en/categories/%e7%bd%91%e7%bb%9c%e7%bc%96%e7%a8%8b">网络编程</a>
+    
+  
+
+  </div>
+
+</div>
+          
+          <div class="post-content markdown" itemprop="articleBody">
+            <div class="main-content-wrap">
+              <p>在网络分层的七层协议中，我们知道TCP处于HTTP层的下方，本质上HTTP连接是基于底层的TCP连接建立的。</p>
+<h3 id="tcp协议概要">TCP协议概要</h3>
+<p>在网络分层的七层协议中，我们知道TCP处于HTTP层的下方，本质上HTTP连接是基于底层的TCP连接建立的。<br>
+<strong>TCP连接标识</strong>: 计算机之间在建立网络连接，也就是俗称的握手，本质上是两个文件句柄的关联，即fd，每个网络连接由四个属性唯一标识：&lt;源IP,源端口,目标IP,目标端口&gt;，因此一台机器的连接数受文件句柄<code>ulimit</code>的限制。<br>
+<strong>操作系统接口</strong>: Socket套接字</p>
+<h4 id="长连接keepalive的对比">长连接KeepAlive的对比</h4>
+<ul>
+<li>
+<p><strong>HTTP keepalive</strong><br>
+众所周知，HTTP连接是无状态的，通常连接用完就销毁，开启keepalive可以告知其保持连接一段时间，避免频繁连接重建。</p>
+</li>
+<li>
+<p><strong>TCP keepalive</strong></p>
+<blockquote>
+<p>Many existing TCP protocols support this way of error handling by defining some sort of heartbeat mechanism that requires each endpoint to send PING/PONG probes at a regular interval in order to detect both networking problems, as well as service health.</p>
+</blockquote>
+<p>TCP有别于HTTP，本身就是为了长连接而设定的，keepalive用于活性检测，可以理解为通过定义某种类型的心跳机制来支持这种错误处理方式，该心跳机制要求每个端点以规则的间隔发送ping/pong探测，以便检测网络问题以及服务健康。</p>
+</li>
+</ul>
+<h3 id="linux网络参数">Linux网络参数</h3>
+<p>在Linux机器可以通过下列网络参数设置TCP保活机制：</p>
+<pre><code>  # cat /proc/sys/net/ipv4/tcp_keepalive_time
+  7200
+
+  # cat /proc/sys/net/ipv4/tcp_keepalive_intvl
+  75
+
+  # cat /proc/sys/net/ipv4/tcp_keepalive_probes
+  9
+</code></pre><p><strong>上述是默认设置，表示初始创建连接在两小时(7200秒)之后，每75秒重新发送一次。如果连续9次未收到ACK响应，则连接被标记为断开。</strong></p>
+<h3 id="go-api介绍">Go API介绍</h3>
+<p>在Go原生net包中，有下列函数可以干涉TCP连接的保活机制：</p>
+<ul>
+<li><code>func (c *TCPConn) SetKeepAlive(keepalive bool) error</code><br>
+是否开启连接检测</li>
+<li><code>func (c *TCPConn) SetKeepAlivePeriod(d time.Duration) error</code><br>
+连接检测间隔，如果不设置默认使用所在操作系统参数设置</li>
+</ul>
+<hr>
+<h3 id="用例demo">用例Demo</h3>
+<p>下面我们先用一个TCP连接demo进行交互，之后我们再用连接池把TCP连接进行集中管理。</p>
+<h4 id="传输结构">传输结构</h4>
+<p>简单定义两个结构用于客户端与服务端交互，传输协议用<strong>json</strong>示范</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Message</span> <span style="color:#66d9ef">struct</span> {
+	<span style="color:#a6e22e">Uid</span> <span style="color:#66d9ef">string</span>
+	<span style="color:#a6e22e">Val</span> <span style="color:#66d9ef">string</span>
+}
+
+<span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Resp</span> <span style="color:#66d9ef">struct</span> {
+	<span style="color:#a6e22e">Uid</span> <span style="color:#66d9ef">string</span>
+	<span style="color:#a6e22e">Val</span> <span style="color:#66d9ef">string</span>
+	<span style="color:#a6e22e">Ts</span> <span style="color:#66d9ef">string</span>
+}
+</code></pre></div><h4 id="server端">server端</h4>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang"><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">TAG</span> = <span style="color:#e6db74">&#34;server: hello, &#34;</span>
+
+<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">transfer</span>(<span style="color:#a6e22e">conn</span> <span style="color:#a6e22e">net</span>.<span style="color:#a6e22e">Conn</span>) {
+	<span style="color:#66d9ef">defer</span> <span style="color:#66d9ef">func</span>() {
+		<span style="color:#a6e22e">remoteAddr</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">conn</span>.<span style="color:#a6e22e">RemoteAddr</span>().<span style="color:#a6e22e">String</span>()
+		<span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Print</span>(<span style="color:#e6db74">&#34;discard remove add:&#34;</span>, <span style="color:#a6e22e">remoteAddr</span>)
+		<span style="color:#a6e22e">conn</span>.<span style="color:#a6e22e">Close</span>()
+	}()
+
+	<span style="color:#75715e">// 设置10秒关闭连接
+</span><span style="color:#75715e"></span>	<span style="color:#75715e">//conn.SetDeadline(time.Now().Add(10 * time.Second))
+</span><span style="color:#75715e"></span>
+	<span style="color:#66d9ef">for</span> {
+		<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">msg</span> <span style="color:#a6e22e">body</span>.<span style="color:#a6e22e">Message</span>
+
+		<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">json</span>.<span style="color:#a6e22e">NewDecoder</span>(<span style="color:#a6e22e">conn</span>).<span style="color:#a6e22e">Decode</span>(<span style="color:#f92672">&amp;</span><span style="color:#a6e22e">msg</span>); <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#a6e22e">io</span>.<span style="color:#a6e22e">EOF</span> {
+			<span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;Decode from client err: %v&#34;</span>, <span style="color:#a6e22e">err</span>)
+			<span style="color:#75715e">// todo... 仿照redis协议写入err前缀符号`-`，通知client错误处理
+</span><span style="color:#75715e"></span>			<span style="color:#66d9ef">return</span>
+		}
+
+		<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">msg</span>.<span style="color:#a6e22e">Uid</span> <span style="color:#f92672">!=</span> <span style="color:#e6db74">&#34;&#34;</span> <span style="color:#f92672">||</span> <span style="color:#a6e22e">msg</span>.<span style="color:#a6e22e">Val</span> <span style="color:#f92672">!=</span> <span style="color:#e6db74">&#34;&#34;</span> {
+			<span style="color:#75715e">//conn.Write([]byte(msg.Val))
+</span><span style="color:#75715e"></span>			<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">rsp</span> <span style="color:#a6e22e">body</span>.<span style="color:#a6e22e">Resp</span>
+			<span style="color:#a6e22e">rsp</span>.<span style="color:#a6e22e">Uid</span> = <span style="color:#a6e22e">msg</span>.<span style="color:#a6e22e">Uid</span>
+			<span style="color:#a6e22e">rsp</span>.<span style="color:#a6e22e">Val</span> = <span style="color:#a6e22e">TAG</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">msg</span>.<span style="color:#a6e22e">Val</span>
+			<span style="color:#a6e22e">ser</span>, <span style="color:#a6e22e">_</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">json</span>.<span style="color:#a6e22e">Marshal</span>(<span style="color:#a6e22e">msg</span>)
+
+			<span style="color:#a6e22e">conn</span>.<span style="color:#a6e22e">Write</span>(append(<span style="color:#a6e22e">ser</span>, <span style="color:#e6db74">&#39;\n&#39;</span>))
+		}
+	}
+}
+
+<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">ListenAndServer</span>() {
+	<span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Print</span>(<span style="color:#e6db74">&#34;Start server...&#34;</span>)
+	<span style="color:#75715e">// 启动监听本地tcp端口3000
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">listen</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">net</span>.<span style="color:#a6e22e">Listen</span>(<span style="color:#e6db74">&#34;tcp&#34;</span>, <span style="color:#e6db74">&#34;0.0.0.0:3000&#34;</span>)
+	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+		<span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Fatal</span>(<span style="color:#e6db74">&#34;Listen failed. msg: &#34;</span>, <span style="color:#a6e22e">err</span>)
+		<span style="color:#66d9ef">return</span>
+	}
+	<span style="color:#66d9ef">for</span> {
+		<span style="color:#a6e22e">conn</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">listen</span>.<span style="color:#a6e22e">Accept</span>()
+		<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+			<span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;accept failed, err: %v&#34;</span>, <span style="color:#a6e22e">err</span>)
+			<span style="color:#66d9ef">continue</span>
+		}
+		<span style="color:#66d9ef">go</span> <span style="color:#a6e22e">transfer</span>(<span style="color:#a6e22e">conn</span>)
+	}
+}
+</code></pre></div><h4 id="client端">client端</h4>
+<p>定义一个Conn连接类型，用来包装原生tcp和其他额外属性，包括上下文，结果通道等。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">IConn</span> <span style="color:#66d9ef">interface</span> {
+	<span style="color:#a6e22e">Close</span>() <span style="color:#66d9ef">error</span>
+}
+
+<span style="color:#75715e">// Conn 对应每个连接
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Conn</span> <span style="color:#66d9ef">struct</span> {
+	<span style="color:#a6e22e">addr</span>    <span style="color:#66d9ef">string</span>              <span style="color:#75715e">// 地址
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">tcp</span>     <span style="color:#f92672">*</span><span style="color:#a6e22e">net</span>.<span style="color:#a6e22e">TCPConn</span>        <span style="color:#75715e">// tcp连接实例, 可以是其他类型
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">ctx</span>     <span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">Context</span>
+	<span style="color:#a6e22e">writer</span>  <span style="color:#f92672">*</span><span style="color:#a6e22e">bufio</span>.<span style="color:#a6e22e">Writer</span>
+	<span style="color:#a6e22e">cnlFun</span>  <span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">CancelFunc</span> <span style="color:#75715e">// 用于通知ctx结束
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">retChan</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">sync</span>.<span style="color:#a6e22e">Map</span>          <span style="color:#75715e">// 存放通道结果集合的map, 属于统一连接
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">err</span>     <span style="color:#66d9ef">error</span>
+}
+
+<span style="color:#75715e">// 为Conn实现Close()函数签名 关闭连接, 关闭消息通道
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">c</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Conn</span>) <span style="color:#a6e22e">Close</span>() (<span style="color:#a6e22e">err</span> <span style="color:#66d9ef">error</span>) {
+	<span style="color:#75715e">// 执行善后
+</span><span style="color:#75715e"></span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">cnlFun</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+		<span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">cnlFun</span>()
+	}
+
+	<span style="color:#75715e">// 关闭tcp连接
+</span><span style="color:#75715e"></span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">tcp</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+		<span style="color:#a6e22e">err</span> = <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">tcp</span>.<span style="color:#a6e22e">Close</span>()
+	}
+
+	<span style="color:#75715e">// 关闭消息通道
+</span><span style="color:#75715e"></span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">retChan</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+		<span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">retChan</span>.<span style="color:#a6e22e">Range</span>(<span style="color:#66d9ef">func</span>(<span style="color:#a6e22e">key</span>, <span style="color:#a6e22e">value</span> <span style="color:#66d9ef">interface</span>{}) <span style="color:#66d9ef">bool</span> {
+			<span style="color:#75715e">// 根据具体业务断言转换通道类型
+</span><span style="color:#75715e"></span>			<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">ch</span>, <span style="color:#a6e22e">ok</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">value</span>.(<span style="color:#66d9ef">chan</span> <span style="color:#66d9ef">string</span>); <span style="color:#a6e22e">ok</span> {
+				close(<span style="color:#a6e22e">ch</span>)
+			}
+			<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">true</span>
+		})
+	}
+	<span style="color:#66d9ef">return</span>
+}
+</code></pre></div><p>定义连接的配置项option结构</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Option</span> <span style="color:#66d9ef">struct</span> {
+	<span style="color:#a6e22e">addr</span>        <span style="color:#66d9ef">string</span>
+	<span style="color:#a6e22e">size</span>        <span style="color:#66d9ef">int</span>
+	<span style="color:#a6e22e">readTimeout</span> <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Duration</span>
+	<span style="color:#a6e22e">dialTimeout</span> <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Duration</span>
+	<span style="color:#a6e22e">keepAlive</span>   <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Duration</span>
+}
+</code></pre></div><p>紧接着创建连接代码如下：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">NewConn</span>(<span style="color:#a6e22e">opt</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Option</span>) (<span style="color:#a6e22e">c</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Conn</span>, <span style="color:#a6e22e">err</span> <span style="color:#66d9ef">error</span>) {
+	<span style="color:#75715e">// 初始化连接
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">c</span> = <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">Conn</span>{
+		<span style="color:#a6e22e">addr</span>:    <span style="color:#a6e22e">opt</span>.<span style="color:#a6e22e">addr</span>,
+		<span style="color:#a6e22e">retChan</span>: new(<span style="color:#a6e22e">sync</span>.<span style="color:#a6e22e">Map</span>),
+		<span style="color:#75715e">//err: nil,
+</span><span style="color:#75715e"></span>	}
+
+	<span style="color:#66d9ef">defer</span> <span style="color:#66d9ef">func</span>() {
+		<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+			<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">c</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+				<span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">Close</span>()
+			}
+		}
+	}()
+
+	<span style="color:#75715e">// 拨号
+</span><span style="color:#75715e"></span>	<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">conn</span> <span style="color:#a6e22e">net</span>.<span style="color:#a6e22e">Conn</span>
+	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">conn</span>, <span style="color:#a6e22e">err</span> = <span style="color:#a6e22e">net</span>.<span style="color:#a6e22e">DialTimeout</span>(<span style="color:#e6db74">&#34;tcp&#34;</span>, <span style="color:#a6e22e">opt</span>.<span style="color:#a6e22e">addr</span>, <span style="color:#a6e22e">opt</span>.<span style="color:#a6e22e">dialTimeout</span>); <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+		<span style="color:#66d9ef">return</span>
+	} <span style="color:#66d9ef">else</span> {
+		<span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">tcp</span> = <span style="color:#a6e22e">conn</span>.(<span style="color:#f92672">*</span><span style="color:#a6e22e">net</span>.<span style="color:#a6e22e">TCPConn</span>)
+	}
+
+	<span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">writer</span> = <span style="color:#a6e22e">bufio</span>.<span style="color:#a6e22e">NewWriter</span>(<span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">tcp</span>)
+
+	<span style="color:#75715e">//if err = c.tcp.SetKeepAlive(true); err != nil {
+</span><span style="color:#75715e"></span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> = <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">tcp</span>.<span style="color:#a6e22e">SetKeepAlive</span>(<span style="color:#66d9ef">false</span>); <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+		<span style="color:#66d9ef">return</span>
+	}
+	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> = <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">tcp</span>.<span style="color:#a6e22e">SetKeepAlivePeriod</span>(<span style="color:#a6e22e">opt</span>.<span style="color:#a6e22e">keepAlive</span>); <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+		<span style="color:#66d9ef">return</span>
+	}
+	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> = <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">tcp</span>.<span style="color:#a6e22e">SetLinger</span>(<span style="color:#ae81ff">0</span>); <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+		<span style="color:#66d9ef">return</span>
+	}
+
+    <span style="color:#75715e">// 创建上下文管理
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">ctx</span>, <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">cnlFun</span> = <span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">WithCancel</span>(<span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">Background</span>())
+
+	<span style="color:#75715e">// 异步接收结果到相应的结果集
+</span><span style="color:#75715e"></span>	<span style="color:#66d9ef">go</span> <span style="color:#a6e22e">receiveResp</span>(<span style="color:#a6e22e">c</span>)
+
+	<span style="color:#66d9ef">return</span>
+}
+</code></pre></div><h4 id="异步接收结果">异步接收结果</h4>
+<p>来看下异步接收结果的代码，其中的<code>receiveResp()</code>函数，主要进行异步轮询，有几个作用：</p>
+<ul>
+<li>感知上下文关闭，通常是连接的cancel()被执行</li>
+<li>接收server端的数据并写入结果通道<code>retChan</code>，其类型是并发安全的<code>sync.Map</code></li>
+<li>监听server的错误，对异常情况关闭连接</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#75715e">// receiveResp 接收tcp连接的数据
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">receiveResp</span>(<span style="color:#a6e22e">c</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Conn</span>) {
+	<span style="color:#a6e22e">scanner</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">bufio</span>.<span style="color:#a6e22e">NewScanner</span>(<span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">tcp</span>)
+	<span style="color:#66d9ef">for</span> {
+		<span style="color:#66d9ef">select</span> {
+		<span style="color:#66d9ef">case</span> <span style="color:#f92672">&lt;-</span><span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">ctx</span>.<span style="color:#a6e22e">Done</span>():
+			<span style="color:#75715e">// c.cnlFun() 被执行了, 如连接池关闭
+</span><span style="color:#75715e"></span>			<span style="color:#66d9ef">return</span>
+		<span style="color:#66d9ef">default</span>:
+			<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">scanner</span>.<span style="color:#a6e22e">Scan</span>() {
+				<span style="color:#75715e">// 读取数据
+</span><span style="color:#75715e"></span>				<span style="color:#a6e22e">rsp</span> <span style="color:#f92672">:=</span> new(<span style="color:#a6e22e">body</span>.<span style="color:#a6e22e">Resp</span>)
+				<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">json</span>.<span style="color:#a6e22e">Unmarshal</span>(<span style="color:#a6e22e">scanner</span>.<span style="color:#a6e22e">Bytes</span>(), <span style="color:#a6e22e">rsp</span>); <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+					<span style="color:#66d9ef">return</span>
+				}
+				<span style="color:#75715e">// 响应id与请求id对应
+</span><span style="color:#75715e"></span>				<span style="color:#a6e22e">uid</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">rsp</span>.<span style="color:#a6e22e">Uid</span>
+				<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">load</span>, <span style="color:#a6e22e">ok</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">retChan</span>.<span style="color:#a6e22e">Load</span>(<span style="color:#a6e22e">uid</span>); <span style="color:#a6e22e">ok</span> {
+					<span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">retChan</span>.<span style="color:#a6e22e">Delete</span>(<span style="color:#a6e22e">uid</span>)
+					<span style="color:#75715e">// 消息通道
+</span><span style="color:#75715e"></span>					<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">ch</span>, <span style="color:#a6e22e">ok</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">load</span>.(<span style="color:#66d9ef">chan</span> <span style="color:#66d9ef">string</span>); <span style="color:#a6e22e">ok</span> {
+						<span style="color:#a6e22e">ch</span> <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">rsp</span>.<span style="color:#a6e22e">Ts</span> <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;: &#34;</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">rsp</span>.<span style="color:#a6e22e">Val</span>
+						<span style="color:#75715e">// 在写入端关闭
+</span><span style="color:#75715e"></span>						close(<span style="color:#a6e22e">ch</span>)
+					}
+				}
+			} <span style="color:#66d9ef">else</span> {
+				<span style="color:#75715e">// 错误, 合并了EOF
+</span><span style="color:#75715e"></span>				<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">scanner</span>.<span style="color:#a6e22e">Err</span>() <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+					<span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">err</span> = <span style="color:#a6e22e">scanner</span>.<span style="color:#a6e22e">Err</span>()
+				} <span style="color:#66d9ef">else</span> {
+					<span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">err</span> = <span style="color:#a6e22e">errors</span>.<span style="color:#a6e22e">New</span>(<span style="color:#e6db74">&#34;scanner done&#34;</span>)
+				}
+				<span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">Close</span>()
+				<span style="color:#66d9ef">return</span>
+			}
+		}
+	}
+}
+</code></pre></div><h4 id="发送请求">发送请求</h4>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#75715e">/*
+</span><span style="color:#75715e">	Send 发送请求, 返回具体业务通道
+</span><span style="color:#75715e">	注意如果入参的msg消息体是interface{}类型, 最好根据业务进行
+</span><span style="color:#75715e">	类型断言校验, 避免server端解析出错，返回err值用于后续判断
+</span><span style="color:#75715e">	是否归还连接池。
+</span><span style="color:#75715e">*/</span>
+<span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">c</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Conn</span>) <span style="color:#a6e22e">Send</span>(<span style="color:#a6e22e">ctx</span> <span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">Context</span>, <span style="color:#a6e22e">msg</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">body</span>.<span style="color:#a6e22e">Message</span>) (<span style="color:#a6e22e">ch</span> <span style="color:#66d9ef">chan</span> <span style="color:#66d9ef">string</span>, <span style="color:#a6e22e">err</span> <span style="color:#66d9ef">error</span>) {
+	<span style="color:#a6e22e">ch</span> = make(<span style="color:#66d9ef">chan</span> <span style="color:#66d9ef">string</span>)
+	<span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">retChan</span>.<span style="color:#a6e22e">Store</span>(<span style="color:#a6e22e">msg</span>.<span style="color:#a6e22e">Uid</span>, <span style="color:#a6e22e">ch</span>)
+	<span style="color:#75715e">// 请求
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">js</span>, <span style="color:#a6e22e">_</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">json</span>.<span style="color:#a6e22e">Marshal</span>(<span style="color:#a6e22e">msg</span>)
+
+	<span style="color:#a6e22e">_</span>, <span style="color:#a6e22e">err</span> = <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">writer</span>.<span style="color:#a6e22e">Write</span>(<span style="color:#a6e22e">js</span>)
+	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+		<span style="color:#66d9ef">return</span>
+	}
+
+	<span style="color:#a6e22e">err</span> = <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">writer</span>.<span style="color:#a6e22e">Flush</span>()
+	<span style="color:#75715e">// 连接不关闭, 后续可以放入连接池
+</span><span style="color:#75715e"></span>	<span style="color:#75715e">//c.tcp.CloseWrite()
+</span><span style="color:#75715e"></span>	<span style="color:#66d9ef">return</span>
+}
+</code></pre></div><h4 id="实例">实例：</h4>
+<ol>
+<li>启动server端监听:</li>
+</ol>
+<pre><code>=== RUN   TestListenAndServer
+2021/05/10 16:58:20 Start server...
+</code></pre><ol start="2">
+<li>发起请求：</li>
+</ol>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">OPT</span> = <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">Option</span>{
+	<span style="color:#a6e22e">addr</span>:        <span style="color:#e6db74">&#34;0.0.0.0:3000&#34;</span>,
+	<span style="color:#a6e22e">size</span>:        <span style="color:#ae81ff">3</span>,
+	<span style="color:#a6e22e">readTimeout</span>: <span style="color:#ae81ff">3</span> <span style="color:#f92672">*</span> <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Second</span>,
+	<span style="color:#a6e22e">dialTimeout</span>: <span style="color:#ae81ff">3</span> <span style="color:#f92672">*</span> <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Second</span>,
+	<span style="color:#a6e22e">keepAlive</span>:   <span style="color:#ae81ff">1</span> <span style="color:#f92672">*</span> <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Second</span>,
+}
+
+<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">createConn</span>(<span style="color:#a6e22e">opt</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Option</span>) <span style="color:#f92672">*</span><span style="color:#a6e22e">Conn</span> {
+	<span style="color:#a6e22e">c</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">NewConn</span>(<span style="color:#a6e22e">opt</span>)
+	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+		panic(<span style="color:#a6e22e">err</span>)
+	}
+	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">c</span>
+}
+
+<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">TestSendMsg</span>(<span style="color:#a6e22e">t</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">testing</span>.<span style="color:#a6e22e">T</span>) {
+	<span style="color:#a6e22e">c</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">createConn</span>(<span style="color:#a6e22e">OPT</span>)
+	<span style="color:#a6e22e">msg</span> <span style="color:#f92672">:=</span> <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">body</span>.<span style="color:#a6e22e">Message</span>{<span style="color:#a6e22e">Uid</span>: <span style="color:#e6db74">&#34;pixel-1&#34;</span>, <span style="color:#a6e22e">Val</span>: <span style="color:#e6db74">&#34;pixelpig!&#34;</span>}
+	<span style="color:#a6e22e">rec</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">Send</span>(<span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">Background</span>(), <span style="color:#a6e22e">msg</span>)
+	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+		<span style="color:#a6e22e">t</span>.<span style="color:#a6e22e">Error</span>(<span style="color:#a6e22e">err</span>)
+	} <span style="color:#66d9ef">else</span> {
+		<span style="color:#a6e22e">t</span>.<span style="color:#a6e22e">Logf</span>(<span style="color:#e6db74">&#34;rec1: %+v&#34;</span>, <span style="color:#f92672">&lt;-</span><span style="color:#a6e22e">rec</span>)
+	}
+
+	<span style="color:#a6e22e">msg</span>.<span style="color:#a6e22e">Val</span> = <span style="color:#e6db74">&#34;another pig!&#34;</span>
+	<span style="color:#a6e22e">rec2</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">Send</span>(<span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">Background</span>(), <span style="color:#a6e22e">msg</span>)
+	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+		<span style="color:#a6e22e">t</span>.<span style="color:#a6e22e">Error</span>(<span style="color:#a6e22e">err</span>)
+	} <span style="color:#66d9ef">else</span> {
+		<span style="color:#a6e22e">t</span>.<span style="color:#a6e22e">Logf</span>(<span style="color:#e6db74">&#34;rec2: %+v&#34;</span>, <span style="color:#f92672">&lt;-</span><span style="color:#a6e22e">rec2</span>)
+	}
+	<span style="color:#a6e22e">t</span>.<span style="color:#a6e22e">Log</span>(<span style="color:#e6db74">&#34;finished&#34;</span>)
+}
+</code></pre></div><ol start="3">
+<li>客户端输出如下：</li>
+</ol>
+<pre><code>=== RUN   TestSendMsg
+    TestSendMsg: conn_test.go:56: rec1: : pixelpig!
+    TestSendMsg: conn_test.go:64: rec2: : another pig!
+    TestSendMsg: conn_test.go:66: finished
+--- PASS: TestSendMsg (9.94s)
+PASS
+</code></pre><hr>
+<h3 id="超时与池化管理">超时与池化管理</h3>
+<p>上面是一个比较简单的点对点交互，后续其实还可以考虑连接交互超时的情况：</p>
+<ol>
+<li>虽然连接结果是异步响应，但是我们有必要对响应进行超时判断，防止单个连接持续阻塞</li>
+<li>我们要考虑复用，即把健康的连接放入连接池进行管理。</li>
+</ol>
+<h4 id="超时判断">超时判断</h4>
+<p>超时判断业界有许多做法，比较常见的是用一个<code>select{}</code>块与<code>time.After()</code>即可。<br>
+下面我们来看下常见的实现：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#a6e22e">rec3</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">Send</span>(<span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">Background</span>(), <span style="color:#a6e22e">msg</span>)
+<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">==</span> <span style="color:#66d9ef">nil</span> {
+	<span style="color:#66d9ef">select</span> {
+	<span style="color:#66d9ef">case</span> <span style="color:#a6e22e">resp</span> <span style="color:#f92672">:=</span> <span style="color:#f92672">&lt;-</span><span style="color:#a6e22e">rec3</span>:
+		<span style="color:#a6e22e">t</span>.<span style="color:#a6e22e">Logf</span>(<span style="color:#e6db74">&#34;rec3: %+v&#34;</span>, <span style="color:#a6e22e">resp</span>)
+		<span style="color:#66d9ef">return</span>
+	<span style="color:#66d9ef">case</span> <span style="color:#f92672">&lt;-</span><span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">After</span>(<span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Second</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">1</span>):
+		<span style="color:#a6e22e">t</span>.<span style="color:#a6e22e">Error</span>(<span style="color:#e6db74">&#34;Wait for resp timeout!&#34;</span>)
+		<span style="color:#66d9ef">return</span>
+	}
+} <span style="color:#66d9ef">else</span> {
+	<span style="color:#a6e22e">t</span>.<span style="color:#a6e22e">Error</span>(<span style="color:#a6e22e">err</span>)
+}
+</code></pre></div><p>超时输出如下：</p>
+<pre><code>=== RUN   TestSendMsg
+    TestSendMsg: conn_test.go:56: rec1: : pixelpig!
+    TestSendMsg: conn_test.go:76: Wait for resp timeout!
+--- FAIL: TestSendMsg (17.99s)
+FAIL
+</code></pre><h4 id="连接池管理">连接池管理</h4>
+<p>这里要考虑的情况稍微复杂点，可以先把难点列出来再逐个击破：</p>
+<ol>
+<li>池子的连接数上限</li>
+<li>空闲连接数更新</li>
+<li>连接获取与归还</li>
+<li>连接关闭</li>
+</ol>
+<p>关于池化操作篇幅可能较长，详解在本系列的下一篇《聊一聊Go网络编程&ndash;TCP连接管理(二)》叙述。</p>
+<h3 id="参考链接">参考链接</h3>
+<p><strong>Notes on TCP keepalive in Go</strong><br>
+<a href="https://thenotexpert.com/golang-tcp-keepalive/">https://thenotexpert.com/golang-tcp-keepalive/</a><br>
+<strong>Using TCP keepalive under Linux</strong><br>
+<a href="https://tldp.org/HOWTO/TCP-Keepalive-HOWTO/usingkeepalive.html">https://tldp.org/HOWTO/TCP-Keepalive-HOWTO/usingkeepalive.html</a></p>
+              
+            </div>
+          </div>
+          <div id="post-footer" class="post-footer main-content-wrap">
+            
+              
+                
+                
+                  <div class="post-footer-tags">
+                    <span class="text-color-light text-small">TAGGED IN</span><br/>
+                    
+  <a class="tag tag--primary tag--small" href="/en/tags/tcp/">TCP</a>
+
+                  </div>
+                
+              
+            
+            <div class="post-actions-wrap">
+  
+      <nav >
+        <ul class="post-actions post-action-nav">
+          
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="/en/2021/05/%E8%81%8A%E4%B8%80%E8%81%8Ago%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B%E4%BA%8C-tcp%E8%BF%9E%E6%8E%A5%E7%AE%A1%E7%90%86/" data-tooltip="聊一聊Go网络编程(二)--TCP连接管理">
+              
+                  <i class="fa fa-angle-left"></i>
+                  <span class="hide-xs hide-sm text-small icon-ml">NEXT</span>
+                </a>
+            </li>
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="/en/2021/01/go%E5%8D%8F%E7%A8%8B%E9%97%B4%E9%80%9A%E4%BF%A1%E4%B9%8B%E7%94%9F%E4%BA%A7%E8%80%85-%E6%B6%88%E8%B4%B9%E8%80%85%E6%A8%A1%E5%9E%8B/" data-tooltip="Go协程间通信之生产者-消费者模型">
+              
+                  <span class="hide-xs hide-sm text-small icon-mr">PREVIOUS</span>
+                  <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+          
+        </ul>
+      </nav>
+    <ul class="post-actions post-action-share" >
+      
+      
+      <li class="post-action">
+        
+          <a class="post-action-btn btn btn--default" href="#">
+        
+          <i class="fa fa-list"></i>
+        </a>
+      </li>
+    </ul>
+  
+</div>
+
+            
+              
+            
+          </div>
+        </article>
+        <footer id="footer" class="main-content-wrap">
+  <span class="copyrights">
+    &copy; 2022 <a href="https://github.com/pixeldin">pixeldin</a>. All Rights Reserved
+  </span>
+</footer>
+
+      </div>
+      <div id="bottom-bar" class="post-bottom-bar" data-behavior="5">
+        <div class="post-actions-wrap">
+  
+      <nav >
+        <ul class="post-actions post-action-nav">
+          
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="/en/2021/05/%E8%81%8A%E4%B8%80%E8%81%8Ago%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B%E4%BA%8C-tcp%E8%BF%9E%E6%8E%A5%E7%AE%A1%E7%90%86/" data-tooltip="聊一聊Go网络编程(二)--TCP连接管理">
+              
+                  <i class="fa fa-angle-left"></i>
+                  <span class="hide-xs hide-sm text-small icon-ml">NEXT</span>
+                </a>
+            </li>
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="/en/2021/01/go%E5%8D%8F%E7%A8%8B%E9%97%B4%E9%80%9A%E4%BF%A1%E4%B9%8B%E7%94%9F%E4%BA%A7%E8%80%85-%E6%B6%88%E8%B4%B9%E8%80%85%E6%A8%A1%E5%9E%8B/" data-tooltip="Go协程间通信之生产者-消费者模型">
+              
+                  <span class="hide-xs hide-sm text-small icon-mr">PREVIOUS</span>
+                  <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+          
+        </ul>
+      </nav>
+    <ul class="post-actions post-action-share" >
+      
+      
+      <li class="post-action">
+        
+          <a class="post-action-btn btn btn--default" href="#">
+        
+          <i class="fa fa-list"></i>
+        </a>
+      </li>
+    </ul>
+  
+</div>
+
+      </div>
+      <div id="share-options-bar" class="share-options-bar" data-behavior="5">
+  <i id="btn-close-shareoptions" class="fa fa-close"></i>
+  <ul class="share-options">
+    
+  </ul>
+</div>
+<div id="share-options-mask" class="share-options-mask"></div>
+    </div>
+    
+    <div id="about">
+  <div id="about-card">
+    <div id="about-btn-close">
+      <i class="fa fa-remove"></i>
+    </div>
+    
+      <img id="about-card-picture" src="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/pig.jpg" alt="Author&#39;s picture" />
+    
+    <h4 id="about-card-name">pixelpig</h4>
+    
+      <div id="about-card-bio">a backend development living in GD, China. Stay hungry, stay foolish <strong>:）</strong></div>
+    
+    
+      <div id="about-card-job">
+        <i class="fa fa-briefcase"></i>
+        <br/>
+        Golang developer@Huya
+      </div>
+    
+    
+      <div id="about-card-location">
+        <i class="fa fa-map-marker"></i>
+        <br/>
+        CHINA-GD
+      </div>
+    
+  </div>
+</div>
+
+    
+
+    
+  
+    <div id="cover" style="background-image:url('https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/cover.jpg');"></div>
+  
+
+
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js" integrity="sha256-/BfiIkHlHoVihZdc6TFuj7MmJ0TWcWsMXkeDFwhi0zw=" crossorigin="anonymous"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.7/js/jquery.fancybox.min.js" integrity="sha256-GEAnjcTqVP+vBp3SSc8bEDQqvWAZMiHyUSIorrWwH50=" crossorigin="anonymous"></script>
+
+
+<script src="/js/script-pcw6v3xilnxydl1vddzazdverrnn9ctynvnxgwho987mfyqkuylcb1nlt.min.js"></script>
+
+
+<script lang="javascript">
+window.onload = updateMinWidth;
+window.onresize = updateMinWidth;
+document.getElementById("sidebar").addEventListener("transitionend", updateMinWidth);
+function updateMinWidth() {
+  var sidebar = document.getElementById("sidebar");
+  var main = document.getElementById("main");
+  main.style.minWidth = "";
+  var w1 = getComputedStyle(main).getPropertyValue("min-width");
+  var w2 = getComputedStyle(sidebar).getPropertyValue("width");
+  var w3 = getComputedStyle(sidebar).getPropertyValue("left");
+  main.style.minWidth = `calc(${w1} - ${w2} - ${w3})`;
+}
+</script>
+
+<script>
+$(document).ready(function() {
+  hljs.configure({ classPrefix: '', useBR: false });
+  $('pre.code-highlight > code, pre > code').each(function(i, block) {
+    if (!$(this).hasClass('codeblock')) {
+      $(this).addClass('codeblock');
+    }
+    hljs.highlightBlock(block);
+  });
+});
+</script>
+
+
+  
+    
+  
+
+
+
+
+    
+  </body>
+</html>
+

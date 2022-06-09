@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>HA on pixelpig - tech</title>
+    <link>/en/tags/ha/</link>
+    <description>Recent content in HA on pixelpig - tech</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 23 Dec 2021 00:00:00 +0000</lastBuildDate><atom:link href="/en/tags/ha/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Talk about Go: The gracefully handling of service restart</title>
+      <link>/en/2021/12/talk-about-go-the-gracefully-handling-of-service-restart/</link>
+      <pubDate>Thu, 23 Dec 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/en/2021/12/talk-about-go-the-gracefully-handling-of-service-restart/</guid>
+      <description>&lt;p&gt;Last time we talked about graceful shutdown of Go programs, today we will talk about graceful restarts.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Talk about Go: The gracefully handling of service shutdown</title>
+      <link>/en/2021/11/talk-about-go-the-gracefully-handling-of-service-shutdown/</link>
+      <pubDate>Tue, 02 Nov 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/en/2021/11/talk-about-go-the-gracefully-handling-of-service-shutdown/</guid>
+      <description>&lt;p&gt;From high availability to graceful shutdown/restart, to refinement to program offline/restart, etc. So what can we do in Go? Today let&amp;rsquo;s talk about the graceful shutdown of go programs.&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>
