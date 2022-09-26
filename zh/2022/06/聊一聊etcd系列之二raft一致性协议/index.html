@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+  <head>
+    
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="generator" content="Hugo 0.80.0 with theme Tranquilpeak 0.4.8-BETA">
+<meta name="author" content="pixelpig">
+<meta name="keywords" content="">
+<meta name="description" content="共识算法旨在机器集群出现异常时候能够维持一个一致认可的结论来保证对外提供服务，今天来聊一聊etcd的共识机制&mdash;-raft协议。">
+
+
+<meta property="og:description" content="共识算法旨在机器集群出现异常时候能够维持一个一致认可的结论来保证对外提供服务，今天来聊一聊etcd的共识机制&mdash;-raft协议。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="聊一聊etcd系列之二：raft一致性协议">
+<meta name="twitter:title" content="聊一聊etcd系列之二：raft一致性协议">
+<meta property="og:url" content="/zh/2022/06/%E8%81%8A%E4%B8%80%E8%81%8Aetcd%E7%B3%BB%E5%88%97%E4%B9%8B%E4%BA%8Craft%E4%B8%80%E8%87%B4%E6%80%A7%E5%8D%8F%E8%AE%AE/">
+<meta property="twitter:url" content="/zh/2022/06/%E8%81%8A%E4%B8%80%E8%81%8Aetcd%E7%B3%BB%E5%88%97%E4%B9%8B%E4%BA%8Craft%E4%B8%80%E8%87%B4%E6%80%A7%E5%8D%8F%E8%AE%AE/">
+<meta property="og:site_name" content="pixelpig - tech">
+<meta property="og:description" content="共识算法旨在机器集群出现异常时候能够维持一个一致认可的结论来保证对外提供服务，今天来聊一聊etcd的共识机制&mdash;-raft协议。">
+<meta name="twitter:description" content="共识算法旨在机器集群出现异常时候能够维持一个一致认可的结论来保证对外提供服务，今天来聊一聊etcd的共识机制&mdash;-raft协议。">
+<meta property="og:locale" content="zh">
+
+  
+    <meta property="article:published_time" content="2022-06-03T00:00:00">
+  
+  
+    <meta property="article:modified_time" content="2022-06-03T00:00:00">
+  
+  
+  
+    
+      <meta property="article:section" content="Go">
+    
+      <meta property="article:section" content="后端">
+    
+  
+  
+    
+      <meta property="article:tag" content="raft">
+    
+      <meta property="article:tag" content="etcd">
+    
+      <meta property="article:tag" content="分布式系统">
+    
+  
+
+
+<meta name="twitter:card" content="summary">
+
+  <meta name="twitter:site" content="@pixelpigpigpig">
+
+
+  <meta name="twitter:creator" content="@pixelpigpigpig">
+
+
+
+
+
+
+  <meta property="og:image" content="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/blog/etcd/raft/FG-%E8%84%91%E8%A3%82case.png">
+  <meta property="twitter:image" content="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/blog/etcd/raft/FG-%E8%84%91%E8%A3%82case.png">
+
+
+
+
+
+  <meta property="og:image" content="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/pig.jpg">
+  <meta property="twitter:image" content="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/pig.jpg">
+
+
+    <title>聊一聊etcd系列之二：raft一致性协议</title>
+
+    <link rel="icon" href="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/blog/static/pixel.ico">
+    
+
+    
+
+    <link rel="canonical" href="/zh/2022/06/%E8%81%8A%E4%B8%80%E8%81%8Aetcd%E7%B3%BB%E5%88%97%E4%B9%8B%E4%BA%8Craft%E4%B8%80%E8%87%B4%E6%80%A7%E5%8D%8F%E8%AE%AE/">
+
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/jquery.fancybox.min.css" integrity="sha256-vuXZ9LGmmwtjqFX1F+EKin1ThZMub58gKULUyf0qECk=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/helpers/jquery.fancybox-thumbs.min.css" integrity="sha256-SEa4XYAHihTcEP1f5gARTB2K26Uk8PsndQYHQC1f4jU=" crossorigin="anonymous" />
+    
+    
+    <link rel="stylesheet" href="/css/style-twzjdbqhmnnacqs0pwwdzcdbt8yhv8giawvjqjmyfoqnvazl0dalmnhdkvp7.min.css" />
+    
+    
+
+    
+      
+    
+    
+  </head>
+
+  <body>
+    <div id="blog">
+      <header id="header" data-behavior="5">
+  <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+  <div class="header-title">
+    <a class="header-title-link" href="/zh/">pixelpig - tech</a>
+  </div>
+  
+    
+      <a class="header-right-picture "
+         href="/#about">
+    
+    
+    
+      
+        <img class="header-picture" src="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/pig.jpg" alt="作者的图片" />
+      
+    
+    </a>
+  
+</header>
+
+      <nav id="sidebar" data-behavior="5">
+  <div class="sidebar-container">
+    
+      <div class="sidebar-profile">
+        <a href="/#about">
+          <img class="sidebar-profile-picture" src="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/pig.jpg" alt="作者的图片" />
+        </a>
+        <h4 class="sidebar-profile-name">pixelpig</h4>
+        
+          <h5 class="sidebar-profile-bio">a backend development living in GD, China. Stay hungry, stay foolish <strong>:）</strong></h5>
+        
+      </div>
+    
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/en">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-language"></i>
+      
+      <span class="sidebar-button-desc">English</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/zh/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-home"></i>
+      
+      <span class="sidebar-button-desc">首页</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/zh/categories">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-bookmark"></i>
+      
+      <span class="sidebar-button-desc">分类</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/zh/tags">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
+      
+      <span class="sidebar-button-desc">标签</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/zh/archives">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-archive"></i>
+      
+      <span class="sidebar-button-desc">归档</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/zh/#about">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-question"></i>
+      
+      <span class="sidebar-button-desc">关于我</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://weibo.com/u/1837780507/" target="_blank" rel="noopener">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-weibo"></i>
+      
+      <span class="sidebar-button-desc">微博</span>
+    </a>
+  </li>
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+
+    </ul>
+  </div>
+</nav>
+
+      
+
+      <div id="main" data-behavior="5"
+        class="
+               hasCoverMetaIn
+               ">
+        <article class="post" itemscope itemType="http://schema.org/BlogPosting">
+          
+          
+            <div class="post-header main-content-wrap text-center">
+  
+    <h1 class="post-title" itemprop="headline">
+      聊一聊etcd系列之二：raft一致性协议
+    </h1>
+  
+  
+  <div class="postShorten-meta post-meta">
+    
+      <time itemprop="datePublished" datetime="2022-06-03T00:00:00Z">
+        
+  六月 3, 2022
+
+      </time>
+    
+    
+  
+  
+    <span>发布在</span>
+    
+      <a class="category-link" href="/zh/categories/go">Go</a>, 
+    
+      <a class="category-link" href="/zh/categories/%e5%90%8e%e7%ab%af">后端</a>
+    
+  
+
+  </div>
+
+</div>
+          
+          <div class="post-content markdown" itemprop="articleBody">
+            <div class="main-content-wrap">
+              <p>共识算法旨在机器集群出现异常时候能够维持一个一致认可的结论来保证对外提供服务，今天来聊一聊etcd的共识机制&mdash;-raft协议。</p>
+<p><img src="https://images.pexels.com/photos/966927/pexels-photo-966927.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=1260&amp;h=750&amp;dpr=1" alt="etcd-cover-raft"></p>
+<h2 id="解决什么问题">解决什么问题</h2>
+<p>在进入etcd的raft之前，我们先来聊聊分布式系统的一致性是什么，raft协议解决了什么问题。</p>
+<h3 id="一致性的不同语义">一致性的不同语义</h3>
+<p>实际上，在ACID事务特性中，一致性C更像是一种能量守恒或者质量守恒，比如转账、抢购，金额物品不会凭空消失或者出现冗余。<br>
+在分布式领域，<strong>分布式一致性更多往往指的是共识，指的是多个节点达成一致意见（要么大家一块错，要么一块对）</strong>，区别在如果是ACID事务语义下的一致性，一般指强一致性。</p>
+<h2 id="如何解决">如何解决</h2>
+<p>etcd内部通过选举和记录同步来达到一致性，日志对每一个认可的操作进行记录和定期压缩归档。<br>
+etcd把更新记录通知到各个节点，在半数以上节点获得ack之后，主节点提交并且通知其他节点一同提交，通过其他节点的日志数据同步，其他节点达成一致状态只是时间问题。</p>
+<h3 id="选举与状态转移">选举与状态转移</h3>
+<p>在raft协议中，每个节点有三个角色状态，分别是：领导者Leader、竞选者Candidate、追随者Follower。节点通过定期的心跳探测和记录同步来更新各个节点的状态，每个节点都有争当Leader的意识，Leader通过与Follower定期发送心跳，来告知任期未结束，当心跳超时或者出现网络分区，Follower则会参与竞选，但是要遵循一些规则：</p>
+<ul>
+<li>Leader必须由Candidate产生，且得到了大多数票数</li>
+<li>在已有Leader且当前Leader的任期是最新的，Follower不参与竞选</li>
+<li>在Leader心跳超时的情况，Follower参与竞选变成Candidate，并为自己记一次投票</li>
+<li><strong>如果节点的日志比Candidate候选人的日志更新时间大，就会拒绝候选人的投票请求</strong></li>
+</ul>
+<p>三个角色的状态转换如下图[FG-角色状态转移]所示：<br>
+<img src="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/blog/etcd/raft/FG-%E8%A7%92%E8%89%B2%E7%8A%B6%E6%80%81%E8%BD%AC%E7%A7%BB.png" alt="FG-角色状态转移"></p>
+<h3 id="日志副本">日志副本</h3>
+<p>etcd各个节点的数据版本是怎么同步的呢？etcd使用日志来记录数据，每个节点都有自己的本地日志，每条日志记录当时Leader的任期编号，简称为termId，这个任期编号用来区分日志文件的版本新旧。<strong>即如果节点的日志比Candidate候选人的日志更新时间大，就会拒绝候选人的投票请求。</strong></p>
+<p>一旦新的Leader角色上任，Leader会通过向Follower同步当前自己可提交的日志下标，如果有Follower没有跟上，Leader会逐级发送上一次的日志下标给Follower，最终直到Follower追上对齐同步。
+同步请求体结构如下：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Entry</span> <span style="color:#66d9ef">struct</span> {
+    <span style="color:#75715e">// 任期id
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">Term</span>  <span style="color:#66d9ef">uint64</span>    <span style="color:#e6db74">`protobuf:&#34;varint,2,opt,name=Term&#34; json:&#34;Term&#34;`</span>         
+	<span style="color:#75715e">// 日志下标
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">Index</span> <span style="color:#66d9ef">uint64</span>    <span style="color:#e6db74">`protobuf:&#34;varint,3,opt,name=Index&#34; json:&#34;Index&#34;`</span>
+	<span style="color:#a6e22e">Type</span>  <span style="color:#a6e22e">EntryType</span> <span style="color:#e6db74">`protobuf:&#34;varint,1,opt,name=Type,enum=raftpb.EntryType&#34; json:&#34;Type&#34;`</span>
+	<span style="color:#a6e22e">Data</span>  []<span style="color:#66d9ef">byte</span>    <span style="color:#e6db74">`protobuf:&#34;bytes,4,opt,name=Data&#34; json:&#34;Data,omitempty&#34;`</span>
+}
+<span style="color:#75715e">// AppendEntries RPC请求：尝试同步记录给节点
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">r</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">raft</span>) <span style="color:#a6e22e">appendEntry</span>(<span style="color:#a6e22e">es</span> <span style="color:#f92672">...</span><span style="color:#a6e22e">pb</span>.<span style="color:#a6e22e">Entry</span>) (<span style="color:#a6e22e">accepted</span> <span style="color:#66d9ef">bool</span>) {
+	<span style="color:#a6e22e">li</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">raftLog</span>.<span style="color:#a6e22e">lastIndex</span>()
+	<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">range</span> <span style="color:#a6e22e">es</span> {
+		<span style="color:#a6e22e">es</span>[<span style="color:#a6e22e">i</span>].<span style="color:#a6e22e">Term</span> = <span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">Term</span>
+		<span style="color:#a6e22e">es</span>[<span style="color:#a6e22e">i</span>].<span style="color:#a6e22e">Index</span> = <span style="color:#a6e22e">li</span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">+</span> uint64(<span style="color:#a6e22e">i</span>)
+	}
+	<span style="color:#75715e">// Track the size of this uncommitted proposal.
+</span><span style="color:#75715e"></span>	<span style="color:#66d9ef">if</span> !<span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">increaseUncommittedSize</span>(<span style="color:#a6e22e">es</span>) {
+	    <span style="color:#75715e">// 当前记录日志没有跟上Leader
+</span><span style="color:#75715e"></span>		<span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">logger</span>.<span style="color:#a6e22e">Debugf</span>(
+			<span style="color:#e6db74">&#34;%x appending new entries to log would exceed uncommitted entry size limit; dropping proposal&#34;</span>,
+			<span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">id</span>,
+		)
+		<span style="color:#75715e">// 拒绝Leader的新记录，需要获得旧记录来对齐
+</span><span style="color:#75715e"></span>		<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">false</span>
+	}
+	<span style="color:#75715e">// use latest &#34;last&#34; index after truncate/append
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">li</span> = <span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">raftLog</span>.append(<span style="color:#a6e22e">es</span><span style="color:#f92672">...</span>)
+	<span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">prs</span>.<span style="color:#a6e22e">Progress</span>[<span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">id</span>].<span style="color:#a6e22e">MaybeUpdate</span>(<span style="color:#a6e22e">li</span>)
+	<span style="color:#75715e">// Regardless of maybeCommit&#39;s return, our caller will call bcastAppend.
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">maybeCommit</span>()
+	<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">true</span>
+}
+</code></pre></div><h3 id="日志压缩">日志压缩</h3>
+<p>由于操作更新日志的增量追加，raft节点在达成一致之后，会对日志版本进行定期归档压缩，有点类似于Redis的AOF和Snapshot备份策略，一次压缩可以释放空间，减轻存储空间避免对大量操作日志进行重放，也方便落后太多日志的节点快速赶上Leader。</p>
+<h3 id="网络分区处理">网络分区处理</h3>
+<p>我们知道网络节点故障其实是会发生的，这里我们分为两种情况来分析如何保证一致性，假设现在有一个场景：<br>
+客户端发送请求到Leader，Leader负责分发数据到Follower并且获得多数节点认可后进行提交，正常流程如下：
+<img src="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/blog/etcd/raft/FG-%E6%95%B0%E6%8D%AE%E6%8F%90%E4%BA%A4%E6%B5%81%E7%A8%8B.png" alt="image"></p>
+<p>假如客户端更新过程出现了故障，那么不同的角色会怎么处理呢？</p>
+<ul>
+<li>Follower故障：Leader会不断的通过RPC请求确认Follower记录追上</li>
+<li>Leader故障：<br>
+Leader故障情况可以再次细分，在宕机时刻数据日志到达Leader之后，Follower是否提交的两种情况：
+<ul>
+<li>数据到达Leader，且未提交到Follower，此时Leader宕机，Client未收到ACK，则会开启重试逻辑，在新的Leader恢复之后继续保证一致性。</li>
+<li>数据到达Leader，部分Follower已经提交，此时Leader宕机，新的Leader将在已提交的部分Follower产生，因为他们的记录是最新的，再次竞选成功，成为新的Leader，最后进行一致性同步。</li>
+<li>Leader节点出现网络分区，在短时间内出现了“脑裂”，即网络分区无法联系对方，在2个局部网络产生了2个Leader，这时候在另一个分区中，新的Leader会选出，新的Leader term编号+1，等到网络分区恢复之后，由于新的Leader由于term编号比旧Leader大，因此最终会以TermId最大的新Leader的数据版本同步。<br>
+<img src="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/blog/etcd/raft/FG-%E8%84%91%E8%A3%82case.png" alt="image"></li>
+</ul>
+</li>
+</ul>
+<h3 id="线性读">线性读</h3>
+<p>在上面的网络分区故障场景中，我们知道了有可能有一段时间存在双Leader，即数据版本可能有脏数据。其实，在etcd数据集合上有一个最大提交下标<code>CommitIndex</code>，表示当前大多数节点认可的下标，<code>ReadIndex</code>表示当前节点可以获取的最新的下标(可能还没被大多数认可)。<br>
+etcd通过这两个记录，提供了<strong>是否开启线性读的选项(Serializable bool类型 )</strong>，用于阻塞读请求，在需要强一致性的情况下，开启线性读，请求则会<strong>等到Follower版本<code>ReadIndex</code>追上一致下标<code>CommitIndex</code>再返回数据</strong>，这个时候就能保证读到的记录是集群中一致ack的。</p>
+<p>相关源码如下：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">RangeRequest</span> <span style="color:#66d9ef">struct</span> {
+	<span style="color:#75715e">// key is the first key for the range. If range_end is not given, the request only looks up key.
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">Key</span> []<span style="color:#66d9ef">byte</span> <span style="color:#e6db74">`protobuf:&#34;bytes,1,opt,name=key,proto3&#34; json:&#34;key,omitempty&#34;`</span>
+	
+	<span style="color:#75715e">// ...
+</span><span style="color:#75715e"></span>	<span style="color:#75715e">// serializable sets the range request to use serializable member-local reads.
+</span><span style="color:#75715e"></span>	<span style="color:#75715e">// Range requests are linearizable by default; linearizable requests have higher
+</span><span style="color:#75715e"></span>	<span style="color:#75715e">// latency and lower throughput than serializable requests but reflect the current
+</span><span style="color:#75715e"></span>	<span style="color:#75715e">// consensus of the cluster. For better performance, in exchange for possible stale reads,
+</span><span style="color:#75715e"></span>	<span style="color:#75715e">// a serializable range request is served locally without needing to reach consensus
+</span><span style="color:#75715e"></span>	<span style="color:#75715e">// with other nodes in the cluster.
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">Serializable</span> <span style="color:#66d9ef">bool</span>
+	
+	<span style="color:#75715e">// ...
+</span><span style="color:#75715e"></span>}
+
+<span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">s</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">EtcdServer</span>) <span style="color:#a6e22e">Range</span>(<span style="color:#a6e22e">ctx</span> <span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">Context</span>, <span style="color:#a6e22e">r</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">pb</span>.<span style="color:#a6e22e">RangeRequest</span>) (<span style="color:#f92672">*</span><span style="color:#a6e22e">pb</span>.<span style="color:#a6e22e">RangeResponse</span>, <span style="color:#66d9ef">error</span>) {
+	<span style="color:#a6e22e">trace</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">traceutil</span>.<span style="color:#a6e22e">New</span>(<span style="color:#e6db74">&#34;range&#34;</span>,
+		<span style="color:#a6e22e">s</span>.<span style="color:#a6e22e">Logger</span>(),
+		<span style="color:#a6e22e">traceutil</span>.<span style="color:#a6e22e">Field</span>{<span style="color:#a6e22e">Key</span>: <span style="color:#e6db74">&#34;range_begin&#34;</span>, <span style="color:#a6e22e">Value</span>: string(<span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">Key</span>)},
+		<span style="color:#a6e22e">traceutil</span>.<span style="color:#a6e22e">Field</span>{<span style="color:#a6e22e">Key</span>: <span style="color:#e6db74">&#34;range_end&#34;</span>, <span style="color:#a6e22e">Value</span>: string(<span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">RangeEnd</span>)},
+	)
+	<span style="color:#a6e22e">ctx</span> = <span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">WithValue</span>(<span style="color:#a6e22e">ctx</span>, <span style="color:#a6e22e">traceutil</span>.<span style="color:#a6e22e">TraceKey</span>, <span style="color:#a6e22e">trace</span>)
+
+	<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">resp</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">pb</span>.<span style="color:#a6e22e">RangeResponse</span>
+	<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">err</span> <span style="color:#66d9ef">error</span>
+	<span style="color:#75715e">//...
+</span><span style="color:#75715e"></span>
+	<span style="color:#66d9ef">if</span> !<span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">Serializable</span> {
+		<span style="color:#75715e">// 线性读, 阻塞等待
+</span><span style="color:#75715e"></span>		<span style="color:#a6e22e">err</span> = <span style="color:#a6e22e">s</span>.<span style="color:#a6e22e">linearizableReadNotify</span>(<span style="color:#a6e22e">ctx</span>)
+		<span style="color:#a6e22e">trace</span>.<span style="color:#a6e22e">Step</span>(<span style="color:#e6db74">&#34;agreement among raft nodes before linearized reading&#34;</span>)
+		<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+			<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>, <span style="color:#a6e22e">err</span>
+		}
+	}
+	<span style="color:#a6e22e">chk</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">func</span>(<span style="color:#a6e22e">ai</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">auth</span>.<span style="color:#a6e22e">AuthInfo</span>) <span style="color:#66d9ef">error</span> {
+		<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">s</span>.<span style="color:#a6e22e">authStore</span>.<span style="color:#a6e22e">IsRangePermitted</span>(<span style="color:#a6e22e">ai</span>, <span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">Key</span>, <span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">RangeEnd</span>)
+	}
+
+	<span style="color:#a6e22e">get</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">func</span>() { <span style="color:#a6e22e">resp</span>, <span style="color:#a6e22e">err</span> = <span style="color:#a6e22e">txn</span>.<span style="color:#a6e22e">Range</span>(<span style="color:#a6e22e">ctx</span>, <span style="color:#a6e22e">s</span>.<span style="color:#a6e22e">Logger</span>(), <span style="color:#a6e22e">s</span>.<span style="color:#a6e22e">KV</span>(), <span style="color:#66d9ef">nil</span>, <span style="color:#a6e22e">r</span>) }
+	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">serr</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">s</span>.<span style="color:#a6e22e">doSerialize</span>(<span style="color:#a6e22e">ctx</span>, <span style="color:#a6e22e">chk</span>, <span style="color:#a6e22e">get</span>); <span style="color:#a6e22e">serr</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+		<span style="color:#a6e22e">err</span> = <span style="color:#a6e22e">serr</span>
+		<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>, <span style="color:#a6e22e">err</span>
+	}
+	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">resp</span>, <span style="color:#a6e22e">err</span>
+}
+</code></pre></div><h3 id="总结">总结</h3>
+<p>这是这几天通过对etcd内部共识机制的一些理解，主要涉及选举状态转移、日志压缩等概念。本系列的下一篇章将聊一聊etcd节点是怎么通信的。</p>
+<h2 id="参考链接">参考链接</h2>
+<ul>
+<li>raft消息类型<br>
+<a href="https://pkg.go.dev/go.etcd.io/etcd/raft/v3#hdr-MessageType">https://pkg.go.dev/go.etcd.io/etcd/raft/v3#hdr-MessageType</a></li>
+<li>etc技术内幕 - 百里燊</li>
+<li>云原生分布式存储基石etcd深入解析 - 华为云</li>
+</ul>
+              
+            </div>
+          </div>
+          <div id="post-footer" class="post-footer main-content-wrap">
+            
+              
+                
+                
+                  <div class="post-footer-tags">
+                    <span class="text-color-light text-small">标签</span><br/>
+                    
+  <a class="tag tag--primary tag--small" href="/zh/tags/raft/">raft</a>
+
+  <a class="tag tag--primary tag--small" href="/zh/tags/etcd/">etcd</a>
+
+  <a class="tag tag--primary tag--small" href="/zh/tags/%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F/">分布式系统</a>
+
+                  </div>
+                
+              
+            
+            <div class="post-actions-wrap">
+  
+      <nav >
+        <ul class="post-actions post-action-nav">
+          
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--disabled">
+              
+                  <i class="fa fa-angle-left"></i>
+                  <span class="hide-xs hide-sm text-small icon-ml">下一篇</span>
+                </a>
+            </li>
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="/zh/2022/05/%E8%81%8A%E4%B8%80%E8%81%8Aetcd%E7%B3%BB%E5%88%97%E4%B9%8B%E4%B8%80%E5%B1%82%E7%BA%A7%E6%A6%82%E5%86%B5%E4%B8%8E%E7%9F%A5%E8%AF%86%E6%A2%B3%E7%90%86/" data-tooltip="聊一聊etcd系列之一：层级概况与知识梳理">
+              
+                  <span class="hide-xs hide-sm text-small icon-mr">上一篇</span>
+                  <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+          
+        </ul>
+      </nav>
+    <ul class="post-actions post-action-share" >
+      
+        <li class="post-action hide-lg hide-md hide-sm">
+          <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
+            <i class="fa fa-share-alt"></i>
+          </a>
+        </li>
+        
+      
+      
+      <li class="post-action">
+        
+          <a class="post-action-btn btn btn--default" href="#">
+        
+          <i class="fa fa-list"></i>
+        </a>
+      </li>
+    </ul>
+  
+</div>
+
+            
+              
+            
+          </div>
+        </article>
+        <footer id="footer" class="main-content-wrap">
+  <span class="copyrights">
+    &copy; 2022 <a href="https://github.com/pixeldin">pixeldin</a>. All Rights Reserved
+  </span>
+</footer>
+
+      </div>
+      <div id="bottom-bar" class="post-bottom-bar" data-behavior="5">
+        <div class="post-actions-wrap">
+  
+      <nav >
+        <ul class="post-actions post-action-nav">
+          
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--disabled">
+              
+                  <i class="fa fa-angle-left"></i>
+                  <span class="hide-xs hide-sm text-small icon-ml">下一篇</span>
+                </a>
+            </li>
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="/zh/2022/05/%E8%81%8A%E4%B8%80%E8%81%8Aetcd%E7%B3%BB%E5%88%97%E4%B9%8B%E4%B8%80%E5%B1%82%E7%BA%A7%E6%A6%82%E5%86%B5%E4%B8%8E%E7%9F%A5%E8%AF%86%E6%A2%B3%E7%90%86/" data-tooltip="聊一聊etcd系列之一：层级概况与知识梳理">
+              
+                  <span class="hide-xs hide-sm text-small icon-mr">上一篇</span>
+                  <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+          
+        </ul>
+      </nav>
+    <ul class="post-actions post-action-share" >
+      
+        <li class="post-action hide-lg hide-md hide-sm">
+          <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
+            <i class="fa fa-share-alt"></i>
+          </a>
+        </li>
+        
+      
+      
+      <li class="post-action">
+        
+          <a class="post-action-btn btn btn--default" href="#">
+        
+          <i class="fa fa-list"></i>
+        </a>
+      </li>
+    </ul>
+  
+</div>
+
+      </div>
+      <div id="share-options-bar" class="share-options-bar" data-behavior="5">
+  <i id="btn-close-shareoptions" class="fa fa-close"></i>
+  <ul class="share-options">
+    
+  </ul>
+</div>
+<div id="share-options-mask" class="share-options-mask"></div>
+    </div>
+    
+    <div id="about">
+  <div id="about-card">
+    <div id="about-btn-close">
+      <i class="fa fa-remove"></i>
+    </div>
+    
+      <img id="about-card-picture" src="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/pig.jpg" alt="作者的图片" />
+    
+    <h4 id="about-card-name">pixelpig</h4>
+    
+      <div id="about-card-bio">a backend development living in GD, China. Stay hungry, stay foolish <strong>:）</strong></div>
+    
+    
+      <div id="about-card-job">
+        <i class="fa fa-briefcase"></i>
+        <br/>
+        Golang developer@Huya
+      </div>
+    
+    
+      <div id="about-card-location">
+        <i class="fa fa-map-marker"></i>
+        <br/>
+        CHINA-GD
+      </div>
+    
+  </div>
+</div>
+
+    
+
+    
+  
+    <div id="cover" style="background-image:url('https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/cover.jpg');"></div>
+  
+
+
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js" integrity="sha256-/BfiIkHlHoVihZdc6TFuj7MmJ0TWcWsMXkeDFwhi0zw=" crossorigin="anonymous"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.7/js/jquery.fancybox.min.js" integrity="sha256-GEAnjcTqVP+vBp3SSc8bEDQqvWAZMiHyUSIorrWwH50=" crossorigin="anonymous"></script>
+
+
+<script src="/js/script-pcw6v3xilnxydl1vddzazdverrnn9ctynvnxgwho987mfyqkuylcb1nlt.min.js"></script>
+
+
+<script lang="javascript">
+window.onload = updateMinWidth;
+window.onresize = updateMinWidth;
+document.getElementById("sidebar").addEventListener("transitionend", updateMinWidth);
+function updateMinWidth() {
+  var sidebar = document.getElementById("sidebar");
+  var main = document.getElementById("main");
+  main.style.minWidth = "";
+  var w1 = getComputedStyle(main).getPropertyValue("min-width");
+  var w2 = getComputedStyle(sidebar).getPropertyValue("width");
+  var w3 = getComputedStyle(sidebar).getPropertyValue("left");
+  main.style.minWidth = `calc(${w1} - ${w2} - ${w3})`;
+}
+</script>
+
+<script>
+$(document).ready(function() {
+  hljs.configure({ classPrefix: '', useBR: false });
+  $('pre.code-highlight > code, pre > code').each(function(i, block) {
+    if (!$(this).hasClass('codeblock')) {
+      $(this).addClass('codeblock');
+    }
+    hljs.highlightBlock(block);
+  });
+});
+</script>
+
+
+  
+    
+  
+
+
+
+
+    
+  </body>
+</html>
+

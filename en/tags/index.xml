@@ -115,5 +115,122 @@
       <description></description>
     </item>
     
+    <item>
+      <title>errgroup</title>
+      <link>/en/tags/errgroup/</link>
+      <pubDate>Tue, 29 Jun 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/en/tags/errgroup/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>HTTP header</title>
+      <link>/en/tags/http-header/</link>
+      <pubDate>Tue, 29 Jun 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/en/tags/http-header/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>文件读写</title>
+      <link>/en/tags/%E6%96%87%E4%BB%B6%E8%AF%BB%E5%86%99/</link>
+      <pubDate>Tue, 29 Jun 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/en/tags/%E6%96%87%E4%BB%B6%E8%AF%BB%E5%86%99/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Concurrent</title>
+      <link>/en/tags/concurrent/</link>
+      <pubDate>Mon, 18 Jan 2021 03:40:05 +0800</pubDate>
+      
+      <guid>/en/tags/concurrent/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>生产者消费者</title>
+      <link>/en/tags/%E7%94%9F%E4%BA%A7%E8%80%85%E6%B6%88%E8%B4%B9%E8%80%85/</link>
+      <pubDate>Mon, 18 Jan 2021 03:40:05 +0800</pubDate>
+      
+      <guid>/en/tags/%E7%94%9F%E4%BA%A7%E8%80%85%E6%B6%88%E8%B4%B9%E8%80%85/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>管道通信</title>
+      <link>/en/tags/%E7%AE%A1%E9%81%93%E9%80%9A%E4%BF%A1/</link>
+      <pubDate>Mon, 18 Jan 2021 03:40:05 +0800</pubDate>
+      
+      <guid>/en/tags/%E7%AE%A1%E9%81%93%E9%80%9A%E4%BF%A1/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>堆栈</title>
+      <link>/en/tags/%E5%A0%86%E6%A0%88/</link>
+      <pubDate>Thu, 16 Apr 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/en/tags/%E5%A0%86%E6%A0%88/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>指针</title>
+      <link>/en/tags/%E6%8C%87%E9%92%88/</link>
+      <pubDate>Thu, 16 Apr 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/en/tags/%E6%8C%87%E9%92%88/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>errors</title>
+      <link>/en/tags/errors/</link>
+      <pubDate>Sun, 15 Mar 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/en/tags/errors/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>cmd</title>
+      <link>/en/tags/cmd/</link>
+      <pubDate>Thu, 20 Feb 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/en/tags/cmd/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>flag</title>
+      <link>/en/tags/flag/</link>
+      <pubDate>Thu, 20 Feb 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/en/tags/flag/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>后端</title>
+      <link>/en/tags/%E5%90%8E%E7%AB%AF/</link>
+      <pubDate>Sun, 11 Aug 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/en/tags/%E5%90%8E%E7%AB%AF/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>线程</title>
+      <link>/en/tags/%E7%BA%BF%E7%A8%8B/</link>
+      <pubDate>Mon, 15 Jul 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/en/tags/%E7%BA%BF%E7%A8%8B/</guid>
+      <description></description>
+    </item>
+    
   </channel>
 </rss>
