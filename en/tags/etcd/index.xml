@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>etcd on pixelpig - tech</title>
+    <link>/en/tags/etcd/</link>
+    <description>Recent content in etcd on pixelpig - tech</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 03 Jun 2022 00:00:00 +0000</lastBuildDate><atom:link href="/en/tags/etcd/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Talk about etcd Series (Part2): the raft consistency protocol</title>
+      <link>/en/2022/06/talk-about-etcd-series-part2-the-raft-consistency-protocol/</link>
+      <pubDate>Fri, 03 Jun 2022 00:00:00 +0000</pubDate>
+      
+      <guid>/en/2022/06/talk-about-etcd-series-part2-the-raft-consistency-protocol/</guid>
+      <description>&lt;p&gt;The purpose of the consensus algorithm is to maintain a consensus conclusion when there is an abnormality in the machine cluster to ensure the provision of services to the outside world.&lt;/p&gt;
+&lt;p&gt;Today, let’s talk about the consensus mechanism of etcd, the raft protocol.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Talk about etcd Series (Part1): Hierarchy Overview with bird&#39;s eye view</title>
+      <link>/en/2022/05/talk-about-etcd-series-part1-hierarchy-overview-with-birds-eye-view/</link>
+      <pubDate>Tue, 17 May 2022 00:00:00 +0000</pubDate>
+      
+      <guid>/en/2022/05/talk-about-etcd-series-part1-hierarchy-overview-with-birds-eye-view/</guid>
+      <description>&lt;p&gt;etcd is very common in the field of microservices. This series will talk about what problems etcd solves and how it solves it for a step-by-step analysis.&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-cn">
+<html lang="en-us">
   <head>
     
     <meta charset="UTF-8">
@@ -8,19 +8,23 @@
 <meta name="generator" content="Hugo 0.80.0 with theme Tranquilpeak 0.4.8-BETA">
 <meta name="author" content="pixelpig">
 <meta name="keywords" content="">
-<meta name="description" content="共识算法旨在机器集群出现异常时候能够维持一个一致认可的结论来保证对外提供服务，今天来聊一聊etcd的共识机制&mdash;-raft协议。">
+<meta name="description" content="The purpose of the consensus algorithm is to maintain a consensus conclusion when there is an abnormality in the machine cluster to ensure the provision of services to the outside world.
+Today, let’s talk about the consensus mechanism of etcd, the raft protocol.">
 
 
-<meta property="og:description" content="共识算法旨在机器集群出现异常时候能够维持一个一致认可的结论来保证对外提供服务，今天来聊一聊etcd的共识机制&mdash;-raft协议。">
+<meta property="og:description" content="The purpose of the consensus algorithm is to maintain a consensus conclusion when there is an abnormality in the machine cluster to ensure the provision of services to the outside world.
+Today, let’s talk about the consensus mechanism of etcd, the raft protocol.">
 <meta property="og:type" content="article">
-<meta property="og:title" content="聊一聊etcd系列之二：raft一致性协议">
-<meta name="twitter:title" content="聊一聊etcd系列之二：raft一致性协议">
-<meta property="og:url" content="/zh/2022/06/%E8%81%8A%E4%B8%80%E8%81%8Aetcd%E7%B3%BB%E5%88%97%E4%B9%8B%E4%BA%8Craft%E4%B8%80%E8%87%B4%E6%80%A7%E5%8D%8F%E8%AE%AE/">
-<meta property="twitter:url" content="/zh/2022/06/%E8%81%8A%E4%B8%80%E8%81%8Aetcd%E7%B3%BB%E5%88%97%E4%B9%8B%E4%BA%8Craft%E4%B8%80%E8%87%B4%E6%80%A7%E5%8D%8F%E8%AE%AE/">
+<meta property="og:title" content="Talk about etcd Series Two: the raft consistency protocol">
+<meta name="twitter:title" content="Talk about etcd Series Two: the raft consistency protocol">
+<meta property="og:url" content="/en/2022/06/talk-about-etcd-series-two-the-raft-consistency-protocol/">
+<meta property="twitter:url" content="/en/2022/06/talk-about-etcd-series-two-the-raft-consistency-protocol/">
 <meta property="og:site_name" content="pixelpig - tech">
-<meta property="og:description" content="共识算法旨在机器集群出现异常时候能够维持一个一致认可的结论来保证对外提供服务，今天来聊一聊etcd的共识机制&mdash;-raft协议。">
-<meta name="twitter:description" content="共识算法旨在机器集群出现异常时候能够维持一个一致认可的结论来保证对外提供服务，今天来聊一聊etcd的共识机制&mdash;-raft协议。">
-<meta property="og:locale" content="zh">
+<meta property="og:description" content="The purpose of the consensus algorithm is to maintain a consensus conclusion when there is an abnormality in the machine cluster to ensure the provision of services to the outside world.
+Today, let’s talk about the consensus mechanism of etcd, the raft protocol.">
+<meta name="twitter:description" content="The purpose of the consensus algorithm is to maintain a consensus conclusion when there is an abnormality in the machine cluster to ensure the provision of services to the outside world.
+Today, let’s talk about the consensus mechanism of etcd, the raft protocol.">
+<meta property="og:locale" content="en">
 
   
     <meta property="article:published_time" content="2022-06-03T00:00:00">
@@ -33,7 +37,7 @@
     
       <meta property="article:section" content="Go">
     
-      <meta property="article:section" content="后端">
+      <meta property="article:section" content="backend">
     
   
   
@@ -42,7 +46,7 @@
     
       <meta property="article:tag" content="etcd">
     
-      <meta property="article:tag" content="分布式系统">
+      <meta property="article:tag" content="distributed systems">
     
   
 
@@ -59,9 +63,6 @@
 
 
 
-  <meta property="og:image" content="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/blog/etcd/raft/FG-%E8%84%91%E8%A3%82case.png">
-  <meta property="twitter:image" content="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/blog/etcd/raft/FG-%E8%84%91%E8%A3%82case.png">
-
 
 
 
@@ -70,14 +71,14 @@
   <meta property="twitter:image" content="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/pig.jpg">
 
 
-    <title>聊一聊etcd系列之二：raft一致性协议</title>
+    <title>Talk about etcd Series Two: the raft consistency protocol</title>
 
     <link rel="icon" href="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/blog/static/pixel.ico">
     
 
     
 
-    <link rel="canonical" href="/zh/2022/06/%E8%81%8A%E4%B8%80%E8%81%8Aetcd%E7%B3%BB%E5%88%97%E4%B9%8B%E4%BA%8Craft%E4%B8%80%E8%87%B4%E6%80%A7%E5%8D%8F%E8%AE%AE/">
+    <link rel="canonical" href="/en/2022/06/talk-about-etcd-series-two-the-raft-consistency-protocol/">
 
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
@@ -100,7 +101,7 @@
       <header id="header" data-behavior="5">
   <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
   <div class="header-title">
-    <a class="header-title-link" href="/zh/">pixelpig - tech</a>
+    <a class="header-title-link" href="/en/">pixelpig - tech</a>
   </div>
   
     
@@ -110,7 +111,7 @@
     
     
       
-        <img class="header-picture" src="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/pig.jpg" alt="作者的图片" />
+        <img class="header-picture" src="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/pig.jpg" alt="Author&#39;s picture" />
       
     
     </a>
@@ -122,7 +123,7 @@
     
       <div class="sidebar-profile">
         <a href="/#about">
-          <img class="sidebar-profile-picture" src="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/pig.jpg" alt="作者的图片" />
+          <img class="sidebar-profile-picture" src="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/pig.jpg" alt="Author&#39;s picture" />
         </a>
         <h4 class="sidebar-profile-name">pixelpig</h4>
         
@@ -134,71 +135,71 @@
       
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="/en">
+      <a class="sidebar-button-link " href="/zh">
     
       <i class="sidebar-button-icon fa fa-lg fa-language"></i>
       
-      <span class="sidebar-button-desc">English</span>
+      <span class="sidebar-button-desc">简/中</span>
     </a>
   </li>
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="/zh/">
+      <a class="sidebar-button-link " href="/en/">
     
       <i class="sidebar-button-icon fa fa-lg fa-home"></i>
       
-      <span class="sidebar-button-desc">首页</span>
+      <span class="sidebar-button-desc">Home</span>
     </a>
   </li>
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="/zh/categories">
+      <a class="sidebar-button-link " href="/en/categories">
     
       <i class="sidebar-button-icon fa fa-lg fa-bookmark"></i>
       
-      <span class="sidebar-button-desc">分类</span>
+      <span class="sidebar-button-desc">Categories</span>
     </a>
   </li>
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="/zh/tags">
+      <a class="sidebar-button-link " href="/en/tags">
     
       <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
       
-      <span class="sidebar-button-desc">标签</span>
+      <span class="sidebar-button-desc">Tags</span>
     </a>
   </li>
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="/zh/archives">
+      <a class="sidebar-button-link " href="/en/archives">
     
       <i class="sidebar-button-icon fa fa-lg fa-archive"></i>
       
-      <span class="sidebar-button-desc">归档</span>
+      <span class="sidebar-button-desc">Archives</span>
     </a>
   </li>
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="/zh/#about">
+      <a class="sidebar-button-link " href="/en/#about">
     
       <i class="sidebar-button-icon fa fa-lg fa-question"></i>
       
-      <span class="sidebar-button-desc">关于我</span>
+      <span class="sidebar-button-desc">About me</span>
     </a>
   </li>
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="https://weibo.com/u/1837780507/" target="_blank" rel="noopener">
+      <a class="sidebar-button-link " href="https://twitter.com/pixelpigpigpig/" target="_blank" rel="noopener">
     
-      <i class="sidebar-button-icon fa fa-lg fa-weibo"></i>
+      <i class="sidebar-button-icon fa fa-lg fa-twitter"></i>
       
-      <span class="sidebar-button-desc">微博</span>
+      <span class="sidebar-button-desc">Twitter</span>
     </a>
   </li>
 
@@ -227,7 +228,7 @@
             <div class="post-header main-content-wrap text-center">
   
     <h1 class="post-title" itemprop="headline">
-      聊一聊etcd系列之二：raft一致性协议
+      Talk about etcd Series Two: the raft consistency protocol
     </h1>
   
   
@@ -235,18 +236,18 @@
     
       <time itemprop="datePublished" datetime="2022-06-03T00:00:00Z">
         
-  六月 3, 2022
+  June 3, 2022
 
       </time>
     
     
   
   
-    <span>发布在</span>
+    <span>in</span>
     
-      <a class="category-link" href="/zh/categories/go">Go</a>, 
+      <a class="category-link" href="/en/categories/go">Go</a>, 
     
-      <a class="category-link" href="/zh/categories/%e5%90%8e%e7%ab%af">后端</a>
+      <a class="category-link" href="/en/categories/backend">backend</a>
     
   
 
@@ -256,45 +257,44 @@
           
           <div class="post-content markdown" itemprop="articleBody">
             <div class="main-content-wrap">
-              <p>共识算法旨在机器集群出现异常时候能够维持一个一致认可的结论来保证对外提供服务，今天来聊一聊etcd的共识机制&mdash;-raft协议。</p>
+              <p>The purpose of the consensus algorithm is to maintain a consensus conclusion when there is an abnormality in the machine cluster to ensure the provision of services to the outside world.</p>
+<p>Today, let’s talk about the consensus mechanism of etcd, the raft protocol.</p>
 <p><img src="https://images.pexels.com/photos/966927/pexels-photo-966927.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=1260&amp;h=750&amp;dpr=1" alt="etcd-cover-raft"></p>
-<h2 id="解决什么问题">解决什么问题</h2>
-<p>在进入etcd的raft之前，我们先来聊聊分布式系统的一致性是什么，raft协议解决了什么问题。</p>
-<h3 id="一致性的不同语义">一致性的不同语义</h3>
-<p>实际上，在ACID事务特性中，一致性C更像是一种能量守恒或者质量守恒，比如转账、抢购，金额物品不会凭空消失或者出现冗余。<br>
-在分布式领域，<strong>分布式一致性更多往往指的是共识，指的是多个节点达成一致意见（要么大家一块错，要么一块对）</strong>，区别在如果是ACID事务语义下的一致性，一般指强一致性。</p>
-<h2 id="如何解决">如何解决</h2>
-<p>etcd内部通过选举和记录同步来达到一致性，
-etcd把更新记录通知到各个节点，在半数以上节点获得ack之后，主节点提交并且通知其他节点一同提交达成一致数据同步。此外，etcd日志会对每一个认可的操作进行记录和定期压缩归档。</p>
-<h3 id="选举与状态转移">选举与状态转移</h3>
-<p>在raft协议中，每个节点有三个角色状态，分别是：领导者Leader、竞选者Candidate、追随者Follower。节点通过定期的心跳探测和记录同步来更新各个节点的状态，每个节点都有争当Leader的意识，Leader通过与Follower定期发送心跳，来告知任期未结束，当心跳超时或者出现网络分区，Follower则会参与竞选，但是要遵循一些规则：</p>
+<h2 id="what-problem-does-it-solve">What problem does it solve</h2>
+<p>Before entering etcd&rsquo;s raft, let&rsquo;s talk about what the consistency of distributed systems is and what problems the raft protocol solves.</p>
+<h3 id="different-semantics-of-consistency">Different Semantics of Consistency</h3>
+<p>In fact, in the ACID transaction characteristics, consistency C is more like a kind of energy conservation or quality conservation, such as transfer, snap-up, and the amount of items will not disappear out of thin air or appear redundant.<br>
+In the distributed field, <strong>distributed consistency often refers to consensus, which means that multiple nodes reach an agreement (either everyone is wrong, or one is right)</strong>, the difference is if it is under the semantics of ACID transactions Consistency, generally refers to strong consistency.</p>
+<h2 id="how-it-is-solved">How it is solved</h2>
+<p>etcd internally achieves consistency through election and record synchronization.<br>
+etcd notifies each node of the update record. After more than half of the nodes get ack, the master node submits it and notifies other nodes to submit it together to achieve consensus data synchronization. In addition, the etcd log records every approved operation and periodically compresses the archive.</p>
+<h3 id="elections-and-state-transitions">Elections and state transitions</h3>
+<p>In the raft protocol, each node has three role states, namely: Leader, Candidate, and Follower. Nodes update the status of each node through regular heartbeat detection and record synchronization. Each node has the awareness of being the leader. The leader sends a heartbeat with the follower regularly to inform that the term is not over. When the heartbeat times out or a network partition occurs, the follower will run for election, but there are some rules to follow:</p>
 <ul>
-<li>Leader必须由Candidate产生，且得到了大多数票数</li>
-<li>在已有Leader且当前Leader的任期是最新的，Follower不参与竞选</li>
-<li>在Leader心跳超时的情况，Follower参与竞选变成Candidate，并为自己记一次投票</li>
-<li><strong>如果节点的日志比Candidate候选人的日志更新时间大，就会拒绝候选人的投票请求</strong></li>
+<li>Leader must be generated by Candidate and get the majority of votes</li>
+<li>If there is an existing leader and the current leader&rsquo;s term is the latest, the follower does not participate in the election</li>
+<li>When the leader&rsquo;s heartbeat times out, the follower participates in the election and becomes a candidate, and records a vote for himself</li>
+<li><strong>If the node&rsquo;s log is older than the candidate&rsquo;s log update time, the candidate&rsquo;s voting request will be rejected</strong></li>
 </ul>
-<p>三个角色的状态转换如下图[FG-角色状态转移]所示：<br>
-<img src="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/blog/etcd/raft/FG-%E8%A7%92%E8%89%B2%E7%8A%B6%E6%80%81%E8%BD%AC%E7%A7%BB.png" alt="FG-角色状态转移"></p>
-<h3 id="日志副本">日志副本</h3>
-<p>我们知道，etcd的分布式存储功能必定要涉及到数据多份存储版本的概念，etcd各个节点的数据版本是怎么同步的呢？<br>
-etcd使用日志来记录数据，每个节点都有自己的本地日志，这些日志来自Leader的同步，记录当时Leader的任期编号，简称为termId，这个任期编号用来区分日志文件的版本新旧。<strong>即如果节点的日志比Candidate候选人的日志更新时间大，就会拒绝候选人的投票请求。</strong></p>
-<p>一旦新的Leader角色上任，Leader会通过向Follower同步当前自己可提交的日志下标，如果有Follower没有跟上，Leader会逐级发送上一次的日志下标给Follower，最终直到Follower追上对齐同步。</p>
-<p>各个角色的日志数据格式如下，t代表任期编号，kv是键值对。
-Leader和Follower通过<code>MatchIndex</code>和<code>NextIndex</code>来交互，Follower会告知Leader当前已收到的最大匹配下标<code>MatchIndex</code>，Leader则通过<code>NextIndex</code>来同步给Follower最新节点。
-各节点日志示意图如下：
+<p>The state transition of the three roles is shown in the following figure [FG-role state transition]:<br>
+<img src="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/blog/etcd/raft/en-etcd-role%20tran.png" alt="FG-role state transition"></p>
+<h3 id="log-replication">Log Replication</h3>
+<p>We know that the distributed storage function of etcd must involve the concept of multiple storage versions of data. How is the data version of each node of etcd synchronized?<br>
+etcd uses logs to record data. Each node has its own local log. These logs come from the leader&rsquo;s synchronization and record the leader&rsquo;s term number at that time, referred to as termId. This term number is used to distinguish the old and new versions of the log files. <strong>That is, if the node&rsquo;s log is older than the candidate&rsquo;s log update time, the candidate&rsquo;s voting request will be rejected.</strong></p>
+<p>Once the new leader role takes office, the leader will synchronize the current log subscript that can be submitted to the follower. If a follower fails to keep up, the leader will send the last log subscript to the follower step by step, until the follower catches up with the alignment synchronization.</p>
+<p>The log data format of each role is as follows, t represents the term number, and kv is a key-value pair.
+Leader and Follower interact through <code>MatchIndex</code> and <code>NextIndex</code>, Follower will inform the Leader of the currently received maximum matching index <code>MatchIndex</code>, and the Leader will pass <code>NextIndex</code>  to synchronize the latest node to the Follower.</p>
+<p>The log diagram of each node is as follows:<br>
 <img src="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/blog/etcd/raft/etcd-logIndex.png" alt="log-Index"></p>
-<p><strong>通过<code>MatchIndex</code>，Leader节点能够知道当前集群已被大多数节点认可的记录，则可以通过广播Msg告知其他Follower一块提交。</strong></p>
-<p>同步请求体结构如下：</p>
+<p><strong>Through <code>MatchIndex</code>, the leader node can know the records that the current cluster has been recognized by most nodes, and can notify other followers to submit a block by broadcasting Msg.</strong></p>
+<p>The structure of the synchronization request body is as follows:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Entry</span> <span style="color:#66d9ef">struct</span> {
-    <span style="color:#75715e">// 任期id
-</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">Term</span>  <span style="color:#66d9ef">uint64</span>    <span style="color:#e6db74">`protobuf:&#34;varint,2,opt,name=Term&#34; json:&#34;Term&#34;`</span>         
-	<span style="color:#75715e">// 日志下标
-</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">Index</span> <span style="color:#66d9ef">uint64</span>    <span style="color:#e6db74">`protobuf:&#34;varint,3,opt,name=Index&#34; json:&#34;Index&#34;`</span>
+	<span style="color:#a6e22e">Term</span>  <span style="color:#66d9ef">uint64</span>    <span style="color:#e6db74">`protobuf:&#34;varint,2,opt,name=Term&#34; json:&#34;Term&#34;`</span>         
+	<span style="color:#a6e22e">Index</span> <span style="color:#66d9ef">uint64</span>    <span style="color:#e6db74">`protobuf:&#34;varint,3,opt,name=Index&#34; json:&#34;Index&#34;`</span>
 	<span style="color:#a6e22e">Type</span>  <span style="color:#a6e22e">EntryType</span> <span style="color:#e6db74">`protobuf:&#34;varint,1,opt,name=Type,enum=raftpb.EntryType&#34; json:&#34;Type&#34;`</span>
 	<span style="color:#a6e22e">Data</span>  []<span style="color:#66d9ef">byte</span>    <span style="color:#e6db74">`protobuf:&#34;bytes,4,opt,name=Data&#34; json:&#34;Data,omitempty&#34;`</span>
 }
-<span style="color:#75715e">// AppendEntries RPC请求：尝试同步记录给节点
+<span style="color:#75715e">// AppendEntries RPC request: Attempt to sync record to node
 </span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">r</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">raft</span>) <span style="color:#a6e22e">appendEntry</span>(<span style="color:#a6e22e">es</span> <span style="color:#f92672">...</span><span style="color:#a6e22e">pb</span>.<span style="color:#a6e22e">Entry</span>) (<span style="color:#a6e22e">accepted</span> <span style="color:#66d9ef">bool</span>) {
 	<span style="color:#a6e22e">li</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">raftLog</span>.<span style="color:#a6e22e">lastIndex</span>()
 	<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">range</span> <span style="color:#a6e22e">es</span> {
@@ -303,12 +303,12 @@ Leader和Follower通过<code>MatchIndex</code>和<code>NextIndex</code>来交互
 	}
 	<span style="color:#75715e">// Track the size of this uncommitted proposal.
 </span><span style="color:#75715e"></span>	<span style="color:#66d9ef">if</span> !<span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">increaseUncommittedSize</span>(<span style="color:#a6e22e">es</span>) {
-	    <span style="color:#75715e">// 当前记录日志没有跟上Leader
+	    <span style="color:#75715e">// The current log does not catch up with the Leader
 </span><span style="color:#75715e"></span>		<span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">logger</span>.<span style="color:#a6e22e">Debugf</span>(
 			<span style="color:#e6db74">&#34;%x appending new entries to log would exceed uncommitted entry size limit; dropping proposal&#34;</span>,
 			<span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">id</span>,
 		)
-		<span style="color:#75715e">// 拒绝Leader的新记录，需要获得旧记录来对齐
+		<span style="color:#75715e">// Reject the new record of the leader, need to wait for catching up by majority
 </span><span style="color:#75715e"></span>		<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">false</span>
 	}
 	<span style="color:#75715e">// use latest &#34;last&#34; index after truncate/append
@@ -318,38 +318,38 @@ Leader和Follower通过<code>MatchIndex</code>和<code>NextIndex</code>来交互
 </span><span style="color:#75715e"></span>	<span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">maybeCommit</span>()
 	<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">true</span>
 }
-</code></pre></div><h3 id="日志压缩">日志压缩</h3>
-<p>由于操作更新日志的增量追加，raft节点在达成一致之后，会对日志版本进行定期归档压缩，有点类似于Redis的AOF和Snapshot备份策略，一次压缩可以释放空间，减轻存储空间避免对大量操作日志进行重放，也方便落后太多日志的节点快速赶上Leader。</p>
-<p>其中，raft启动会有个关联成员<code>storage</code>用来存储日志数据集合，具体相关操作是在etcd的<code>raft.Storage</code>接口实现的。核心的成员如下</p>
+</code></pre></div><h3 id="log-compression">Log Compression</h3>
+<p>Due to the incremental addition of the operation update log, the raft node will periodically archive and compress the log version after reaching an agreement, which is somewhat similar to the AOF and Snapshot backup strategies of Redis. One compression can free up space, reduce storage space and avoid a large number of operation logs. Replaying is also convenient for nodes that lag behind too many logs to quickly catch up with the leader.</p>
+<p>Among them, raft startup will have an associated member <code>storage``` to store the log data collection, and the specific related operations are implemented in the </code>raft.Storage``` interface of etcd. The core members are as follows:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">bootstrappedRaft</span> <span style="color:#66d9ef">struct</span> {
 	<span style="color:#a6e22e">lg</span>        <span style="color:#f92672">*</span><span style="color:#a6e22e">zap</span>.<span style="color:#a6e22e">Logger</span>
 	<span style="color:#a6e22e">heartbeat</span> <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Duration</span>
 
 	<span style="color:#a6e22e">peers</span>   []<span style="color:#a6e22e">raft</span>.<span style="color:#a6e22e">Peer</span>
 	<span style="color:#a6e22e">config</span>  <span style="color:#f92672">*</span><span style="color:#a6e22e">raft</span>.<span style="color:#a6e22e">Config</span>
-	<span style="color:#75715e">// raft server启动关联存储实现类
+	<span style="color:#75715e">// raft server associative storage implementation
 </span><span style="color:#75715e"></span>	<span style="color:#a6e22e">storage</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">raft</span>.<span style="color:#a6e22e">MemoryStorage</span>
 }
 
 <span style="color:#75715e">//...
 </span><span style="color:#75715e"></span>
-<span style="color:#75715e">//Storage接口实现类MemoryStorage
+<span style="color:#75715e">//Storage implement
 </span><span style="color:#75715e"></span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">MemoryStorage</span> <span style="color:#66d9ef">struct</span> {
 	<span style="color:#a6e22e">sync</span>.<span style="color:#a6e22e">Mutex</span>
 	<span style="color:#a6e22e">hardState</span> <span style="color:#a6e22e">pb</span>.<span style="color:#a6e22e">HardState</span>
 	<span style="color:#a6e22e">snapshot</span>  <span style="color:#a6e22e">pb</span>.<span style="color:#a6e22e">Snapshot</span>
-	<span style="color:#75715e">// ents存放当前节点操作集合，每个Entry表示日志附加属性
+	<span style="color:#75715e">// ents stores the current node operation set, each Entry represents the log additional attributes
 </span><span style="color:#75715e"></span>	<span style="color:#a6e22e">ents</span> []<span style="color:#a6e22e">pb</span>.<span style="color:#a6e22e">Entry</span>
 }
 
-<span style="color:#75715e">//Entry附加属性
+<span style="color:#75715e">//Entry Additional properties
 </span><span style="color:#75715e"></span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Entry</span> <span style="color:#66d9ef">struct</span> {
 	<span style="color:#a6e22e">Term</span>  <span style="color:#66d9ef">uint64</span>    <span style="color:#e6db74">`protobuf:&#34;varint,2,opt,name=Term&#34; json:&#34;Term&#34;`</span>
 	<span style="color:#a6e22e">Index</span> <span style="color:#66d9ef">uint64</span>    <span style="color:#e6db74">`protobuf:&#34;varint,3,opt,name=Index&#34; json:&#34;Index&#34;`</span>
 	<span style="color:#a6e22e">Type</span>  <span style="color:#a6e22e">EntryType</span> <span style="color:#e6db74">`protobuf:&#34;varint,1,opt,name=Type,enum=raftpb.EntryType&#34; json:&#34;Type&#34;`</span>
 	<span style="color:#a6e22e">Data</span>  []<span style="color:#66d9ef">byte</span>    <span style="color:#e6db74">`protobuf:&#34;bytes,4,opt,name=Data&#34; json:&#34;Data,omitempty&#34;`</span>
 }
-</code></pre></div><p>raft会定期创建快照来对日志进行压缩，相当于保存快照到本地文件，之后执行<code>Compact()</code>函数对<code>ents</code>字段进行轮转，保留新一轮的下标。</p>
+</code></pre></div><p>raft will periodically create snapshots to compress the log, which is equivalent to saving the snapshot to a local file, and then execute the <code>Compact()</code> function to rotate the <code>ents</code> field, and retain a new round of subscripts .</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#75715e">// Compact discards all log entries prior to compactIndex.
 </span><span style="color:#75715e">// It is the application&#39;s responsibility to not attempt to compact an index
 </span><span style="color:#75715e">// greater than raftLog.applied.
@@ -372,35 +372,35 @@ Leader和Follower通过<code>MatchIndex</code>和<code>NextIndex</code>来交互
 	<span style="color:#a6e22e">ms</span>.<span style="color:#a6e22e">ents</span> = <span style="color:#a6e22e">ents</span>
 	<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>
 }
-</code></pre></div><p>其实，在<code>MemoryStorage</code>提交之前，节点还会先写到本地磁盘持久化，一旦故障拉起可以重建数据，这个过程叫做WAL预写日志。</p>
-<p>关于日志存储更多细节，将在本系列的 <em>etcd存储分析</em> 展开聊。</p>
-<h3 id="网络分区处理">网络分区处理</h3>
-<p>我们知道网络节点故障其实是会发生的，这里我们分为两种情况来分析如何保证一致性，假设现在有一个场景：<br>
-客户端发送请求到Leader，Leader负责分发数据到Follower并且获得多数节点认可后进行提交，正常流程如下：
+</code></pre></div><p>In fact, before committing <code>MemoryStorage</code>, the node will also write to the local disk for persistence. Once the fault occurs, the data can be reconstructed. This process is called the WAL write-ahead log.</p>
+<p>More details on log storage will be discussed in <em>etcd storage analysis</em> of this series.</p>
+<h3 id="network-partition-handling">Network Partition Handling</h3>
+<p>We know that network node failures can actually happen. Here we divide it into two cases to analyze how to ensure consistency. Suppose there is a scenario as follow:<br>
+The client sends a request to the leader, and the leader is responsible for distributing data to the followers and submitting it after receiving approval from most nodes. 
 <img src="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/blog/etcd/raft/FG-%E6%95%B0%E6%8D%AE%E6%8F%90%E4%BA%A4%E6%B5%81%E7%A8%8B.png" alt="image"></p>
-<p>假如客户端更新过程出现了故障，那么不同的角色会怎么处理呢？</p>
+<p>If the client update process fails, what will the different roles do?</p>
 <ul>
-<li>Follower故障：Leader会不断的通过RPC请求确认Follower记录追上</li>
-<li>Leader故障：<br>
-Leader故障情况可以再次细分，在宕机时刻数据日志到达Leader之后，Follower是否提交的两种情况：
+<li>Follower failure: The leader will continue to confirm the follower record through RPC requests to catch up</li>
+<li>Leader failure:
+The leader failure situation can be subdivided again. After the data log reaches the leader at the time of downtime, whether the follower submits two situations:
 <ul>
-<li>数据到达Leader，且未提交到Follower，此时Leader宕机，Client未收到ACK，则会开启重试逻辑，在新的Leader恢复之后继续保证一致性。</li>
-<li>数据到达Leader，部分Follower已经提交，此时Leader宕机，新的Leader将在已提交的部分Follower产生，因为他们的记录是最新的，再次竞选成功，成为新的Leader，最后进行一致性同步。</li>
-<li>Leader节点出现网络分区，在短时间内出现了“脑裂”，即网络分区无法联系对方，在2个局部网络产生了2个Leader，这时候在另一个分区中，新的Leader会选出，新的Leader term编号+1，等到网络分区恢复之后，由于新的Leader由于term编号比旧Leader大，因此最终会以TermId最大的新Leader的数据版本同步。<br>
-<em>这里还有一个优化选项，etcd提供了一个<code>PreVote</code>参数，用来优化因为网络问题频繁Leader选举的情况，如果当前节点要变成Candidate竞选者，会有一个<code>PreCandidate</code>预投票的状态，如果预投票没有得到大多数节点的相应，则会放弃竞选。</em>
-<img src="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/blog/etcd/raft/FG-%E8%84%91%E8%A3%82case.png" alt="image"></li>
+<li>The data arrives at the leader and is not submitted to the follower. At this time, the leader is down and the client does not receive an ACK. The retry logic will be enabled, and the consistency will continue to be guaranteed after the new leader recovers.</li>
+<li>The data reaches the leader and some followers have been submitted. At this time, the leader is down, and a new leader will be generated in the submitted followers because their records are up to date. Once again, the election is successful and becomes the new leader. Finally, consistency synchronization is performed. .</li>
+<li>The leader node has a network partition, and a &ldquo;split brain&rdquo; occurs in a short period of time, that is, the network partition cannot contact the other party, and two leaders are generated in two local networks. At this time, in another partition, a new leader will be selected. , the term number of the new leader is +1. After the network partition is restored, because the term number of the new leader is larger than that of the old leader, it will eventually be synchronized with the data version of the new leader with the largest TermId.<br>
+<em>There is also an optimization option here. etcd provides a <code>PreVote</code> parameter to optimize the situation of frequent leader elections due to network problems. If the current node wants to become a candidate candidate, there will be a <code>PreCandidate </code> as the state of pre-voting, if the pre-voting does not get a corresponding response from the majority of nodes, the election will be abandoned.</em>
+<img src="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/blog/etcd/raft/en-brain-split.png" alt="image"></li>
 </ul>
 </li>
 </ul>
-<p>此外，针对脑裂的场景，etcd还提供了一个Leader自检查票数的开关</p>
+<p>In addition, for split-brain scenarios, etcd also provides a switch for the Leader to check the votes itself.</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#75715e">// CheckQuorum specifies if the leader should check quorum activity. Leader
 </span><span style="color:#75715e">// steps down when quorum is not active for an electionTimeout.
 </span><span style="color:#75715e"></span><span style="color:#a6e22e">CheckQuorum</span> <span style="color:#66d9ef">bool</span>    
-</code></pre></div><p><strong>每隔一段时间，Leader从其他节点获得心跳并记录连接数，如果心跳连接数小于半数，Leader会自动降为Follower</strong>。</p>
+</code></pre></div><p><strong>Every once in a while, the leader obtains heartbeats from other nodes and records the number of connections. If the number of heartbeat connections is less than half, the leader will automatically drop to a follower</strong>.</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#75715e">// tickHeartbeat is run by leaders to send a MsgBeat after r.heartbeatTimeout.
 </span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">r</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">raft</span>) <span style="color:#a6e22e">tickHeartbeat</span>() {
     <span style="color:#75715e">// ...
-</span><span style="color:#75715e"></span>    <span style="color:#75715e">// 自检
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">// self checking
 </span><span style="color:#75715e"></span>    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">checkQuorum</span> {
     	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">Step</span>(<span style="color:#a6e22e">pb</span>.<span style="color:#a6e22e">Message</span>{<span style="color:#a6e22e">From</span>: <span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">id</span>, <span style="color:#a6e22e">Type</span>: <span style="color:#a6e22e">pb</span>.<span style="color:#a6e22e">MsgCheckQuorum</span>}); <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
     		<span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">logger</span>.<span style="color:#a6e22e">Debugf</span>(<span style="color:#e6db74">&#34;error occurred during checking sending heartbeat: %v&#34;</span>, <span style="color:#a6e22e">err</span>)
@@ -408,27 +408,28 @@ Leader故障情况可以再次细分，在宕机时刻数据日志到达Leader�
     }
     <span style="color:#75715e">//...
 </span><span style="color:#75715e"></span>}
-<span style="color:#75715e">// Leader消息处理
+<span style="color:#75715e">// Leader msg handle
 </span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">stepLeader</span>(<span style="color:#a6e22e">r</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">raft</span>, <span style="color:#a6e22e">m</span> <span style="color:#a6e22e">pb</span>.<span style="color:#a6e22e">Message</span>) <span style="color:#66d9ef">error</span> {
 	<span style="color:#75715e">// These message types do not require any progress for m.From.
 </span><span style="color:#75715e"></span>	<span style="color:#66d9ef">switch</span> <span style="color:#a6e22e">m</span>.<span style="color:#a6e22e">Type</span> {
 	<span style="color:#75715e">// ...
 </span><span style="color:#75715e"></span>	<span style="color:#66d9ef">case</span> <span style="color:#a6e22e">pb</span>.<span style="color:#a6e22e">MsgCheckQuorum</span>:
 		<span style="color:#75715e">// ...
-</span><span style="color:#75715e"></span>		<span style="color:#75715e">// 检测Leader是否有大多数人票选
+</span><span style="color:#75715e"></span>		<span style="color:#75715e">// Check if the leader has a majority vote
 </span><span style="color:#75715e"></span>		<span style="color:#66d9ef">if</span> !<span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">prs</span>.<span style="color:#a6e22e">QuorumActive</span>() {
 			<span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">logger</span>.<span style="color:#a6e22e">Warningf</span>(<span style="color:#e6db74">&#34;%x stepped down to follower since quorum is not active&#34;</span>, <span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">id</span>)
-			<span style="color:#75715e">// 降为Follower
+			<span style="color:#75715e">// reduced to Follower
 </span><span style="color:#75715e"></span>			<span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">becomeFollower</span>(<span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">Term</span>, <span style="color:#a6e22e">None</span>)
 		}
 	    <span style="color:#75715e">// ...
 </span><span style="color:#75715e"></span>    }
     <span style="color:#75715e">// ...
 </span><span style="color:#75715e"></span>}
-</code></pre></div><h3 id="线性读">线性读</h3>
-<p>在上面的网络分区故障场景中，我们知道了有可能有一段时间存在双Leader，即数据版本可能有脏数据。其实，在etcd数据集合上有一个最大提交下标<code>CommitIndex</code>，表示当前大多数节点认可的下标，<code>ReadIndex</code>表示当前节点可以获取的最新的下标(可能还没被大多数认可)。<br>
-etcd通过这两个记录，提供了<strong>是否开启线性读的选项(Serializable bool类型 )</strong>，用于阻塞读请求，在需要强一致性的情况下，开启线性读，请求则会<strong>等到Follower版本<code>ReadIndex</code>追上一致下标<code>CommitIndex</code>再返回数据</strong>，这个时候就能保证读到的记录是集群中一致ack的。</p>
-<p>相关源码如下：</p>
+</code></pre></div><h3 id="linearizable-read">Linearizable Read</h3>
+<p>In the above network partition failure scenario, we know that there may be dual leaders for a period of time, that is, the data version may have dirty data. In fact, there is a maximum commit index <code>CommitIndex</code> on the etcd data set, which represents the current subscript recognized by most nodes, and <code>ReadIndex</code> represents the latest index that can be obtained by the current node (maybe not yet recognized by most).<br>
+Through these two records, etcd provides the option of whether to enable linear reading (Serializable bool type), which is used to block read requests.</p>
+<p>When strong consistency is required, linear reading is enabled, and the request will <strong>wait until The Follower version <code>ReadIndex</code> catches up with the consistent subscript <code>CommitIndex</code> and returns the data</strong>. At this time, the read records can be guaranteed to be consistent in the cluster.</p>
+<p>The relevant source code is as follows:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">RangeRequest</span> <span style="color:#66d9ef">struct</span> {
 	<span style="color:#75715e">// key is the first key for the range. If range_end is not given, the request only looks up key.
 </span><span style="color:#75715e"></span>	<span style="color:#a6e22e">Key</span> []<span style="color:#66d9ef">byte</span> <span style="color:#e6db74">`protobuf:&#34;bytes,1,opt,name=key,proto3&#34; json:&#34;key,omitempty&#34;`</span>
@@ -458,7 +459,7 @@ etcd通过这两个记录，提供了<strong>是否开启线性读的选项(Seri
 	<span style="color:#75715e">//...
 </span><span style="color:#75715e"></span>
 	<span style="color:#66d9ef">if</span> !<span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">Serializable</span> {
-		<span style="color:#75715e">// 线性读, 阻塞等待
+		<span style="color:#75715e">// blocking waiting
 </span><span style="color:#75715e"></span>		<span style="color:#a6e22e">err</span> = <span style="color:#a6e22e">s</span>.<span style="color:#a6e22e">linearizableReadNotify</span>(<span style="color:#a6e22e">ctx</span>)
 		<span style="color:#a6e22e">trace</span>.<span style="color:#a6e22e">Step</span>(<span style="color:#e6db74">&#34;agreement among raft nodes before linearized reading&#34;</span>)
 		<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
@@ -476,11 +477,11 @@ etcd通过这两个记录，提供了<strong>是否开启线性读的选项(Seri
 	}
 	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">resp</span>, <span style="color:#a6e22e">err</span>
 }
-</code></pre></div><h3 id="总结">总结</h3>
-<p>这是这几天通过对etcd内部共识机制的一些理解，主要涉及选举状态转移、日志压缩等概念。本系列的下一篇章将聊一聊etcd节点是怎么通信的。</p>
-<h2 id="参考链接">参考链接</h2>
+</code></pre></div><h3 id="summary">Summary</h3>
+<p>This is some understanding of etcd&rsquo;s internal consensus mechanism in the past few days, mainly involving concepts such as election state transfer and log compression. The next chapter in this series will talk about how etcd nodes communicate.</p>
+<h2 id="reference-link">Reference link</h2>
 <ul>
-<li>raft消息类型<br>
+<li>raft MessageType
 <a href="https://pkg.go.dev/go.etcd.io/etcd/raft/v3#hdr-MessageType">https://pkg.go.dev/go.etcd.io/etcd/raft/v3#hdr-MessageType</a></li>
 <li>etc技术内幕 - 百里燊</li>
 <li>云原生分布式存储基石etcd深入解析 - 华为云</li>
@@ -494,13 +495,13 @@ etcd通过这两个记录，提供了<strong>是否开启线性读的选项(Seri
                 
                 
                   <div class="post-footer-tags">
-                    <span class="text-color-light text-small">标签</span><br/>
+                    <span class="text-color-light text-small">TAGGED IN</span><br/>
                     
-  <a class="tag tag--primary tag--small" href="/zh/tags/raft/">raft</a>
+  <a class="tag tag--primary tag--small" href="/en/tags/raft/">raft</a>
 
-  <a class="tag tag--primary tag--small" href="/zh/tags/etcd/">etcd</a>
+  <a class="tag tag--primary tag--small" href="/en/tags/etcd/">etcd</a>
 
-  <a class="tag tag--primary tag--small" href="/zh/tags/%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F/">分布式系统</a>
+  <a class="tag tag--primary tag--small" href="/en/tags/distributed-systems/">distributed systems</a>
 
                   </div>
                 
@@ -516,14 +517,14 @@ etcd通过这两个记录，提供了<strong>是否开启线性读的选项(Seri
                 <a class="post-action-btn btn btn--disabled">
               
                   <i class="fa fa-angle-left"></i>
-                  <span class="hide-xs hide-sm text-small icon-ml">下一篇</span>
+                  <span class="hide-xs hide-sm text-small icon-ml">NEXT</span>
                 </a>
             </li>
             <li class="post-action">
               
-                <a class="post-action-btn btn btn--default tooltip--top" href="/zh/2022/05/%E8%81%8A%E4%B8%80%E8%81%8Aetcd%E7%B3%BB%E5%88%97%E4%B9%8B%E4%B8%80%E5%B1%82%E7%BA%A7%E6%A6%82%E5%86%B5%E4%B8%8E%E7%9F%A5%E8%AF%86%E6%A2%B3%E7%90%86/" data-tooltip="聊一聊etcd系列之一：层级概况与知识梳理">
+                <a class="post-action-btn btn btn--default tooltip--top" href="/en/2022/05/talk-about-etcd-series-one-hierarchy-overview-with-birds-eye-view/" data-tooltip="Talk about etcd Series One: Hierarchy Overview with bird&#39;s eye view">
               
-                  <span class="hide-xs hide-sm text-small icon-mr">上一篇</span>
+                  <span class="hide-xs hide-sm text-small icon-mr">PREVIOUS</span>
                   <i class="fa fa-angle-right"></i>
                 </a>
             </li>
@@ -574,14 +575,14 @@ etcd通过这两个记录，提供了<strong>是否开启线性读的选项(Seri
                 <a class="post-action-btn btn btn--disabled">
               
                   <i class="fa fa-angle-left"></i>
-                  <span class="hide-xs hide-sm text-small icon-ml">下一篇</span>
+                  <span class="hide-xs hide-sm text-small icon-ml">NEXT</span>
                 </a>
             </li>
             <li class="post-action">
               
-                <a class="post-action-btn btn btn--default tooltip--top" href="/zh/2022/05/%E8%81%8A%E4%B8%80%E8%81%8Aetcd%E7%B3%BB%E5%88%97%E4%B9%8B%E4%B8%80%E5%B1%82%E7%BA%A7%E6%A6%82%E5%86%B5%E4%B8%8E%E7%9F%A5%E8%AF%86%E6%A2%B3%E7%90%86/" data-tooltip="聊一聊etcd系列之一：层级概况与知识梳理">
+                <a class="post-action-btn btn btn--default tooltip--top" href="/en/2022/05/talk-about-etcd-series-one-hierarchy-overview-with-birds-eye-view/" data-tooltip="Talk about etcd Series One: Hierarchy Overview with bird&#39;s eye view">
               
-                  <span class="hide-xs hide-sm text-small icon-mr">上一篇</span>
+                  <span class="hide-xs hide-sm text-small icon-mr">PREVIOUS</span>
                   <i class="fa fa-angle-right"></i>
                 </a>
             </li>
@@ -625,7 +626,7 @@ etcd通过这两个记录，提供了<strong>是否开启线性读的选项(Seri
       <i class="fa fa-remove"></i>
     </div>
     
-      <img id="about-card-picture" src="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/pig.jpg" alt="作者的图片" />
+      <img id="about-card-picture" src="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/pig.jpg" alt="Author&#39;s picture" />
     
     <h4 id="about-card-name">pixelpig</h4>
     
