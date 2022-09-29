@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="generator" content="Hugo 0.80.0 with theme Tranquilpeak 0.4.8-BETA">
+<meta name="author" content="pixelpig">
+<meta name="keywords" content="">
+<meta name="description" content="etcd is very common in the field of microservices. This series will talk about what problems etcd solves and how it solves it for a step-by-step analysis.">
+
+
+<meta property="og:description" content="etcd is very common in the field of microservices. This series will talk about what problems etcd solves and how it solves it for a step-by-step analysis.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Talk about etcd Series (Part1): Hierarchy Overview with bird&#39;s eye view">
+<meta name="twitter:title" content="Talk about etcd Series (Part1): Hierarchy Overview with bird&#39;s eye view">
+<meta property="og:url" content="/en/2022/05/talk-about-etcd-series-part1-hierarchy-overview-with-birds-eye-view/">
+<meta property="twitter:url" content="/en/2022/05/talk-about-etcd-series-part1-hierarchy-overview-with-birds-eye-view/">
+<meta property="og:site_name" content="pixelpig - tech">
+<meta property="og:description" content="etcd is very common in the field of microservices. This series will talk about what problems etcd solves and how it solves it for a step-by-step analysis.">
+<meta name="twitter:description" content="etcd is very common in the field of microservices. This series will talk about what problems etcd solves and how it solves it for a step-by-step analysis.">
+<meta property="og:locale" content="en">
+
+  
+    <meta property="article:published_time" content="2022-05-17T00:00:00">
+  
+  
+    <meta property="article:modified_time" content="2022-05-17T00:00:00">
+  
+  
+  
+    
+      <meta property="article:section" content="Go">
+    
+      <meta property="article:section" content="backend">
+    
+  
+  
+    
+      <meta property="article:tag" content="raft">
+    
+      <meta property="article:tag" content="etcd">
+    
+      <meta property="article:tag" content="distributed systems">
+    
+  
+
+
+<meta name="twitter:card" content="summary">
+
+  <meta name="twitter:site" content="@pixelpigpigpig">
+
+
+  <meta name="twitter:creator" content="@pixelpigpigpig">
+
+
+
+
+
+
+  <meta property="og:image" content="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/blog/etcd/raft/s0-%E8%84%91%E5%9B%BE.png">
+  <meta property="twitter:image" content="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/blog/etcd/raft/s0-%E8%84%91%E5%9B%BE.png">
+
+
+
+
+
+  <meta property="og:image" content="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/pig.jpg">
+  <meta property="twitter:image" content="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/pig.jpg">
+
+
+    <title>Talk about etcd Series (Part1): Hierarchy Overview with bird&#39;s eye view</title>
+
+    <link rel="icon" href="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/blog/static/pixel.ico">
+    
+
+    
+
+    <link rel="canonical" href="/en/2022/05/talk-about-etcd-series-part1-hierarchy-overview-with-birds-eye-view/">
+
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/jquery.fancybox.min.css" integrity="sha256-vuXZ9LGmmwtjqFX1F+EKin1ThZMub58gKULUyf0qECk=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/helpers/jquery.fancybox-thumbs.min.css" integrity="sha256-SEa4XYAHihTcEP1f5gARTB2K26Uk8PsndQYHQC1f4jU=" crossorigin="anonymous" />
+    
+    
+    <link rel="stylesheet" href="/css/style-twzjdbqhmnnacqs0pwwdzcdbt8yhv8giawvjqjmyfoqnvazl0dalmnhdkvp7.min.css" />
+    
+    
+
+    
+      
+    
+    
+  </head>
+
+  <body>
+    <div id="blog">
+      <header id="header" data-behavior="5">
+  <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+  <div class="header-title">
+    <a class="header-title-link" href="/en/">pixelpig - tech</a>
+  </div>
+  
+    
+      <a class="header-right-picture "
+         href="/#about">
+    
+    
+    
+      
+        <img class="header-picture" src="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/pig.jpg" alt="Author&#39;s picture" />
+      
+    
+    </a>
+  
+</header>
+
+      <nav id="sidebar" data-behavior="5">
+  <div class="sidebar-container">
+    
+      <div class="sidebar-profile">
+        <a href="/#about">
+          <img class="sidebar-profile-picture" src="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/pig.jpg" alt="Author&#39;s picture" />
+        </a>
+        <h4 class="sidebar-profile-name">pixelpig</h4>
+        
+          <h5 class="sidebar-profile-bio">a backend development living in GD, China. Stay hungry, stay foolish <strong>:）</strong></h5>
+        
+      </div>
+    
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/zh">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-language"></i>
+      
+      <span class="sidebar-button-desc">简/中</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/en/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-home"></i>
+      
+      <span class="sidebar-button-desc">Home</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/en/categories">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-bookmark"></i>
+      
+      <span class="sidebar-button-desc">Categories</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/en/tags">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
+      
+      <span class="sidebar-button-desc">Tags</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/en/archives">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-archive"></i>
+      
+      <span class="sidebar-button-desc">Archives</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/en/#about">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-question"></i>
+      
+      <span class="sidebar-button-desc">About me</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://twitter.com/pixelpigpigpig/" target="_blank" rel="noopener">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-twitter"></i>
+      
+      <span class="sidebar-button-desc">Twitter</span>
+    </a>
+  </li>
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+
+    </ul>
+  </div>
+</nav>
+
+      
+
+      <div id="main" data-behavior="5"
+        class="
+               hasCoverMetaIn
+               ">
+        <article class="post" itemscope itemType="http://schema.org/BlogPosting">
+          
+          
+            <div class="post-header main-content-wrap text-center">
+  
+    <h1 class="post-title" itemprop="headline">
+      Talk about etcd Series (Part1): Hierarchy Overview with bird&#39;s eye view
+    </h1>
+  
+  
+  <div class="postShorten-meta post-meta">
+    
+      <time itemprop="datePublished" datetime="2022-05-17T00:00:00Z">
+        
+  May 17, 2022
+
+      </time>
+    
+    
+  
+  
+    <span>in</span>
+    
+      <a class="category-link" href="/en/categories/go">Go</a>, 
+    
+      <a class="category-link" href="/en/categories/backend">backend</a>
+    
+  
+
+  </div>
+
+</div>
+          
+          <div class="post-content markdown" itemprop="articleBody">
+            <div class="main-content-wrap">
+              <p>etcd is very common in the field of microservices. This series will talk about what problems etcd solves and how it solves it for a step-by-step analysis.</p>
+<p><img src="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/blog/etcd/raft/etcd-tree.png" alt="etcd-cover-tree"></p>
+<h2 id="foreword">Foreword</h2>
+<p>etcd is very common in the field of microservices. It is often used as a registry to provide service registration and discovery. For example, the K8S framework uses etcd as the basic component for internal interaction. Recently, I have been sorting out some internal structures and dependent components of etcd. Today, let&rsquo;s take a look at the global perspective and talk about some technology stacks of etcd.</p>
+<h2 id="what-problem-does-it-solve">What problem does it solve</h2>
+<p>The positioning of etcd is a general consistent KV storage, but in application scenarios oriented to service registration and discovery, there are probably several ways to use it:</p>
+<ol>
+<li>Registration/configuration center KV storage</li>
+<li>Service Discovery</li>
+<li>Distributed lock</li>
+</ol>
+<h2 id="how-it-is-solved">How it is solved</h2>
+<h3 id="layered-design">Layered design</h3>
+<p>Hierarchical design is the basic idea of software development. etcd also adopts module division of labor to implement each internal component separately, so as to perform their own duties, from the API layer to the logic layer, and then to the underlying file storage, which is roughly divided into three modules. , this series will be disassembled chapter by chapter based on this idea.
+<strong>This series will be divided into the following major modules for analysis, if you are interested, you can follow me and pay more attention :)</strong></p>
+<h3 id="conformance-protocol">Conformance Protocol</h3>
+<p>When it comes to distributed storage, distributed protocols are naturally inseparable. The bottom layer of etcd relies on the <strong>raft</strong> consensus algorithm to ensure consistency, and adopts the <strong>election strategy</strong> to regularly update the current status of each node.</p>
+<h3 id="way-of-communication">Way of communication</h3>
+<p>The communication method between etcd nodes is updated and iterative (v2-&gt;v3). v2 uses HTTP/1.X protocol and communicates based on RESTful API; v3 adds HTTP/2.x grpc protocol support on the basis of compatibility with v2. In the multiplexing scenario, the transmission efficiency is improved, based on<a href="https://etcd.io/docs/v3.5/learning/design-client/">Stream API</a> with long connection for activity detection.<br>
+<img src="https://etcd.io/docs/v3.5/learning/img/client-balancer-figure-06.png" alt="image">
+In addition, etcd exposes a friendly API to shield the underlying complex application logic and provide a logical cluster view of multiple physical machines.</p>
+<h3 id="data-storage">Data Storage</h3>
+<p>Regarding the underlying storage of etcd data, it mainly relies on the write-ahead log (WAL) and the BoltDB storage engine. All data will be guaranteed to be written to the WAL for data persistence before submission. The detailed implementation of BoltDB will be elaborated in the subsequent series, with these technical points:</p>
+<ul>
+<li><strong>B+ tree</strong>, KV DB, <strong>&ldquo;more reading and less writing&rdquo;</strong></li>
+<li>Combined with <strong>COW</strong> lock-free read and write concurrency</li>
+<li><strong>mmap()</strong> (memory mapped disk technology), zero copy</li>
+</ul>
+<p>Among them, etcd spends a lot of space on multi-version control of nodes (<strong>MVCC</strong>), which depends on the index mapping of the underlying B+ tree and the memory B-tree structure. How they are related will be discussed later in this series.</p>
+<h2 id="mindmap">Mindmap</h2>
+<p>The entire technology stack of etcd can actually be expanded vertically and horizontally. Here is a diagram of the context. This series will be carried out in conjunction with this brain map. You can also make in-depth contact with the points of interest.
+<img src="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/blog/etcd/raft/en-etcd-mind.png" alt="mindmap"></p>
+<h2 id="reference-link">Reference link</h2>
+<ul>
+<li>etcd docs 
+<a href="https://etcd.io/docs/v3.5/learning/">https://etcd.io/docs/v3.5/learning/</a></li>
+<li>Deep Dive: etcd<br>
+<a href="https://www.youtube.com/watch?v=DrtdrdwDpZE">https://www.youtube.com/watch?v=DrtdrdwDpZE</a></li>
+<li>raft pdf<br>
+<a href="https://raft.github.io/raft.pdf">https://raft.github.io/raft.pdf</a></li>
+</ul>
+              
+            </div>
+          </div>
+          <div id="post-footer" class="post-footer main-content-wrap">
+            
+              
+                
+                
+                  <div class="post-footer-tags">
+                    <span class="text-color-light text-small">TAGGED IN</span><br/>
+                    
+  <a class="tag tag--primary tag--small" href="/en/tags/raft/">raft</a>
+
+  <a class="tag tag--primary tag--small" href="/en/tags/etcd/">etcd</a>
+
+  <a class="tag tag--primary tag--small" href="/en/tags/distributed-systems/">distributed systems</a>
+
+                  </div>
+                
+              
+            
+            <div class="post-actions-wrap">
+  
+      <nav >
+        <ul class="post-actions post-action-nav">
+          
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="/en/2022/06/talk-about-etcd-series-part2-the-raft-consistency-protocol/" data-tooltip="Talk about etcd Series (Part2): the raft consistency protocol">
+              
+                  <i class="fa fa-angle-left"></i>
+                  <span class="hide-xs hide-sm text-small icon-ml">NEXT</span>
+                </a>
+            </li>
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="/en/2022/04/talk-about-go-a-high-performance-pool-for-reusing-object-sync.pool/" data-tooltip="Talk about Go: A high performance pool for reusing object - Sync.Pool">
+              
+                  <span class="hide-xs hide-sm text-small icon-mr">PREVIOUS</span>
+                  <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+          
+        </ul>
+      </nav>
+    <ul class="post-actions post-action-share" >
+      
+        <li class="post-action hide-lg hide-md hide-sm">
+          <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
+            <i class="fa fa-share-alt"></i>
+          </a>
+        </li>
+        
+      
+      
+      <li class="post-action">
+        
+          <a class="post-action-btn btn btn--default" href="#">
+        
+          <i class="fa fa-list"></i>
+        </a>
+      </li>
+    </ul>
+  
+</div>
+
+            
+              
+            
+          </div>
+        </article>
+        <footer id="footer" class="main-content-wrap">
+  <span class="copyrights">
+    &copy; 2022 <a href="https://github.com/pixeldin">pixeldin</a>. All Rights Reserved
+  </span>
+</footer>
+
+      </div>
+      <div id="bottom-bar" class="post-bottom-bar" data-behavior="5">
+        <div class="post-actions-wrap">
+  
+      <nav >
+        <ul class="post-actions post-action-nav">
+          
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="/en/2022/06/talk-about-etcd-series-part2-the-raft-consistency-protocol/" data-tooltip="Talk about etcd Series (Part2): the raft consistency protocol">
+              
+                  <i class="fa fa-angle-left"></i>
+                  <span class="hide-xs hide-sm text-small icon-ml">NEXT</span>
+                </a>
+            </li>
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="/en/2022/04/talk-about-go-a-high-performance-pool-for-reusing-object-sync.pool/" data-tooltip="Talk about Go: A high performance pool for reusing object - Sync.Pool">
+              
+                  <span class="hide-xs hide-sm text-small icon-mr">PREVIOUS</span>
+                  <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+          
+        </ul>
+      </nav>
+    <ul class="post-actions post-action-share" >
+      
+        <li class="post-action hide-lg hide-md hide-sm">
+          <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
+            <i class="fa fa-share-alt"></i>
+          </a>
+        </li>
+        
+      
+      
+      <li class="post-action">
+        
+          <a class="post-action-btn btn btn--default" href="#">
+        
+          <i class="fa fa-list"></i>
+        </a>
+      </li>
+    </ul>
+  
+</div>
+
+      </div>
+      <div id="share-options-bar" class="share-options-bar" data-behavior="5">
+  <i id="btn-close-shareoptions" class="fa fa-close"></i>
+  <ul class="share-options">
+    
+  </ul>
+</div>
+<div id="share-options-mask" class="share-options-mask"></div>
+    </div>
+    
+    <div id="about">
+  <div id="about-card">
+    <div id="about-btn-close">
+      <i class="fa fa-remove"></i>
+    </div>
+    
+      <img id="about-card-picture" src="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/pig.jpg" alt="Author&#39;s picture" />
+    
+    <h4 id="about-card-name">pixelpig</h4>
+    
+      <div id="about-card-bio">a backend development living in GD, China. Stay hungry, stay foolish <strong>:）</strong></div>
+    
+    
+      <div id="about-card-job">
+        <i class="fa fa-briefcase"></i>
+        <br/>
+        Golang developer@Huya
+      </div>
+    
+    
+      <div id="about-card-location">
+        <i class="fa fa-map-marker"></i>
+        <br/>
+        CHINA-GD
+      </div>
+    
+  </div>
+</div>
+
+    
+
+    
+  
+    <div id="cover" style="background-image:url('https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/cover.jpg');"></div>
+  
+
+
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js" integrity="sha256-/BfiIkHlHoVihZdc6TFuj7MmJ0TWcWsMXkeDFwhi0zw=" crossorigin="anonymous"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.7/js/jquery.fancybox.min.js" integrity="sha256-GEAnjcTqVP+vBp3SSc8bEDQqvWAZMiHyUSIorrWwH50=" crossorigin="anonymous"></script>
+
+
+<script src="/js/script-pcw6v3xilnxydl1vddzazdverrnn9ctynvnxgwho987mfyqkuylcb1nlt.min.js"></script>
+
+
+<script lang="javascript">
+window.onload = updateMinWidth;
+window.onresize = updateMinWidth;
+document.getElementById("sidebar").addEventListener("transitionend", updateMinWidth);
+function updateMinWidth() {
+  var sidebar = document.getElementById("sidebar");
+  var main = document.getElementById("main");
+  main.style.minWidth = "";
+  var w1 = getComputedStyle(main).getPropertyValue("min-width");
+  var w2 = getComputedStyle(sidebar).getPropertyValue("width");
+  var w3 = getComputedStyle(sidebar).getPropertyValue("left");
+  main.style.minWidth = `calc(${w1} - ${w2} - ${w3})`;
+}
+</script>
+
+<script>
+$(document).ready(function() {
+  hljs.configure({ classPrefix: '', useBR: false });
+  $('pre.code-highlight > code, pre > code').each(function(i, block) {
+    if (!$(this).hasClass('codeblock')) {
+      $(this).addClass('codeblock');
+    }
+    hljs.highlightBlock(block);
+  });
+});
+</script>
+
+
+  
+    
+  
+
+
+
+
+    
+  </body>
+</html>
+
