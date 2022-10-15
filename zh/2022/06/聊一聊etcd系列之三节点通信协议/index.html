@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+  <head>
+    
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="generator" content="Hugo 0.80.0 with theme Tranquilpeak 0.4.8-BETA">
+<meta name="author" content="pixelpig">
+<meta name="keywords" content="">
+<meta name="description" content="etcd在微服务领域使用场景十分普遍，经常用于作为一个注册中心，提供服务注册与发现。近期梳理了etcd的一些内部结构与依赖组件，今天来聊一聊etcd的节点通信协议。">
+
+
+<meta property="og:description" content="etcd在微服务领域使用场景十分普遍，经常用于作为一个注册中心，提供服务注册与发现。近期梳理了etcd的一些内部结构与依赖组件，今天来聊一聊etcd的节点通信协议。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="聊一聊etcd系列之三：节点通信协议">
+<meta name="twitter:title" content="聊一聊etcd系列之三：节点通信协议">
+<meta property="og:url" content="/zh/2022/06/%E8%81%8A%E4%B8%80%E8%81%8Aetcd%E7%B3%BB%E5%88%97%E4%B9%8B%E4%B8%89%E8%8A%82%E7%82%B9%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE/">
+<meta property="twitter:url" content="/zh/2022/06/%E8%81%8A%E4%B8%80%E8%81%8Aetcd%E7%B3%BB%E5%88%97%E4%B9%8B%E4%B8%89%E8%8A%82%E7%82%B9%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE/">
+<meta property="og:site_name" content="pixelpig - tech">
+<meta property="og:description" content="etcd在微服务领域使用场景十分普遍，经常用于作为一个注册中心，提供服务注册与发现。近期梳理了etcd的一些内部结构与依赖组件，今天来聊一聊etcd的节点通信协议。">
+<meta name="twitter:description" content="etcd在微服务领域使用场景十分普遍，经常用于作为一个注册中心，提供服务注册与发现。近期梳理了etcd的一些内部结构与依赖组件，今天来聊一聊etcd的节点通信协议。">
+<meta property="og:locale" content="zh">
+
+  
+    <meta property="article:published_time" content="2022-06-23T00:00:00">
+  
+  
+    <meta property="article:modified_time" content="2022-06-23T00:00:00">
+  
+  
+  
+    
+      <meta property="article:section" content="Go">
+    
+      <meta property="article:section" content="后端">
+    
+  
+  
+    
+      <meta property="article:tag" content="raft">
+    
+      <meta property="article:tag" content="etcd">
+    
+      <meta property="article:tag" content="分布式系统">
+    
+  
+
+
+<meta name="twitter:card" content="summary">
+
+  <meta name="twitter:site" content="@pixelpigpigpig">
+
+
+  <meta name="twitter:creator" content="@pixelpigpigpig">
+
+
+
+
+
+
+  <meta property="og:image" content="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/blog/etcd/raft/kv-process.png">
+  <meta property="twitter:image" content="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/blog/etcd/raft/kv-process.png">
+
+
+
+
+
+  <meta property="og:image" content="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/pig.jpg">
+  <meta property="twitter:image" content="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/pig.jpg">
+
+
+    <title>聊一聊etcd系列之三：节点通信协议</title>
+
+    <link rel="icon" href="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/blog/static/pixel.ico">
+    
+
+    
+
+    <link rel="canonical" href="/zh/2022/06/%E8%81%8A%E4%B8%80%E8%81%8Aetcd%E7%B3%BB%E5%88%97%E4%B9%8B%E4%B8%89%E8%8A%82%E7%82%B9%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE/">
+
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/jquery.fancybox.min.css" integrity="sha256-vuXZ9LGmmwtjqFX1F+EKin1ThZMub58gKULUyf0qECk=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/helpers/jquery.fancybox-thumbs.min.css" integrity="sha256-SEa4XYAHihTcEP1f5gARTB2K26Uk8PsndQYHQC1f4jU=" crossorigin="anonymous" />
+    
+    
+    <link rel="stylesheet" href="/css/style-twzjdbqhmnnacqs0pwwdzcdbt8yhv8giawvjqjmyfoqnvazl0dalmnhdkvp7.min.css" />
+    
+    
+
+    
+      
+    
+    
+  </head>
+
+  <body>
+    <div id="blog">
+      <header id="header" data-behavior="5">
+  <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+  <div class="header-title">
+    <a class="header-title-link" href="/zh/">pixelpig - tech</a>
+  </div>
+  
+    
+      <a class="header-right-picture "
+         href="/#about">
+    
+    
+    
+      
+        <img class="header-picture" src="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/pig.jpg" alt="作者的图片" />
+      
+    
+    </a>
+  
+</header>
+
+      <nav id="sidebar" data-behavior="5">
+  <div class="sidebar-container">
+    
+      <div class="sidebar-profile">
+        <a href="/#about">
+          <img class="sidebar-profile-picture" src="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/pig.jpg" alt="作者的图片" />
+        </a>
+        <h4 class="sidebar-profile-name">pixelpig</h4>
+        
+          <h5 class="sidebar-profile-bio">a backend development living in GD, China. Stay hungry, stay foolish <strong>:）</strong></h5>
+        
+      </div>
+    
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/en">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-language"></i>
+      
+      <span class="sidebar-button-desc">English</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/zh/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-home"></i>
+      
+      <span class="sidebar-button-desc">首页</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/zh/categories">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-bookmark"></i>
+      
+      <span class="sidebar-button-desc">分类</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/zh/tags">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
+      
+      <span class="sidebar-button-desc">标签</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/zh/archives">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-archive"></i>
+      
+      <span class="sidebar-button-desc">归档</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/zh/#about">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-question"></i>
+      
+      <span class="sidebar-button-desc">关于我</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://weibo.com/u/1837780507/" target="_blank" rel="noopener">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-weibo"></i>
+      
+      <span class="sidebar-button-desc">微博</span>
+    </a>
+  </li>
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+
+    </ul>
+  </div>
+</nav>
+
+      
+
+      <div id="main" data-behavior="5"
+        class="
+               hasCoverMetaIn
+               ">
+        <article class="post" itemscope itemType="http://schema.org/BlogPosting">
+          
+          
+            <div class="post-header main-content-wrap text-center">
+  
+    <h1 class="post-title" itemprop="headline">
+      聊一聊etcd系列之三：节点通信协议
+    </h1>
+  
+  
+  <div class="postShorten-meta post-meta">
+    
+      <time itemprop="datePublished" datetime="2022-06-23T00:00:00Z">
+        
+  六月 23, 2022
+
+      </time>
+    
+    
+  
+  
+    <span>发布在</span>
+    
+      <a class="category-link" href="/zh/categories/go">Go</a>, 
+    
+      <a class="category-link" href="/zh/categories/%e5%90%8e%e7%ab%af">后端</a>
+    
+  
+
+  </div>
+
+</div>
+          
+          <div class="post-content markdown" itemprop="articleBody">
+            <div class="main-content-wrap">
+              <p>etcd在微服务领域使用场景十分普遍，经常用于作为一个注册中心，提供服务注册与发现。近期梳理了etcd的一些内部结构与依赖组件，今天来聊一聊etcd的节点通信协议。</p>
+<p><img src="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/blog/etcd/raft/etcd-part3-cover.png" alt="etcd-part3-cover"></p>
+<h2 id="前言">前言</h2>
+<p>etcd在微服务领域使用场景十分普遍，经常用于作为一个注册中心，提供服务注册与发现常见的比如K8S框架就以etcd作为基础组件进行内部交互。前面提到etcd通过分层对各个模块进行实现，今天我们来进入网络部分，本篇将聊一聊etcd如何对外提供的API，从客户端和服务端来逐步分析。</p>
+<h2 id="它解决了什么问题">它解决了什么问题</h2>
+<h3 id="通信效率">通信效率</h3>
+<p>聊到通信协议固然要考虑的是节点间的通信方式，早期的etcd通信版本是v2，通过<strong>HTTP+JSON</strong>暴露外部API，由于经常需要服务感知节点配置变动或者监听推送，客户端和服务端需要频繁通信，早期的v2采用<strong>HTTP1.1</strong>的长连接来维持，经过如此通信效率依然不高。</p>
+<p><em>由于这篇集中讲网络通信，所以关于v2到v3的升级特性只关注网络通信相关的功能，其他存储特性优化将在后续“底层存储”进行分析，比如v3的MVCC、快照、事务等。</em></p>
+<h3 id="http1x-vs-http2">HTTP/1.X VS HTTP/2</h3>
+<p>我们先来简单聊一聊<strong>HTTP/1.x</strong>到<strong>HTTP/2</strong>的演变：</p>
+<h4 id="连接数">连接数</h4>
+<p>在<strong>HTTP/2</strong>之前，<strong>HTTP/1</strong>并不高效，因为同一个请求等待响应时候会阻塞后续网络包的发送，当今网络的大部分问题已经由带宽变成延迟问题，有时候提高带宽(发送内容大小)的收益已经不如降低延迟(网络传输耗时)性价比来的高。</p>
+<p>此外，我们也不能暴力的开启多连接，毕竟基于三次握手创建连接是要消耗资源的，此外单连接的阻塞问题并没有得到解决，试图开启多连接来优化是治标不治本的。</p>
+<h4 id="文本协议">文本协议</h4>
+<p><strong>HTTP/1</strong>采用文本协议，其编码格式对人类友好，但是传输并不高效，尚且不论安全问题(<strong>HTTPS</strong>)。</p>
+<hr>
+<p>etcd v3版本引进了<code>grpc+protobuf</code>的通信方式(基于<strong>HTTP/2.0</strong>)，其优势在于：</p>
+<ul>
+<li>采用二进制压缩传输，序列/反序列化更加高效</li>
+<li>基于<strong>HTTP2.0</strong>的服务端主动推送特性，对事件多路复用做了优化</li>
+<li><code>Watch</code>功能使用grpc的stream流进行感知，同一个客户端和服务端采用单一连接，替代v2的<strong>HTTP</strong>长轮询检测，直接减少连接数和内存开销</li>
+</ul>
+<h3 id="兼容性">兼容性</h3>
+<p>etcd v3版本为了向上兼容v2 API版本，提供了grpc网关来支持原HTTP JSON接口支持。</p>
+<p><img src="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/blog/etcd/raft/kv-process.png" alt="kv-process flow"></p>
+<h2 id="它是如何解决的">它是如何解决的</h2>
+<p>我们在这个系列的第一篇讲到etcd通过分层把各个模块功能进行拆分，分别进行实现，提高代码的可读性和降低维护成本。<br>
+在通信模块这一块，etcd同样采用了分层策略，其中外部跨机器节点的网络模块集中在<code>api.rafthttp</code>的package，而节点状态更新和底层存储的分布在<code>etcd.raft</code>的package。</p>
+<h3 id="v2协议转换">v2协议转换</h3>
+<p>这是一段etcd v2请求过渡到底层<code>etcdserver</code>的转换逻辑：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#75715e">// parseKeyRequest 将接收到的关于 keysPrefix 的 http.Request 转换为
+</span><span style="color:#75715e">// 转换为etcdserverpb请求
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">parseKeyRequest</span>(<span style="color:#a6e22e">r</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">Request</span>, <span style="color:#a6e22e">clock</span> <span style="color:#a6e22e">clockwork</span>.<span style="color:#a6e22e">Clock</span>) (<span style="color:#a6e22e">etcdserverpb</span>.<span style="color:#a6e22e">Request</span>, <span style="color:#66d9ef">bool</span>, <span style="color:#66d9ef">error</span>) {
+	<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">noValueOnSuccess</span> <span style="color:#66d9ef">bool</span>
+	<span style="color:#a6e22e">emptyReq</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">etcdserverpb</span>.<span style="color:#a6e22e">Request</span>{}
+
+	<span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">ParseForm</span>()
+	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+		<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">emptyReq</span>, <span style="color:#66d9ef">false</span>, <span style="color:#a6e22e">v2error</span>.<span style="color:#a6e22e">NewRequestError</span>(
+			<span style="color:#a6e22e">v2error</span>.<span style="color:#a6e22e">EcodeInvalidForm</span>,
+			<span style="color:#a6e22e">err</span>.<span style="color:#a6e22e">Error</span>(),
+		)
+	}
+
+	<span style="color:#75715e">// ...
+</span><span style="color:#75715e"></span>	<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">pIdx</span>, <span style="color:#a6e22e">wIdx</span> <span style="color:#66d9ef">uint64</span>
+	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">pIdx</span>, <span style="color:#a6e22e">err</span> = <span style="color:#a6e22e">getUint64</span>(<span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">Form</span>, <span style="color:#e6db74">&#34;prevIndex&#34;</span>); <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+		<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">emptyReq</span>, <span style="color:#66d9ef">false</span>, <span style="color:#a6e22e">v2error</span>.<span style="color:#a6e22e">NewRequestError</span>(
+			<span style="color:#a6e22e">v2error</span>.<span style="color:#a6e22e">EcodeIndexNaN</span>,
+			<span style="color:#e6db74">`invalid value for &#34;prevIndex&#34;`</span>,
+		)
+	}
+	<span style="color:#75715e">// ...
+</span><span style="color:#75715e"></span>	
+	<span style="color:#75715e">// 转换为etcdserverpb.Request proto 请求结构
+</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">rr</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">etcdserverpb</span>.<span style="color:#a6e22e">Request</span>{
+		<span style="color:#a6e22e">Method</span>:    <span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">Method</span>,
+		<span style="color:#a6e22e">Path</span>:      <span style="color:#a6e22e">p</span>,
+		<span style="color:#a6e22e">Val</span>:       <span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">FormValue</span>(<span style="color:#e6db74">&#34;value&#34;</span>),
+		<span style="color:#a6e22e">Dir</span>:       <span style="color:#a6e22e">dir</span>,
+		<span style="color:#a6e22e">PrevValue</span>: <span style="color:#a6e22e">pV</span>,
+		<span style="color:#a6e22e">PrevIndex</span>: <span style="color:#a6e22e">pIdx</span>,
+		<span style="color:#a6e22e">PrevExist</span>: <span style="color:#a6e22e">pe</span>,
+		<span style="color:#a6e22e">Wait</span>:      <span style="color:#a6e22e">wait</span>,
+		<span style="color:#a6e22e">Since</span>:     <span style="color:#a6e22e">wIdx</span>,
+		<span style="color:#a6e22e">Recursive</span>: <span style="color:#a6e22e">rec</span>,
+		<span style="color:#a6e22e">Sorted</span>:    <span style="color:#a6e22e">sort</span>,
+		<span style="color:#a6e22e">Quorum</span>:    <span style="color:#a6e22e">quorum</span>,
+		<span style="color:#a6e22e">Stream</span>:    <span style="color:#a6e22e">stream</span>,
+	}
+	<span style="color:#75715e">// ...
+</span><span style="color:#75715e"></span>	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">rr</span>, <span style="color:#a6e22e">noValueOnSuccess</span>, <span style="color:#66d9ef">nil</span>
+}
+</code></pre></div><p>值得一提的是，etcd官方已经在v3.4版本之后全局默认使用v3方式通信了，所以后续我们着重分析v3版本的代码，分别从客户端和服务端来分开描述。</p>
+<h3 id="客户端">客户端</h3>
+<p>v3客户端封装了一个grpc连接，用于rpc服务内部通信</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#75715e">// Client provides and manages an etcd v3 client session.
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Client</span> <span style="color:#66d9ef">struct</span> {
+	<span style="color:#a6e22e">Cluster</span>
+	<span style="color:#a6e22e">KV</span>
+	<span style="color:#a6e22e">Lease</span>
+	<span style="color:#a6e22e">Watcher</span>
+	<span style="color:#75715e">// rpc Connection
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">conn</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">grpc</span>.<span style="color:#a6e22e">ClientConn</span>
+	<span style="color:#a6e22e">cfg</span>           <span style="color:#a6e22e">Config</span>
+	<span style="color:#75715e">//...
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">lg</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">zap</span>.<span style="color:#a6e22e">Logger</span>
+}
+</code></pre></div><h4 id="proto协议文件">proto协议文件</h4>
+<p>在<code>etcdserver</code>的pkg中，约定了一些通信的.proto文件</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go">..<span style="color:#f92672">/</span>..<span style="color:#f92672">/</span><span style="color:#a6e22e">etcd</span><span style="color:#f92672">/</span><span style="color:#a6e22e">etcdserver</span><span style="color:#f92672">/</span><span style="color:#a6e22e">etcdserverpb</span> ((<span style="color:#a6e22e">v3</span><span style="color:#ae81ff">.4.0</span>))
+<span style="color:#960050;background-color:#1e0010">$</span> <span style="color:#a6e22e">ls</span> <span style="color:#f92672">-</span><span style="color:#a6e22e">l</span> <span style="color:#f92672">*</span>.<span style="color:#a6e22e">proto</span>
+<span style="color:#f92672">-</span><span style="color:#a6e22e">rw</span><span style="color:#f92672">-</span><span style="color:#a6e22e">r</span><span style="color:#f92672">--</span><span style="color:#a6e22e">r</span><span style="color:#f92672">--</span> <span style="color:#ae81ff">1</span> <span style="color:#a6e22e">Pixel_Pig</span> <span style="color:#ae81ff">197121</span>  <span style="color:#ae81ff">1515</span> <span style="color:#a6e22e">Oct</span>  <span style="color:#ae81ff">8</span> <span style="color:#ae81ff">10</span>:<span style="color:#ae81ff">57</span> <span style="color:#a6e22e">etcdserver</span>.<span style="color:#a6e22e">proto</span>
+<span style="color:#f92672">-</span><span style="color:#a6e22e">rw</span><span style="color:#f92672">-</span><span style="color:#a6e22e">r</span><span style="color:#f92672">--</span><span style="color:#a6e22e">r</span><span style="color:#f92672">--</span> <span style="color:#ae81ff">1</span> <span style="color:#a6e22e">Pixel_Pig</span> <span style="color:#ae81ff">197121</span>  <span style="color:#ae81ff">2364</span> <span style="color:#a6e22e">Oct</span>  <span style="color:#ae81ff">8</span> <span style="color:#ae81ff">10</span>:<span style="color:#ae81ff">57</span> <span style="color:#a6e22e">raft_internal</span>.<span style="color:#a6e22e">proto</span>
+<span style="color:#f92672">-</span><span style="color:#a6e22e">rw</span><span style="color:#f92672">-</span><span style="color:#a6e22e">r</span><span style="color:#f92672">--</span><span style="color:#a6e22e">r</span><span style="color:#f92672">--</span> <span style="color:#ae81ff">1</span> <span style="color:#a6e22e">Pixel_Pig</span> <span style="color:#ae81ff">197121</span> <span style="color:#ae81ff">35627</span> <span style="color:#a6e22e">Oct</span>  <span style="color:#ae81ff">8</span> <span style="color:#ae81ff">10</span>:<span style="color:#ae81ff">57</span> <span style="color:#a6e22e">rpc</span>.<span style="color:#a6e22e">proto</span>
+</code></pre></div><p>定义了etcd主要对外提供功能模块的服务<br>
+<img src="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/blog/etcd/raft/etcd-proto-svr.png" alt="etcd内部rpc服务"></p>
+<h4 id="request请求结构">Request请求结构</h4>
+<p>这是etcd节点rpc通信的请求体,上面v2客户端版本把HttpRequest转换成的<code>etcdserverpb.Request</code>正是来自于etcdserver.proto文件<br>
+<img src="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/blog/etcd/raft/etcd-proto-request.png" alt="etcd-proto-request"></p>
+<h4 id="kv客户端">kv客户端</h4>
+<p>客户端请求会经过<code>KV</code>接口的实现<code>kVClient</code>进行调用，远程端是<code>KVServer</code></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">c</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">kVClient</span>) <span style="color:#a6e22e">Range</span>(<span style="color:#a6e22e">ctx</span> <span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">Context</span>, <span style="color:#a6e22e">in</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">RangeRequest</span>, <span style="color:#a6e22e">opts</span> <span style="color:#f92672">...</span><span style="color:#a6e22e">grpc</span>.<span style="color:#a6e22e">CallOption</span>) (<span style="color:#f92672">*</span><span style="color:#a6e22e">RangeResponse</span>, <span style="color:#66d9ef">error</span>) {
+	<span style="color:#a6e22e">out</span> <span style="color:#f92672">:=</span> new(<span style="color:#a6e22e">RangeResponse</span>)
+	<span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">grpc</span>.<span style="color:#a6e22e">Invoke</span>(<span style="color:#a6e22e">ctx</span>, <span style="color:#e6db74">&#34;/etcdserverpb.KV/Range&#34;</span>, <span style="color:#a6e22e">in</span>, <span style="color:#a6e22e">out</span>, <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">cc</span>, <span style="color:#a6e22e">opts</span><span style="color:#f92672">...</span>)
+	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+		<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>, <span style="color:#a6e22e">err</span>
+	}
+	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">out</span>, <span style="color:#66d9ef">nil</span>
+}
+
+<span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">c</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">kVClient</span>) <span style="color:#a6e22e">Put</span>(<span style="color:#a6e22e">ctx</span> <span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">Context</span>, <span style="color:#a6e22e">in</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">PutRequest</span>, <span style="color:#a6e22e">opts</span> <span style="color:#f92672">...</span><span style="color:#a6e22e">grpc</span>.<span style="color:#a6e22e">CallOption</span>) (<span style="color:#f92672">*</span><span style="color:#a6e22e">PutResponse</span>, <span style="color:#66d9ef">error</span>) {
+	<span style="color:#a6e22e">out</span> <span style="color:#f92672">:=</span> new(<span style="color:#a6e22e">PutResponse</span>)
+	<span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">grpc</span>.<span style="color:#a6e22e">Invoke</span>(<span style="color:#a6e22e">ctx</span>, <span style="color:#e6db74">&#34;/etcdserverpb.KV/Put&#34;</span>, <span style="color:#a6e22e">in</span>, <span style="color:#a6e22e">out</span>, <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">cc</span>, <span style="color:#a6e22e">opts</span><span style="color:#f92672">...</span>)
+	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+		<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>, <span style="color:#a6e22e">err</span>
+	}
+	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">out</span>, <span style="color:#66d9ef">nil</span>
+}
+
+<span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">c</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">kVClient</span>) <span style="color:#a6e22e">DeleteRange</span>(<span style="color:#a6e22e">ctx</span> <span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">Context</span>, <span style="color:#a6e22e">in</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">DeleteRangeRequest</span>, <span style="color:#a6e22e">opts</span> <span style="color:#f92672">...</span><span style="color:#a6e22e">grpc</span>.<span style="color:#a6e22e">CallOption</span>) (<span style="color:#f92672">*</span><span style="color:#a6e22e">DeleteRangeResponse</span>, <span style="color:#66d9ef">error</span>) {
+	<span style="color:#a6e22e">out</span> <span style="color:#f92672">:=</span> new(<span style="color:#a6e22e">DeleteRangeResponse</span>)
+	<span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">grpc</span>.<span style="color:#a6e22e">Invoke</span>(<span style="color:#a6e22e">ctx</span>, <span style="color:#e6db74">&#34;/etcdserverpb.KV/DeleteRange&#34;</span>, <span style="color:#a6e22e">in</span>, <span style="color:#a6e22e">out</span>, <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">cc</span>, <span style="color:#a6e22e">opts</span><span style="color:#f92672">...</span>)
+	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+		<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>, <span style="color:#a6e22e">err</span>
+	}
+	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">out</span>, <span style="color:#66d9ef">nil</span>
+}
+</code></pre></div><h3 id="服务端">服务端</h3>
+<p>服务端的组件较为复杂，在梳理内部控件通信之前，有必要先了解各个组件充当的角色是什么。
+服务端解决的问题是：</p>
+<ul>
+<li>接收客户端的请求并对节点进行分发</li>
+<li>感知集群成员变动，对成员通知</li>
+<li>同步或者启动恢复快照</li>
+</ul>
+<h4 id="服务端拦截器">服务端拦截器</h4>
+<p>我们在前面客户端组件提到一个<code>KVServer</code>，其实etcd还对其包了一层拦截器，就是<code>quotaKVServer</code></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">quotaKVServer</span> <span style="color:#66d9ef">struct</span> {
+	<span style="color:#a6e22e">pb</span>.<span style="color:#a6e22e">KVServer</span>
+	<span style="color:#75715e">// 辅助功能
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">qa</span> <span style="color:#a6e22e">quotaAlarmer</span>
+}
+<span style="color:#66d9ef">type</span> <span style="color:#a6e22e">quotaAlarmer</span> <span style="color:#66d9ef">struct</span> {
+	<span style="color:#a6e22e">q</span>  <span style="color:#a6e22e">etcdserver</span>.<span style="color:#a6e22e">Quota</span>
+	<span style="color:#a6e22e">a</span>  <span style="color:#a6e22e">Alarmer</span>
+	<span style="color:#a6e22e">id</span> <span style="color:#a6e22e">types</span>.<span style="color:#a6e22e">ID</span>
+}
+<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">NewQuotaKVServer</span>(<span style="color:#a6e22e">s</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">etcdserver</span>.<span style="color:#a6e22e">EtcdServer</span>) <span style="color:#a6e22e">pb</span>.<span style="color:#a6e22e">KVServer</span> {
+	<span style="color:#66d9ef">return</span> <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quotaKVServer</span>{
+		<span style="color:#a6e22e">NewKVServer</span>(<span style="color:#a6e22e">s</span>),
+		<span style="color:#a6e22e">quotaAlarmer</span>{<span style="color:#a6e22e">etcdserver</span>.<span style="color:#a6e22e">NewBackendQuota</span>(<span style="color:#a6e22e">s</span>, <span style="color:#e6db74">&#34;kv&#34;</span>), <span style="color:#a6e22e">s</span>, <span style="color:#a6e22e">s</span>.<span style="color:#a6e22e">ID</span>()},
+	}
+}
+</code></pre></div><p>这个拦截器的作用是对客户端请求进行空间检测，对每个请求计算Key-Vaule资源消耗空间，服务端统计剩余空间以此来做告警，如果超过则抛出错误：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#a6e22e">ErrGRPCNoSpace</span>       = <span style="color:#a6e22e">status</span>.<span style="color:#a6e22e">New</span>(<span style="color:#a6e22e">codes</span>.<span style="color:#a6e22e">ResourceExhausted</span>, <span style="color:#e6db74">&#34;etcdserver: mvcc: database space exceeded&#34;</span>).<span style="color:#a6e22e">Err</span>()
+</code></pre></div><p>如果集群出现这种情况，官方文档也给出了建议：<br>
+<a href="https://etcd.io/docs/v3.4/faq/#what-does-mvcc-database-space-exceeded-mean-and-how-do-i-fix-it">fix mvcc: database space exceeded</a></p>
+<ul>
+<li>历史版本压缩</li>
+<li>文件碎片整理</li>
+</ul>
+<h4 id="接口关系">接口关系</h4>
+<p>在<code>go</code>的语言规则中，使用组合替代继承，<code>go</code>的接口采用隐式实现，raft节点内部通信主要是通过定义<code>channel</code>成员进行消息传播，比如外部消息到底层log的转换。而涉及跨机器节点的消息体则使用http客户端发送，其数据流图如下：
+<img src="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/blog/etcd/raft/etcd-server-flow.png" alt="etcd-server-flow"></p>
+<hr>
+<p><code>etcdserver</code>除了对客户端暴露API使用之外，在启动时刻还注册监听了内部成员通信的一下逻辑，接下来我们看下server端内部逻辑。</p>
+<h4 id="peer-通信组件">peer-通信组件</h4>
+<p>etcd集群使用peer作为单点结构来做跨网络通信，几个核心的成员函数如下，内部封装了节点间的网络请求，比如提交快照给其他节点：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Peer</span> <span style="color:#66d9ef">interface</span> {
+    <span style="color:#a6e22e">send</span>(<span style="color:#a6e22e">m</span> <span style="color:#a6e22e">raftpb</span>.<span style="color:#a6e22e">Message</span>)
+    <span style="color:#a6e22e">sendSnap</span>(<span style="color:#a6e22e">m</span> <span style="color:#a6e22e">snap</span>.<span style="color:#a6e22e">Message</span>)
+    <span style="color:#a6e22e">update</span>(<span style="color:#a6e22e">urls</span> <span style="color:#a6e22e">types</span>.<span style="color:#a6e22e">URLs</span>)
+}
+</code></pre></div><h4 id="transporter接口">Transporter接口</h4>
+<p>etcd集群则需要维护一个<code>peer</code>节点列表，etcd的做法是选择往上抽取一层，使用<code>Transport</code>来维护<code>peer</code>列表，通过<code>Transport</code>实现了<code>Transporter</code>接口来对<code>peer</code>成员进行管理，<code>Transporter</code>接口主要是对<code>peer</code>成员进行更新维护。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Transporter</span> <span style="color:#66d9ef">interface</span> {
+    <span style="color:#75715e">// ...
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">AddRemote</span>(<span style="color:#a6e22e">id</span> <span style="color:#a6e22e">types</span>.<span style="color:#a6e22e">ID</span>, <span style="color:#a6e22e">urls</span> []<span style="color:#66d9ef">string</span>)
+	<span style="color:#a6e22e">AddPeer</span>(<span style="color:#a6e22e">id</span> <span style="color:#a6e22e">types</span>.<span style="color:#a6e22e">ID</span>, <span style="color:#a6e22e">urls</span> []<span style="color:#66d9ef">string</span>)
+	<span style="color:#a6e22e">RemovePeer</span>(<span style="color:#a6e22e">id</span> <span style="color:#a6e22e">types</span>.<span style="color:#a6e22e">ID</span>)
+	<span style="color:#a6e22e">RemoveAllPeers</span>()
+	<span style="color:#a6e22e">UpdatePeer</span>(<span style="color:#a6e22e">id</span> <span style="color:#a6e22e">types</span>.<span style="color:#a6e22e">ID</span>, <span style="color:#a6e22e">urls</span> []<span style="color:#66d9ef">string</span>)
+	<span style="color:#75715e">// ...
+</span><span style="color:#75715e"></span>}
+</code></pre></div><p><code>Transporter</code>的实现体<code>Transport</code></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Transport</span> <span style="color:#66d9ef">struct</span> {
+	<span style="color:#75715e">//...
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">ID</span>          <span style="color:#a6e22e">types</span>.<span style="color:#a6e22e">ID</span>   <span style="color:#75715e">// local member ID
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">URLs</span>        <span style="color:#a6e22e">types</span>.<span style="color:#a6e22e">URLs</span> <span style="color:#75715e">// local peer URLs
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">ClusterID</span>   <span style="color:#a6e22e">types</span>.<span style="color:#a6e22e">ID</span>   <span style="color:#75715e">// raft cluster ID for request validation
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">Raft</span>        <span style="color:#a6e22e">Raft</span>       <span style="color:#75715e">// raft state machine, to which the Transport forwards received messages and reports status
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">Snapshotter</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">snap</span>.<span style="color:#a6e22e">Snapshotter</span>
+	<span style="color:#75715e">// ...
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">streamRt</span>   <span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">RoundTripper</span> <span style="color:#75715e">// 传输小数据量、频繁的消息
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">pipelineRt</span> <span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">RoundTripper</span> <span style="color:#75715e">// 传输数据量大、频率低的逻辑
+</span><span style="color:#75715e"></span>
+	<span style="color:#a6e22e">mu</span>      <span style="color:#a6e22e">sync</span>.<span style="color:#a6e22e">RWMutex</span>         <span style="color:#75715e">// protect the remote and peer map
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">remotes</span> <span style="color:#66d9ef">map</span>[<span style="color:#a6e22e">types</span>.<span style="color:#a6e22e">ID</span>]<span style="color:#f92672">*</span><span style="color:#a6e22e">remote</span> <span style="color:#75715e">// remotes map that helps newly joined member to catch up
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">peers</span>   <span style="color:#66d9ef">map</span>[<span style="color:#a6e22e">types</span>.<span style="color:#a6e22e">ID</span>]<span style="color:#a6e22e">Peer</span>    <span style="color:#75715e">// peers map
+</span><span style="color:#75715e"></span>
+	<span style="color:#75715e">// 心跳探测
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">pipelineProber</span> <span style="color:#a6e22e">probing</span>.<span style="color:#a6e22e">Prober</span>
+	<span style="color:#a6e22e">streamProber</span>   <span style="color:#a6e22e">probing</span>.<span style="color:#a6e22e">Prober</span>
+}
+</code></pre></div><p>整体主要结构关系如下图：<br>
+<img src="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/blog/etcd/raft/etcd-interface-struct.png" alt="etcd-interface-relation">
+可以看到，每个<code>peer</code>结构又内嵌了<code>raftNode</code>节点，通过<code>raftNode</code>连接了底层的日志结构、文件目录，如<code>MemoryStorage</code>，<code>wal</code>等，存储层解决的问题是通过返回相应的日志下标，结合raft对日志树多版本数据进行查询、更新。
+关于底层存储将在本系列下一篇展开:)</p>
+<p>这里我们主要分析<code>transport</code>，<code>transport</code>在<code>Handler()</code>函数进行统一注册，</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">t</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Transport</span>) <span style="color:#a6e22e">Handler</span>() <span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">Handler</span> {
+	<span style="color:#a6e22e">pipelineHandler</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">newPipelineHandler</span>(<span style="color:#a6e22e">t</span>, <span style="color:#a6e22e">t</span>.<span style="color:#a6e22e">Raft</span>, <span style="color:#a6e22e">t</span>.<span style="color:#a6e22e">ClusterID</span>)
+	<span style="color:#a6e22e">streamHandler</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">newStreamHandler</span>(<span style="color:#a6e22e">t</span>, <span style="color:#a6e22e">t</span>, <span style="color:#a6e22e">t</span>.<span style="color:#a6e22e">Raft</span>, <span style="color:#a6e22e">t</span>.<span style="color:#a6e22e">ID</span>, <span style="color:#a6e22e">t</span>.<span style="color:#a6e22e">ClusterID</span>)
+	<span style="color:#a6e22e">snapHandler</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">newSnapshotHandler</span>(<span style="color:#a6e22e">t</span>, <span style="color:#a6e22e">t</span>.<span style="color:#a6e22e">Raft</span>, <span style="color:#a6e22e">t</span>.<span style="color:#a6e22e">Snapshotter</span>, <span style="color:#a6e22e">t</span>.<span style="color:#a6e22e">ClusterID</span>)
+	<span style="color:#a6e22e">mux</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">NewServeMux</span>()
+	<span style="color:#a6e22e">mux</span>.<span style="color:#a6e22e">Handle</span>(<span style="color:#a6e22e">RaftPrefix</span>, <span style="color:#a6e22e">pipelineHandler</span>)
+	<span style="color:#a6e22e">mux</span>.<span style="color:#a6e22e">Handle</span>(<span style="color:#a6e22e">RaftStreamPrefix</span><span style="color:#f92672">+</span><span style="color:#e6db74">&#34;/&#34;</span>, <span style="color:#a6e22e">streamHandler</span>)
+	<span style="color:#a6e22e">mux</span>.<span style="color:#a6e22e">Handle</span>(<span style="color:#a6e22e">RaftSnapshotPrefix</span>, <span style="color:#a6e22e">snapHandler</span>)
+	<span style="color:#a6e22e">mux</span>.<span style="color:#a6e22e">Handle</span>(<span style="color:#a6e22e">ProbingPrefix</span>, <span style="color:#a6e22e">probing</span>.<span style="color:#a6e22e">NewHandler</span>())
+	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">mux</span>
+}
+</code></pre></div><p>其中对几个核心功能进行监听</p>
+<table>
+<thead>
+<tr>
+<th>Handler实现</th>
+<th>功能模块</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>pipelineHandler</td>
+<td>转发消息到内部raft节点进行处理</td>
+</tr>
+<tr>
+<td>snapshotHandler</td>
+<td>传输存储快照(短链接、大数据)，写入本地db</td>
+</tr>
+<tr>
+<td>streamHandler</td>
+<td>维护长连接更新心跳(小数据)</td>
+</tr>
+</tbody>
+</table>
+<p>部分pipelineHandler处理逻辑如下：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">h</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">pipelineHandler</span>) <span style="color:#a6e22e">ServeHTTP</span>(<span style="color:#a6e22e">w</span> <span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">ResponseWriter</span>, <span style="color:#a6e22e">r</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">Request</span>) {
+	<span style="color:#75715e">//...
+</span><span style="color:#75715e"></span>	
+	<span style="color:#75715e">// 更新上游转发节点
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">addRemoteFromRequest</span>(<span style="color:#a6e22e">h</span>.<span style="color:#a6e22e">tr</span>, <span style="color:#a6e22e">r</span>)
+	<span style="color:#a6e22e">limitedr</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">pioutil</span>.<span style="color:#a6e22e">NewLimitedBufferReader</span>(<span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">Body</span>, <span style="color:#a6e22e">connReadLimitByte</span>)
+	<span style="color:#a6e22e">b</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">ioutil</span>.<span style="color:#a6e22e">ReadAll</span>(<span style="color:#a6e22e">limitedr</span>)
+	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+		<span style="color:#75715e">//...
+</span><span style="color:#75715e"></span>	}
+
+    <span style="color:#75715e">// 解析消息体
+</span><span style="color:#75715e"></span>	<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">m</span> <span style="color:#a6e22e">raftpb</span>.<span style="color:#a6e22e">Message</span>
+	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">m</span>.<span style="color:#a6e22e">Unmarshal</span>(<span style="color:#a6e22e">b</span>); <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+		<span style="color:#75715e">// ...
+</span><span style="color:#75715e"></span>		<span style="color:#66d9ef">return</span>
+	}
+
+	<span style="color:#a6e22e">receivedBytes</span>.<span style="color:#a6e22e">WithLabelValues</span>(<span style="color:#a6e22e">types</span>.<span style="color:#a6e22e">ID</span>(<span style="color:#a6e22e">m</span>.<span style="color:#a6e22e">From</span>).<span style="color:#a6e22e">String</span>()).<span style="color:#a6e22e">Add</span>(float64(len(<span style="color:#a6e22e">b</span>)))
+    <span style="color:#75715e">// 转发至底层node进行处理，即node.step()
+</span><span style="color:#75715e"></span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">h</span>.<span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">Process</span>(<span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">TODO</span>(), <span style="color:#a6e22e">m</span>); <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+		<span style="color:#66d9ef">switch</span> <span style="color:#a6e22e">v</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">err</span>.(<span style="color:#66d9ef">type</span>) {
+		<span style="color:#66d9ef">case</span> <span style="color:#a6e22e">writerToResponse</span>:
+			<span style="color:#a6e22e">v</span>.<span style="color:#a6e22e">WriteTo</span>(<span style="color:#a6e22e">w</span>)
+		<span style="color:#66d9ef">default</span>:
+			<span style="color:#75715e">// ...
+</span><span style="color:#75715e"></span>		}
+		<span style="color:#66d9ef">return</span>
+	}
+    <span style="color:#75715e">// ...
+</span><span style="color:#75715e"></span>}
+</code></pre></div><h4 id="心跳反馈">心跳反馈</h4>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#75715e">// server side
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">h</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">httpHealth</span>) <span style="color:#a6e22e">ServeHTTP</span>(<span style="color:#a6e22e">w</span> <span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">ResponseWriter</span>, <span style="color:#a6e22e">r</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">Request</span>) {
+    <span style="color:#75715e">// return health
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">health</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">Health</span>{<span style="color:#a6e22e">OK</span>: <span style="color:#66d9ef">true</span>, <span style="color:#a6e22e">Now</span>: <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Now</span>()}
+	<span style="color:#a6e22e">e</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">json</span>.<span style="color:#a6e22e">NewEncoder</span>(<span style="color:#a6e22e">w</span>)
+	<span style="color:#a6e22e">e</span>.<span style="color:#a6e22e">Encode</span>(<span style="color:#a6e22e">health</span>)
+}
+</code></pre></div><p>还记得上面提到的<code>Transport</code>接口吗，它用于维护raft成员变动，在<code>AddPeer()</code>和<code>UpdatePeer()</code>子函数都会新创建协程对集群列表做定期心跳检测
+<img src="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/blog/etcd/raft/etcd-prober-check.png" alt="prober-check"></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">p</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">prober</span>) <span style="color:#a6e22e">AddHTTP</span>(<span style="color:#a6e22e">id</span> <span style="color:#66d9ef">string</span>, <span style="color:#a6e22e">probingInterval</span> <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Duration</span>, <span style="color:#a6e22e">endpoints</span> []<span style="color:#66d9ef">string</span>) <span style="color:#66d9ef">error</span> {
+	<span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">mu</span>.<span style="color:#a6e22e">Lock</span>()
+	<span style="color:#66d9ef">defer</span> <span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">mu</span>.<span style="color:#a6e22e">Unlock</span>()
+	<span style="color:#75715e">// ...
+</span><span style="color:#75715e"></span>	<span style="color:#66d9ef">go</span> <span style="color:#66d9ef">func</span>() {
+		<span style="color:#a6e22e">pinned</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">0</span>
+		<span style="color:#66d9ef">for</span> {
+			<span style="color:#66d9ef">select</span> {
+			<span style="color:#66d9ef">case</span> <span style="color:#f92672">&lt;-</span><span style="color:#a6e22e">ticker</span>.<span style="color:#a6e22e">C</span>:
+				<span style="color:#a6e22e">start</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Now</span>()
+				<span style="color:#a6e22e">req</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">NewRequest</span>(<span style="color:#e6db74">&#34;GET&#34;</span>, <span style="color:#a6e22e">endpoints</span>[<span style="color:#a6e22e">pinned</span>], <span style="color:#66d9ef">nil</span>)
+				<span style="color:#75715e">// ...
+</span><span style="color:#75715e"></span>				<span style="color:#a6e22e">resp</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">tr</span>.<span style="color:#a6e22e">RoundTrip</span>(<span style="color:#a6e22e">req</span>)
+				<span style="color:#75715e">// ...
+</span><span style="color:#75715e"></span>				<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+					<span style="color:#a6e22e">s</span>.<span style="color:#a6e22e">recordFailure</span>(<span style="color:#a6e22e">err</span>)
+					<span style="color:#a6e22e">pinned</span> = (<span style="color:#a6e22e">pinned</span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>) <span style="color:#f92672">%</span> len(<span style="color:#a6e22e">endpoints</span>)
+					<span style="color:#66d9ef">continue</span>
+				}
+
+				<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">hh</span> <span style="color:#a6e22e">Health</span>
+				<span style="color:#a6e22e">d</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">json</span>.<span style="color:#a6e22e">NewDecoder</span>(<span style="color:#a6e22e">resp</span>.<span style="color:#a6e22e">Body</span>)
+				<span style="color:#a6e22e">err</span> = <span style="color:#a6e22e">d</span>.<span style="color:#a6e22e">Decode</span>(<span style="color:#f92672">&amp;</span><span style="color:#a6e22e">hh</span>)
+				<span style="color:#a6e22e">resp</span>.<span style="color:#a6e22e">Body</span>.<span style="color:#a6e22e">Close</span>()
+				<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> <span style="color:#f92672">||</span> !<span style="color:#a6e22e">hh</span>.<span style="color:#a6e22e">OK</span> {
+					<span style="color:#a6e22e">s</span>.<span style="color:#a6e22e">recordFailure</span>(<span style="color:#a6e22e">err</span>)
+					<span style="color:#a6e22e">pinned</span> = (<span style="color:#a6e22e">pinned</span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>) <span style="color:#f92672">%</span> len(<span style="color:#a6e22e">endpoints</span>)
+					<span style="color:#66d9ef">continue</span>
+				}
+
+				<span style="color:#a6e22e">s</span>.<span style="color:#a6e22e">record</span>(<span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Since</span>(<span style="color:#a6e22e">start</span>), <span style="color:#a6e22e">hh</span>.<span style="color:#a6e22e">Now</span>)
+			<span style="color:#66d9ef">case</span> <span style="color:#f92672">&lt;-</span><span style="color:#a6e22e">s</span>.<span style="color:#a6e22e">stopC</span>:
+				<span style="color:#a6e22e">ticker</span>.<span style="color:#a6e22e">Stop</span>()
+				<span style="color:#66d9ef">return</span>
+			}
+		}
+	}()
+
+	<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>
+}
+</code></pre></div><h2 id="总结">总结</h2>
+<p>以上是etcd对各个模块功能的实现，etcd通过分层架构设计，把实现模块从网络层-raft状态-日志存储层逐层实现，读者感兴趣可以选择从某个层级代码进行切入，本系列的下一篇将聊一聊etcd的底层存储。</p>
+<h2 id="参考链接">参考链接</h2>
+<ul>
+<li>《HTTP/2 in Action》</li>
+<li>etcd文档<br>
+<a href="https://etcd.io/docs/v3.5/learning/">https://etcd.io/docs/v3.5/learning/</a></li>
+<li>etc技术内幕 - 百里燊</li>
+<li>云原生分布式存储基石etcd深入解析 - 华为云</li>
+</ul>
+              
+            </div>
+          </div>
+          <div id="post-footer" class="post-footer main-content-wrap">
+            
+              
+                
+                
+                  <div class="post-footer-tags">
+                    <span class="text-color-light text-small">标签</span><br/>
+                    
+  <a class="tag tag--primary tag--small" href="/zh/tags/raft/">raft</a>
+
+  <a class="tag tag--primary tag--small" href="/zh/tags/etcd/">etcd</a>
+
+  <a class="tag tag--primary tag--small" href="/zh/tags/%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F/">分布式系统</a>
+
+                  </div>
+                
+              
+            
+            <div class="post-actions-wrap">
+  
+      <nav >
+        <ul class="post-actions post-action-nav">
+          
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--disabled">
+              
+                  <i class="fa fa-angle-left"></i>
+                  <span class="hide-xs hide-sm text-small icon-ml">下一篇</span>
+                </a>
+            </li>
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="/zh/2022/06/%E8%81%8A%E4%B8%80%E8%81%8Aetcd%E7%B3%BB%E5%88%97%E4%B9%8B%E4%BA%8Craft%E4%B8%80%E8%87%B4%E6%80%A7%E5%8D%8F%E8%AE%AE/" data-tooltip="聊一聊etcd系列之二：raft一致性协议">
+              
+                  <span class="hide-xs hide-sm text-small icon-mr">上一篇</span>
+                  <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+          
+        </ul>
+      </nav>
+    <ul class="post-actions post-action-share" >
+      
+        <li class="post-action hide-lg hide-md hide-sm">
+          <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
+            <i class="fa fa-share-alt"></i>
+          </a>
+        </li>
+        
+      
+      
+      <li class="post-action">
+        
+          <a class="post-action-btn btn btn--default" href="#">
+        
+          <i class="fa fa-list"></i>
+        </a>
+      </li>
+    </ul>
+  
+</div>
+
+            
+              
+            
+          </div>
+        </article>
+        <footer id="footer" class="main-content-wrap">
+  <span class="copyrights">
+    &copy; 2022 <a href="https://github.com/pixeldin">pixeldin</a>. All Rights Reserved
+  </span>
+</footer>
+
+      </div>
+      <div id="bottom-bar" class="post-bottom-bar" data-behavior="5">
+        <div class="post-actions-wrap">
+  
+      <nav >
+        <ul class="post-actions post-action-nav">
+          
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--disabled">
+              
+                  <i class="fa fa-angle-left"></i>
+                  <span class="hide-xs hide-sm text-small icon-ml">下一篇</span>
+                </a>
+            </li>
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="/zh/2022/06/%E8%81%8A%E4%B8%80%E8%81%8Aetcd%E7%B3%BB%E5%88%97%E4%B9%8B%E4%BA%8Craft%E4%B8%80%E8%87%B4%E6%80%A7%E5%8D%8F%E8%AE%AE/" data-tooltip="聊一聊etcd系列之二：raft一致性协议">
+              
+                  <span class="hide-xs hide-sm text-small icon-mr">上一篇</span>
+                  <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+          
+        </ul>
+      </nav>
+    <ul class="post-actions post-action-share" >
+      
+        <li class="post-action hide-lg hide-md hide-sm">
+          <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
+            <i class="fa fa-share-alt"></i>
+          </a>
+        </li>
+        
+      
+      
+      <li class="post-action">
+        
+          <a class="post-action-btn btn btn--default" href="#">
+        
+          <i class="fa fa-list"></i>
+        </a>
+      </li>
+    </ul>
+  
+</div>
+
+      </div>
+      <div id="share-options-bar" class="share-options-bar" data-behavior="5">
+  <i id="btn-close-shareoptions" class="fa fa-close"></i>
+  <ul class="share-options">
+    
+  </ul>
+</div>
+<div id="share-options-mask" class="share-options-mask"></div>
+    </div>
+    
+    <div id="about">
+  <div id="about-card">
+    <div id="about-btn-close">
+      <i class="fa fa-remove"></i>
+    </div>
+    
+      <img id="about-card-picture" src="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/pig.jpg" alt="作者的图片" />
+    
+    <h4 id="about-card-name">pixelpig</h4>
+    
+      <div id="about-card-bio">a backend development living in GD, China. Stay hungry, stay foolish <strong>:）</strong></div>
+    
+    
+      <div id="about-card-job">
+        <i class="fa fa-briefcase"></i>
+        <br/>
+        Golang developer@Huya
+      </div>
+    
+    
+      <div id="about-card-location">
+        <i class="fa fa-map-marker"></i>
+        <br/>
+        CHINA-GD
+      </div>
+    
+  </div>
+</div>
+
+    
+
+    
+  
+    <div id="cover" style="background-image:url('https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/cover.jpg');"></div>
+  
+
+
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js" integrity="sha256-/BfiIkHlHoVihZdc6TFuj7MmJ0TWcWsMXkeDFwhi0zw=" crossorigin="anonymous"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.7/js/jquery.fancybox.min.js" integrity="sha256-GEAnjcTqVP+vBp3SSc8bEDQqvWAZMiHyUSIorrWwH50=" crossorigin="anonymous"></script>
+
+
+<script src="/js/script-pcw6v3xilnxydl1vddzazdverrnn9ctynvnxgwho987mfyqkuylcb1nlt.min.js"></script>
+
+
+<script lang="javascript">
+window.onload = updateMinWidth;
+window.onresize = updateMinWidth;
+document.getElementById("sidebar").addEventListener("transitionend", updateMinWidth);
+function updateMinWidth() {
+  var sidebar = document.getElementById("sidebar");
+  var main = document.getElementById("main");
+  main.style.minWidth = "";
+  var w1 = getComputedStyle(main).getPropertyValue("min-width");
+  var w2 = getComputedStyle(sidebar).getPropertyValue("width");
+  var w3 = getComputedStyle(sidebar).getPropertyValue("left");
+  main.style.minWidth = `calc(${w1} - ${w2} - ${w3})`;
+}
+</script>
+
+<script>
+$(document).ready(function() {
+  hljs.configure({ classPrefix: '', useBR: false });
+  $('pre.code-highlight > code, pre > code').each(function(i, block) {
+    if (!$(this).hasClass('codeblock')) {
+      $(this).addClass('codeblock');
+    }
+    hljs.highlightBlock(block);
+  });
+});
+</script>
+
+
+  
+    
+  
+
+
+
+
+    
+  </body>
+</html>
+
