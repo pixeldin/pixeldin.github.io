@@ -6,7 +6,17 @@
     <description>Recent content in Go on pixelpig - tech</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 03 Jun 2022 00:00:00 +0000</lastBuildDate><atom:link href="/en/categories/go/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 23 Jun 2022 00:00:00 +0000</lastBuildDate><atom:link href="/en/categories/go/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Talk about etcd (Part3): the Communication Protocol between Client and Server</title>
+      <link>/en/2022/06/talk-about-etcd-part3-the-communication-protocol-between-client-and-server/</link>
+      <pubDate>Thu, 23 Jun 2022 00:00:00 +0000</pubDate>
+      
+      <guid>/en/2022/06/talk-about-etcd-part3-the-communication-protocol-between-client-and-server/</guid>
+      <description>&lt;p&gt;As mentioned earlier, etcd implements each module through layers. This time we will enter the network part.
+Today, let’s talk about the communication way of etcd inside the server and client role.&lt;/p&gt;</description>
+    </item>
+    
     <item>
       <title>Talk about etcd (Part2): the raft consistency protocol</title>
       <link>/en/2022/06/talk-about-etcd-part2-the-raft-consistency-protocol/</link>
