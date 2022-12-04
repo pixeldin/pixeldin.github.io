@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+  <head>
+    
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="generator" content="Hugo 0.80.0 with theme Tranquilpeak 0.4.8-BETA">
+<meta name="author" content="pixelpig">
+<meta name="keywords" content="">
+<meta name="description" content="Lua作为一种胶水语言，具备动态类型，通过整合已有的高级组件构建新的应用。">
+
+
+<meta property="og:description" content="Lua作为一种胶水语言，具备动态类型，通过整合已有的高级组件构建新的应用。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Lua Basic Tip">
+<meta name="twitter:title" content="Lua Basic Tip">
+<meta property="og:url" content="/zh/2022/11/lua-basic-tip/">
+<meta property="twitter:url" content="/zh/2022/11/lua-basic-tip/">
+<meta property="og:site_name" content="pixelpig - tech">
+<meta property="og:description" content="Lua作为一种胶水语言，具备动态类型，通过整合已有的高级组件构建新的应用。">
+<meta name="twitter:description" content="Lua作为一种胶水语言，具备动态类型，通过整合已有的高级组件构建新的应用。">
+<meta property="og:locale" content="zh">
+
+  
+    <meta property="article:published_time" content="2022-11-02T00:00:00">
+  
+  
+    <meta property="article:modified_time" content="2022-11-02T00:00:00">
+  
+  
+  
+    
+      <meta property="article:section" content="Lua">
+    
+      <meta property="article:section" content="gateway">
+    
+  
+  
+    
+      <meta property="article:tag" content="Nginx">
+    
+      <meta property="article:tag" content="OpenResty">
+    
+      <meta property="article:tag" content="LuaJIT">
+    
+  
+
+
+<meta name="twitter:card" content="summary">
+
+  <meta name="twitter:site" content="@pixelpigpigpig">
+
+
+  <meta name="twitter:creator" content="@pixelpigpigpig">
+
+
+
+
+
+
+  <meta property="og:image" content="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/blog/Lua/glue.png">
+  <meta property="twitter:image" content="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/blog/Lua/glue.png">
+
+
+
+
+
+  <meta property="og:image" content="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/pig.jpg">
+  <meta property="twitter:image" content="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/pig.jpg">
+
+
+    <title>Lua Basic Tip</title>
+
+    <link rel="icon" href="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/blog/static/pixel.ico">
+    
+
+    
+
+    <link rel="canonical" href="/zh/2022/11/lua-basic-tip/">
+
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/jquery.fancybox.min.css" integrity="sha256-vuXZ9LGmmwtjqFX1F+EKin1ThZMub58gKULUyf0qECk=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/helpers/jquery.fancybox-thumbs.min.css" integrity="sha256-SEa4XYAHihTcEP1f5gARTB2K26Uk8PsndQYHQC1f4jU=" crossorigin="anonymous" />
+    
+    
+    <link rel="stylesheet" href="/css/style-twzjdbqhmnnacqs0pwwdzcdbt8yhv8giawvjqjmyfoqnvazl0dalmnhdkvp7.min.css" />
+    
+    
+
+    
+      
+    
+    
+  </head>
+
+  <body>
+    <div id="blog">
+      <header id="header" data-behavior="5">
+  <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+  <div class="header-title">
+    <a class="header-title-link" href="/zh/">pixelpig - tech</a>
+  </div>
+  
+    
+      <a class="header-right-picture "
+         href="/#about">
+    
+    
+    
+      
+        <img class="header-picture" src="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/pig.jpg" alt="作者的图片" />
+      
+    
+    </a>
+  
+</header>
+
+      <nav id="sidebar" data-behavior="5">
+  <div class="sidebar-container">
+    
+      <div class="sidebar-profile">
+        <a href="/#about">
+          <img class="sidebar-profile-picture" src="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/pig.jpg" alt="作者的图片" />
+        </a>
+        <h4 class="sidebar-profile-name">pixelpig</h4>
+        
+          <h5 class="sidebar-profile-bio">a backend development living in GD, China. Stay hungry, stay foolish <strong>:）</strong></h5>
+        
+      </div>
+    
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/en">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-language"></i>
+      
+      <span class="sidebar-button-desc">English</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/zh/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-home"></i>
+      
+      <span class="sidebar-button-desc">首页</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/zh/categories">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-bookmark"></i>
+      
+      <span class="sidebar-button-desc">分类</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/zh/tags">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
+      
+      <span class="sidebar-button-desc">标签</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/zh/archives">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-archive"></i>
+      
+      <span class="sidebar-button-desc">归档</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/zh/#about">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-question"></i>
+      
+      <span class="sidebar-button-desc">关于我</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://weibo.com/u/1837780507/" target="_blank" rel="noopener">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-weibo"></i>
+      
+      <span class="sidebar-button-desc">微博</span>
+    </a>
+  </li>
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+
+    </ul>
+  </div>
+</nav>
+
+      
+
+      <div id="main" data-behavior="5"
+        class="
+               hasCoverMetaIn
+               ">
+        <article class="post" itemscope itemType="http://schema.org/BlogPosting">
+          
+          
+            <div class="post-header main-content-wrap text-center">
+  
+    <h1 class="post-title" itemprop="headline">
+      Lua Basic Tip
+    </h1>
+  
+  
+  <div class="postShorten-meta post-meta">
+    
+      <time itemprop="datePublished" datetime="2022-11-02T00:00:00Z">
+        
+  十一月 2, 2022
+
+      </time>
+    
+    
+  
+  
+    <span>发布在</span>
+    
+      <a class="category-link" href="/zh/categories/lua">Lua</a>, 
+    
+      <a class="category-link" href="/zh/categories/gateway">gateway</a>
+    
+  
+
+  </div>
+
+</div>
+          
+          <div class="post-content markdown" itemprop="articleBody">
+            <div class="main-content-wrap">
+              <p>Lua作为一种胶水语言，具备动态类型，通过整合已有的高级组件构建新的应用。</p>
+<p><img src="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/blog/Lua/Lua-glue.png" alt="recover"></p>
+<h3 id="前言">前言</h3>
+<p>Lua作为一种胶水语言，具备动态类型，即运行时检测，只有值才有类型。
+适用场景：</p>
+<blockquote>
+<p>Lua语言支持组件化的软件开发方式，通过整合已有的高级组件构建新的应用。这些组件通常是通过C/C++等编译型强类型语言编写的，Lua语言充当了整合和连接这些组件的角色。</p>
+</blockquote>
+<h2 id="基础概念">基础概念</h2>
+<h3 id="字符串">字符串:</h3>
+<p>内化：两个完全一样的 Lua 字符串在 Lua 虚拟机中只会存储一份。每一个 Lua 字符串在创建时都会插入到 Lua 虚拟机内部的一个全局的哈希表中。 这意味着</p>
+<ol>
+<li>创建相同的 Lua 字符串并不会引入新的动态内存分配操作，所以相对便宜（但仍有全局哈希表查询的开销），</li>
+<li>内容相同的 Lua 字符串不会占用多份存储空间，</li>
+<li>已经创建好的 Lua 字符串之间进行相等性比较时是 <code>O(1)</code> 时间度的开销，而不是通常见到的 <code>O(n)</code>.</li>
+</ol>
+<blockquote>
+<p>相同内容的字符串只会被保存一份，因此 Lua 字符串之间的相等性比较可以简化为其内部存储地址的比较。这意味着 <strong>Lua 字符串的相等性比较总是为 O(1). 而在其他编程语言中，字符串的相等性比较则通常为 O(n)，即需要逐个字节（或按若干个连续字节）进行比较</strong></p>
+</blockquote>
+<h3 id="table表">table表：</h3>
+<p><strong>通常实现为一个哈希表、一个数组、或者两者的混合。具体的实现为何种形式，动态依赖于具体的 table 的键分布特点。</strong></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-lua" data-lang="lua"><span style="color:#66d9ef">local</span> corp <span style="color:#f92672">=</span> {
+    web <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;www.google.com&#34;</span>,   <span style="color:#75715e">--索引为字符串，key = &#34;web&#34;,</span>
+                              <span style="color:#75715e">--            value = &#34;www.google.com&#34;</span>
+    telephone <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;12345678&#34;</span>,   <span style="color:#75715e">--索引为字符串</span>
+    staff <span style="color:#f92672">=</span> {<span style="color:#e6db74">&#34;Jack&#34;</span>, <span style="color:#e6db74">&#34;Scott&#34;</span>, <span style="color:#e6db74">&#34;Gary&#34;</span>}, <span style="color:#75715e">--索引为字符串，值也是一个表</span>
+    <span style="color:#ae81ff">100876</span>,              <span style="color:#75715e">--相当于 [1] = 100876，此时索引为数字</span>
+                         <span style="color:#75715e">--      key = 1, value = 100876</span>
+    <span style="color:#ae81ff">100191</span>,              <span style="color:#75715e">--相当于 [2] = 100191，此时索引为数字</span>
+    [<span style="color:#ae81ff">10</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">360</span>,          <span style="color:#75715e">--直接把数字索引给出</span>
+    [<span style="color:#e6db74">&#34;city&#34;</span>] <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;Beijing&#34;</span> <span style="color:#75715e">--索引为字符串</span>
+}
+
+print(corp.web)               <span style="color:#75715e">--&gt;output:www.google.com</span>
+print(corp[<span style="color:#e6db74">&#34;telephone&#34;</span>])      <span style="color:#75715e">--&gt;output:12345678</span>
+print(corp[<span style="color:#ae81ff">2</span>])                <span style="color:#75715e">--&gt;output:100191</span>
+print(corp[<span style="color:#e6db74">&#34;city&#34;</span>])           <span style="color:#75715e">--&gt;output:&#34;Beijing&#34;</span>
+print(corp.staff[<span style="color:#ae81ff">1</span>])          <span style="color:#75715e">--&gt;output:Jack</span>
+print(corp[<span style="color:#ae81ff">10</span>])               <span style="color:#75715e">--&gt;output:360</span>
+</code></pre></div><h4 id="导出table结构">导出table结构</h4>
+<p>通常可以通过如下方式打印table结构，即dump table</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-lua" data-lang="lua"><span style="color:#75715e">-- debug dump for Lua table</span>
+<span style="color:#66d9ef">local</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">dump</span>(o)
+    <span style="color:#66d9ef">if</span> type(o) <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;table&#39;</span> <span style="color:#66d9ef">then</span>
+       <span style="color:#66d9ef">local</span> s <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;{ &#39;</span>
+       <span style="color:#66d9ef">for</span> k,v <span style="color:#66d9ef">in</span> pairs(o) <span style="color:#66d9ef">do</span>
+          <span style="color:#66d9ef">if</span> type(k) <span style="color:#f92672">~=</span> <span style="color:#e6db74">&#39;number&#39;</span> <span style="color:#66d9ef">then</span> k <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;&#34;&#39;</span><span style="color:#f92672">..</span>k<span style="color:#f92672">..</span><span style="color:#e6db74">&#39;&#34;&#39;</span> <span style="color:#66d9ef">end</span>
+          s <span style="color:#f92672">=</span> s <span style="color:#f92672">..</span> <span style="color:#e6db74">&#39;[&#39;</span><span style="color:#f92672">..</span>k<span style="color:#f92672">..</span><span style="color:#e6db74">&#39;] = &#39;</span> <span style="color:#f92672">..</span> dump(v) <span style="color:#f92672">..</span> <span style="color:#e6db74">&#39;,&#39;</span>
+       <span style="color:#66d9ef">end</span>
+       <span style="color:#66d9ef">return</span> s <span style="color:#f92672">..</span> <span style="color:#e6db74">&#39;} &#39;</span>
+    <span style="color:#66d9ef">else</span>
+       <span style="color:#66d9ef">return</span> tostring(o)
+    <span style="color:#66d9ef">end</span>
+ <span style="color:#66d9ef">end</span>
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-lua" data-lang="lua"><span style="color:#75715e">-- dump table with inspect </span>
+<span style="color:#66d9ef">local</span> inspect <span style="color:#f92672">=</span> require(<span style="color:#e6db74">&#39;inspect&#39;</span>)
+core.log.info(<span style="color:#e6db74">&#34;# Pixel-debug table content: &#34;</span><span style="color:#f92672">..</span> inspect(table))
+</code></pre></div><blockquote>
+<p>不要在 Lua 的 table 中使用 nil 值，<strong>如果一个元素要删除，直接 remove，不要用 nil 去代替</strong>
+。</p>
+</blockquote>
+<h2 id="函数">函数</h2>
+<ul>
+<li>
+<p>参数传递：默认传值, <code>table</code>类型：<strong>传引用</strong></p>
+</li>
+<li>
+<p><code>…</code>表示变长</p>
+<blockquote>
+<p><strong>LuaJIT 2 尚不能 JIT 编译这种变长参数的用法，只能解释执行。所以对性能敏感的代码，应当避免使用此种形式。</strong></p>
+</blockquote>
+</li>
+<li>
+<p>返回值，函数有多个返回值可以<strong>用括号来表示只取第一个值，但是只能解释执行。</strong></p>
+</li>
+</ul>
+<h3 id="string">String</h3>
+<blockquote>
+<p>由于 <code>string.byte</code> 只返回整数，而并不像 <code>string.sub</code> 等函数那样（尝试）创建新的 Lua 字符串， 因此使用 <code>string.byte</code> 来进行字符串相关的扫描和分析是最为高效的，尤其是在被 LuaJIT 2 所 JIT 编译之后。</p>
+</blockquote>
+<h2 id="luajit">LuaJIT</h2>
+<p><code>just-in-time</code>，Lua语言的即时编译器。</p>
+<blockquote>
+<p>即时编译器会将频繁执行的代码编译成机器码缓存起来，下次调用时将直接执行机器码。相比原生逐条执行虚拟机指令效率更高。而对于那些只执行一次的代码仍然逐条执行。</p>
+</blockquote>
+<h2 id="参考链接">参考链接</h2>
+<ul>
+<li><strong>Openresty最佳实践</strong><br>
+<a href="https://github.com/moonbingbing/openresty-best-practices/">https://github.com/moonbingbing/openresty-best-practices/</a></li>
+<li><strong>《Lua程序设计》</strong></li>
+<li><strong>LuaJIT Introduce</strong>
+<ul>
+<li><a href="https://www.jianshu.com/p/0f968605d36d">https://www.jianshu.com/p/0f968605d36d</a></li>
+<li><a href="https://www.youtube.com/watch?v=p4AzAaJ8Ick">https://www.youtube.com/watch?v=p4AzAaJ8Ick</a></li>
+</ul>
+</li>
+</ul>
+              
+            </div>
+          </div>
+          <div id="post-footer" class="post-footer main-content-wrap">
+            
+              
+                
+                
+                  <div class="post-footer-tags">
+                    <span class="text-color-light text-small">标签</span><br/>
+                    
+  <a class="tag tag--primary tag--small" href="/zh/tags/nginx/">Nginx</a>
+
+  <a class="tag tag--primary tag--small" href="/zh/tags/openresty/">OpenResty</a>
+
+  <a class="tag tag--primary tag--small" href="/zh/tags/luajit/">LuaJIT</a>
+
+                  </div>
+                
+              
+            
+            <div class="post-actions-wrap">
+  
+      <nav >
+        <ul class="post-actions post-action-nav">
+          
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--disabled">
+              
+                  <i class="fa fa-angle-left"></i>
+                  <span class="hide-xs hide-sm text-small icon-ml">下一篇</span>
+                </a>
+            </li>
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="/zh/2022/06/%E8%81%8A%E4%B8%80%E8%81%8Aetcd%E7%B3%BB%E5%88%97%E4%B9%8B%E4%B8%89%E8%8A%82%E7%82%B9%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE/" data-tooltip="聊一聊etcd系列之三：节点通信协议">
+              
+                  <span class="hide-xs hide-sm text-small icon-mr">上一篇</span>
+                  <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+          
+        </ul>
+      </nav>
+    <ul class="post-actions post-action-share" >
+      
+        <li class="post-action hide-lg hide-md hide-sm">
+          <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
+            <i class="fa fa-share-alt"></i>
+          </a>
+        </li>
+        
+      
+      
+      <li class="post-action">
+        
+          <a class="post-action-btn btn btn--default" href="#">
+        
+          <i class="fa fa-list"></i>
+        </a>
+      </li>
+    </ul>
+  
+</div>
+
+            
+              
+            
+          </div>
+        </article>
+        <footer id="footer" class="main-content-wrap">
+  <span class="copyrights">
+    &copy; 2022 <a href="https://github.com/pixeldin">pixeldin</a>. All Rights Reserved
+  </span>
+</footer>
+
+      </div>
+      <div id="bottom-bar" class="post-bottom-bar" data-behavior="5">
+        <div class="post-actions-wrap">
+  
+      <nav >
+        <ul class="post-actions post-action-nav">
+          
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--disabled">
+              
+                  <i class="fa fa-angle-left"></i>
+                  <span class="hide-xs hide-sm text-small icon-ml">下一篇</span>
+                </a>
+            </li>
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="/zh/2022/06/%E8%81%8A%E4%B8%80%E8%81%8Aetcd%E7%B3%BB%E5%88%97%E4%B9%8B%E4%B8%89%E8%8A%82%E7%82%B9%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE/" data-tooltip="聊一聊etcd系列之三：节点通信协议">
+              
+                  <span class="hide-xs hide-sm text-small icon-mr">上一篇</span>
+                  <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+          
+        </ul>
+      </nav>
+    <ul class="post-actions post-action-share" >
+      
+        <li class="post-action hide-lg hide-md hide-sm">
+          <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
+            <i class="fa fa-share-alt"></i>
+          </a>
+        </li>
+        
+      
+      
+      <li class="post-action">
+        
+          <a class="post-action-btn btn btn--default" href="#">
+        
+          <i class="fa fa-list"></i>
+        </a>
+      </li>
+    </ul>
+  
+</div>
+
+      </div>
+      <div id="share-options-bar" class="share-options-bar" data-behavior="5">
+  <i id="btn-close-shareoptions" class="fa fa-close"></i>
+  <ul class="share-options">
+    
+  </ul>
+</div>
+<div id="share-options-mask" class="share-options-mask"></div>
+    </div>
+    
+    <div id="about">
+  <div id="about-card">
+    <div id="about-btn-close">
+      <i class="fa fa-remove"></i>
+    </div>
+    
+      <img id="about-card-picture" src="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/pig.jpg" alt="作者的图片" />
+    
+    <h4 id="about-card-name">pixelpig</h4>
+    
+      <div id="about-card-bio">a backend development living in GD, China. Stay hungry, stay foolish <strong>:）</strong></div>
+    
+    
+      <div id="about-card-job">
+        <i class="fa fa-briefcase"></i>
+        <br/>
+        Golang developer@Huya
+      </div>
+    
+    
+      <div id="about-card-location">
+        <i class="fa fa-map-marker"></i>
+        <br/>
+        CHINA-GD
+      </div>
+    
+  </div>
+</div>
+
+    
+
+    
+  
+    <div id="cover" style="background-image:url('https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/cover.jpg');"></div>
+  
+
+
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js" integrity="sha256-/BfiIkHlHoVihZdc6TFuj7MmJ0TWcWsMXkeDFwhi0zw=" crossorigin="anonymous"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.7/js/jquery.fancybox.min.js" integrity="sha256-GEAnjcTqVP+vBp3SSc8bEDQqvWAZMiHyUSIorrWwH50=" crossorigin="anonymous"></script>
+
+
+<script src="/js/script-pcw6v3xilnxydl1vddzazdverrnn9ctynvnxgwho987mfyqkuylcb1nlt.min.js"></script>
+
+
+<script lang="javascript">
+window.onload = updateMinWidth;
+window.onresize = updateMinWidth;
+document.getElementById("sidebar").addEventListener("transitionend", updateMinWidth);
+function updateMinWidth() {
+  var sidebar = document.getElementById("sidebar");
+  var main = document.getElementById("main");
+  main.style.minWidth = "";
+  var w1 = getComputedStyle(main).getPropertyValue("min-width");
+  var w2 = getComputedStyle(sidebar).getPropertyValue("width");
+  var w3 = getComputedStyle(sidebar).getPropertyValue("left");
+  main.style.minWidth = `calc(${w1} - ${w2} - ${w3})`;
+}
+</script>
+
+<script>
+$(document).ready(function() {
+  hljs.configure({ classPrefix: '', useBR: false });
+  $('pre.code-highlight > code, pre > code').each(function(i, block) {
+    if (!$(this).hasClass('codeblock')) {
+      $(this).addClass('codeblock');
+    }
+    hljs.highlightBlock(block);
+  });
+});
+</script>
+
+
+  
+    
+  
+
+
+
+
+    
+  </body>
+</html>
+
