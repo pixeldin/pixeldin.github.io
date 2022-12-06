@@ -13,20 +13,20 @@
 
 <meta property="og:description" content="Lua作为一种胶水语言，具备动态类型，通过整合已有的高级组件构建新的应用。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Lua Basic Tip">
-<meta name="twitter:title" content="Lua Basic Tip">
-<meta property="og:url" content="/zh/2022/11/lua-basic-tip/">
-<meta property="twitter:url" content="/zh/2022/11/lua-basic-tip/">
+<meta property="og:title" content="OpenResty Notes">
+<meta name="twitter:title" content="OpenResty Notes">
+<meta property="og:url" content="/zh/2022/11/openresty-notes/">
+<meta property="twitter:url" content="/zh/2022/11/openresty-notes/">
 <meta property="og:site_name" content="pixelpig - tech">
 <meta property="og:description" content="Lua作为一种胶水语言，具备动态类型，通过整合已有的高级组件构建新的应用。">
 <meta name="twitter:description" content="Lua作为一种胶水语言，具备动态类型，通过整合已有的高级组件构建新的应用。">
 <meta property="og:locale" content="zh">
 
   
-    <meta property="article:published_time" content="2022-11-02T00:00:00">
+    <meta property="article:published_time" content="2022-11-13T00:00:00">
   
   
-    <meta property="article:modified_time" content="2022-11-02T00:00:00">
+    <meta property="article:modified_time" content="2022-11-13T00:00:00">
   
   
   
@@ -59,8 +59,8 @@
 
 
 
-  <meta property="og:image" content="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/blog/Lua/glue.png">
-  <meta property="twitter:image" content="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/blog/Lua/glue.png">
+  <meta property="og:image" content="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/blog/Lua/openresty/bird.png">
+  <meta property="twitter:image" content="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/blog/Lua/openresty/bird.png">
 
 
 
@@ -70,14 +70,14 @@
   <meta property="twitter:image" content="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/pig.jpg">
 
 
-    <title>Lua Basic Tip</title>
+    <title>OpenResty Notes</title>
 
     <link rel="icon" href="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/blog/static/pixel.ico">
     
 
     
 
-    <link rel="canonical" href="/zh/2022/11/lua-basic-tip/">
+    <link rel="canonical" href="/zh/2022/11/openresty-notes/">
 
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
@@ -227,15 +227,15 @@
             <div class="post-header main-content-wrap text-center">
   
     <h1 class="post-title" itemprop="headline">
-      Lua Basic Tip
+      OpenResty Notes
     </h1>
   
   
   <div class="postShorten-meta post-meta">
     
-      <time itemprop="datePublished" datetime="2022-11-02T00:00:00Z">
+      <time itemprop="datePublished" datetime="2022-11-13T00:00:00Z">
         
-  十一月 2, 2022
+  十一月 13, 2022
 
       </time>
     
@@ -257,102 +257,49 @@
           <div class="post-content markdown" itemprop="articleBody">
             <div class="main-content-wrap">
               <p>Lua作为一种胶水语言，具备动态类型，通过整合已有的高级组件构建新的应用。</p>
-<p><img src="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/blog/Lua/Lua-glue.png" alt="recover"></p>
-<h3 id="前言">前言</h3>
-<p>Lua作为一种胶水语言，具备动态类型，即运行时检测，只有值才有类型。
-适用场景：</p>
-<blockquote>
-<p>Lua语言支持组件化的软件开发方式，通过整合已有的高级组件构建新的应用。这些组件通常是通过C/C++等编译型强类型语言编写的，Lua语言充当了整合和连接这些组件的角色。</p>
-</blockquote>
-<h2 id="基础概念">基础概念</h2>
-<h3 id="字符串">字符串:</h3>
-<p>内化：两个完全一样的 Lua 字符串在 Lua 虚拟机中只会存储一份。每一个 Lua 字符串在创建时都会插入到 Lua 虚拟机内部的一个全局的哈希表中。 这意味着</p>
-<ol>
-<li>创建相同的 Lua 字符串并不会引入新的动态内存分配操作，所以相对便宜（但仍有全局哈希表查询的开销），</li>
-<li>内容相同的 Lua 字符串不会占用多份存储空间，</li>
-<li>已经创建好的 Lua 字符串之间进行相等性比较时是 <code>O(1)</code> 时间度的开销，而不是通常见到的 <code>O(n)</code>.</li>
-</ol>
-<blockquote>
-<p>相同内容的字符串只会被保存一份，因此 Lua 字符串之间的相等性比较可以简化为其内部存储地址的比较。这意味着 <strong>Lua 字符串的相等性比较总是为 O(1). 而在其他编程语言中，字符串的相等性比较则通常为 O(n)，即需要逐个字节（或按若干个连续字节）进行比较</strong></p>
-</blockquote>
-<h3 id="table表">table表：</h3>
-<p><strong>通常实现为一个哈希表、一个数组、或者两者的混合。具体的实现为何种形式，动态依赖于具体的 table 的键分布特点。</strong></p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-lua" data-lang="lua"><span style="color:#66d9ef">local</span> corp <span style="color:#f92672">=</span> {
-    web <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;www.google.com&#34;</span>,   <span style="color:#75715e">--索引为字符串，key = &#34;web&#34;,</span>
-                              <span style="color:#75715e">--            value = &#34;www.google.com&#34;</span>
-    telephone <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;12345678&#34;</span>,   <span style="color:#75715e">--索引为字符串</span>
-    staff <span style="color:#f92672">=</span> {<span style="color:#e6db74">&#34;Jack&#34;</span>, <span style="color:#e6db74">&#34;Scott&#34;</span>, <span style="color:#e6db74">&#34;Gary&#34;</span>}, <span style="color:#75715e">--索引为字符串，值也是一个表</span>
-    <span style="color:#ae81ff">100876</span>,              <span style="color:#75715e">--相当于 [1] = 100876，此时索引为数字</span>
-                         <span style="color:#75715e">--      key = 1, value = 100876</span>
-    <span style="color:#ae81ff">100191</span>,              <span style="color:#75715e">--相当于 [2] = 100191，此时索引为数字</span>
-    [<span style="color:#ae81ff">10</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">360</span>,          <span style="color:#75715e">--直接把数字索引给出</span>
-    [<span style="color:#e6db74">&#34;city&#34;</span>] <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;Beijing&#34;</span> <span style="color:#75715e">--索引为字符串</span>
-}
-
-print(corp.web)               <span style="color:#75715e">--&gt;output:www.google.com</span>
-print(corp[<span style="color:#e6db74">&#34;telephone&#34;</span>])      <span style="color:#75715e">--&gt;output:12345678</span>
-print(corp[<span style="color:#ae81ff">2</span>])                <span style="color:#75715e">--&gt;output:100191</span>
-print(corp[<span style="color:#e6db74">&#34;city&#34;</span>])           <span style="color:#75715e">--&gt;output:&#34;Beijing&#34;</span>
-print(corp.staff[<span style="color:#ae81ff">1</span>])          <span style="color:#75715e">--&gt;output:Jack</span>
-print(corp[<span style="color:#ae81ff">10</span>])               <span style="color:#75715e">--&gt;output:360</span>
-</code></pre></div><h4 id="导出table结构">导出table结构</h4>
-<p>通常可以通过如下方式打印table结构，即dump table</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-lua" data-lang="lua"><span style="color:#75715e">-- debug dump for Lua table</span>
-<span style="color:#66d9ef">local</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">dump</span>(o)
-    <span style="color:#66d9ef">if</span> type(o) <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;table&#39;</span> <span style="color:#66d9ef">then</span>
-       <span style="color:#66d9ef">local</span> s <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;{ &#39;</span>
-       <span style="color:#66d9ef">for</span> k,v <span style="color:#66d9ef">in</span> pairs(o) <span style="color:#66d9ef">do</span>
-          <span style="color:#66d9ef">if</span> type(k) <span style="color:#f92672">~=</span> <span style="color:#e6db74">&#39;number&#39;</span> <span style="color:#66d9ef">then</span> k <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;&#34;&#39;</span><span style="color:#f92672">..</span>k<span style="color:#f92672">..</span><span style="color:#e6db74">&#39;&#34;&#39;</span> <span style="color:#66d9ef">end</span>
-          s <span style="color:#f92672">=</span> s <span style="color:#f92672">..</span> <span style="color:#e6db74">&#39;[&#39;</span><span style="color:#f92672">..</span>k<span style="color:#f92672">..</span><span style="color:#e6db74">&#39;] = &#39;</span> <span style="color:#f92672">..</span> dump(v) <span style="color:#f92672">..</span> <span style="color:#e6db74">&#39;,&#39;</span>
-       <span style="color:#66d9ef">end</span>
-       <span style="color:#66d9ef">return</span> s <span style="color:#f92672">..</span> <span style="color:#e6db74">&#39;} &#39;</span>
-    <span style="color:#66d9ef">else</span>
-       <span style="color:#66d9ef">return</span> tostring(o)
-    <span style="color:#66d9ef">end</span>
- <span style="color:#66d9ef">end</span>
-</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-lua" data-lang="lua"><span style="color:#75715e">-- dump table with inspect </span>
-<span style="color:#66d9ef">local</span> inspect <span style="color:#f92672">=</span> require(<span style="color:#e6db74">&#39;inspect&#39;</span>)
-core.log.info(<span style="color:#e6db74">&#34;# Pixel-debug table content: &#34;</span><span style="color:#f92672">..</span> inspect(table))
-</code></pre></div><blockquote>
-<p>不要在 Lua 的 table 中使用 nil 值，<strong>如果一个元素要删除，直接 remove，不要用 nil 去代替</strong>
-。</p>
-</blockquote>
-<h2 id="函数">函数</h2>
+<p><img src="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/blog/Lua/openresty/bird-home.png" alt="openresty-home"></p>
+<h1 id="特性是什么">❓特性是什么</h1>
+<p>💡 Nginx网关+插件化管理</p>
 <ul>
-<li>
-<p>参数传递：默认传值, <code>table</code>类型：<strong>传引用</strong></p>
-</li>
-<li>
-<p><code>…</code>表示变长</p>
-<blockquote>
-<p><strong>LuaJIT 2 尚不能 JIT 编译这种变长参数的用法，只能解释执行。所以对性能敏感的代码，应当避免使用此种形式。</strong></p>
-</blockquote>
-</li>
-<li>
-<p>返回值，函数有多个返回值可以<strong>用括号来表示只取第一个值，但是只能解释执行。</strong></p>
-</li>
+<li>特性一: 同步非阻塞</li>
+<li>特性二: 动态热更新</li>
+<li>特性三: 测试用例驱动完善</li>
 </ul>
-<h3 id="string">String</h3>
-<blockquote>
-<p>由于 <code>string.byte</code> 只返回整数，而并不像 <code>string.sub</code> 等函数那样（尝试）创建新的 Lua 字符串， 因此使用 <code>string.byte</code> 来进行字符串相关的扫描和分析是最为高效的，尤其是在被 LuaJIT 2 所 JIT 编译之后。</p>
-</blockquote>
-<h2 id="luajit">LuaJIT</h2>
-<p><code>just-in-time</code>，Lua语言的即时编译器。</p>
-<blockquote>
-<p>即时编译器会将频繁执行的代码编译成机器码缓存起来，下次调用时将直接执行机器码。相比原生逐条执行虚拟机指令效率更高。而对于那些只执行一次的代码仍然逐条执行。</p>
-</blockquote>
-<h2 id="参考链接">参考链接</h2>
+<h2 id="前言">前言</h2>
+<p>从Nginx出发，再到插件定制化，作为一个国产API网关的沉淀，OpenResty开始逐渐摆脱NGINX的影子，形成自己的生态体系，在API网关、软WAF等领域被广泛使用。</p>
+<h2 id="如何实现">🔨如何实现</h2>
+<h3 id="项目模块">项目模块</h3>
+<h4 id="子项目">子项目:</h4>
 <ul>
-<li><strong>Openresty最佳实践</strong><br>
-<a href="https://github.com/moonbingbing/openresty-best-practices/">https://github.com/moonbingbing/openresty-best-practices/</a></li>
-<li><strong>《Lua程序设计》</strong></li>
-<li><strong>LuaJIT Introduce</strong>
+<li>perl编写的文档</li>
+<li>resty目录: LuaJIT</li>
+<li>测试框架<strong>test-nginx</strong></li>
+<li>调试工具: 火焰图\代码格式化</li>
+</ul>
+<h4 id="包管理工具">包管理工具:</h4>
 <ul>
-<li><a href="https://www.jianshu.com/p/0f968605d36d">https://www.jianshu.com/p/0f968605d36d</a></li>
-<li><a href="https://www.youtube.com/watch?v=p4AzAaJ8Ick">https://www.youtube.com/watch?v=p4AzAaJ8Ick</a></li>
+<li>OPM</li>
+<li>LuaRocks</li>
 </ul>
-</li>
+<h4 id="执行阶段">执行阶段:</h4>
+<p><img src="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/blog/Lua/openresty/openresty_process.png" alt="OpenResty执行阶段"></p>
+<ul>
+<li><code>set_by_lua：设置变量；</code></li>
+<li><code>rewrite_by_lua：转发、重定向等；</code></li>
+<li><code>access_by_lua：准入、权限等；</code></li>
+<li><code>content_by_lua：生成返回内容；</code></li>
+<li><code>header_filter_by_lua：应答头过滤处理；</code></li>
+<li><code>body_filter_by_lua：应答体过滤处理；</code></li>
+<li><code>log_by_lua：日志记录。</code></li>
 </ul>
+<h3 id="lua--luajit">Lua &amp; LuaJIT</h3>
+<p>Lua: 虚拟机 编译字节码→机器码</p>
+<p>LuaJIT: 在上面基础上增加热代码检测, 对于频繁调用代码开启缓冲, 自己转成机器码</p>
+<blockquote>
+<p><strong>所谓 LuaJIT 的性能优化，本质上就是让尽可能多的 Lua 代码可以被 JIT 编译器生成机器码，而不是回退到 Lua 解释器的解释执行模式退到 Lua 解释器的解释执行模式</strong></p>
+</blockquote>
+<h2 id="参考资料">🔗参考资料</h2>
+<p><a href="https://github.com/moonbingbing/openresty-best-practices">https://github.com/moonbingbing/openresty-best-practices</a></p>
               
             </div>
           </div>
@@ -381,7 +328,7 @@ core.log.info(<span style="color:#e6db74">&#34;# Pixel-debug table content: &#34
           
             <li class="post-action">
               
-                <a class="post-action-btn btn btn--default tooltip--top" href="/zh/2022/11/openresty-notes/" data-tooltip="OpenResty Notes">
+                <a class="post-action-btn btn btn--disabled">
               
                   <i class="fa fa-angle-left"></i>
                   <span class="hide-xs hide-sm text-small icon-ml">下一篇</span>
@@ -389,7 +336,7 @@ core.log.info(<span style="color:#e6db74">&#34;# Pixel-debug table content: &#34
             </li>
             <li class="post-action">
               
-                <a class="post-action-btn btn btn--default tooltip--top" href="/zh/2022/06/%E8%81%8A%E4%B8%80%E8%81%8Aetcd%E7%B3%BB%E5%88%97%E4%B9%8B%E4%B8%89%E8%8A%82%E7%82%B9%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE/" data-tooltip="聊一聊etcd系列之三：节点通信协议">
+                <a class="post-action-btn btn btn--default tooltip--top" href="/zh/2022/11/lua-basic-tip/" data-tooltip="Lua Basic Tip">
               
                   <span class="hide-xs hide-sm text-small icon-mr">上一篇</span>
                   <i class="fa fa-angle-right"></i>
@@ -439,7 +386,7 @@ core.log.info(<span style="color:#e6db74">&#34;# Pixel-debug table content: &#34
           
             <li class="post-action">
               
-                <a class="post-action-btn btn btn--default tooltip--top" href="/zh/2022/11/openresty-notes/" data-tooltip="OpenResty Notes">
+                <a class="post-action-btn btn btn--disabled">
               
                   <i class="fa fa-angle-left"></i>
                   <span class="hide-xs hide-sm text-small icon-ml">下一篇</span>
@@ -447,7 +394,7 @@ core.log.info(<span style="color:#e6db74">&#34;# Pixel-debug table content: &#34
             </li>
             <li class="post-action">
               
-                <a class="post-action-btn btn btn--default tooltip--top" href="/zh/2022/06/%E8%81%8A%E4%B8%80%E8%81%8Aetcd%E7%B3%BB%E5%88%97%E4%B9%8B%E4%B8%89%E8%8A%82%E7%82%B9%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE/" data-tooltip="聊一聊etcd系列之三：节点通信协议">
+                <a class="post-action-btn btn btn--default tooltip--top" href="/zh/2022/11/lua-basic-tip/" data-tooltip="Lua Basic Tip">
               
                   <span class="hide-xs hide-sm text-small icon-mr">上一篇</span>
                   <i class="fa fa-angle-right"></i>
