@@ -13,7 +13,7 @@
       <pubDate>Sun, 13 Nov 2022 00:00:00 +0000</pubDate>
       
       <guid>/zh/2022/11/openresty-notes/</guid>
-      <description>&lt;p&gt;Lua作为一种胶水语言，具备动态类型，通过整合已有的高级组件构建新的应用。&lt;/p&gt;</description>
+      <description>&lt;p&gt;从Nginx出发，再到插件定制化，作为一个国产API网关的沉淀，OpenResty开始逐渐摆脱NGINX的影子。&lt;/p&gt;</description>
     </item>
     
     <item>
