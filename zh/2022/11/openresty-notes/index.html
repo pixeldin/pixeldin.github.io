@@ -355,6 +355,32 @@ LuaJIT通过FFI方式实现C函数API，在<strong>非解释模式</strong>下�
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-lua" data-lang="lua">lua_shared_dict share_dict_xxx <span style="color:#ae81ff">10</span>m;
 </code></pre></div></li>
 </ul>
+<h3 id="真值与空">真值与空</h3>
+<p>Lua：<strong>除了<code>nil</code>和<code>false</code> 其他都是真值</strong>。</p>
+<p>OpenResty衍生的非空：<code>ngx.null</code>、<code>cdata:NULL</code>、<code>cjson.null</code></p>
+<hr>
+<h2 id="测试框架testnginx">测试框架test::Nginx</h2>
+<p>配合测试用例以及DSL规范熟悉上手。</p>
+<h2 id="压测配置">压测配置</h2>
+<p><code>fs.file-max:</code> 全局最大文件打开数量</p>
+<p><code>ulimit -n:</code> 一个进程可以打开的文件数量</p>
+<h2 id="性能概要">性能概要</h2>
+<h3 id="避免阻塞操作">避免阻塞操作</h3>
+<ul>
+<li>执行外部命令<code>os.execute()</code> 使用外部<code>ffi</code>或者<code>ngx.pipe</code>替换</li>
+<li>替换磁盘i\o为异步网络，可以用<code>cosocket</code> 异步实现上报远程</li>
+<li>只在init阶段执行阻塞操作，如<code>luasocket</code></li>
+</ul>
+<h3 id="字符串操作">字符串操作</h3>
+<ul>
+<li>避免频繁创建字符串，加重GC代价，使用<code>Lua table</code>保存字符串</li>
+<li>避免产生临时字符串，可使用<code>string.byte</code> → <code>string.char</code>进行转换</li>
+</ul>
+<h3 id="table事项">table事项</h3>
+<ul>
+<li>预分配table大小，避免插入元素再自增</li>
+<li>table插入使用下标，尽量避免#获取table长度<code>t[#t + 1]</code></li>
+</ul>
 <h2 id="参考资料">🔗参考资料</h2>
 <p><a href="https://www.jianshu.com/p/0f968605d36d">简书：LuaJit</a></p>
 <p><a href="https://www.youtube.com/watch?v=p4AzAaJ8Ick">The price of speed: Lua or LuaJIT? Etiene Dalcol - London Lua August 2017</a></p>
