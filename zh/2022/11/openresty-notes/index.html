@@ -126,7 +126,7 @@
         </a>
         <h4 class="sidebar-profile-name">pixelpig</h4>
         
-          <h5 class="sidebar-profile-bio">With enthusiasm for open source and I am looking forward to be a  better developer. Stay hungry, stay foolish <strong>:）</strong></h5>
+          <h5 class="sidebar-profile-bio">With enthusiasm for open source and I am looking forward to be a better developer. Stay hungry, stay foolish <strong>:）</strong></h5>
         
       </div>
     
@@ -380,9 +380,32 @@ LuaJIT通过FFI方式实现C函数API，在<strong>非解释模式</strong>下�
 <ul>
 <li>预分配table大小，避免插入元素再自增</li>
 <li>table插入使用下标，尽量避免#获取table长度<code>t[#t + 1]</code></li>
+<li>使用<code>table.clear</code>清空复用<code>table</code>,可以配合<code>tablepool</code>使用</li>
 </ul>
+<h2 id="性能监控">性能监控</h2>
+<ul>
+<li>断点、日志</li>
+<li>动态追踪、调试</li>
+<li>Systemtap</li>
+<li>火焰图
+<ul>
+<li>横坐标：CPU分配时间占比</li>
+<li>纵坐标：函数栈深度</li>
+</ul>
+</li>
+</ul>
+<h2 id="动态">动态</h2>
+<h3 id="动态调试">动态调试</h3>
+<p>基于动态语言的<code>hook</code>模块进行debug</p>
+<h3 id="动态加载">动态加载</h3>
+<blockquote>
+<p>动态，指的是程序可以在运行时、在不重新加载的情况下，去修改参数、配置，乃至修改自身的代码。OpenResty是通过脚本语言Lua来完成的⸺脚本语言的一大优势，便是运行时可以去做动态地改变。</p>
+</blockquote>
+<h3 id="动态上游ngxbalancer">动态上游(<code>ngx.balancer</code>)</h3>
+<p>被动+主动健康监测</p>
 <h2 id="参考资料">🔗参考资料</h2>
 <p><a href="https://www.jianshu.com/p/0f968605d36d">简书：LuaJit</a></p>
+<p><a href="https://apisix.apache.org/zh/blog/2022/08/19/apache-apisix-runtime-dynamic-debugging/">Apisix动态调试</a></p>
 <p><a href="https://www.youtube.com/watch?v=p4AzAaJ8Ick">The price of speed: Lua or LuaJIT? Etiene Dalcol - London Lua August 2017</a></p>
 <p><a href="https://github.com/moonbingbing/openresty-best-practices">OpenResty最佳实践</a></p>
               
@@ -529,7 +552,7 @@ LuaJIT通过FFI方式实现C函数API，在<strong>非解释模式</strong>下�
     
     <h4 id="about-card-name">pixelpig</h4>
     
-      <div id="about-card-bio">With enthusiasm for open source and I am looking forward to be a  better developer. Stay hungry, stay foolish <strong>:）</strong></div>
+      <div id="about-card-bio">With enthusiasm for open source and I am looking forward to be a better developer. Stay hungry, stay foolish <strong>:）</strong></div>
     
     
     
