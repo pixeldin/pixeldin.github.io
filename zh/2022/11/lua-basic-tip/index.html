@@ -403,6 +403,17 @@ myrectangle:printArea()
 <p>返回值，函数有多个返回值可以<strong>用括号来表示只取第一个值，但是只能解释执行。</strong></p>
 </li>
 </ul>
+<h2 id="弱表">弱表</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-lua" data-lang="lua"><span style="color:#75715e">-- __mode的值是 k\v，那就意味着这个table的键\值为弱引用</span>
+setmetatable(tb, {__mode <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;v})
+</span></code></pre></div><p>通过弱表声明可以避免垃圾回收泄漏未引用对象。</p>
+<h2 id="模块">模块</h2>
+<h3 id="stringhttpsmoonbingbinggitbooksioopenresty-best-practicescontentluastring_libraryhtml"><a href="https://moonbingbing.gitbooks.io/openresty-best-practices/content/lua/string_library.html">String</a></h3>
+<blockquote>
+<p>由于 <code>string.byte</code> 只返回整数，而并不像 <code>string.sub</code> 等函数那样（尝试）创建新的 Lua 字符串， 因此使用 <code>string.byte</code> 来进行字符串相关的扫描和分析是最为高效的，尤其是在被 LuaJIT 2 所 JIT 编译之后。</p>
+</blockquote>
+<h2 id="luarocks">LuaRocks</h2>
+<p>包管理工具</p>
 <h3 id="string">String</h3>
 <blockquote>
 <p>由于 <code>string.byte</code> 只返回整数，而并不像 <code>string.sub</code> 等函数那样（尝试）创建新的 Lua 字符串， 因此使用 <code>string.byte</code> 来进行字符串相关的扫描和分析是最为高效的，尤其是在被 LuaJIT 2 所 JIT 编译之后。</p>
