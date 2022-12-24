@@ -345,7 +345,7 @@ LuaJIT通过FFI方式实现C函数API，在<strong>非解释模式</strong>下�
 <p>共享变量：<code>$val</code> 仅支持字符串</p>
 </li>
 <li>
-<p>ngx.ctx: 在同一个请求共享，<strong>随请求结束销毁</strong></p>
+<p>ngx.ctx: 在同一个请求共享，<strong>随请求结束销毁，如果发生重定向，则会丢失</strong>，可以借鉴开源库<a href="https://github.com/tokers/lua-resty-ctxdump/blob/master/README.md">lua-resty-ctxdump</a></p>
 </li>
 <li>
 <p>使用模块变量，在相同的woker内部共享，但是<strong>要避免写，防止竞争问题</strong></p>
@@ -365,6 +365,24 @@ LuaJIT通过FFI方式实现C函数API，在<strong>非解释模式</strong>下�
 <p><code>fs.file-max:</code> 全局最大文件打开数量</p>
 <p><code>ulimit -n:</code> 一个进程可以打开的文件数量</p>
 <h2 id="性能概要">性能概要</h2>
+<h3 id="资源分析">资源分析</h3>
+<ul>
+<li>top</li>
+<li>pidstat</li>
+<li>vmstat</li>
+<li>iostat</li>
+<li>sar</li>
+</ul>
+<blockquote>
+<p>USE(utilization\saturation\errors)</p>
+</blockquote>
+<h3 id="负载分析">负载分析</h3>
+<ul>
+<li>perf</li>
+<li>systemtap</li>
+<li>bcc/ebpf</li>
+<li>火焰图</li>
+</ul>
 <h3 id="避免阻塞操作">避免阻塞操作</h3>
 <ul>
 <li>执行外部命令<code>os.execute()</code> 使用外部<code>ffi</code>或者<code>ngx.pipe</code>替换</li>
