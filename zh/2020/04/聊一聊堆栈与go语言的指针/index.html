@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="generator" content="Hugo 0.80.0 with theme Tranquilpeak 0.4.8-BETA">
+<meta name="generator" content="Hugo 0.110.0 with theme Tranquilpeak 0.4.8-BETA">
 <meta name="author" content="pixelpig">
 <meta name="keywords" content="">
 <meta name="description" content="堆、栈在计算机领域是亘古不变的热门话题，归根结底它们都是操作系统层面的内存划分。">
@@ -284,34 +284,34 @@ Pointers serve one purpose, to share a value with a function so the function can
 <p>结合上述的理解，指针指的是内存地址，堆是共享模块，指针是为了共享同一块内存片。在Go语言中，所有传参都是值传递，指针也是通过传递指针的值。</p>
 <h3 id="程序实例-指针共享">程序实例 指针共享</h3>
 <h4 id="主函数">主函数</h4>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
-	<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">v</span> <span style="color:#66d9ef">int</span> = <span style="color:#ae81ff">1</span>
-	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;# Main frame: Value of v:\t\t %v, address: %p\n&#34;</span>, <span style="color:#a6e22e">v</span>, <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">v</span>)
-	<span style="color:#a6e22e">PassValue</span>(<span style="color:#a6e22e">v</span>, <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">v</span>)
-	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;# Main frame: Value of v:\t\t %v, address: %p\n&#34;</span>, <span style="color:#a6e22e">v</span>, <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">v</span>)
-}
-</code></pre></div><h4 id="子函数">子函数</h4>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">PassValue</span>(<span style="color:#a6e22e">fv</span> <span style="color:#66d9ef">int</span>, <span style="color:#a6e22e">addV</span> <span style="color:#f92672">*</span><span style="color:#66d9ef">int</span>) {
-	<span style="color:#75715e">// fv 的地址只属于该函数, 由该函数栈分配
-</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;# Func frame: Value of fv:\t\t %v, address: %p\n&#34;</span>, <span style="color:#a6e22e">fv</span>, <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">fv</span>)
-	<span style="color:#75715e">//本次修改只在该函数生效
-</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">fv</span> = <span style="color:#ae81ff">0</span>
-	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;# Func frame: Value of fv:\t\t %v, address: %p\n&#34;</span>, <span style="color:#a6e22e">fv</span>, <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">fv</span>)
-
-	<span style="color:#75715e">/*
-</span><span style="color:#75715e">	 *	根据main函数传入的全局地址, 对指针执行操作外部是可见的,
-</span><span style="color:#75715e">	 *  因为改指针操作的都是同一个内存块的内容
-</span><span style="color:#75715e">	 */</span>
-	<span style="color:#f92672">*</span><span style="color:#a6e22e">addV</span><span style="color:#f92672">++</span>
-	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;# Func frame: Value of addV:\t %v, address: %p\n&#34;</span>, <span style="color:#f92672">*</span><span style="color:#a6e22e">addV</span>, <span style="color:#a6e22e">addV</span>)
-}
-</code></pre></div><h4 id="输出">输出:</h4>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#960050;background-color:#1e0010">#</span> <span style="color:#a6e22e">Main</span> <span style="color:#a6e22e">frame</span>: <span style="color:#a6e22e">Value</span> <span style="color:#a6e22e">of</span> <span style="color:#a6e22e">v</span>:		 <span style="color:#ae81ff">1</span>, <span style="color:#a6e22e">address</span>: <span style="color:#ae81ff">0xc000054080</span>
-<span style="color:#960050;background-color:#1e0010">#</span> <span style="color:#a6e22e">Func</span> <span style="color:#a6e22e">frame</span>: <span style="color:#a6e22e">Value</span> <span style="color:#a6e22e">of</span> <span style="color:#a6e22e">fv</span>:		 <span style="color:#ae81ff">1</span>, <span style="color:#a6e22e">address</span>: <span style="color:#ae81ff">0xc0000540a0</span>
-<span style="color:#960050;background-color:#1e0010">#</span> <span style="color:#a6e22e">Func</span> <span style="color:#a6e22e">frame</span>: <span style="color:#a6e22e">Value</span> <span style="color:#a6e22e">of</span> <span style="color:#a6e22e">fv</span>:		 <span style="color:#ae81ff">0</span>, <span style="color:#a6e22e">address</span>: <span style="color:#ae81ff">0xc0000540a0</span>
-<span style="color:#960050;background-color:#1e0010">#</span> <span style="color:#a6e22e">Func</span> <span style="color:#a6e22e">frame</span>: <span style="color:#a6e22e">Value</span> <span style="color:#a6e22e">of</span> <span style="color:#a6e22e">addV</span>:	 <span style="color:#ae81ff">2</span>, <span style="color:#a6e22e">address</span>: <span style="color:#ae81ff">0xc000054080</span>
-<span style="color:#960050;background-color:#1e0010">#</span> <span style="color:#a6e22e">Main</span> <span style="color:#a6e22e">frame</span>: <span style="color:#a6e22e">Value</span> <span style="color:#a6e22e">of</span> <span style="color:#a6e22e">v</span>:		 <span style="color:#ae81ff">2</span>, <span style="color:#a6e22e">address</span>: <span style="color:#ae81ff">0xc000054080</span>
-</code></pre></div><p>可以看到传递指针在子函数里面操作的都是<strong>同一个地址（0xc000054080）</strong>,所以在子函数退出时候对v的改变在主函数是可见的。<br>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">v</span> <span style="color:#66d9ef">int</span> = <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;# Main frame: Value of v:\t\t %v, address: %p\n&#34;</span>, <span style="color:#a6e22e">v</span>, <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">v</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">PassValue</span>(<span style="color:#a6e22e">v</span>, <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">v</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;# Main frame: Value of v:\t\t %v, address: %p\n&#34;</span>, <span style="color:#a6e22e">v</span>, <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">v</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h4 id="子函数">子函数</h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">PassValue</span>(<span style="color:#a6e22e">fv</span> <span style="color:#66d9ef">int</span>, <span style="color:#a6e22e">addV</span> <span style="color:#f92672">*</span><span style="color:#66d9ef">int</span>) {
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// fv 的地址只属于该函数, 由该函数栈分配
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;# Func frame: Value of fv:\t\t %v, address: %p\n&#34;</span>, <span style="color:#a6e22e">fv</span>, <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">fv</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">//本次修改只在该函数生效
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">fv</span> = <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;# Func frame: Value of fv:\t\t %v, address: %p\n&#34;</span>, <span style="color:#a6e22e">fv</span>, <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">fv</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">/*
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">	 *	根据main函数传入的全局地址, 对指针执行操作外部是可见的,
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">	 *  因为改指针操作的都是同一个内存块的内容
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">	 */</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#f92672">*</span><span style="color:#a6e22e">addV</span><span style="color:#f92672">++</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;# Func frame: Value of addV:\t %v, address: %p\n&#34;</span>, <span style="color:#f92672">*</span><span style="color:#a6e22e">addV</span>, <span style="color:#a6e22e">addV</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h4 id="输出">输出:</h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">#</span> <span style="color:#a6e22e">Main</span> <span style="color:#a6e22e">frame</span>: <span style="color:#a6e22e">Value</span> <span style="color:#a6e22e">of</span> <span style="color:#a6e22e">v</span>:		 <span style="color:#ae81ff">1</span>, <span style="color:#a6e22e">address</span>: <span style="color:#ae81ff">0xc000054080</span>
+</span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">#</span> <span style="color:#a6e22e">Func</span> <span style="color:#a6e22e">frame</span>: <span style="color:#a6e22e">Value</span> <span style="color:#a6e22e">of</span> <span style="color:#a6e22e">fv</span>:		 <span style="color:#ae81ff">1</span>, <span style="color:#a6e22e">address</span>: <span style="color:#ae81ff">0xc0000540a0</span>
+</span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">#</span> <span style="color:#a6e22e">Func</span> <span style="color:#a6e22e">frame</span>: <span style="color:#a6e22e">Value</span> <span style="color:#a6e22e">of</span> <span style="color:#a6e22e">fv</span>:		 <span style="color:#ae81ff">0</span>, <span style="color:#a6e22e">address</span>: <span style="color:#ae81ff">0xc0000540a0</span>
+</span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">#</span> <span style="color:#a6e22e">Func</span> <span style="color:#a6e22e">frame</span>: <span style="color:#a6e22e">Value</span> <span style="color:#a6e22e">of</span> <span style="color:#a6e22e">addV</span>:	 <span style="color:#ae81ff">2</span>, <span style="color:#a6e22e">address</span>: <span style="color:#ae81ff">0xc000054080</span>
+</span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">#</span> <span style="color:#a6e22e">Main</span> <span style="color:#a6e22e">frame</span>: <span style="color:#a6e22e">Value</span> <span style="color:#a6e22e">of</span> <span style="color:#a6e22e">v</span>:		 <span style="color:#ae81ff">2</span>, <span style="color:#a6e22e">address</span>: <span style="color:#ae81ff">0xc000054080</span>
+</span></span></code></pre></div><p>可以看到传递指针在子函数里面操作的都是<strong>同一个地址（0xc000054080）</strong>,所以在子函数退出时候对v的改变在主函数是可见的。<br>
 而传进子函数的fv所在地址已经处于子函数的管辖栈，随着函数结束，该栈会被释放。</p>
 <hr>
 <h3 id="栈逃逸">栈逃逸</h3>
@@ -319,39 +319,38 @@ Pointers serve one purpose, to share a value with a function so the function can
 <li>
 <p><strong>访问外部栈</strong><br>
 指的是变量在函数执行结束时候，没有随着函数栈结束生命，值超出函数（栈）的调用周期，逃到堆去了（通常是一个全局指针），能被外部所共享，可以通过go自带的工具来分析。下面是栈逃逸的一个栗子。</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#75715e">//go:noinline
-</span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">CreatePointer</span>() <span style="color:#f92672">*</span><span style="color:#66d9ef">int</span>  {
-    <span style="color:#66d9ef">return</span> new(<span style="color:#66d9ef">int</span>)
-}
-</code></pre></div><p><strong>分析</strong></p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#960050;background-color:#1e0010">$</span> <span style="color:#66d9ef">go</span> <span style="color:#a6e22e">build</span> <span style="color:#f92672">-</span><span style="color:#a6e22e">gcflags</span> <span style="color:#e6db74">&#34;-m -m -l&#34;</span> <span style="color:#a6e22e">escape</span>.<span style="color:#66d9ef">go</span>
-<span style="color:#960050;background-color:#1e0010">#</span> <span style="color:#a6e22e">command</span><span style="color:#f92672">-</span><span style="color:#a6e22e">line</span><span style="color:#f92672">-</span><span style="color:#a6e22e">arguments</span>
-.<span style="color:#960050;background-color:#1e0010">\</span><span style="color:#a6e22e">escape</span>.<span style="color:#66d9ef">go</span>:<span style="color:#ae81ff">9</span>:<span style="color:#ae81ff">12</span>: new(<span style="color:#66d9ef">int</span>) <span style="color:#a6e22e">escapes</span> <span style="color:#a6e22e">to</span> <span style="color:#a6e22e">heap</span>
-.<span style="color:#960050;background-color:#1e0010">\</span><span style="color:#a6e22e">escape</span>.<span style="color:#66d9ef">go</span>:<span style="color:#ae81ff">9</span>:<span style="color:#ae81ff">12</span>:       <span style="color:#a6e22e">from</span> <span style="color:#960050;background-color:#1e0010">~</span><span style="color:#a6e22e">r0</span> (<span style="color:#66d9ef">return</span>) <span style="color:#a6e22e">at</span> .<span style="color:#960050;background-color:#1e0010">\</span><span style="color:#a6e22e">escape</span>.<span style="color:#66d9ef">go</span>:<span style="color:#ae81ff">9</span>:<span style="color:#ae81ff">2</span>
-</code></pre></div><p>可以看到提示, <code>return new(int)</code>这个语句把new指针返回给调用方，这个随着CreatePointer函数结束的时候仍然有外部引用到这个指针，已经超出了该函数栈的范围，所以编译器提示它将分配到堆中去。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#75715e">//go:noinline
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">CreatePointer</span>() <span style="color:#f92672">*</span><span style="color:#66d9ef">int</span>  {
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> new(<span style="color:#66d9ef">int</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p><strong>分析</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">$</span> <span style="color:#66d9ef">go</span> <span style="color:#a6e22e">build</span> <span style="color:#f92672">-</span><span style="color:#a6e22e">gcflags</span> <span style="color:#e6db74">&#34;-m -m -l&#34;</span> <span style="color:#a6e22e">escape</span>.<span style="color:#66d9ef">go</span>
+</span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">#</span> <span style="color:#a6e22e">command</span><span style="color:#f92672">-</span><span style="color:#a6e22e">line</span><span style="color:#f92672">-</span><span style="color:#a6e22e">arguments</span>
+</span></span><span style="display:flex;"><span>.<span style="color:#960050;background-color:#1e0010">\</span><span style="color:#a6e22e">escape</span>.<span style="color:#66d9ef">go</span>:<span style="color:#ae81ff">9</span>:<span style="color:#ae81ff">12</span>: new(<span style="color:#66d9ef">int</span>) <span style="color:#a6e22e">escapes</span> <span style="color:#a6e22e">to</span> <span style="color:#a6e22e">heap</span>
+</span></span><span style="display:flex;"><span>.<span style="color:#960050;background-color:#1e0010">\</span><span style="color:#a6e22e">escape</span>.<span style="color:#66d9ef">go</span>:<span style="color:#ae81ff">9</span>:<span style="color:#ae81ff">12</span>:       <span style="color:#a6e22e">from</span> <span style="color:#960050;background-color:#1e0010">~</span><span style="color:#a6e22e">r0</span> (<span style="color:#66d9ef">return</span>) <span style="color:#a6e22e">at</span> .<span style="color:#960050;background-color:#1e0010">\</span><span style="color:#a6e22e">escape</span>.<span style="color:#66d9ef">go</span>:<span style="color:#ae81ff">9</span>:<span style="color:#ae81ff">2</span>
+</span></span></code></pre></div><p>可以看到提示, <code>return new(int)</code>这个语句把new指针返回给调用方，这个随着CreatePointer函数结束的时候仍然有外部引用到这个指针，已经超出了该函数栈的范围，所以编译器提示它将分配到堆中去。</p>
 </li>
 <li>
 <p><strong>编译未确定</strong><br>
 关于栈逃逸，还有另外一种情景会发生，再看一个栗子：</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">SpecifySizeAllocate</span>()  {
-    <span style="color:#a6e22e">buf</span> <span style="color:#f92672">:=</span> make([]<span style="color:#66d9ef">byte</span>, <span style="color:#ae81ff">5</span>)
-    println(<span style="color:#a6e22e">buf</span>)
-}
-   
-<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">UnSpecifySizeAllocate</span>(<span style="color:#a6e22e">size</span> <span style="color:#66d9ef">int</span>)  {
-    <span style="color:#a6e22e">buf</span> <span style="color:#f92672">:=</span> make([]<span style="color:#66d9ef">byte</span>, <span style="color:#a6e22e">size</span>)
-    println(<span style="color:#a6e22e">buf</span>)
-}
-</code></pre></div><p><strong>分析</strong></p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#960050;background-color:#1e0010">$</span> <span style="color:#66d9ef">go</span> <span style="color:#a6e22e">build</span> <span style="color:#f92672">-</span><span style="color:#a6e22e">gcflags</span> <span style="color:#e6db74">&#34;-m -m&#34;</span> <span style="color:#a6e22e">escape</span>.<span style="color:#66d9ef">go</span>
-<span style="color:#960050;background-color:#1e0010">#</span> <span style="color:#a6e22e">command</span><span style="color:#f92672">-</span><span style="color:#a6e22e">line</span><span style="color:#f92672">-</span><span style="color:#a6e22e">arguments</span>
-.<span style="color:#960050;background-color:#1e0010">\</span><span style="color:#a6e22e">escape</span>.<span style="color:#66d9ef">go</span>:<span style="color:#ae81ff">5</span>:<span style="color:#ae81ff">6</span>: <span style="color:#a6e22e">can</span> <span style="color:#a6e22e">inline</span> <span style="color:#a6e22e">SpecifySizeAllocate</span> <span style="color:#a6e22e">as</span>: <span style="color:#66d9ef">func</span>() { <span style="color:#a6e22e">buf</span> <span style="color:#f92672">:=</span> make([]<span style="color:#66d9ef">byte</span>, <span style="color:#ae81ff">5</span>); println(<span style="color:#a6e22e">buf</span>) }
-.<span style="color:#960050;background-color:#1e0010">\</span><span style="color:#a6e22e">escape</span>.<span style="color:#66d9ef">go</span>:<span style="color:#ae81ff">10</span>:<span style="color:#ae81ff">6</span>: <span style="color:#a6e22e">can</span> <span style="color:#a6e22e">inline</span> <span style="color:#a6e22e">UnSpecifySizeAllocate</span> <span style="color:#a6e22e">as</span>: <span style="color:#66d9ef">func</span>(<span style="color:#66d9ef">int</span>) { <span style="color:#a6e22e">buf</span> <span style="color:#f92672">:=</span> make([]<span style="color:#66d9ef">byte</span>, <span style="color:#a6e22e">size</span>); println(<span style="color:#a6e22e">buf</span>) }
-.<span style="color:#960050;background-color:#1e0010">\</span><span style="color:#a6e22e">escape</span>.<span style="color:#66d9ef">go</span>:<span style="color:#ae81ff">6</span>:<span style="color:#ae81ff">13</span>: <span style="color:#a6e22e">SpecifySizeAllocate</span> make([]<span style="color:#66d9ef">byte</span>, <span style="color:#ae81ff">5</span>) <span style="color:#a6e22e">does</span> <span style="color:#a6e22e">not</span> <span style="color:#a6e22e">escape</span>
-.<span style="color:#960050;background-color:#1e0010">\</span><span style="color:#a6e22e">escape</span>.<span style="color:#66d9ef">go</span>:<span style="color:#ae81ff">11</span>:<span style="color:#ae81ff">13</span>: make([]<span style="color:#66d9ef">byte</span>, <span style="color:#a6e22e">size</span>) <span style="color:#a6e22e">escapes</span> <span style="color:#a6e22e">to</span> <span style="color:#a6e22e">heap</span>
-.<span style="color:#960050;background-color:#1e0010">\</span><span style="color:#a6e22e">escape</span>.<span style="color:#66d9ef">go</span>:<span style="color:#ae81ff">11</span>:<span style="color:#ae81ff">13</span>:      <span style="color:#a6e22e">from</span> make([]<span style="color:#66d9ef">byte</span>, <span style="color:#a6e22e">size</span>) (<span style="color:#a6e22e">non</span><span style="color:#f92672">-</span><span style="color:#a6e22e">constant</span> <span style="color:#a6e22e">size</span>) <span style="color:#a6e22e">at</span> .<span style="color:#960050;background-color:#1e0010">\</span><span style="color:#a6e22e">escape</span>.<span style="color:#66d9ef">go</span>:<span style="color:#ae81ff">11</span>:<span style="color:#ae81ff">13</span>
-   
-</code></pre></div><p>观察这两个函数，两个buf的生存期都只在函数里面，好像都不会逃逸，然而根据分析结果，<code>UnSpecifySizeAllocate()</code>这个函数却产生了栈逃逸，这是为什么呢？<br>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">SpecifySizeAllocate</span>()  {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">buf</span> <span style="color:#f92672">:=</span> make([]<span style="color:#66d9ef">byte</span>, <span style="color:#ae81ff">5</span>)
+</span></span><span style="display:flex;"><span>	println(<span style="color:#a6e22e">buf</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">UnSpecifySizeAllocate</span>(<span style="color:#a6e22e">size</span> <span style="color:#66d9ef">int</span>)  {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">buf</span> <span style="color:#f92672">:=</span> make([]<span style="color:#66d9ef">byte</span>, <span style="color:#a6e22e">size</span>)
+</span></span><span style="display:flex;"><span>	println(<span style="color:#a6e22e">buf</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p><strong>分析</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">$</span> <span style="color:#66d9ef">go</span> <span style="color:#a6e22e">build</span> <span style="color:#f92672">-</span><span style="color:#a6e22e">gcflags</span> <span style="color:#e6db74">&#34;-m -m&#34;</span> <span style="color:#a6e22e">escape</span>.<span style="color:#66d9ef">go</span>
+</span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">#</span> <span style="color:#a6e22e">command</span><span style="color:#f92672">-</span><span style="color:#a6e22e">line</span><span style="color:#f92672">-</span><span style="color:#a6e22e">arguments</span>
+</span></span><span style="display:flex;"><span>.<span style="color:#960050;background-color:#1e0010">\</span><span style="color:#a6e22e">escape</span>.<span style="color:#66d9ef">go</span>:<span style="color:#ae81ff">5</span>:<span style="color:#ae81ff">6</span>: <span style="color:#a6e22e">can</span> <span style="color:#a6e22e">inline</span> <span style="color:#a6e22e">SpecifySizeAllocate</span> <span style="color:#a6e22e">as</span>: <span style="color:#66d9ef">func</span>() { <span style="color:#a6e22e">buf</span> <span style="color:#f92672">:=</span> make([]<span style="color:#66d9ef">byte</span>, <span style="color:#ae81ff">5</span>); println(<span style="color:#a6e22e">buf</span>) }
+</span></span><span style="display:flex;"><span>.<span style="color:#960050;background-color:#1e0010">\</span><span style="color:#a6e22e">escape</span>.<span style="color:#66d9ef">go</span>:<span style="color:#ae81ff">10</span>:<span style="color:#ae81ff">6</span>: <span style="color:#a6e22e">can</span> <span style="color:#a6e22e">inline</span> <span style="color:#a6e22e">UnSpecifySizeAllocate</span> <span style="color:#a6e22e">as</span>: <span style="color:#66d9ef">func</span>(<span style="color:#66d9ef">int</span>) { <span style="color:#a6e22e">buf</span> <span style="color:#f92672">:=</span> make([]<span style="color:#66d9ef">byte</span>, <span style="color:#a6e22e">size</span>); println(<span style="color:#a6e22e">buf</span>) }
+</span></span><span style="display:flex;"><span>.<span style="color:#960050;background-color:#1e0010">\</span><span style="color:#a6e22e">escape</span>.<span style="color:#66d9ef">go</span>:<span style="color:#ae81ff">6</span>:<span style="color:#ae81ff">13</span>: <span style="color:#a6e22e">SpecifySizeAllocate</span> make([]<span style="color:#66d9ef">byte</span>, <span style="color:#ae81ff">5</span>) <span style="color:#a6e22e">does</span> <span style="color:#a6e22e">not</span> <span style="color:#a6e22e">escape</span>
+</span></span><span style="display:flex;"><span>.<span style="color:#960050;background-color:#1e0010">\</span><span style="color:#a6e22e">escape</span>.<span style="color:#66d9ef">go</span>:<span style="color:#ae81ff">11</span>:<span style="color:#ae81ff">13</span>: make([]<span style="color:#66d9ef">byte</span>, <span style="color:#a6e22e">size</span>) <span style="color:#a6e22e">escapes</span> <span style="color:#a6e22e">to</span> <span style="color:#a6e22e">heap</span>
+</span></span><span style="display:flex;"><span>.<span style="color:#960050;background-color:#1e0010">\</span><span style="color:#a6e22e">escape</span>.<span style="color:#66d9ef">go</span>:<span style="color:#ae81ff">11</span>:<span style="color:#ae81ff">13</span>:      <span style="color:#a6e22e">from</span> make([]<span style="color:#66d9ef">byte</span>, <span style="color:#a6e22e">size</span>) (<span style="color:#a6e22e">non</span><span style="color:#f92672">-</span><span style="color:#a6e22e">constant</span> <span style="color:#a6e22e">size</span>) <span style="color:#a6e22e">at</span> .<span style="color:#960050;background-color:#1e0010">\</span><span style="color:#a6e22e">escape</span>.<span style="color:#66d9ef">go</span>:<span style="color:#ae81ff">11</span>:<span style="color:#ae81ff">13</span>
+</span></span></code></pre></div><p>观察这两个函数，两个buf的生存期都只在函数里面，好像都不会逃逸，然而根据分析结果，<code>UnSpecifySizeAllocate()</code>这个函数却产生了栈逃逸，这是为什么呢？<br>
 可以看到，分析提示“non-constant size”/“没有具体大小”，这是因为，<strong>编译器并不能在编译阶段知道size的值,所以没法在函数栈里面分配确切大小的区间给buf，如果编译器遇到这种未确定的大小分配，会把他分配到堆中去。</strong> 这也解释了为什么<code>SpecifySizeAllocate()</code>函数没有产生逃逸。</p>
 </li>
 </ol>
@@ -433,7 +432,7 @@ Pointers serve one purpose, to share a value with a function so the function can
         </article>
         <footer id="footer" class="main-content-wrap">
   <span class="copyrights">
-    &copy; 2022 <a href="https://github.com/pixeldin">pixeldin</a>. All Rights Reserved
+    &copy; 2023 <a href="https://github.com/pixeldin">pixeldin</a>. All Rights Reserved
   </span>
 </footer>
 

@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="generator" content="Hugo 0.80.0 with theme Tranquilpeak 0.4.8-BETA">
+<meta name="generator" content="Hugo 0.110.0 with theme Tranquilpeak 0.4.8-BETA">
 <meta name="author" content="pixelpig">
 <meta name="keywords" content="">
 <meta name="description" content="我们计算机上面跑的每个任务，都是操作系统层面的资源分配，从启动进程到创建线程，在核数固定的情况下，多线程并发地执行。">
@@ -303,85 +303,85 @@
 <p>后面尝试通过列举几个<strong>Go</strong>的简单程序，通过单/多协程处理，比对两者在不同情景的性能差异情况。</p>
 <h5 id="map-reduce">Map-Reduce：</h5>
 <p>这个例子比较简单，我们目标是累加一个等差数列</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">PIXEL_ARRAY</span> []<span style="color:#66d9ef">int</span>
-<span style="color:#75715e">//初始化一个等差数列，后面尝试将等差数列传到单协程/多协程函数进行累加
-</span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">init</span>()  {
-  <span style="color:#66d9ef">for</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">1</span>; <span style="color:#a6e22e">i</span> <span style="color:#f92672">&lt;=</span> <span style="color:#ae81ff">100000</span>; <span style="color:#a6e22e">i</span><span style="color:#f92672">++</span> {
-    <span style="color:#a6e22e">PIXEL_ARRAY</span> = append(<span style="color:#a6e22e">PIXEL_ARRAY</span>, <span style="color:#a6e22e">i</span>)
-  }
-}
-</code></pre></div><p>后面我们用单协程/多协程版本，区分开两个实现方式</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#75715e">//单协程暴力版本
-</span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">SumWithSingle</span>(<span style="color:#a6e22e">arr</span> []<span style="color:#66d9ef">int</span>) <span style="color:#66d9ef">int32</span> {
-  <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">sum</span> <span style="color:#66d9ef">int32</span>
-  <span style="color:#75715e">//遍历累加，相当暴力！
-</span><span style="color:#75715e"></span>  <span style="color:#66d9ef">for</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">0</span>; <span style="color:#a6e22e">i</span> &lt; len(<span style="color:#a6e22e">arr</span>); <span style="color:#a6e22e">i</span><span style="color:#f92672">++</span> {
-    <span style="color:#a6e22e">sum</span> <span style="color:#f92672">+=</span> int32(<span style="color:#a6e22e">arr</span>[<span style="color:#a6e22e">i</span>])
-  }
-  <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">sum</span>
-}
-
-<span style="color:#75715e">//多协程版本，每个协程均等计算自己分配的切片区间， gNum是起多少个协程并发处理
-</span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">SumWithMulti</span>(<span style="color:#a6e22e">arr</span> []<span style="color:#66d9ef">int</span>, <span style="color:#a6e22e">gNum</span> <span style="color:#66d9ef">int</span>) <span style="color:#66d9ef">int32</span> {
-  <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">wg</span> <span style="color:#a6e22e">sync</span>.<span style="color:#a6e22e">WaitGroup</span>
-  <span style="color:#75715e">//用于等待gNum个协程执行完
-</span><span style="color:#75715e"></span>  <span style="color:#a6e22e">wg</span>.<span style="color:#a6e22e">Add</span>(<span style="color:#a6e22e">gNum</span>)
-
-  <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">sum</span> <span style="color:#66d9ef">int32</span>
-  <span style="color:#75715e">//各个任务的平均长度
-</span><span style="color:#75715e"></span>  <span style="color:#a6e22e">div</span> <span style="color:#f92672">:=</span> len(<span style="color:#a6e22e">arr</span>) <span style="color:#f92672">/</span> <span style="color:#a6e22e">gNum</span>
-  
-  <span style="color:#75715e">//注意切割长度需要向上取整，此处非本demo侧重点，为了简单化一律使用整除切开原数组.
-</span><span style="color:#75715e"></span>  <span style="color:#75715e">//div := int(math.Ceil(float64(float64(len(arr)) / float64(gNum))))
-</span><span style="color:#75715e"></span>  
-  <span style="color:#66d9ef">for</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">0</span>; <span style="color:#a6e22e">i</span> &lt; <span style="color:#a6e22e">gNum</span>; <span style="color:#a6e22e">i</span><span style="color:#f92672">++</span> {
-    <span style="color:#a6e22e">Left</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">*</span> <span style="color:#a6e22e">div</span>
-    <span style="color:#a6e22e">Right</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">Left</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">div</span>
-    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">==</span> <span style="color:#a6e22e">gNum</span> {
-      <span style="color:#a6e22e">Right</span> = len(<span style="color:#a6e22e">arr</span>)
-    }
-    <span style="color:#66d9ef">go</span> <span style="color:#66d9ef">func</span>() {
-        <span style="color:#75715e">//每个协程独立的汇总
-</span><span style="color:#75715e"></span>      <span style="color:#a6e22e">ps</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">0</span>
-      <span style="color:#66d9ef">for</span> <span style="color:#a6e22e">_</span>, <span style="color:#a6e22e">value</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">range</span> <span style="color:#a6e22e">arr</span>[<span style="color:#a6e22e">Left</span>:<span style="color:#a6e22e">Right</span>] {
-        <span style="color:#a6e22e">ps</span> <span style="color:#f92672">+=</span> <span style="color:#a6e22e">value</span>
-      }
-      <span style="color:#75715e">//处理完累积到全局变量，由于仅有累加操作,可以用原子加实现互斥, 这里无需加锁.
-</span><span style="color:#75715e"></span>      <span style="color:#a6e22e">atomic</span>.<span style="color:#a6e22e">AddInt32</span>(<span style="color:#f92672">&amp;</span><span style="color:#a6e22e">sum</span>, int32(<span style="color:#a6e22e">ps</span>))
-      <span style="color:#a6e22e">wg</span>.<span style="color:#a6e22e">Done</span>()
-    }()
-  }
-
-  <span style="color:#75715e">//等待各个子协程计算完毕
-</span><span style="color:#75715e"></span>  <span style="color:#a6e22e">wg</span>.<span style="color:#a6e22e">Wait</span>()
-  <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">sum</span>
-}
-</code></pre></div><h4 id="性能分析">性能分析</h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">PIXEL_ARRAY</span> []<span style="color:#66d9ef">int</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">//初始化一个等差数列，后面尝试将等差数列传到单协程/多协程函数进行累加
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">init</span>()  {
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">for</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">1</span>; <span style="color:#a6e22e">i</span> <span style="color:#f92672">&lt;=</span> <span style="color:#ae81ff">100000</span>; <span style="color:#a6e22e">i</span><span style="color:#f92672">++</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">PIXEL_ARRAY</span> = append(<span style="color:#a6e22e">PIXEL_ARRAY</span>, <span style="color:#a6e22e">i</span>)
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>后面我们用单协程/多协程版本，区分开两个实现方式</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#75715e">//单协程暴力版本
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">SumWithSingle</span>(<span style="color:#a6e22e">arr</span> []<span style="color:#66d9ef">int</span>) <span style="color:#66d9ef">int32</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">sum</span> <span style="color:#66d9ef">int32</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">//遍历累加，相当暴力！
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  <span style="color:#66d9ef">for</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">0</span>; <span style="color:#a6e22e">i</span> &lt; len(<span style="color:#a6e22e">arr</span>); <span style="color:#a6e22e">i</span><span style="color:#f92672">++</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">sum</span> <span style="color:#f92672">+=</span> int32(<span style="color:#a6e22e">arr</span>[<span style="color:#a6e22e">i</span>])
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">sum</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">//多协程版本，每个协程均等计算自己分配的切片区间， gNum是起多少个协程并发处理
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">SumWithMulti</span>(<span style="color:#a6e22e">arr</span> []<span style="color:#66d9ef">int</span>, <span style="color:#a6e22e">gNum</span> <span style="color:#66d9ef">int</span>) <span style="color:#66d9ef">int32</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">wg</span> <span style="color:#a6e22e">sync</span>.<span style="color:#a6e22e">WaitGroup</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">//用于等待gNum个协程执行完
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  <span style="color:#a6e22e">wg</span>.<span style="color:#a6e22e">Add</span>(<span style="color:#a6e22e">gNum</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">sum</span> <span style="color:#66d9ef">int32</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">//各个任务的平均长度
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  <span style="color:#a6e22e">div</span> <span style="color:#f92672">:=</span> len(<span style="color:#a6e22e">arr</span>) <span style="color:#f92672">/</span> <span style="color:#a6e22e">gNum</span>
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">//注意切割长度需要向上取整，此处非本demo侧重点，为了简单化一律使用整除切开原数组.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  <span style="color:#75715e">//div := int(math.Ceil(float64(float64(len(arr)) / float64(gNum))))
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">for</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">0</span>; <span style="color:#a6e22e">i</span> &lt; <span style="color:#a6e22e">gNum</span>; <span style="color:#a6e22e">i</span><span style="color:#f92672">++</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">Left</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">*</span> <span style="color:#a6e22e">div</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">Right</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">Left</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">div</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">==</span> <span style="color:#a6e22e">gNum</span> {
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">Right</span> = len(<span style="color:#a6e22e">arr</span>)
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">go</span> <span style="color:#66d9ef">func</span>() {
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">//每个协程独立的汇总
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>      <span style="color:#a6e22e">ps</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">for</span> <span style="color:#a6e22e">_</span>, <span style="color:#a6e22e">value</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">range</span> <span style="color:#a6e22e">arr</span>[<span style="color:#a6e22e">Left</span>:<span style="color:#a6e22e">Right</span>] {
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">ps</span> <span style="color:#f92672">+=</span> <span style="color:#a6e22e">value</span>
+</span></span><span style="display:flex;"><span>      }
+</span></span><span style="display:flex;"><span>      <span style="color:#75715e">//处理完累积到全局变量，由于仅有累加操作,可以用原子加实现互斥, 这里无需加锁.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>      <span style="color:#a6e22e">atomic</span>.<span style="color:#a6e22e">AddInt32</span>(<span style="color:#f92672">&amp;</span><span style="color:#a6e22e">sum</span>, int32(<span style="color:#a6e22e">ps</span>))
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">wg</span>.<span style="color:#a6e22e">Done</span>()
+</span></span><span style="display:flex;"><span>    }()
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">//等待各个子协程计算完毕
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  <span style="color:#a6e22e">wg</span>.<span style="color:#a6e22e">Wait</span>()
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">sum</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h4 id="性能分析">性能分析</h4>
 <p>下面尝试用BenchMark分析性能，输出如下：</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#f92672">import</span> <span style="color:#e6db74">&#34;testing&#34;</span>
-
-<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">PIXEL_ARRAY</span> []<span style="color:#66d9ef">int</span>
-
-<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">init</span>()  {
-  <span style="color:#66d9ef">for</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">1</span>; <span style="color:#a6e22e">i</span> <span style="color:#f92672">&lt;=</span> <span style="color:#ae81ff">100000</span>; <span style="color:#a6e22e">i</span><span style="color:#f92672">++</span> {
-    <span style="color:#a6e22e">PIXEL_ARRAY</span> = append(<span style="color:#a6e22e">PIXEL_ARRAY</span>, <span style="color:#a6e22e">i</span>)
-  }
-}
-
-<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">BenchmarkSumWithSingle</span>(<span style="color:#a6e22e">b</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">testing</span>.<span style="color:#a6e22e">B</span>) {
-  <span style="color:#66d9ef">for</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">0</span>; <span style="color:#a6e22e">i</span> &lt; <span style="color:#a6e22e">b</span>.<span style="color:#a6e22e">N</span>; <span style="color:#a6e22e">i</span><span style="color:#f92672">++</span> {
-    <span style="color:#a6e22e">SumWithSingle</span>(<span style="color:#a6e22e">PIXEL_ARRAY</span>)
-  }
-}
-
-<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">BenchmarkSumWithMulti</span>(<span style="color:#a6e22e">b</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">testing</span>.<span style="color:#a6e22e">B</span>) {
-  <span style="color:#66d9ef">for</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">0</span>; <span style="color:#a6e22e">i</span> &lt; <span style="color:#a6e22e">b</span>.<span style="color:#a6e22e">N</span>; <span style="color:#a6e22e">i</span><span style="color:#f92672">++</span> {
-    <span style="color:#a6e22e">SumWithMulti</span>(<span style="color:#a6e22e">PIXEL_ARRAY</span>, <span style="color:#ae81ff">10</span>)
-  }
-}
-</code></pre></div><p><strong>结果示例：</strong><br>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#e6db74">&#34;testing&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">PIXEL_ARRAY</span> []<span style="color:#66d9ef">int</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">init</span>()  {
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">for</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">1</span>; <span style="color:#a6e22e">i</span> <span style="color:#f92672">&lt;=</span> <span style="color:#ae81ff">100000</span>; <span style="color:#a6e22e">i</span><span style="color:#f92672">++</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">PIXEL_ARRAY</span> = append(<span style="color:#a6e22e">PIXEL_ARRAY</span>, <span style="color:#a6e22e">i</span>)
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">BenchmarkSumWithSingle</span>(<span style="color:#a6e22e">b</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">testing</span>.<span style="color:#a6e22e">B</span>) {
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">for</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">0</span>; <span style="color:#a6e22e">i</span> &lt; <span style="color:#a6e22e">b</span>.<span style="color:#a6e22e">N</span>; <span style="color:#a6e22e">i</span><span style="color:#f92672">++</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">SumWithSingle</span>(<span style="color:#a6e22e">PIXEL_ARRAY</span>)
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">BenchmarkSumWithMulti</span>(<span style="color:#a6e22e">b</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">testing</span>.<span style="color:#a6e22e">B</span>) {
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">for</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">0</span>; <span style="color:#a6e22e">i</span> &lt; <span style="color:#a6e22e">b</span>.<span style="color:#a6e22e">N</span>; <span style="color:#a6e22e">i</span><span style="color:#f92672">++</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">SumWithMulti</span>(<span style="color:#a6e22e">PIXEL_ARRAY</span>, <span style="color:#ae81ff">10</span>)
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p><strong>结果示例：</strong><br>
 在4核电脑上，启动10个协程去并发处理，针对这个例子多协程是优于单协程的，符合预期。</p>
-<pre><code>$ GOGC=off go test -run none -bench . -benchtime 3s
+<pre tabindex="0"><code>$ GOGC=off go test -run none -bench . -benchtime 3s
 goos: windows
 goarch: amd64
 pkg: HelloGo/basic/Multi
@@ -407,20 +407,20 @@ ok      HelloGo/basic/Multi     8.623s
 <p><strong>GO</strong>的P和你的CPU核心数量有关，注意这里并不是真正CPU数量，是++逻辑CPU数量++。查看任务管理器，在4核CPU的情况下，假如说你的机器具备超线程(i7处理器)，每个物理核有两个线程，那么意味着在Go程序里逻辑上有8个可用的处理器，<strong>逻辑CPU</strong>数量应该是8。即上面所提到的<strong>P</strong>。<br>
 我当前机器是(i5处理器)，每个核一个线程，所以下面输出的逻辑CPU(<strong>P</strong>)数量是4，<strong>这代表当启动多个线程的时候，我的机器最多可以支持并行4个系统线程，多出来的线程就是并发了。</strong><br>
 可以通过在你的机器执行下列Go代码，看下逻辑<strong>P</strong>的数量，</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
-
-<span style="color:#f92672">import</span> (
-  <span style="color:#e6db74">&#34;fmt&#34;</span>
-  <span style="color:#e6db74">&#34;runtime&#34;</span>
-)
-
-<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
-    <span style="color:#75715e">// NumCPU returns the number of logical
-</span><span style="color:#75715e"></span>    <span style="color:#75715e">// CPUs usable by the current process.
-</span><span style="color:#75715e"></span>    <span style="color:#75715e">//我的机器输出 4
-</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">runtime</span>.<span style="color:#a6e22e">NumCPU</span>())
-}
-</code></pre></div><p>每一个<strong>P</strong>会分配一个系统线程<strong>M</strong>，相当于说在这个机器的Go程序中，我有4个<strong>系统线程</strong>可以用来执行我的任务，每个都独立与其中一个核，<strong>P</strong>挂钩。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> (
+</span></span><span style="display:flex;"><span>  <span style="color:#e6db74">&#34;fmt&#34;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#e6db74">&#34;runtime&#34;</span>
+</span></span><span style="display:flex;"><span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// NumCPU returns the number of logical
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// CPUs usable by the current process.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">//我的机器输出 4
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">runtime</span>.<span style="color:#a6e22e">NumCPU</span>())
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>每一个<strong>P</strong>会分配一个系统线程<strong>M</strong>，相当于说在这个机器的Go程序中，我有4个<strong>系统线程</strong>可以用来执行我的任务，每个都独立与其中一个核，<strong>P</strong>挂钩。</p>
 <p>M个<strong>Go协程</strong>会分配在N个<strong>系统线程</strong>上，每个要运行的G都必须关联上<strong>P</strong>(逻辑CPU)，程序可以干涉<code>GOMAXPROCS</code>的数量，以控制最多有多少个<strong>P</strong>可以使用。</p>
 <p>下面用图示可能会更加直观：<br>
 <img src="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/scheduler-P-M-G.png" alt="Go全局与本地协程队列.png"></p>
@@ -440,22 +440,22 @@ ok      HelloGo/basic/Multi     8.623s
 </ul>
 <h4 id="程序示例">程序示例：</h4>
 <p>下面展示一个简单而且比较常见的例子，我们通过限制逻辑CPU的个数，尝试干涉Go调度器。</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
-
-    <span style="color:#75715e">//设置最多一个P可以关联上
-</span><span style="color:#75715e"></span>  <span style="color:#a6e22e">runtime</span>.<span style="color:#a6e22e">GOMAXPROCS</span>(<span style="color:#ae81ff">1</span>)
-  <span style="color:#66d9ef">go</span> <span style="color:#66d9ef">func</span>() {
-    <span style="color:#66d9ef">for</span> {
-      <span style="color:#75715e">//保持空转,如果没有其他函数调用,在单个处理器下该协程不会切换
-</span><span style="color:#75715e"></span>      ;
-    }
-  }()
-
-  <span style="color:#75715e">//尝试切换协程
-</span><span style="color:#75715e"></span>  <span style="color:#a6e22e">runtime</span>.<span style="color:#a6e22e">Gosched</span>()
-  println(<span style="color:#e6db74">&#34;main done.&#34;</span>)
-}
-</code></pre></div><p>我们通过<code>runtime.GOMAXPROCS(1)</code>设置本次运行的逻辑CPU个数，代表可用的P只有1，意味着最多只能同时分配给一个协程去执行。如果执行这个程序，由于主协程执行了让步<strong>Gosched()</strong>，获得运行权的的Go协程会得到执行，由于该协程在死循环一直执行空语句，导致程序不会有任何输出，而且主协程得不到运行权，所以这个程序永远不会退出。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">//设置最多一个P可以关联上
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  <span style="color:#a6e22e">runtime</span>.<span style="color:#a6e22e">GOMAXPROCS</span>(<span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">go</span> <span style="color:#66d9ef">func</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> {
+</span></span><span style="display:flex;"><span>      <span style="color:#75715e">//保持空转,如果没有其他函数调用,在单个处理器下该协程不会切换
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>      ;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>  }()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">//尝试切换协程
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  <span style="color:#a6e22e">runtime</span>.<span style="color:#a6e22e">Gosched</span>()
+</span></span><span style="display:flex;"><span>  println(<span style="color:#e6db74">&#34;main done.&#34;</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>我们通过<code>runtime.GOMAXPROCS(1)</code>设置本次运行的逻辑CPU个数，代表可用的P只有1，意味着最多只能同时分配给一个协程去执行。如果执行这个程序，由于主协程执行了让步<strong>Gosched()</strong>，获得运行权的的Go协程会得到执行，由于该协程在死循环一直执行空语句，导致程序不会有任何输出，而且主协程得不到运行权，所以这个程序永远不会退出。</p>
 <p>题外话：注意这里区别于上面的<code>runtime.NumCPU(int)</code>方法，<code>NumCPU()</code>是在启动时候直接调用系统方法，所以和经过<strong>GOMAXPROCS</strong>的设置之后，并不会改变<code>NumCPU()</code>原有的返回值，<code>GOMAXPROCS</code>仅是对本次运行时<strong>P</strong>数量进行限制。</p>
 <h3 id="协程偷窃">协程偷窃</h3>
 <p>从Go调度器角度看，执行的协程任务有点快有的慢，既然我的职责是不能让CPU空闲，那当我有空的时候，我肯定要从别人那里偷一些任务来跑。<br>
@@ -467,7 +467,7 @@ ok      HelloGo/basic/Multi     8.623s
 <li>本地队列：指的是当前上下文<strong>P</strong>关联上的Go协程队列(<strong>LRQ</strong>)，本地队列，在go1.13版本每个本地协程队列的最大值是256，超过256就会放到全局队列里面去。本地队列是可以被其他<strong>P</strong>偷走的，在某些情况下，当有<strong>P</strong>发现本地的<strong>G</strong>队列空了，就会去偷其他<strong>P</strong>的本地队列，每次会从其它<strong>P</strong>的本地队列里面偷走一半的<strong>G</strong>。</li>
 <li>全局队列：在其他情况，当有空闲<strong>P</strong>发现其他<strong>P</strong>的本地队列没有<strong>G</strong>可以偷的情况下，会尝试获取全局队列的<strong>G</strong>去执行。</li>
 </ul>
-<pre><code>runtime.schedule() {
+<pre tabindex="0"><code>runtime.schedule() {
     // only 1/61 of the time, check the global runnable queue for a G.
     // if not found, check the local queue.
     // if not found,
@@ -570,7 +570,7 @@ Ardanlabs素质三连：  <br>
         </article>
         <footer id="footer" class="main-content-wrap">
   <span class="copyrights">
-    &copy; 2022 <a href="https://github.com/pixeldin">pixeldin</a>. All Rights Reserved
+    &copy; 2023 <a href="https://github.com/pixeldin">pixeldin</a>. All Rights Reserved
   </span>
 </footer>
 

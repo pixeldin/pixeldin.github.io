@@ -1,13 +1,10 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
-  
   <url>
     <loc>/en/categories/backend/</loc>
     <lastmod>2022-06-23T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/en/categories/</loc>
     <lastmod>2022-06-23T00:00:00+00:00</lastmod>
     <xhtml:link
@@ -20,14 +17,10 @@
                 hreflang="en"
                 href="/en/categories/"
                 />
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/en/tags/distributed-systems/</loc>
     <lastmod>2022-06-23T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/en/tags/etcd/</loc>
     <lastmod>2022-06-23T00:00:00+00:00</lastmod>
     <xhtml:link
@@ -40,9 +33,7 @@
                 hreflang="en"
                 href="/en/tags/etcd/"
                 />
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/en/categories/go/</loc>
     <lastmod>2022-06-23T00:00:00+00:00</lastmod>
     <xhtml:link
@@ -55,9 +46,7 @@
                 hreflang="en"
                 href="/en/categories/go/"
                 />
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/en/</loc>
     <lastmod>2022-06-23T00:00:00+00:00</lastmod>
     <xhtml:link
@@ -70,9 +59,7 @@
                 hreflang="en"
                 href="/en/"
                 />
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/en/post/</loc>
     <lastmod>2022-06-23T00:00:00+00:00</lastmod>
     <xhtml:link
@@ -85,9 +72,7 @@
                 hreflang="en"
                 href="/en/post/"
                 />
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/en/tags/raft/</loc>
     <lastmod>2022-06-23T00:00:00+00:00</lastmod>
     <xhtml:link
@@ -100,9 +85,7 @@
                 hreflang="en"
                 href="/en/tags/raft/"
                 />
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/en/tags/</loc>
     <lastmod>2022-06-23T00:00:00+00:00</lastmod>
     <xhtml:link
@@ -115,39 +98,25 @@
                 hreflang="en"
                 href="/en/tags/"
                 />
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/en/2022/06/talk-about-etcd-part3-the-communication-protocol-between-client-and-server/</loc>
     <lastmod>2022-06-23T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/en/2022/06/talk-about-etcd-part2-the-raft-consistency-protocol/</loc>
     <lastmod>2022-06-03T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/en/2022/05/talk-about-etcd-part1-hierarchy-overview-with-birds-eye-view/</loc>
     <lastmod>2022-05-17T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/en/categories/cache/</loc>
     <lastmod>2022-04-23T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/en/tags/false-sharing/</loc>
     <lastmod>2022-04-23T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/en/tags/object-pool/</loc>
     <lastmod>2022-04-23T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/en/tags/sync.pool/</loc>
     <lastmod>2022-04-23T00:00:00+00:00</lastmod>
     <xhtml:link
@@ -160,34 +129,22 @@
                 hreflang="en"
                 href="/en/tags/sync.pool/"
                 />
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/en/tags/talk-about-go/</loc>
     <lastmod>2022-04-23T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/en/2022/04/talk-about-go-a-high-performance-pool-for-reusing-object-sync.pool/</loc>
     <lastmod>2022-04-23T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/en/tags/goroutine/</loc>
     <lastmod>2022-03-17T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/en/tags/pprof/</loc>
     <lastmod>2022-03-17T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/en/2022/03/talk-about-go-goroutines-information-and-how-to-prevent-goroutine-leaks/</loc>
     <lastmod>2022-03-17T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/en/tags/circuit-breaker/</loc>
     <lastmod>2022-02-25T00:00:00+00:00</lastmod>
     <xhtml:link
@@ -200,64 +157,40 @@
                 hreflang="en"
                 href="/en/tags/circuit-breaker/"
                 />
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/en/categories/middleware/</loc>
     <lastmod>2022-02-25T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/en/2022/02/talk-about-go-a-simple-implement-of-circuit-breaker/</loc>
     <lastmod>2022-02-25T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/en/categories/network/</loc>
     <lastmod>2022-02-04T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/en/2022/02/talk-about-go-network-programming-about-grouping-and-unpacking-in-tcp-flow/</loc>
     <lastmod>2022-02-04T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/en/categories/tcp/</loc>
     <lastmod>2022-02-04T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/en/tags/ha/</loc>
     <lastmod>2021-12-23T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/en/tags/microservice/</loc>
     <lastmod>2021-12-23T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/en/categories/microservice/</loc>
     <lastmod>2021-12-23T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/en/tags/process-communication/</loc>
     <lastmod>2021-12-23T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/en/2021/12/talk-about-go-the-gracefully-handling-of-service-restart/</loc>
     <lastmod>2021-12-23T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/en/2021/11/talk-about-go-the-gracefully-handling-of-service-shutdown/</loc>
     <lastmod>2021-11-02T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/en/tags/gin/</loc>
     <lastmod>2021-10-15T00:00:00+00:00</lastmod>
     <xhtml:link
@@ -270,44 +203,28 @@
                 hreflang="en"
                 href="/en/tags/gin/"
                 />
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/en/tags/interceptor/</loc>
     <lastmod>2021-10-15T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/en/2021/10/talk-about-go-how-to-custom-build-a-gateway-interceptor-in-gin-framwork/</loc>
     <lastmod>2021-10-15T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/en/2021/08/before-talking-about-the-gin-web-framework-lets-take-a-look-at-httprouter/</loc>
     <lastmod>2021-08-16T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/en/2021/05/talk-about-go-network-programming-tcp-connection-management/</loc>
+  </url><url>
+    <loc>/en/2021/05/talk-about-go-network-programming--tcp-connection-management/</loc>
     <lastmod>2021-05-16T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/en/2021/05/talk-about-go-network-programming-tcp-communication/</loc>
+  </url><url>
+    <loc>/en/2021/05/talk-about-go-network-programming--tcp-communication/</loc>
     <lastmod>2021-05-15T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/en/categories/os/</loc>
     <lastmod>2020-10-18T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/en/2020/10/talk-about-go-the-operating-systems-thread-scheduling-and-goroutines/</loc>
     <lastmod>2020-10-18T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/en/archives/</loc>
     <xhtml:link
                 rel="alternate"
@@ -320,5 +237,4 @@
                 href="/en/archives/"
                 />
   </url>
-  
 </urlset>

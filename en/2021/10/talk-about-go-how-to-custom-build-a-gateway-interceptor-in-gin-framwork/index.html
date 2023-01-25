@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="generator" content="Hugo 0.80.0 with theme Tranquilpeak 0.4.8-BETA">
+<meta name="generator" content="Hugo 0.110.0 with theme Tranquilpeak 0.4.8-BETA">
 <meta name="author" content="pixelpig">
 <meta name="keywords" content="">
 <meta name="description" content="Middleware often used as a level &ldquo;security check&rdquo;, for core components such as request header/request body verification, caching, and current limiting.">
@@ -276,27 +276,27 @@
 <li>流程概述<br>
 Register Handler → ListenAndServer → for pool Accept → execute handler → call <code>ServerHTTP()</code> func internal</li>
 </ul>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
-	<span style="color:#a6e22e">hf</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">func</span>(<span style="color:#a6e22e">w</span> <span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">ResponseWriter</span>, <span style="color:#a6e22e">r</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">Request</span>) {
-		<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Fprintf</span>(<span style="color:#a6e22e">w</span>, <span style="color:#e6db74">&#34;Hello there, from %q&#34;</span>, <span style="color:#a6e22e">html</span>.<span style="color:#a6e22e">EscapeString</span>(<span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">URL</span>.<span style="color:#a6e22e">Path</span>))
-	}
-
-	<span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">HandleFunc</span>(<span style="color:#e6db74">&#34;/bar&#34;</span>, <span style="color:#a6e22e">hf</span>)
-	<span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Fatal</span>(<span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">ListenAndServe</span>(<span style="color:#e6db74">&#34;:8080&#34;</span>, <span style="color:#66d9ef">nil</span>))
-}
-</code></pre></div><p>Now let&rsquo;s go to the source code and see what it does: <br>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">hf</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">func</span>(<span style="color:#a6e22e">w</span> <span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">ResponseWriter</span>, <span style="color:#a6e22e">r</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">Request</span>) {
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Fprintf</span>(<span style="color:#a6e22e">w</span>, <span style="color:#e6db74">&#34;Hello there, from %q&#34;</span>, <span style="color:#a6e22e">html</span>.<span style="color:#a6e22e">EscapeString</span>(<span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">URL</span>.<span style="color:#a6e22e">Path</span>))
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">HandleFunc</span>(<span style="color:#e6db74">&#34;/bar&#34;</span>, <span style="color:#a6e22e">hf</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Fatal</span>(<span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">ListenAndServe</span>(<span style="color:#e6db74">&#34;:8080&#34;</span>, <span style="color:#66d9ef">nil</span>))
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Now let&rsquo;s go to the source code and see what it does: <br>
 First, <code>HandleFunc()</code>use the <code>ServeMux</code>struct, there is a core inside which is <code>muxEntry</code> as a mapping between handler and url request path.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">ServeMux</span> <span style="color:#66d9ef">struct</span> {
-	<span style="color:#a6e22e">mu</span>    <span style="color:#a6e22e">sync</span>.<span style="color:#a6e22e">RWMutex</span>
-	<span style="color:#a6e22e">m</span>     <span style="color:#66d9ef">map</span>[<span style="color:#66d9ef">string</span>]<span style="color:#a6e22e">muxEntry</span> <span style="color:#75715e">// the Handler registration dictionary is used to return the corresponding handler function
-</span><span style="color:#75715e"></span>	<span style="color:#f92672">...</span>
-}
-<span style="color:#75715e">// the mapping of handler and url
-</span><span style="color:#75715e"></span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">muxEntry</span> <span style="color:#66d9ef">struct</span> {
-	<span style="color:#a6e22e">h</span>       <span style="color:#a6e22e">Handler</span>
-	<span style="color:#a6e22e">pattern</span> <span style="color:#66d9ef">string</span>
-}
-</code></pre></div><p>When the program starts, the main function above binds the <code>hf</code> and &ldquo;/bar&rdquo; paths relative to each other.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">ServeMux</span> <span style="color:#66d9ef">struct</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">mu</span>    <span style="color:#a6e22e">sync</span>.<span style="color:#a6e22e">RWMutex</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">m</span>     <span style="color:#66d9ef">map</span>[<span style="color:#66d9ef">string</span>]<span style="color:#a6e22e">muxEntry</span> <span style="color:#75715e">// the Handler registration dictionary is used to return the corresponding handler function
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#f92672">...</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// the mapping of handler and url
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">muxEntry</span> <span style="color:#66d9ef">struct</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">h</span>       <span style="color:#a6e22e">Handler</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">pattern</span> <span style="color:#66d9ef">string</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>When the program starts, the main function above binds the <code>hf</code> and &ldquo;/bar&rdquo; paths relative to each other.</p>
 <p>Next, there is a simple implementation of multiplexing. We know that the cost of creating coroutines in Go is not high, and usually a request cycle does not last too long.
 As you can see in the source code, each time Go accepts an HTTP connection, it is essentially a new Go coroutine for processing. The entire flowchart is as follows:
 <img src="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/blog/go-gin/http-req-flow.png" alt="HTTP request flow"></p>
@@ -314,46 +314,46 @@ If you are interested, you can refer to my previous blog post before:
 <h3 id="header-interrupted">Header Interrupted</h3>
 <p>We design a Header that must have a request entry with our desired value. If the required Header is lost, subsequent calls will not be made and the http request will be interrupted.</p>
 <p><strong>Code Example：</strong></p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">init</span>() {
-	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">os</span>.<span style="color:#a6e22e">Setenv</span>(<span style="color:#e6db74">&#34;PORT&#34;</span>, <span style="color:#e6db74">&#34;8099&#34;</span>); <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
-		panic(<span style="color:#a6e22e">err</span>)
-	}
-}
-
-<span style="color:#66d9ef">var</span> (
-	<span style="color:#a6e22e">H_KEY</span>    = <span style="color:#e6db74">&#34;h-key&#34;</span>  <span style="color:#75715e">//business header key
-</span><span style="color:#75715e"></span>)
-
-<span style="color:#75715e">// Declare a simple handler for pingpong as a request accepting behavior
-</span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">helloFunc</span>(<span style="color:#a6e22e">c</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">gin</span>.<span style="color:#a6e22e">Context</span>) {
-	<span style="color:#66d9ef">const</span> <span style="color:#a6e22e">TAG</span> = <span style="color:#e6db74">&#34;PingPong&#34;</span>
-	<span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">JSON</span>(<span style="color:#a6e22e">comdel</span>.<span style="color:#a6e22e">Success</span>, <span style="color:#a6e22e">comdel</span>.<span style="color:#a6e22e">SimpleResponse</span>(<span style="color:#ae81ff">200</span>, <span style="color:#a6e22e">TAG</span>))
-	<span style="color:#66d9ef">return</span>
-}
-
-<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
-	<span style="color:#a6e22e">r</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">gin</span>.<span style="color:#a6e22e">Default</span>()
-	<span style="color:#75715e">// passing the header checker function as a barrier
-</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">POST</span>(<span style="color:#e6db74">&#34;/hello-with-header&#34;</span>, <span style="color:#a6e22e">middle</span>.<span style="color:#a6e22e">HeaderCheck</span>(<span style="color:#a6e22e">H_KEY</span>), <span style="color:#a6e22e">helloFunc</span>)
-	<span style="color:#a6e22e">e</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">Run</span>()
-	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;Server stop with err: %v\n&#34;</span>, <span style="color:#a6e22e">e</span>)
-}
-</code></pre></div><p>The routing relationship from <code>/hello-with-header</code> to <code>middle.HeaderCheck(H_KEY)</code> is registered above, which is equivalent to using the function <code>HeaderCheck</code> as <code>helloFunc() </code>&rsquo;s upstream interceptor.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">init</span>() {
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">os</span>.<span style="color:#a6e22e">Setenv</span>(<span style="color:#e6db74">&#34;PORT&#34;</span>, <span style="color:#e6db74">&#34;8099&#34;</span>); <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>		panic(<span style="color:#a6e22e">err</span>)
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">var</span> (
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">H_KEY</span>    = <span style="color:#e6db74">&#34;h-key&#34;</span>  <span style="color:#75715e">//business header key
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// Declare a simple handler for pingpong as a request accepting behavior
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">helloFunc</span>(<span style="color:#a6e22e">c</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">gin</span>.<span style="color:#a6e22e">Context</span>) {
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">const</span> <span style="color:#a6e22e">TAG</span> = <span style="color:#e6db74">&#34;PingPong&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">JSON</span>(<span style="color:#a6e22e">comdel</span>.<span style="color:#a6e22e">Success</span>, <span style="color:#a6e22e">comdel</span>.<span style="color:#a6e22e">SimpleResponse</span>(<span style="color:#ae81ff">200</span>, <span style="color:#a6e22e">TAG</span>))
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">r</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">gin</span>.<span style="color:#a6e22e">Default</span>()
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// passing the header checker function as a barrier
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">POST</span>(<span style="color:#e6db74">&#34;/hello-with-header&#34;</span>, <span style="color:#a6e22e">middle</span>.<span style="color:#a6e22e">HeaderCheck</span>(<span style="color:#a6e22e">H_KEY</span>), <span style="color:#a6e22e">helloFunc</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">e</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">Run</span>()
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;Server stop with err: %v\n&#34;</span>, <span style="color:#a6e22e">e</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>The routing relationship from <code>/hello-with-header</code> to <code>middle.HeaderCheck(H_KEY)</code> is registered above, which is equivalent to using the function <code>HeaderCheck</code> as <code>helloFunc() </code>&rsquo;s upstream interceptor.</p>
 <p>Then we look at the specific code of the middleware:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">HeaderCheck</span>(<span style="color:#a6e22e">key</span> <span style="color:#66d9ef">string</span>) <span style="color:#66d9ef">func</span>(<span style="color:#a6e22e">c</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">gin</span>.<span style="color:#a6e22e">Context</span>) {
-	<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">func</span>(<span style="color:#a6e22e">c</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">gin</span>.<span style="color:#a6e22e">Context</span>) {
-		<span style="color:#a6e22e">kh</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">GetHeader</span>(<span style="color:#a6e22e">key</span>)
-		<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">kh</span> <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;&#34;</span> {			
-			<span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">JSON</span>(<span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">StatusOK</span>, <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">comdel</span>.<span style="color:#a6e22e">Response</span>{<span style="color:#a6e22e">Code</span>: <span style="color:#a6e22e">comdel</span>.<span style="color:#a6e22e">Unknown</span>, <span style="color:#a6e22e">Msg</span>: <span style="color:#e6db74">&#34;lacking necessary header&#34;</span>})
-			<span style="color:#75715e">// illegal request, terminate the current process
-</span><span style="color:#75715e"></span>			<span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">Abort</span>()
-			<span style="color:#66d9ef">return</span>
-		}
-		<span style="color:#75715e">// normal request, and the execution chain is called down
-</span><span style="color:#75715e"></span>		<span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">Next</span>()
-	}
-}
-</code></pre></div><p><strong>Output：</strong>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">HeaderCheck</span>(<span style="color:#a6e22e">key</span> <span style="color:#66d9ef">string</span>) <span style="color:#66d9ef">func</span>(<span style="color:#a6e22e">c</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">gin</span>.<span style="color:#a6e22e">Context</span>) {
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">func</span>(<span style="color:#a6e22e">c</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">gin</span>.<span style="color:#a6e22e">Context</span>) {
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">kh</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">GetHeader</span>(<span style="color:#a6e22e">key</span>)
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">kh</span> <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;&#34;</span> {			
+</span></span><span style="display:flex;"><span>			<span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">JSON</span>(<span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">StatusOK</span>, <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">comdel</span>.<span style="color:#a6e22e">Response</span>{<span style="color:#a6e22e">Code</span>: <span style="color:#a6e22e">comdel</span>.<span style="color:#a6e22e">Unknown</span>, <span style="color:#a6e22e">Msg</span>: <span style="color:#e6db74">&#34;lacking necessary header&#34;</span>})
+</span></span><span style="display:flex;"><span>			<span style="color:#75715e">// illegal request, terminate the current process
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>			<span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">Abort</span>()
+</span></span><span style="display:flex;"><span>			<span style="color:#66d9ef">return</span>
+</span></span><span style="display:flex;"><span>		}
+</span></span><span style="display:flex;"><span>		<span style="color:#75715e">// normal request, and the execution chain is called down
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>		<span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">Next</span>()
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p><strong>Output：</strong>
 You can see that <code>Header</code> is missing the key we expected, so it was intercepted by the middleware.
 <img src="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/blog/go-gin/mid-lack-header.png" alt="gin-post-man-demo"></p>
 <p>So in theory, you can do any logic you want to verify in the middleware. Let&rsquo;s organize a body verification middleware. The function is:<br>
@@ -366,53 +366,53 @@ Accept any target type structure, check it against the target type when the HTTP
 <li>Recover the original structure and pass in the <code>gin</code> built-in verification function <code>ShouldBindBodyWith()</code></li>
 </ol>
 <p>Let&rsquo;s get out hands dirty, now write a runtime body structure detection, pass in the structure of the expected target type, and verify the fields</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#75715e">// Construct return error format corresponding
-</span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">NewBindFailedResponse</span>(<span style="color:#a6e22e">tag</span> <span style="color:#66d9ef">string</span>) <span style="color:#f92672">*</span><span style="color:#a6e22e">Response</span> {
-	<span style="color:#66d9ef">return</span> <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">Response</span>{<span style="color:#a6e22e">Code</span>: <span style="color:#a6e22e">WrongArgs</span>, <span style="color:#a6e22e">Msg</span>: <span style="color:#e6db74">&#34;wrong argument&#34;</span>, <span style="color:#a6e22e">Tag</span>: <span style="color:#a6e22e">tag</span>}
-}
-
-<span style="color:#75715e">// reqVal represents a specific struct type
-</span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">ReqCheck</span>(<span style="color:#a6e22e">reqVal</span> <span style="color:#66d9ef">interface</span>{}) <span style="color:#66d9ef">func</span>(<span style="color:#a6e22e">ctx</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">gin</span>.<span style="color:#a6e22e">Context</span>) {
-	<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">reqType</span> <span style="color:#a6e22e">reflect</span>.<span style="color:#a6e22e">Type</span> = <span style="color:#66d9ef">nil</span>
-	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">reqVal</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
-	    <span style="color:#75715e">// restore from interface{}, extract the original value type
-</span><span style="color:#75715e"></span>		<span style="color:#a6e22e">value</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">reflect</span>.<span style="color:#a6e22e">Indirect</span>(<span style="color:#a6e22e">reflect</span>.<span style="color:#a6e22e">ValueOf</span>(<span style="color:#a6e22e">reqVal</span>))
-		<span style="color:#75715e">// get the validation body primitive type at runtime
-</span><span style="color:#75715e"></span>		<span style="color:#a6e22e">reqType</span> = <span style="color:#a6e22e">value</span>.<span style="color:#a6e22e">Type</span>()
-	}
-
-	<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">func</span>(<span style="color:#a6e22e">c</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">gin</span>.<span style="color:#a6e22e">Context</span>) {
-		<span style="color:#a6e22e">tag</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">Request</span>.<span style="color:#a6e22e">RequestURI</span>
-
-		<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">req</span> <span style="color:#66d9ef">interface</span>{} = <span style="color:#66d9ef">nil</span>
-		<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">reqType</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
-		    <span style="color:#75715e">// primitive type
-</span><span style="color:#75715e"></span>			<span style="color:#a6e22e">req</span> = <span style="color:#a6e22e">reflect</span>.<span style="color:#a6e22e">New</span>(<span style="color:#a6e22e">reqType</span>).<span style="color:#a6e22e">Interface</span>()
-			<span style="color:#75715e">// primitive type check
-</span><span style="color:#75715e"></span>			<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">ShouldBindBodyWith</span>(<span style="color:#a6e22e">req</span>, <span style="color:#a6e22e">binding</span>.<span style="color:#a6e22e">JSON</span>); <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
-				<span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">JSON</span>(<span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">StatusOK</span>, <span style="color:#a6e22e">NewBindFailedResponse</span>(<span style="color:#a6e22e">tag</span>))
-				<span style="color:#75715e">// bindBody err, terminate the execution chain
-</span><span style="color:#75715e"></span>				<span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">Abort</span>()
-				<span style="color:#66d9ef">return</span>
-			}
-		}
-		<span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">Next</span>()
-	}
-}
-</code></pre></div><p><strong>Mock struct:</strong></p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#75715e">// declare the request parameter structure, the id must be passed
-</span><span style="color:#75715e"></span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">PingReq</span> <span style="color:#66d9ef">struct</span> {
-	<span style="color:#a6e22e">Name</span> <span style="color:#66d9ef">string</span> <span style="color:#e6db74">`json:&#34;name&#34;`</span>
-	<span style="color:#75715e">// tag required
-</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">Id</span>   <span style="color:#66d9ef">string</span> <span style="color:#e6db74">`json:&#34;id&#34; binding:&#34;required&#34;`</span>
-}
-
-<span style="color:#75715e">/*
-</span><span style="color:#75715e">    Before routing/hello-with-req helloFunc() processing logic,
-</span><span style="color:#75715e">    Inject ReqCheck to detect request body interception module
-</span><span style="color:#75715e">*/</span>
-<span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">POST</span>(<span style="color:#e6db74">&#34;/hello-with-req&#34;</span>, <span style="color:#a6e22e">middle</span>.<span style="color:#a6e22e">ReqCheck</span>(<span style="color:#a6e22e">bizmod</span>.<span style="color:#a6e22e">PingReq</span>{}), <span style="color:#a6e22e">helloFunc</span>)
-</code></pre></div><p><strong>Request example:</strong><br>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#75715e">// Construct return error format corresponding
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">NewBindFailedResponse</span>(<span style="color:#a6e22e">tag</span> <span style="color:#66d9ef">string</span>) <span style="color:#f92672">*</span><span style="color:#a6e22e">Response</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">Response</span>{<span style="color:#a6e22e">Code</span>: <span style="color:#a6e22e">WrongArgs</span>, <span style="color:#a6e22e">Msg</span>: <span style="color:#e6db74">&#34;wrong argument&#34;</span>, <span style="color:#a6e22e">Tag</span>: <span style="color:#a6e22e">tag</span>}
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// reqVal represents a specific struct type
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">ReqCheck</span>(<span style="color:#a6e22e">reqVal</span> <span style="color:#66d9ef">interface</span>{}) <span style="color:#66d9ef">func</span>(<span style="color:#a6e22e">ctx</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">gin</span>.<span style="color:#a6e22e">Context</span>) {
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">reqType</span> <span style="color:#a6e22e">reflect</span>.<span style="color:#a6e22e">Type</span> = <span style="color:#66d9ef">nil</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">reqVal</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>	    <span style="color:#75715e">// restore from interface{}, extract the original value type
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>		<span style="color:#a6e22e">value</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">reflect</span>.<span style="color:#a6e22e">Indirect</span>(<span style="color:#a6e22e">reflect</span>.<span style="color:#a6e22e">ValueOf</span>(<span style="color:#a6e22e">reqVal</span>))
+</span></span><span style="display:flex;"><span>		<span style="color:#75715e">// get the validation body primitive type at runtime
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>		<span style="color:#a6e22e">reqType</span> = <span style="color:#a6e22e">value</span>.<span style="color:#a6e22e">Type</span>()
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">func</span>(<span style="color:#a6e22e">c</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">gin</span>.<span style="color:#a6e22e">Context</span>) {
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">tag</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">Request</span>.<span style="color:#a6e22e">RequestURI</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">req</span> <span style="color:#66d9ef">interface</span>{} = <span style="color:#66d9ef">nil</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">reqType</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>		    <span style="color:#75715e">// primitive type
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>			<span style="color:#a6e22e">req</span> = <span style="color:#a6e22e">reflect</span>.<span style="color:#a6e22e">New</span>(<span style="color:#a6e22e">reqType</span>).<span style="color:#a6e22e">Interface</span>()
+</span></span><span style="display:flex;"><span>			<span style="color:#75715e">// primitive type check
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>			<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">ShouldBindBodyWith</span>(<span style="color:#a6e22e">req</span>, <span style="color:#a6e22e">binding</span>.<span style="color:#a6e22e">JSON</span>); <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>				<span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">JSON</span>(<span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">StatusOK</span>, <span style="color:#a6e22e">NewBindFailedResponse</span>(<span style="color:#a6e22e">tag</span>))
+</span></span><span style="display:flex;"><span>				<span style="color:#75715e">// bindBody err, terminate the execution chain
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>				<span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">Abort</span>()
+</span></span><span style="display:flex;"><span>				<span style="color:#66d9ef">return</span>
+</span></span><span style="display:flex;"><span>			}
+</span></span><span style="display:flex;"><span>		}
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">Next</span>()
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p><strong>Mock struct:</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#75715e">// declare the request parameter structure, the id must be passed
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">PingReq</span> <span style="color:#66d9ef">struct</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">Name</span> <span style="color:#66d9ef">string</span> <span style="color:#e6db74">`json:&#34;name&#34;`</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// tag required
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">Id</span>   <span style="color:#66d9ef">string</span> <span style="color:#e6db74">`json:&#34;id&#34; binding:&#34;required&#34;`</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">/*
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">    Before routing/hello-with-req helloFunc() processing logic,
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">    Inject ReqCheck to detect request body interception module
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">*/</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">POST</span>(<span style="color:#e6db74">&#34;/hello-with-req&#34;</span>, <span style="color:#a6e22e">middle</span>.<span style="color:#a6e22e">ReqCheck</span>(<span style="color:#a6e22e">bizmod</span>.<span style="color:#a6e22e">PingReq</span>{}), <span style="color:#a6e22e">helloFunc</span>)
+</span></span></code></pre></div><p><strong>Request example:</strong><br>
 Legal parameters by convention:<br>
 <img src="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/blog/go-gin/mid-req-check-0.png" alt="Legal parameters"></p>
 <p>Incoming convention violation missing id parameter:<br>
@@ -494,7 +494,7 @@ Both branches of the program are in line with our expectations, so the middlewar
         </article>
         <footer id="footer" class="main-content-wrap">
   <span class="copyrights">
-    &copy; 2022 <a href="https://github.com/pixeldin">pixeldin</a>. All Rights Reserved
+    &copy; 2023 <a href="https://github.com/pixeldin">pixeldin</a>. All Rights Reserved
   </span>
 </footer>
 

@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="generator" content="Hugo 0.80.0 with theme Tranquilpeak 0.4.8-BETA">
+<meta name="generator" content="Hugo 0.110.0 with theme Tranquilpeak 0.4.8-BETA">
 <meta name="author" content="pixelpig">
 <meta name="keywords" content="">
 <meta name="description" content="middleware，常常用于作为请求头/请求体校验、缓存、限流等核心组件的关卡&quot;安检&quot;。">
@@ -266,27 +266,27 @@
 <li>流程概述<br>
 注册Handler → ListenAndServer → for轮询Accept → 执行处理 → 调用内部实现体的ServerHTTP()函数</li>
 </ul>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
-	<span style="color:#a6e22e">hf</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">func</span>(<span style="color:#a6e22e">w</span> <span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">ResponseWriter</span>, <span style="color:#a6e22e">r</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">Request</span>) {
-		<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Fprintf</span>(<span style="color:#a6e22e">w</span>, <span style="color:#e6db74">&#34;Hello there, from %q&#34;</span>, <span style="color:#a6e22e">html</span>.<span style="color:#a6e22e">EscapeString</span>(<span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">URL</span>.<span style="color:#a6e22e">Path</span>))
-	}
-
-	<span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">HandleFunc</span>(<span style="color:#e6db74">&#34;/bar&#34;</span>, <span style="color:#a6e22e">hf</span>)
-	<span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Fatal</span>(<span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">ListenAndServe</span>(<span style="color:#e6db74">&#34;:8080&#34;</span>, <span style="color:#66d9ef">nil</span>))
-}
-</code></pre></div><p>下面我们进入源码，看下其中做了什么：<br>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">hf</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">func</span>(<span style="color:#a6e22e">w</span> <span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">ResponseWriter</span>, <span style="color:#a6e22e">r</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">Request</span>) {
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Fprintf</span>(<span style="color:#a6e22e">w</span>, <span style="color:#e6db74">&#34;Hello there, from %q&#34;</span>, <span style="color:#a6e22e">html</span>.<span style="color:#a6e22e">EscapeString</span>(<span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">URL</span>.<span style="color:#a6e22e">Path</span>))
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">HandleFunc</span>(<span style="color:#e6db74">&#34;/bar&#34;</span>, <span style="color:#a6e22e">hf</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Fatal</span>(<span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">ListenAndServe</span>(<span style="color:#e6db74">&#34;:8080&#34;</span>, <span style="color:#66d9ef">nil</span>))
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>下面我们进入源码，看下其中做了什么：<br>
 首先，<code>HandleFunc()</code>底层封装了一个叫做<code>ServeMux</code>的结构体，内部有一个核心是<code>muxEntry</code>作为handler与url请求路径的映射。</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">ServeMux</span> <span style="color:#66d9ef">struct</span> {
-	<span style="color:#a6e22e">mu</span>    <span style="color:#a6e22e">sync</span>.<span style="color:#a6e22e">RWMutex</span>
-	<span style="color:#a6e22e">m</span>     <span style="color:#66d9ef">map</span>[<span style="color:#66d9ef">string</span>]<span style="color:#a6e22e">muxEntry</span> <span style="color:#75715e">// Handler注册字典用于返回对应的处理函数
-</span><span style="color:#75715e"></span>	<span style="color:#f92672">...</span>
-}
-<span style="color:#75715e">// handler与定位url的映射
-</span><span style="color:#75715e"></span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">muxEntry</span> <span style="color:#66d9ef">struct</span> {
-	<span style="color:#a6e22e">h</span>       <span style="color:#a6e22e">Handler</span>
-	<span style="color:#a6e22e">pattern</span> <span style="color:#66d9ef">string</span>
-}
-</code></pre></div><p>当程序启动，上面的main函数相对于把hf和&quot;/bar&quot;这个路径绑在一起。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">ServeMux</span> <span style="color:#66d9ef">struct</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">mu</span>    <span style="color:#a6e22e">sync</span>.<span style="color:#a6e22e">RWMutex</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">m</span>     <span style="color:#66d9ef">map</span>[<span style="color:#66d9ef">string</span>]<span style="color:#a6e22e">muxEntry</span> <span style="color:#75715e">// Handler注册字典用于返回对应的处理函数
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#f92672">...</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// handler与定位url的映射
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">muxEntry</span> <span style="color:#66d9ef">struct</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">h</span>       <span style="color:#a6e22e">Handler</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">pattern</span> <span style="color:#66d9ef">string</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>当程序启动，上面的main函数相对于把hf和&quot;/bar&quot;这个路径绑在一起。</p>
 <p>接着，就是多路复用的简单实现，我们知道在Go里创建协程的成本其实不高，而且通常一个请求周期不会持续太久。<br>
 源码中可以看到，Go每次接受一个HTTP连接本质上就是new一个Go协程进行处理，整个流程图如下：
 <img src="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/blog/go-gin/http-req-flow.png" alt="HTTP request flow"></p>
@@ -305,50 +305,50 @@
 <h3 id="header拦截器">Header拦截器</h3>
 <p>我们设计一个Header必须要有我们期望值的请求入口，如果丢失所需Header则不进行后续调用，中断http请求。</p>
 <p><strong>用法模板：</strong></p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">init</span>() {
-	<span style="color:#75715e">// 设置gin启动默认端口
-</span><span style="color:#75715e"></span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">os</span>.<span style="color:#a6e22e">Setenv</span>(<span style="color:#e6db74">&#34;PORT&#34;</span>, <span style="color:#e6db74">&#34;8099&#34;</span>); <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
-		panic(<span style="color:#a6e22e">err</span>)
-	}
-}
-
-<span style="color:#66d9ef">var</span> (
-	<span style="color:#a6e22e">H_KEY</span>    = <span style="color:#e6db74">&#34;h-key&#34;</span>  <span style="color:#75715e">//业务header key
-</span><span style="color:#75715e"></span>)
-
-<span style="color:#75715e">// 声明一个pingpong的简单handler，作为请求接受行为
-</span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">helloFunc</span>(<span style="color:#a6e22e">c</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">gin</span>.<span style="color:#a6e22e">Context</span>) {
-	<span style="color:#66d9ef">const</span> <span style="color:#a6e22e">TAG</span> = <span style="color:#e6db74">&#34;PingPong&#34;</span>
-	<span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">JSON</span>(<span style="color:#a6e22e">comdel</span>.<span style="color:#a6e22e">Success</span>, <span style="color:#a6e22e">comdel</span>.<span style="color:#a6e22e">SimpleResponse</span>(<span style="color:#ae81ff">200</span>, <span style="color:#a6e22e">TAG</span>))
-	<span style="color:#66d9ef">return</span>
-}
-
-<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
-    <span style="color:#75715e">// 创建gin实例
-</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">r</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">gin</span>.<span style="color:#a6e22e">Default</span>()
-	<span style="color:#75715e">// 校验header
-</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">POST</span>(<span style="color:#e6db74">&#34;/hello-with-header&#34;</span>, <span style="color:#a6e22e">middle</span>.<span style="color:#a6e22e">HeaderCheck</span>(<span style="color:#a6e22e">H_KEY</span>), <span style="color:#a6e22e">helloFunc</span>)
-	<span style="color:#a6e22e">e</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">Run</span>()
-	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;Server stop with err: %v\n&#34;</span>, <span style="color:#a6e22e">e</span>)
-}
-</code></pre></div><p>上面注册了<code>/hello-with-header</code>到<code>middle.HeaderCheck(H_KEY)</code>的路由关系，相当于把函数<code>HeaderCheck</code>作为<code>helloFunc()</code>的上游拦截器。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">init</span>() {
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// 设置gin启动默认端口
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">os</span>.<span style="color:#a6e22e">Setenv</span>(<span style="color:#e6db74">&#34;PORT&#34;</span>, <span style="color:#e6db74">&#34;8099&#34;</span>); <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>		panic(<span style="color:#a6e22e">err</span>)
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">var</span> (
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">H_KEY</span>    = <span style="color:#e6db74">&#34;h-key&#34;</span>  <span style="color:#75715e">//业务header key
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// 声明一个pingpong的简单handler，作为请求接受行为
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">helloFunc</span>(<span style="color:#a6e22e">c</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">gin</span>.<span style="color:#a6e22e">Context</span>) {
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">const</span> <span style="color:#a6e22e">TAG</span> = <span style="color:#e6db74">&#34;PingPong&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">JSON</span>(<span style="color:#a6e22e">comdel</span>.<span style="color:#a6e22e">Success</span>, <span style="color:#a6e22e">comdel</span>.<span style="color:#a6e22e">SimpleResponse</span>(<span style="color:#ae81ff">200</span>, <span style="color:#a6e22e">TAG</span>))
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 创建gin实例
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">r</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">gin</span>.<span style="color:#a6e22e">Default</span>()
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// 校验header
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">POST</span>(<span style="color:#e6db74">&#34;/hello-with-header&#34;</span>, <span style="color:#a6e22e">middle</span>.<span style="color:#a6e22e">HeaderCheck</span>(<span style="color:#a6e22e">H_KEY</span>), <span style="color:#a6e22e">helloFunc</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">e</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">Run</span>()
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;Server stop with err: %v\n&#34;</span>, <span style="color:#a6e22e">e</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>上面注册了<code>/hello-with-header</code>到<code>middle.HeaderCheck(H_KEY)</code>的路由关系，相当于把函数<code>HeaderCheck</code>作为<code>helloFunc()</code>的上游拦截器。</p>
 <p>接着看下中间件的具体代码：</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">HeaderCheck</span>(<span style="color:#a6e22e">key</span> <span style="color:#66d9ef">string</span>) <span style="color:#66d9ef">func</span>(<span style="color:#a6e22e">c</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">gin</span>.<span style="color:#a6e22e">Context</span>) {
-	<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">func</span>(<span style="color:#a6e22e">c</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">gin</span>.<span style="color:#a6e22e">Context</span>) {
-		<span style="color:#75715e">// 获取header的值
-</span><span style="color:#75715e"></span>		<span style="color:#a6e22e">kh</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">GetHeader</span>(<span style="color:#a6e22e">key</span>)
-		<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">kh</span> <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;&#34;</span> {
-			<span style="color:#75715e">// header缺失
-</span><span style="color:#75715e"></span>			<span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">JSON</span>(<span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">StatusOK</span>, <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">comdel</span>.<span style="color:#a6e22e">Response</span>{<span style="color:#a6e22e">Code</span>: <span style="color:#a6e22e">comdel</span>.<span style="color:#a6e22e">Unknown</span>, <span style="color:#a6e22e">Msg</span>: <span style="color:#e6db74">&#34;lacking necessary header&#34;</span>})
-			<span style="color:#75715e">// 请求不合法，终止当前流程
-</span><span style="color:#75715e"></span>			<span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">Abort</span>()
-			<span style="color:#66d9ef">return</span>
-		}
-		<span style="color:#75715e">// 请求正常，执行链往下调用
-</span><span style="color:#75715e"></span>		<span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">Next</span>()
-	}
-}
-</code></pre></div><p><strong>演示结果：</strong>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">HeaderCheck</span>(<span style="color:#a6e22e">key</span> <span style="color:#66d9ef">string</span>) <span style="color:#66d9ef">func</span>(<span style="color:#a6e22e">c</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">gin</span>.<span style="color:#a6e22e">Context</span>) {
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">func</span>(<span style="color:#a6e22e">c</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">gin</span>.<span style="color:#a6e22e">Context</span>) {
+</span></span><span style="display:flex;"><span>		<span style="color:#75715e">// 获取header的值
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>		<span style="color:#a6e22e">kh</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">GetHeader</span>(<span style="color:#a6e22e">key</span>)
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">kh</span> <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;&#34;</span> {
+</span></span><span style="display:flex;"><span>			<span style="color:#75715e">// header缺失
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>			<span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">JSON</span>(<span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">StatusOK</span>, <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">comdel</span>.<span style="color:#a6e22e">Response</span>{<span style="color:#a6e22e">Code</span>: <span style="color:#a6e22e">comdel</span>.<span style="color:#a6e22e">Unknown</span>, <span style="color:#a6e22e">Msg</span>: <span style="color:#e6db74">&#34;lacking necessary header&#34;</span>})
+</span></span><span style="display:flex;"><span>			<span style="color:#75715e">// 请求不合法，终止当前流程
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>			<span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">Abort</span>()
+</span></span><span style="display:flex;"><span>			<span style="color:#66d9ef">return</span>
+</span></span><span style="display:flex;"><span>		}
+</span></span><span style="display:flex;"><span>		<span style="color:#75715e">// 请求正常，执行链往下调用
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>		<span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">Next</span>()
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p><strong>演示结果：</strong>
 可以看到<code>Header</code>缺少我们预期要的key，所以被中间件拦截了。
 <img src="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/blog/go-gin/mid-lack-header.png" alt="header拦截"></p>
 <p>所以理论上你可以在中间件做任何你想要校验的逻辑，我们再来整理一个body校验中间件，功能是：<br>
@@ -361,55 +361,55 @@
 <li>还原为原结构传入<code>gin</code>内置校验函数<code>ShouldBindBodyWith()</code></li>
 </ol>
 <p>现在编写一个运行时body结构体检测，传入预期目标类型的结构，并对字段进行校验</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#75715e">// 构造返回错误格式相应
-</span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">NewBindFailedResponse</span>(<span style="color:#a6e22e">tag</span> <span style="color:#66d9ef">string</span>) <span style="color:#f92672">*</span><span style="color:#a6e22e">Response</span> {
-	<span style="color:#66d9ef">return</span> <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">Response</span>{<span style="color:#a6e22e">Code</span>: <span style="color:#a6e22e">WrongArgs</span>, <span style="color:#a6e22e">Msg</span>: <span style="color:#e6db74">&#34;wrong argument&#34;</span>, <span style="color:#a6e22e">Tag</span>: <span style="color:#a6e22e">tag</span>}
-}
-
-<span style="color:#75715e">// reqVal表示具体struct类型
-</span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">ReqCheck</span>(<span style="color:#a6e22e">reqVal</span> <span style="color:#66d9ef">interface</span>{}) <span style="color:#66d9ef">func</span>(<span style="color:#a6e22e">ctx</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">gin</span>.<span style="color:#a6e22e">Context</span>) {
-	<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">reqType</span> <span style="color:#a6e22e">reflect</span>.<span style="color:#a6e22e">Type</span> = <span style="color:#66d9ef">nil</span>
-	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">reqVal</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
-	    <span style="color:#75715e">// 从interface{}还原，提取原值类型
-</span><span style="color:#75715e"></span>		<span style="color:#a6e22e">value</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">reflect</span>.<span style="color:#a6e22e">Indirect</span>(<span style="color:#a6e22e">reflect</span>.<span style="color:#a6e22e">ValueOf</span>(<span style="color:#a6e22e">reqVal</span>))
-		<span style="color:#75715e">// 运行时: 拿到校验体原始类型
-</span><span style="color:#75715e"></span>		<span style="color:#a6e22e">reqType</span> = <span style="color:#a6e22e">value</span>.<span style="color:#a6e22e">Type</span>()
-	}
-
-	<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">func</span>(<span style="color:#a6e22e">c</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">gin</span>.<span style="color:#a6e22e">Context</span>) {
-		<span style="color:#a6e22e">tag</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">Request</span>.<span style="color:#a6e22e">RequestURI</span>
-
-		<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">req</span> <span style="color:#66d9ef">interface</span>{} = <span style="color:#66d9ef">nil</span>
-		<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">reqType</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
-		    <span style="color:#75715e">// 原始类型
-</span><span style="color:#75715e"></span>			<span style="color:#a6e22e">req</span> = <span style="color:#a6e22e">reflect</span>.<span style="color:#a6e22e">New</span>(<span style="color:#a6e22e">reqType</span>).<span style="color:#a6e22e">Interface</span>()
-			<span style="color:#75715e">// 原始类型校验
-</span><span style="color:#75715e"></span>			<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">ShouldBindBodyWith</span>(<span style="color:#a6e22e">req</span>, <span style="color:#a6e22e">binding</span>.<span style="color:#a6e22e">JSON</span>); <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
-				<span style="color:#75715e">// 结构体绑定出错
-</span><span style="color:#75715e"></span>				<span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">JSON</span>(<span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">StatusOK</span>, <span style="color:#a6e22e">NewBindFailedResponse</span>(<span style="color:#a6e22e">tag</span>))
-				<span style="color:#75715e">// 终止执行链
-</span><span style="color:#75715e"></span>				<span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">Abort</span>()
-				<span style="color:#66d9ef">return</span>
-			}
-		}
-		<span style="color:#75715e">// 无需校验, 执行链往下
-</span><span style="color:#75715e"></span>		<span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">Next</span>()
-	}
-}
-</code></pre></div><p><strong>程序示例：</strong></p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#75715e">// 声明请求参数结构，id必传
-</span><span style="color:#75715e"></span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">PingReq</span> <span style="color:#66d9ef">struct</span> {
-	<span style="color:#a6e22e">Name</span> <span style="color:#66d9ef">string</span> <span style="color:#e6db74">`json:&#34;name&#34;`</span>
-	<span style="color:#75715e">// tag required表示id字段必传
-</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">Id</span>   <span style="color:#66d9ef">string</span> <span style="color:#e6db74">`json:&#34;id&#34; binding:&#34;required&#34;`</span>
-}
-
-<span style="color:#75715e">/*
-</span><span style="color:#75715e">    在路由/hello-with-req helloFunc()处理逻辑之前，
-</span><span style="color:#75715e">    注入ReqCheck检测请求体拦截模块
-</span><span style="color:#75715e">*/</span>
-<span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">POST</span>(<span style="color:#e6db74">&#34;/hello-with-req&#34;</span>, <span style="color:#a6e22e">middle</span>.<span style="color:#a6e22e">ReqCheck</span>(<span style="color:#a6e22e">bizmod</span>.<span style="color:#a6e22e">PingReq</span>{}), <span style="color:#a6e22e">helloFunc</span>)
-</code></pre></div><p><strong>请求示例：</strong><br>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#75715e">// 构造返回错误格式相应
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">NewBindFailedResponse</span>(<span style="color:#a6e22e">tag</span> <span style="color:#66d9ef">string</span>) <span style="color:#f92672">*</span><span style="color:#a6e22e">Response</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">Response</span>{<span style="color:#a6e22e">Code</span>: <span style="color:#a6e22e">WrongArgs</span>, <span style="color:#a6e22e">Msg</span>: <span style="color:#e6db74">&#34;wrong argument&#34;</span>, <span style="color:#a6e22e">Tag</span>: <span style="color:#a6e22e">tag</span>}
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// reqVal表示具体struct类型
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">ReqCheck</span>(<span style="color:#a6e22e">reqVal</span> <span style="color:#66d9ef">interface</span>{}) <span style="color:#66d9ef">func</span>(<span style="color:#a6e22e">ctx</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">gin</span>.<span style="color:#a6e22e">Context</span>) {
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">reqType</span> <span style="color:#a6e22e">reflect</span>.<span style="color:#a6e22e">Type</span> = <span style="color:#66d9ef">nil</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">reqVal</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>	    <span style="color:#75715e">// 从interface{}还原，提取原值类型
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>		<span style="color:#a6e22e">value</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">reflect</span>.<span style="color:#a6e22e">Indirect</span>(<span style="color:#a6e22e">reflect</span>.<span style="color:#a6e22e">ValueOf</span>(<span style="color:#a6e22e">reqVal</span>))
+</span></span><span style="display:flex;"><span>		<span style="color:#75715e">// 运行时: 拿到校验体原始类型
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>		<span style="color:#a6e22e">reqType</span> = <span style="color:#a6e22e">value</span>.<span style="color:#a6e22e">Type</span>()
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">func</span>(<span style="color:#a6e22e">c</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">gin</span>.<span style="color:#a6e22e">Context</span>) {
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">tag</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">Request</span>.<span style="color:#a6e22e">RequestURI</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">req</span> <span style="color:#66d9ef">interface</span>{} = <span style="color:#66d9ef">nil</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">reqType</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>		    <span style="color:#75715e">// 原始类型
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>			<span style="color:#a6e22e">req</span> = <span style="color:#a6e22e">reflect</span>.<span style="color:#a6e22e">New</span>(<span style="color:#a6e22e">reqType</span>).<span style="color:#a6e22e">Interface</span>()
+</span></span><span style="display:flex;"><span>			<span style="color:#75715e">// 原始类型校验
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>			<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">ShouldBindBodyWith</span>(<span style="color:#a6e22e">req</span>, <span style="color:#a6e22e">binding</span>.<span style="color:#a6e22e">JSON</span>); <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>				<span style="color:#75715e">// 结构体绑定出错
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>				<span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">JSON</span>(<span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">StatusOK</span>, <span style="color:#a6e22e">NewBindFailedResponse</span>(<span style="color:#a6e22e">tag</span>))
+</span></span><span style="display:flex;"><span>				<span style="color:#75715e">// 终止执行链
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>				<span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">Abort</span>()
+</span></span><span style="display:flex;"><span>				<span style="color:#66d9ef">return</span>
+</span></span><span style="display:flex;"><span>			}
+</span></span><span style="display:flex;"><span>		}
+</span></span><span style="display:flex;"><span>		<span style="color:#75715e">// 无需校验, 执行链往下
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>		<span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">Next</span>()
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p><strong>程序示例：</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#75715e">// 声明请求参数结构，id必传
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">PingReq</span> <span style="color:#66d9ef">struct</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">Name</span> <span style="color:#66d9ef">string</span> <span style="color:#e6db74">`json:&#34;name&#34;`</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// tag required表示id字段必传
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">Id</span>   <span style="color:#66d9ef">string</span> <span style="color:#e6db74">`json:&#34;id&#34; binding:&#34;required&#34;`</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">/*
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">    在路由/hello-with-req helloFunc()处理逻辑之前，
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">    注入ReqCheck检测请求体拦截模块
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">*/</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">POST</span>(<span style="color:#e6db74">&#34;/hello-with-req&#34;</span>, <span style="color:#a6e22e">middle</span>.<span style="color:#a6e22e">ReqCheck</span>(<span style="color:#a6e22e">bizmod</span>.<span style="color:#a6e22e">PingReq</span>{}), <span style="color:#a6e22e">helloFunc</span>)
+</span></span></code></pre></div><p><strong>请求示例：</strong><br>
 传入约定合法参数：<br>
 <img src="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/blog/go-gin/mid-req-check-0.png" alt="请求合法"></p>
 <p>传入约定违规缺失id参数：<br>
@@ -445,7 +445,7 @@
           
             <li class="post-action">
               
-                <a class="post-action-btn btn btn--default tooltip--top" href="/zh/2021/11/%E8%81%8A%E4%B8%80%E8%81%8Ago%E6%9C%8D%E5%8A%A1%E7%9A%84%E4%BC%98%E9%9B%85%E5%A4%84%E7%90%86%E4%B8%80-%E4%BC%98%E9%9B%85%E4%B8%8B%E7%BA%BF/" data-tooltip="聊一聊Go服务的优雅处理(一)--优雅下线">
+                <a class="post-action-btn btn btn--default tooltip--top" href="/zh/2021/11/%E8%81%8A%E4%B8%80%E8%81%8Ago%E6%9C%8D%E5%8A%A1%E7%9A%84%E4%BC%98%E9%9B%85%E5%A4%84%E7%90%86%E4%B8%80--%E4%BC%98%E9%9B%85%E4%B8%8B%E7%BA%BF/" data-tooltip="聊一聊Go服务的优雅处理(一)--优雅下线">
               
                   <i class="fa fa-angle-left"></i>
                   <span class="hide-xs hide-sm text-small icon-ml">下一篇</span>
@@ -490,7 +490,7 @@
         </article>
         <footer id="footer" class="main-content-wrap">
   <span class="copyrights">
-    &copy; 2022 <a href="https://github.com/pixeldin">pixeldin</a>. All Rights Reserved
+    &copy; 2023 <a href="https://github.com/pixeldin">pixeldin</a>. All Rights Reserved
   </span>
 </footer>
 
@@ -503,7 +503,7 @@
           
             <li class="post-action">
               
-                <a class="post-action-btn btn btn--default tooltip--top" href="/zh/2021/11/%E8%81%8A%E4%B8%80%E8%81%8Ago%E6%9C%8D%E5%8A%A1%E7%9A%84%E4%BC%98%E9%9B%85%E5%A4%84%E7%90%86%E4%B8%80-%E4%BC%98%E9%9B%85%E4%B8%8B%E7%BA%BF/" data-tooltip="聊一聊Go服务的优雅处理(一)--优雅下线">
+                <a class="post-action-btn btn btn--default tooltip--top" href="/zh/2021/11/%E8%81%8A%E4%B8%80%E8%81%8Ago%E6%9C%8D%E5%8A%A1%E7%9A%84%E4%BC%98%E9%9B%85%E5%A4%84%E7%90%86%E4%B8%80--%E4%BC%98%E9%9B%85%E4%B8%8B%E7%BA%BF/" data-tooltip="聊一聊Go服务的优雅处理(一)--优雅下线">
               
                   <i class="fa fa-angle-left"></i>
                   <span class="hide-xs hide-sm text-small icon-ml">下一篇</span>

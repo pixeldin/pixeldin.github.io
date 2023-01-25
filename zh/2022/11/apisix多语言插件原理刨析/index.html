@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+  <head>
+    
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="generator" content="Hugo 0.110.0 with theme Tranquilpeak 0.4.8-BETA">
+<meta name="author" content="pixelpig">
+<meta name="keywords" content="">
+<meta name="description" content="APISIX在以Lua语言为背景开发出插件库，除此之外还支持其他语言的插件，根据官方文档，其原理是类似side-car的设计。">
+
+
+<meta property="og:description" content="APISIX在以Lua语言为背景开发出插件库，除此之外还支持其他语言的插件，根据官方文档，其原理是类似side-car的设计。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="APISIX：多语言插件原理刨析">
+<meta name="twitter:title" content="APISIX：多语言插件原理刨析">
+<meta property="og:url" content="/zh/2022/11/apisix%E5%A4%9A%E8%AF%AD%E8%A8%80%E6%8F%92%E4%BB%B6%E5%8E%9F%E7%90%86%E5%88%A8%E6%9E%90/">
+<meta property="twitter:url" content="/zh/2022/11/apisix%E5%A4%9A%E8%AF%AD%E8%A8%80%E6%8F%92%E4%BB%B6%E5%8E%9F%E7%90%86%E5%88%A8%E6%9E%90/">
+<meta property="og:site_name" content="pixelpig.tech">
+<meta property="og:description" content="APISIX在以Lua语言为背景开发出插件库，除此之外还支持其他语言的插件，根据官方文档，其原理是类似side-car的设计。">
+<meta name="twitter:description" content="APISIX在以Lua语言为背景开发出插件库，除此之外还支持其他语言的插件，根据官方文档，其原理是类似side-car的设计。">
+<meta property="og:locale" content="zh">
+
+  
+    <meta property="article:published_time" content="2022-11-22T00:00:00">
+  
+  
+    <meta property="article:modified_time" content="2022-11-22T00:00:00">
+  
+  
+  
+    
+      <meta property="article:section" content="Lua">
+    
+      <meta property="article:section" content="gateway">
+    
+  
+  
+    
+      <meta property="article:tag" content="NGINX">
+    
+      <meta property="article:tag" content="OpenResty">
+    
+      <meta property="article:tag" content="LuaJIT">
+    
+  
+
+
+<meta name="twitter:card" content="summary">
+
+  <meta name="twitter:site" content="@pixelpigpigpig">
+
+
+  <meta name="twitter:creator" content="@pixelpigpigpig">
+
+
+
+
+
+
+
+
+
+
+  <meta property="og:image" content="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/pig.jpg">
+  <meta property="twitter:image" content="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/pig.jpg">
+
+
+    <title>APISIX：多语言插件原理刨析</title>
+
+    <link rel="icon" href="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/blog/static/pig_round_circle.png">
+    
+
+    
+
+    <link rel="canonical" href="/zh/2022/11/apisix%E5%A4%9A%E8%AF%AD%E8%A8%80%E6%8F%92%E4%BB%B6%E5%8E%9F%E7%90%86%E5%88%A8%E6%9E%90/">
+
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/jquery.fancybox.min.css" integrity="sha256-vuXZ9LGmmwtjqFX1F+EKin1ThZMub58gKULUyf0qECk=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/helpers/jquery.fancybox-thumbs.min.css" integrity="sha256-SEa4XYAHihTcEP1f5gARTB2K26Uk8PsndQYHQC1f4jU=" crossorigin="anonymous" />
+    
+    
+    <link rel="stylesheet" href="/css/style-twzjdbqhmnnacqs0pwwdzcdbt8yhv8giawvjqjmyfoqnvazl0dalmnhdkvp7.min.css" />
+    
+    
+
+    
+      
+    
+    
+  </head>
+
+  <body>
+    <div id="blog">
+      <header id="header" data-behavior="5">
+  <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+  <div class="header-title">
+    <a class="header-title-link" href="/zh/">pixelpig.tech</a>
+  </div>
+  
+    
+      <a class="header-right-picture "
+         href="/#about">
+    
+    
+    
+      
+        <img class="header-picture" src="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/pig.jpg" alt="作者的图片" />
+      
+    
+    </a>
+  
+</header>
+
+      <nav id="sidebar" data-behavior="5">
+  <div class="sidebar-container">
+    
+      <div class="sidebar-profile">
+        <a href="/#about">
+          <img class="sidebar-profile-picture" src="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/pig.jpg" alt="作者的图片" />
+        </a>
+        <h4 class="sidebar-profile-name">pixelpig</h4>
+        
+          <h5 class="sidebar-profile-bio">With enthusiasm for open source and I am looking forward to be a better developer. Stay hungry, stay foolish <strong>:）</strong></h5>
+        
+      </div>
+    
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/en">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-language"></i>
+      
+      <span class="sidebar-button-desc">English</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/zh/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-home"></i>
+      
+      <span class="sidebar-button-desc">首页</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/zh/categories">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-bookmark"></i>
+      
+      <span class="sidebar-button-desc">分类</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/zh/tags">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
+      
+      <span class="sidebar-button-desc">标签</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/zh/archives">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-archive"></i>
+      
+      <span class="sidebar-button-desc">归档</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/zh/#about">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-question"></i>
+      
+      <span class="sidebar-button-desc">关于我</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://github.com/pixeldin" target="_blank" rel="noopener">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-github"></i>
+      
+      <span class="sidebar-button-desc">pixeldin</span>
+    </a>
+  </li>
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+
+    </ul>
+  </div>
+</nav>
+
+      
+
+      <div id="main" data-behavior="5"
+        class="
+               hasCoverMetaIn
+               ">
+        <article class="post" itemscope itemType="http://schema.org/BlogPosting">
+          
+          
+            <div class="post-header main-content-wrap text-center">
+  
+    <h1 class="post-title" itemprop="headline">
+      APISIX：多语言插件原理刨析
+    </h1>
+  
+  
+  <div class="postShorten-meta post-meta">
+    
+      <time itemprop="datePublished" datetime="2022-11-22T00:00:00Z">
+        
+  十一月 22, 2022
+
+      </time>
+    
+    
+  
+  
+    <span>发布在</span>
+    
+      <a class="category-link" href="/zh/categories/lua">Lua</a>, 
+    
+      <a class="category-link" href="/zh/categories/gateway">gateway</a>
+    
+  
+
+  </div>
+
+</div>
+          
+          <div class="post-content markdown" itemprop="articleBody">
+            <div class="main-content-wrap">
+              <p>APISIX在以Lua语言为背景开发出插件库，除此之外还支持其他语言的插件，根据官方文档，其原理是类似<code>side-car</code>的设计。</p>
+<!-- raw HTML omitted -->
+<h1 id="前言">前言</h1>
+<h1 id="原理刨析">原理刨析</h1>
+<blockquote>
+<p>Apache APISIX 会把 plugin runner 作为自己的一个子进程</p>
+</blockquote>
+<h2 id="进程间通信ipc">进程间通信(IPC)</h2>
+<p>创建独立进程用于请求通信，要求其他语言通过socket和APISIX进行通信。（次数性能损耗比数据大小更加大，所以尽量减少通信次数。）Socket，作为内核中的一个套接字结构体，可用于进程间通信。</p>
+<h3 id="进程通信方式">进程通信方式：</h3>
+<ul>
+<li>基于内核SYSV消息队列（开发量太大）</li>
+<li>共享内存（开发量太大）</li>
+<li>Unix socket</li>
+<li>pipe IO (性能较高但是在多进程架构实现难度大)</li>
+</ul>
+<h3 id="序列化方式">序列化方式：</h3>
+<p>二进制：</p>
+<ul>
+<li>msgpack（没有主流IDL实现）</li>
+<li>protobuf（decode时候需要decode整个文件，无法按需decode来减少和APISIX交互次数）</li>
+<li>flatbuffer（向官方提供LuaJit实现）
+<a href="https://github.com/google/flatbuffers/pull/6584/files">Add LuaJit support</a></li>
+</ul>
+<h3 id="apisix-plugin-runner">APISIX Plugin Runner</h3>
+<ul>
+<li>使用<code>APISIX_LISTEN_ADDRESS</code>指定生成<code>socket</code>接口的目录，提供用于插件进行外部通信，如不指定，在<code>UnitTest</code>模式下会在默认目录生成：
+<pre tabindex="0"><code>root@pixelpig:~/work/apisix# ll t/servroot/html/
+total 0
+drwxr-xr-x 1 root root 512 Jan  3 18:05 ./
+drwxr-xr-x 1 root root 512 Jan  3 18:05 ../
+-rw-r--r-- 1 root root  72 Jan  3 18:05 index.html
+srw-rw-rw- 1 root root   0 Jan  3 18:05 nginx.sock=
+</code></pre></li>
+</ul>
+<h2 id="wasm">WASM</h2>
+<p>对<code>C++\Rust</code>支持友好，但是对<code>Go</code>协程调度受限，WASM对<code>cooroutine</code>原生支持还在purposal阶段。</p>
+<h2 id="共享库">共享库</h2>
+<p>即将语言编译成C共享库，输出为共享对象二进制文件<code>(.so)</code> ，如<code>Kong</code>框架支持<code>Go</code>插件：</p>
+<h1 id="语言对比">语言对比</h1>
+<h1 id="参考链接">参考链接</h1>
+<ul>
+<li><strong>Openresty最佳实践</strong><br>
+<a href="https://github.com/moonbingbing/openresty-best-practices/">https://github.com/moonbingbing/openresty-best-practices/</a></li>
+<li><strong>Lua编程技巧</strong><br>
+<a href="https://blog.codingnow.com/cloud/Luatips">https://blog.codingnow.com/cloud/Luatips</a></li>
+</ul>
+              
+            </div>
+          </div>
+          <div id="post-footer" class="post-footer main-content-wrap">
+            
+              
+                
+                
+                  <div class="post-footer-tags">
+                    <span class="text-color-light text-small">标签</span><br/>
+                    
+  <a class="tag tag--primary tag--small" href="/zh/tags/nginx/">NGINX</a>
+
+  <a class="tag tag--primary tag--small" href="/zh/tags/openresty/">OpenResty</a>
+
+  <a class="tag tag--primary tag--small" href="/zh/tags/luajit/">LuaJIT</a>
+
+                  </div>
+                
+              
+            
+            <div class="post-actions-wrap">
+  
+      <nav >
+        <ul class="post-actions post-action-nav">
+          
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--disabled">
+              
+                  <i class="fa fa-angle-left"></i>
+                  <span class="hide-xs hide-sm text-small icon-ml">下一篇</span>
+                </a>
+            </li>
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="/zh/2022/11/openresty-notes/" data-tooltip="OpenResty Notes">
+              
+                  <span class="hide-xs hide-sm text-small icon-mr">上一篇</span>
+                  <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+          
+        </ul>
+      </nav>
+    <ul class="post-actions post-action-share" >
+      
+        <li class="post-action hide-lg hide-md hide-sm">
+          <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
+            <i class="fa fa-share-alt"></i>
+          </a>
+        </li>
+        
+      
+      
+      <li class="post-action">
+        
+          <a class="post-action-btn btn btn--default" href="#">
+        
+          <i class="fa fa-list"></i>
+        </a>
+      </li>
+    </ul>
+  
+</div>
+
+            
+              
+            
+          </div>
+        </article>
+        <footer id="footer" class="main-content-wrap">
+  <span class="copyrights">
+    &copy; 2023 <a href="https://github.com/pixeldin">pixeldin</a>. All Rights Reserved
+  </span>
+</footer>
+
+      </div>
+      <div id="bottom-bar" class="post-bottom-bar" data-behavior="5">
+        <div class="post-actions-wrap">
+  
+      <nav >
+        <ul class="post-actions post-action-nav">
+          
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--disabled">
+              
+                  <i class="fa fa-angle-left"></i>
+                  <span class="hide-xs hide-sm text-small icon-ml">下一篇</span>
+                </a>
+            </li>
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="/zh/2022/11/openresty-notes/" data-tooltip="OpenResty Notes">
+              
+                  <span class="hide-xs hide-sm text-small icon-mr">上一篇</span>
+                  <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+          
+        </ul>
+      </nav>
+    <ul class="post-actions post-action-share" >
+      
+        <li class="post-action hide-lg hide-md hide-sm">
+          <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
+            <i class="fa fa-share-alt"></i>
+          </a>
+        </li>
+        
+      
+      
+      <li class="post-action">
+        
+          <a class="post-action-btn btn btn--default" href="#">
+        
+          <i class="fa fa-list"></i>
+        </a>
+      </li>
+    </ul>
+  
+</div>
+
+      </div>
+      <div id="share-options-bar" class="share-options-bar" data-behavior="5">
+  <i id="btn-close-shareoptions" class="fa fa-close"></i>
+  <ul class="share-options">
+    
+  </ul>
+</div>
+<div id="share-options-mask" class="share-options-mask"></div>
+    </div>
+    
+    <div id="about">
+  <div id="about-card">
+    <div id="about-btn-close">
+      <i class="fa fa-remove"></i>
+    </div>
+    
+      <img id="about-card-picture" src="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/pig.jpg" alt="作者的图片" />
+    
+    <h4 id="about-card-name">pixelpig</h4>
+    
+      <div id="about-card-bio">With enthusiasm for open source and I am looking forward to be a better developer. Stay hungry, stay foolish <strong>:）</strong></div>
+    
+    
+    
+      <div id="about-card-location">
+        <i class="fa fa-map-marker"></i>
+        <br/>
+        GuangDong - CHINA
+      </div>
+    
+  </div>
+</div>
+
+    
+
+    
+  
+    <div id="cover" style="background-image:url('https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/cover.jpg');"></div>
+  
+
+
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js" integrity="sha256-/BfiIkHlHoVihZdc6TFuj7MmJ0TWcWsMXkeDFwhi0zw=" crossorigin="anonymous"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.7/js/jquery.fancybox.min.js" integrity="sha256-GEAnjcTqVP+vBp3SSc8bEDQqvWAZMiHyUSIorrWwH50=" crossorigin="anonymous"></script>
+
+
+<script src="/js/script-pcw6v3xilnxydl1vddzazdverrnn9ctynvnxgwho987mfyqkuylcb1nlt.min.js"></script>
+
+
+<script lang="javascript">
+window.onload = updateMinWidth;
+window.onresize = updateMinWidth;
+document.getElementById("sidebar").addEventListener("transitionend", updateMinWidth);
+function updateMinWidth() {
+  var sidebar = document.getElementById("sidebar");
+  var main = document.getElementById("main");
+  main.style.minWidth = "";
+  var w1 = getComputedStyle(main).getPropertyValue("min-width");
+  var w2 = getComputedStyle(sidebar).getPropertyValue("width");
+  var w3 = getComputedStyle(sidebar).getPropertyValue("left");
+  main.style.minWidth = `calc(${w1} - ${w2} - ${w3})`;
+}
+</script>
+
+<script>
+$(document).ready(function() {
+  hljs.configure({ classPrefix: '', useBR: false });
+  $('pre.code-highlight > code, pre > code').each(function(i, block) {
+    if (!$(this).hasClass('codeblock')) {
+      $(this).addClass('codeblock');
+    }
+    hljs.highlightBlock(block);
+  });
+});
+</script>
+
+
+  
+    
+  
+
+
+
+
+    
+  </body>
+</html>
+

@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="generator" content="Hugo 0.80.0 with theme Tranquilpeak 0.4.8-BETA">
+<meta name="generator" content="Hugo 0.110.0 with theme Tranquilpeak 0.4.8-BETA">
 <meta name="author" content="pixelpig">
 <meta name="keywords" content="">
 <meta name="description" content="Last time we talked about graceful shutdown of Go programs, today we will talk about graceful restarts.">
@@ -330,123 +330,123 @@ First of all, it literally means <strong>reuse</strong>. The specific concepts a
 <ol>
 <li>Configuration items for incoming multiplexed connections</li>
 </ol>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">control</span>(<span style="color:#a6e22e">network</span>, <span style="color:#a6e22e">address</span> <span style="color:#66d9ef">string</span>, <span style="color:#a6e22e">c</span> <span style="color:#a6e22e">syscall</span>.<span style="color:#a6e22e">RawConn</span>) <span style="color:#66d9ef">error</span> {
-	<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">err</span> <span style="color:#66d9ef">error</span>
-	<span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">Control</span>(<span style="color:#66d9ef">func</span>(<span style="color:#a6e22e">fd</span> <span style="color:#66d9ef">uintptr</span>) {
-		<span style="color:#a6e22e">err</span> = <span style="color:#a6e22e">unix</span>.<span style="color:#a6e22e">SetsockoptInt</span>(int(<span style="color:#a6e22e">fd</span>), <span style="color:#a6e22e">unix</span>.<span style="color:#a6e22e">SOL_SOCKET</span>, <span style="color:#a6e22e">unix</span>.<span style="color:#a6e22e">SO_REUSEADDR</span>, <span style="color:#ae81ff">1</span>)
-		<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
-			<span style="color:#66d9ef">return</span>
-		}
-		<span style="color:#a6e22e">err</span> = <span style="color:#a6e22e">unix</span>.<span style="color:#a6e22e">SetsockoptInt</span>(int(<span style="color:#a6e22e">fd</span>), <span style="color:#a6e22e">unix</span>.<span style="color:#a6e22e">SOL_SOCKET</span>, <span style="color:#a6e22e">unix</span>.<span style="color:#a6e22e">SO_REUSEPORT</span>, <span style="color:#ae81ff">1</span>)
-		<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
-			<span style="color:#66d9ef">return</span>
-		}
-	})
-	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">err</span>
-}
-</code></pre></div><ol start="2">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">control</span>(<span style="color:#a6e22e">network</span>, <span style="color:#a6e22e">address</span> <span style="color:#66d9ef">string</span>, <span style="color:#a6e22e">c</span> <span style="color:#a6e22e">syscall</span>.<span style="color:#a6e22e">RawConn</span>) <span style="color:#66d9ef">error</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">err</span> <span style="color:#66d9ef">error</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">Control</span>(<span style="color:#66d9ef">func</span>(<span style="color:#a6e22e">fd</span> <span style="color:#66d9ef">uintptr</span>) {
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">err</span> = <span style="color:#a6e22e">unix</span>.<span style="color:#a6e22e">SetsockoptInt</span>(int(<span style="color:#a6e22e">fd</span>), <span style="color:#a6e22e">unix</span>.<span style="color:#a6e22e">SOL_SOCKET</span>, <span style="color:#a6e22e">unix</span>.<span style="color:#a6e22e">SO_REUSEADDR</span>, <span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>			<span style="color:#66d9ef">return</span>
+</span></span><span style="display:flex;"><span>		}
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">err</span> = <span style="color:#a6e22e">unix</span>.<span style="color:#a6e22e">SetsockoptInt</span>(int(<span style="color:#a6e22e">fd</span>), <span style="color:#a6e22e">unix</span>.<span style="color:#a6e22e">SOL_SOCKET</span>, <span style="color:#a6e22e">unix</span>.<span style="color:#a6e22e">SO_REUSEPORT</span>, <span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>			<span style="color:#66d9ef">return</span>
+</span></span><span style="display:flex;"><span>		}
+</span></span><span style="display:flex;"><span>	})
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">err</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><ol start="2">
 <li>Check if the currently listening tcp tuple is listening</li>
 </ol>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">listener</span>() (<span style="color:#a6e22e">net</span>.<span style="color:#a6e22e">Listener</span>, <span style="color:#66d9ef">error</span>) {
-	<span style="color:#a6e22e">lc</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">net</span>.<span style="color:#a6e22e">ListenConfig</span>{
-		<span style="color:#a6e22e">Control</span>: <span style="color:#a6e22e">control</span>,
-	}
-	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">l</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">lc</span>.<span style="color:#a6e22e">Listen</span>(<span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">TODO</span>(), <span style="color:#e6db74">&#34;tcp&#34;</span>, <span style="color:#e6db74">&#34;:8080&#34;</span>); <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
-	    <span style="color:#75715e">// port not in use, return err
-</span><span style="color:#75715e"></span>		<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>, <span style="color:#a6e22e">err</span>
-	} <span style="color:#66d9ef">else</span> {
-		<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">l</span>, <span style="color:#66d9ef">nil</span>
-	}
-}
-</code></pre></div><ol start="3">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">listener</span>() (<span style="color:#a6e22e">net</span>.<span style="color:#a6e22e">Listener</span>, <span style="color:#66d9ef">error</span>) {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">lc</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">net</span>.<span style="color:#a6e22e">ListenConfig</span>{
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">Control</span>: <span style="color:#a6e22e">control</span>,
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">l</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">lc</span>.<span style="color:#a6e22e">Listen</span>(<span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">TODO</span>(), <span style="color:#e6db74">&#34;tcp&#34;</span>, <span style="color:#e6db74">&#34;:8080&#34;</span>); <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>	    <span style="color:#75715e">// port not in use, return err
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>		<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>, <span style="color:#a6e22e">err</span>
+</span></span><span style="display:flex;"><span>	} <span style="color:#66d9ef">else</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">l</span>, <span style="color:#66d9ef">nil</span>
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><ol start="3">
 <li>Monitor system semaphores</li>
 </ol>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">upgradeLoop</span>(<span style="color:#a6e22e">l</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">net</span>.<span style="color:#a6e22e">Listener</span>, <span style="color:#a6e22e">s</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">Server</span>) {
-	<span style="color:#a6e22e">sig</span> <span style="color:#f92672">:=</span> make(<span style="color:#66d9ef">chan</span> <span style="color:#a6e22e">os</span>.<span style="color:#a6e22e">Signal</span>)
-	<span style="color:#a6e22e">signal</span>.<span style="color:#a6e22e">Notify</span>(<span style="color:#a6e22e">sig</span>, <span style="color:#a6e22e">syscall</span>.<span style="color:#a6e22e">SIGQUIT</span>, <span style="color:#a6e22e">syscall</span>.<span style="color:#a6e22e">SIGUSR2</span>)
-	<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">t</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">range</span> <span style="color:#a6e22e">sig</span> {
-		<span style="color:#66d9ef">switch</span> <span style="color:#a6e22e">t</span> {
-		<span style="color:#66d9ef">case</span> <span style="color:#a6e22e">syscall</span>.<span style="color:#a6e22e">SIGUSR2</span>:
-			<span style="color:#75715e">// receive upgrade semaphore
-</span><span style="color:#75715e"></span>			<span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;Received SIGUSR2 upgrading binary&#34;</span>)
-			<span style="color:#75715e">// graceful upgrade of frok child processes
-</span><span style="color:#75715e"></span>			<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">spawnChild</span>(); <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
-				<span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Println</span>(
-					<span style="color:#e6db74">&#34;Cannot perform binary upgrade, when starting process: &#34;</span>,
-					<span style="color:#a6e22e">err</span>.<span style="color:#a6e22e">Error</span>(),
-				)
-				<span style="color:#66d9ef">continue</span>
-			}
-		<span style="color:#66d9ef">case</span> <span style="color:#a6e22e">syscall</span>.<span style="color:#a6e22e">SIGQUIT</span>:
-		    <span style="color:#75715e">// receive a semaphore to kill the current process
-</span><span style="color:#75715e"></span>			<span style="color:#a6e22e">s</span>.<span style="color:#a6e22e">Shutdown</span>(<span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">Background</span>())
-			<span style="color:#a6e22e">os</span>.<span style="color:#a6e22e">Exit</span>(<span style="color:#ae81ff">0</span>)
-		}
-	}
-}
-
-<span style="color:#75715e">// fork child process, and update override global parent process id before new process
-</span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">spawnChild</span>() <span style="color:#66d9ef">error</span> {
-	<span style="color:#75715e">// get the parameters of the current startup incoming executable file, such as./main
-</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">argv0</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">exec</span>.<span style="color:#a6e22e">LookPath</span>(<span style="color:#a6e22e">os</span>.<span style="color:#a6e22e">Args</span>[<span style="color:#ae81ff">0</span>])
-	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
-		<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">err</span>
-	}
-	<span style="color:#a6e22e">wd</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">os</span>.<span style="color:#a6e22e">Getwd</span>()
-	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
-		<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">err</span>
-	}
-
-	<span style="color:#a6e22e">files</span> <span style="color:#f92672">:=</span> make([]<span style="color:#f92672">*</span><span style="color:#a6e22e">os</span>.<span style="color:#a6e22e">File</span>, <span style="color:#ae81ff">0</span>)
-	<span style="color:#a6e22e">files</span> = append(<span style="color:#a6e22e">files</span>, <span style="color:#a6e22e">os</span>.<span style="color:#a6e22e">Stdin</span>, <span style="color:#a6e22e">os</span>.<span style="color:#a6e22e">Stdout</span>, <span style="color:#a6e22e">os</span>.<span style="color:#a6e22e">Stderr</span>)
-
-	<span style="color:#75715e">// save the current process, this id will be killed after the new process is started
-</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">ppid</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">os</span>.<span style="color:#a6e22e">Getpid</span>()
-	<span style="color:#a6e22e">os</span>.<span style="color:#a6e22e">Setenv</span>(<span style="color:#e6db74">&#34;APP_PPID&#34;</span>, <span style="color:#a6e22e">strconv</span>.<span style="color:#a6e22e">Itoa</span>(<span style="color:#a6e22e">ppid</span>))
-
-	<span style="color:#a6e22e">os</span>.<span style="color:#a6e22e">StartProcess</span>(<span style="color:#a6e22e">argv0</span>, <span style="color:#a6e22e">os</span>.<span style="color:#a6e22e">Args</span>, <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">os</span>.<span style="color:#a6e22e">ProcAttr</span>{
-		<span style="color:#a6e22e">Dir</span>:   <span style="color:#a6e22e">wd</span>,
-		<span style="color:#a6e22e">Env</span>:   <span style="color:#a6e22e">os</span>.<span style="color:#a6e22e">Environ</span>(),
-		<span style="color:#a6e22e">Files</span>: <span style="color:#a6e22e">files</span>,
-		<span style="color:#a6e22e">Sys</span>:   <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">syscall</span>.<span style="color:#a6e22e">SysProcAttr</span>{},
-	})
-
-	<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>
-}
-</code></pre></div><ol start="4">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">upgradeLoop</span>(<span style="color:#a6e22e">l</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">net</span>.<span style="color:#a6e22e">Listener</span>, <span style="color:#a6e22e">s</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">Server</span>) {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">sig</span> <span style="color:#f92672">:=</span> make(<span style="color:#66d9ef">chan</span> <span style="color:#a6e22e">os</span>.<span style="color:#a6e22e">Signal</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">signal</span>.<span style="color:#a6e22e">Notify</span>(<span style="color:#a6e22e">sig</span>, <span style="color:#a6e22e">syscall</span>.<span style="color:#a6e22e">SIGQUIT</span>, <span style="color:#a6e22e">syscall</span>.<span style="color:#a6e22e">SIGUSR2</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">t</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">range</span> <span style="color:#a6e22e">sig</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">switch</span> <span style="color:#a6e22e">t</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">case</span> <span style="color:#a6e22e">syscall</span>.<span style="color:#a6e22e">SIGUSR2</span>:
+</span></span><span style="display:flex;"><span>			<span style="color:#75715e">// receive upgrade semaphore
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>			<span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;Received SIGUSR2 upgrading binary&#34;</span>)
+</span></span><span style="display:flex;"><span>			<span style="color:#75715e">// graceful upgrade of frok child processes
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>			<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">spawnChild</span>(); <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>				<span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Println</span>(
+</span></span><span style="display:flex;"><span>					<span style="color:#e6db74">&#34;Cannot perform binary upgrade, when starting process: &#34;</span>,
+</span></span><span style="display:flex;"><span>					<span style="color:#a6e22e">err</span>.<span style="color:#a6e22e">Error</span>(),
+</span></span><span style="display:flex;"><span>				)
+</span></span><span style="display:flex;"><span>				<span style="color:#66d9ef">continue</span>
+</span></span><span style="display:flex;"><span>			}
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">case</span> <span style="color:#a6e22e">syscall</span>.<span style="color:#a6e22e">SIGQUIT</span>:
+</span></span><span style="display:flex;"><span>		    <span style="color:#75715e">// receive a semaphore to kill the current process
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>			<span style="color:#a6e22e">s</span>.<span style="color:#a6e22e">Shutdown</span>(<span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">Background</span>())
+</span></span><span style="display:flex;"><span>			<span style="color:#a6e22e">os</span>.<span style="color:#a6e22e">Exit</span>(<span style="color:#ae81ff">0</span>)
+</span></span><span style="display:flex;"><span>		}
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// fork child process, and update override global parent process id before new process
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">spawnChild</span>() <span style="color:#66d9ef">error</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// get the parameters of the current startup incoming executable file, such as./main
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">argv0</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">exec</span>.<span style="color:#a6e22e">LookPath</span>(<span style="color:#a6e22e">os</span>.<span style="color:#a6e22e">Args</span>[<span style="color:#ae81ff">0</span>])
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">err</span>
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">wd</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">os</span>.<span style="color:#a6e22e">Getwd</span>()
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">err</span>
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">files</span> <span style="color:#f92672">:=</span> make([]<span style="color:#f92672">*</span><span style="color:#a6e22e">os</span>.<span style="color:#a6e22e">File</span>, <span style="color:#ae81ff">0</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">files</span> = append(<span style="color:#a6e22e">files</span>, <span style="color:#a6e22e">os</span>.<span style="color:#a6e22e">Stdin</span>, <span style="color:#a6e22e">os</span>.<span style="color:#a6e22e">Stdout</span>, <span style="color:#a6e22e">os</span>.<span style="color:#a6e22e">Stderr</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// save the current process, this id will be killed after the new process is started
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">ppid</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">os</span>.<span style="color:#a6e22e">Getpid</span>()
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">os</span>.<span style="color:#a6e22e">Setenv</span>(<span style="color:#e6db74">&#34;APP_PPID&#34;</span>, <span style="color:#a6e22e">strconv</span>.<span style="color:#a6e22e">Itoa</span>(<span style="color:#a6e22e">ppid</span>))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">os</span>.<span style="color:#a6e22e">StartProcess</span>(<span style="color:#a6e22e">argv0</span>, <span style="color:#a6e22e">os</span>.<span style="color:#a6e22e">Args</span>, <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">os</span>.<span style="color:#a6e22e">ProcAttr</span>{
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">Dir</span>:   <span style="color:#a6e22e">wd</span>,
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">Env</span>:   <span style="color:#a6e22e">os</span>.<span style="color:#a6e22e">Environ</span>(),
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">Files</span>: <span style="color:#a6e22e">files</span>,
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">Sys</span>:   <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">syscall</span>.<span style="color:#a6e22e">SysProcAttr</span>{},
+</span></span><span style="display:flex;"><span>	})
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><ol start="4">
 <li>Main coroutine</li>
 </ol>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
-	<span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;Started HTTP API, PID: &#34;</span>, <span style="color:#a6e22e">os</span>.<span style="color:#a6e22e">Getpid</span>())
-	<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">l</span> <span style="color:#a6e22e">net</span>.<span style="color:#a6e22e">Listener</span>
-    <span style="color:#75715e">// start at first
-</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">fd</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">listener</span>(); <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
-    	<span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;Parent does not exists, starting a normal way&#34;</span>)
-    	<span style="color:#a6e22e">l</span>, <span style="color:#a6e22e">err</span> = <span style="color:#a6e22e">net</span>.<span style="color:#a6e22e">Listen</span>(<span style="color:#e6db74">&#34;tcp&#34;</span>, <span style="color:#e6db74">&#34;:8080&#34;</span>)
-    
-    	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
-    		panic(<span style="color:#a6e22e">err</span>)
-    	}
-    } <span style="color:#66d9ef">else</span> {
-    	<span style="color:#75715e">// the current port has been monitored
-</span><span style="color:#75715e"></span>    	<span style="color:#a6e22e">l</span> = <span style="color:#a6e22e">fd</span>
-    	<span style="color:#75715e">// send quit to the parent process
-</span><span style="color:#75715e"></span>    	<span style="color:#a6e22e">killParent</span>()
-    	<span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Sleep</span>(<span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Second</span>)
-    }
-    
-    <span style="color:#75715e">// start server listening
-</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">s</span> <span style="color:#f92672">:=</span> <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">Server</span>{}
-    	<span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">HandleFunc</span>(<span style="color:#e6db74">&#34;/&#34;</span>, <span style="color:#66d9ef">func</span>(<span style="color:#a6e22e">rw</span> <span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">ResponseWriter</span>, <span style="color:#a6e22e">r</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">Request</span>) {
-    		<span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;New request! From: %d, path: %s, method: %s: &#34;</span>, <span style="color:#a6e22e">os</span>.<span style="color:#a6e22e">Getpid</span>(),
-    			<span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">URL</span>, <span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">Method</span>)
-    	})
-    <span style="color:#66d9ef">go</span> <span style="color:#a6e22e">s</span>.<span style="color:#a6e22e">Serve</span>(<span style="color:#a6e22e">l</span>)
-    
-    <span style="color:#75715e">// monitor semaphore
-</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">upgradeLoop</span>(<span style="color:#f92672">&amp;</span><span style="color:#a6e22e">l</span>, <span style="color:#a6e22e">s</span>)
-}
-</code></pre></div><h4 id="code-reference">Code Reference：</h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;Started HTTP API, PID: &#34;</span>, <span style="color:#a6e22e">os</span>.<span style="color:#a6e22e">Getpid</span>())
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">l</span> <span style="color:#a6e22e">net</span>.<span style="color:#a6e22e">Listener</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// start at first
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">fd</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">listener</span>(); <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>    	<span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;Parent does not exists, starting a normal way&#34;</span>)
+</span></span><span style="display:flex;"><span>    	<span style="color:#a6e22e">l</span>, <span style="color:#a6e22e">err</span> = <span style="color:#a6e22e">net</span>.<span style="color:#a6e22e">Listen</span>(<span style="color:#e6db74">&#34;tcp&#34;</span>, <span style="color:#e6db74">&#34;:8080&#34;</span>)
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>    		panic(<span style="color:#a6e22e">err</span>)
+</span></span><span style="display:flex;"><span>    	}
+</span></span><span style="display:flex;"><span>    } <span style="color:#66d9ef">else</span> {
+</span></span><span style="display:flex;"><span>    	<span style="color:#75715e">// the current port has been monitored
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    	<span style="color:#a6e22e">l</span> = <span style="color:#a6e22e">fd</span>
+</span></span><span style="display:flex;"><span>    	<span style="color:#75715e">// send quit to the parent process
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    	<span style="color:#a6e22e">killParent</span>()
+</span></span><span style="display:flex;"><span>    	<span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Sleep</span>(<span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Second</span>)
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// start server listening
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#a6e22e">s</span> <span style="color:#f92672">:=</span> <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">Server</span>{}
+</span></span><span style="display:flex;"><span>    	<span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">HandleFunc</span>(<span style="color:#e6db74">&#34;/&#34;</span>, <span style="color:#66d9ef">func</span>(<span style="color:#a6e22e">rw</span> <span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">ResponseWriter</span>, <span style="color:#a6e22e">r</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">Request</span>) {
+</span></span><span style="display:flex;"><span>    		<span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;New request! From: %d, path: %s, method: %s: &#34;</span>, <span style="color:#a6e22e">os</span>.<span style="color:#a6e22e">Getpid</span>(),
+</span></span><span style="display:flex;"><span>    			<span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">URL</span>, <span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">Method</span>)
+</span></span><span style="display:flex;"><span>    	})
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">go</span> <span style="color:#a6e22e">s</span>.<span style="color:#a6e22e">Serve</span>(<span style="color:#a6e22e">l</span>)
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// monitor semaphore
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">upgradeLoop</span>(<span style="color:#f92672">&amp;</span><span style="color:#a6e22e">l</span>, <span style="color:#a6e22e">s</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h4 id="code-reference">Code Reference：</h4>
 <p><a href="https://github.com/wutchzone/zero-downtime-application/blob/master/inherit-version/main.go">zero-downtime-application source code</a>, in fact, the core lies in the process of elegant migration from new process to old process, as long as you understand the core step, it will look more clearer at the code.</p>
 <p>This is why the main function logic block needs to be compatible with two situations, one is the normal server process, and the other is to receive the end of the old process.</p>
 <h3 id="expand-the-application">Expand the application</h3>
@@ -534,7 +534,7 @@ First of all, it literally means <strong>reuse</strong>. The specific concepts a
         </article>
         <footer id="footer" class="main-content-wrap">
   <span class="copyrights">
-    &copy; 2022 <a href="https://github.com/pixeldin">pixeldin</a>. All Rights Reserved
+    &copy; 2023 <a href="https://github.com/pixeldin">pixeldin</a>. All Rights Reserved
   </span>
 </footer>
 

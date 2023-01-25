@@ -64,19 +64,19 @@ It&amp;rsquo;s a protection strategy that prevents the upstream from retrying re
     
     <item>
       <title>Talk about Go: Network programming--TCP Connection Management</title>
-      <link>/en/2021/05/talk-about-go-network-programming-tcp-connection-management/</link>
+      <link>/en/2021/05/talk-about-go-network-programming--tcp-connection-management/</link>
       <pubDate>Sun, 16 May 2021 00:00:00 +0000</pubDate>
       
-      <guid>/en/2021/05/talk-about-go-network-programming-tcp-connection-management/</guid>
+      <guid>/en/2021/05/talk-about-go-network-programming--tcp-connection-management/</guid>
       <description>&lt;p&gt;In the last article, we talked about how to initiate a TCP connection in Go, and listed a full-duplex demo. Today, we will talk about connection pool management further.&lt;/p&gt;</description>
     </item>
     
     <item>
       <title>Talk about Go: Network programming--TCP Communication</title>
-      <link>/en/2021/05/talk-about-go-network-programming-tcp-communication/</link>
+      <link>/en/2021/05/talk-about-go-network-programming--tcp-communication/</link>
       <pubDate>Sat, 15 May 2021 00:00:00 +0000</pubDate>
       
-      <guid>/en/2021/05/talk-about-go-network-programming-tcp-communication/</guid>
+      <guid>/en/2021/05/talk-about-go-network-programming--tcp-communication/</guid>
       <description>&lt;p&gt;In the seven-layer protocol of network layering, we know that TCP is below the HTTP layer. In essence, the HTTP packet body parsing is established based on the underlying TCP connection.&lt;/p&gt;</description>
     </item>
     
