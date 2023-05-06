@@ -2,11 +2,11 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>/en/categories/backend/</loc>
-    <lastmod>2022-06-23T00:00:00+00:00</lastmod>
+    <loc>/en/page/about/</loc>
+    <lastmod>2023-05-01T00:00:00+00:00</lastmod>
   </url><url>
     <loc>/en/categories/</loc>
-    <lastmod>2022-06-23T00:00:00+00:00</lastmod>
+    <lastmod>2023-05-01T00:00:00+00:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh"
@@ -17,6 +17,99 @@
                 hreflang="en"
                 href="/en/categories/"
                 />
+  </url><url>
+    <loc>/en/page/</loc>
+    <lastmod>2023-05-01T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/en/</loc>
+    <lastmod>2023-05-01T00:00:00+00:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh"
+                href="/zh/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="/en/"
+                />
+  </url><url>
+    <loc>/en/tags/</loc>
+    <lastmod>2023-05-01T00:00:00+00:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh"
+                href="/zh/tags/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="/en/tags/"
+                />
+  </url><url>
+    <loc>/en/tags/%E7%AE%80%E5%8E%86/</loc>
+    <lastmod>2023-05-01T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/en/categories/%E7%AE%80%E5%8E%86/</loc>
+    <lastmod>2023-05-01T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/en/categories/frontend/</loc>
+    <lastmod>2023-02-04T00:00:00+00:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh"
+                href="/zh/categories/frontend/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="/en/categories/frontend/"
+                />
+  </url><url>
+    <loc>/en/categories/javascript/</loc>
+    <lastmod>2023-02-04T00:00:00+00:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh"
+                href="/zh/categories/javascript/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="/en/categories/javascript/"
+                />
+  </url><url>
+    <loc>/en/post/</loc>
+    <lastmod>2023-02-04T00:00:00+00:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh"
+                href="/zh/post/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="/en/post/"
+                />
+  </url><url>
+    <loc>/en/2023/02/talk-about-typescripts-interface/</loc>
+    <lastmod>2023-02-04T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/en/tags/typescript/</loc>
+    <lastmod>2023-02-04T00:00:00+00:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh"
+                href="/zh/tags/typescript/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="/en/tags/typescript/"
+                />
+  </url><url>
+    <loc>/en/categories/backend/</loc>
+    <lastmod>2022-06-23T00:00:00+00:00</lastmod>
   </url><url>
     <loc>/en/tags/distributed-systems/</loc>
     <lastmod>2022-06-23T00:00:00+00:00</lastmod>
@@ -47,32 +140,6 @@
                 href="/en/categories/go/"
                 />
   </url><url>
-    <loc>/en/</loc>
-    <lastmod>2022-06-23T00:00:00+00:00</lastmod>
-    <xhtml:link
-                rel="alternate"
-                hreflang="zh"
-                href="/zh/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="en"
-                href="/en/"
-                />
-  </url><url>
-    <loc>/en/post/</loc>
-    <lastmod>2022-06-23T00:00:00+00:00</lastmod>
-    <xhtml:link
-                rel="alternate"
-                hreflang="zh"
-                href="/zh/post/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="en"
-                href="/en/post/"
-                />
-  </url><url>
     <loc>/en/tags/raft/</loc>
     <lastmod>2022-06-23T00:00:00+00:00</lastmod>
     <xhtml:link
@@ -84,19 +151,6 @@
                 rel="alternate"
                 hreflang="en"
                 href="/en/tags/raft/"
-                />
-  </url><url>
-    <loc>/en/tags/</loc>
-    <lastmod>2022-06-23T00:00:00+00:00</lastmod>
-    <xhtml:link
-                rel="alternate"
-                hreflang="zh"
-                href="/zh/tags/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="en"
-                href="/en/tags/"
                 />
   </url><url>
     <loc>/en/2022/06/talk-about-etcd-part3-the-communication-protocol-between-client-and-server/</loc>
