@@ -3,7 +3,7 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>/zh/categories/</loc>
-    <lastmod>2023-02-04T00:00:00+00:00</lastmod>
+    <lastmod>2023-04-14T00:00:00+00:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
@@ -16,7 +16,7 @@
                 />
   </url><url>
     <loc>/zh/categories/frontend/</loc>
-    <lastmod>2023-02-04T00:00:00+00:00</lastmod>
+    <lastmod>2023-04-14T00:00:00+00:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
@@ -29,7 +29,7 @@
                 />
   </url><url>
     <loc>/zh/categories/javascript/</loc>
-    <lastmod>2023-02-04T00:00:00+00:00</lastmod>
+    <lastmod>2023-04-14T00:00:00+00:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
@@ -42,7 +42,7 @@
                 />
   </url><url>
     <loc>/zh/</loc>
-    <lastmod>2023-02-04T00:00:00+00:00</lastmod>
+    <lastmod>2023-04-14T00:00:00+00:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
@@ -55,7 +55,7 @@
                 />
   </url><url>
     <loc>/zh/post/</loc>
-    <lastmod>2023-02-04T00:00:00+00:00</lastmod>
+    <lastmod>2023-04-14T00:00:00+00:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
@@ -68,7 +68,7 @@
                 />
   </url><url>
     <loc>/zh/tags/</loc>
-    <lastmod>2023-02-04T00:00:00+00:00</lastmod>
+    <lastmod>2023-04-14T00:00:00+00:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
@@ -81,7 +81,7 @@
                 />
   </url><url>
     <loc>/zh/tags/typescript/</loc>
-    <lastmod>2023-02-04T00:00:00+00:00</lastmod>
+    <lastmod>2023-04-14T00:00:00+00:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
@@ -93,8 +93,14 @@
                 href="/zh/tags/typescript/"
                 />
   </url><url>
-    <loc>/zh/2023/02/%E8%81%8A%E4%B8%80%E8%81%8Atypescript%E7%9A%84interface/</loc>
-    <lastmod>2023-02-04T00:00:00+00:00</lastmod>
+    <loc>/zh/2023/04/%E8%81%8A%E4%B8%80%E8%81%8Atypescript%E7%9A%84interface/</loc>
+    <lastmod>2023-04-14T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/zh/tags/next.js/</loc>
+    <lastmod>2023-02-24T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/zh/2023/02/%E8%81%8A%E4%B8%80%E8%81%8Anext.js%E7%9A%84%E9%A2%84%E6%B8%B2%E6%9F%93/</loc>
+    <lastmod>2023-02-24T00:00:00+00:00</lastmod>
   </url><url>
     <loc>/zh/2023/01/apisix%E5%A6%82%E4%BD%95%E5%9C%A8vscode%E6%90%AD%E5%BB%BA%E8%B0%83%E8%AF%95%E7%8E%AF%E5%A2%83/</loc>
     <lastmod>2023-01-20T00:00:00+00:00</lastmod>
