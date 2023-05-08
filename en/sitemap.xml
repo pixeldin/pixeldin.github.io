@@ -2,293 +2,293 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>/en/page/about/</loc>
+    <loc>https://pixeldin.github.io/en/page/about/</loc>
     <lastmod>2023-05-01T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/en/categories/</loc>
-    <lastmod>2023-05-01T00:00:00+00:00</lastmod>
-    <xhtml:link
-                rel="alternate"
-                hreflang="zh"
-                href="/zh/categories/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="en"
-                href="/en/categories/"
-                />
-  </url><url>
-    <loc>/en/page/</loc>
-    <lastmod>2023-05-01T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>/en/</loc>
+    <loc>https://pixeldin.github.io/en/categories/</loc>
     <lastmod>2023-05-01T00:00:00+00:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh"
-                href="/zh/"
+                href="https://pixeldin.github.io/zh/categories/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="/en/"
+                href="https://pixeldin.github.io/en/categories/"
                 />
   </url><url>
-    <loc>/en/tags/</loc>
+    <loc>https://pixeldin.github.io/en/page/</loc>
+    <lastmod>2023-05-01T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://pixeldin.github.io/en/</loc>
     <lastmod>2023-05-01T00:00:00+00:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh"
-                href="/zh/tags/"
+                href="https://pixeldin.github.io/zh/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="/en/tags/"
+                href="https://pixeldin.github.io/en/"
                 />
   </url><url>
-    <loc>/en/tags/%E7%AE%80%E5%8E%86/</loc>
+    <loc>https://pixeldin.github.io/en/tags/</loc>
+    <lastmod>2023-05-01T00:00:00+00:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh"
+                href="https://pixeldin.github.io/zh/tags/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://pixeldin.github.io/en/tags/"
+                />
+  </url><url>
+    <loc>https://pixeldin.github.io/en/tags/%E7%AE%80%E5%8E%86/</loc>
     <lastmod>2023-05-01T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/en/categories/%E7%AE%80%E5%8E%86/</loc>
+    <loc>https://pixeldin.github.io/en/categories/%E7%AE%80%E5%8E%86/</loc>
     <lastmod>2023-05-01T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/en/categories/frontend/</loc>
+    <loc>https://pixeldin.github.io/en/categories/frontend/</loc>
     <lastmod>2023-02-04T00:00:00+00:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh"
-                href="/zh/categories/frontend/"
+                href="https://pixeldin.github.io/zh/categories/frontend/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="/en/categories/frontend/"
+                href="https://pixeldin.github.io/en/categories/frontend/"
                 />
   </url><url>
-    <loc>/en/categories/javascript/</loc>
+    <loc>https://pixeldin.github.io/en/categories/javascript/</loc>
     <lastmod>2023-02-04T00:00:00+00:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh"
-                href="/zh/categories/javascript/"
+                href="https://pixeldin.github.io/zh/categories/javascript/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="/en/categories/javascript/"
+                href="https://pixeldin.github.io/en/categories/javascript/"
                 />
   </url><url>
-    <loc>/en/post/</loc>
+    <loc>https://pixeldin.github.io/en/post/</loc>
     <lastmod>2023-02-04T00:00:00+00:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh"
-                href="/zh/post/"
+                href="https://pixeldin.github.io/zh/post/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="/en/post/"
+                href="https://pixeldin.github.io/en/post/"
                 />
   </url><url>
-    <loc>/en/2023/02/talk-about-typescripts-interface/</loc>
+    <loc>https://pixeldin.github.io/en/2023/02/talk-about-typescripts-interface/</loc>
     <lastmod>2023-02-04T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/en/tags/typescript/</loc>
+    <loc>https://pixeldin.github.io/en/tags/typescript/</loc>
     <lastmod>2023-02-04T00:00:00+00:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh"
-                href="/zh/tags/typescript/"
+                href="https://pixeldin.github.io/zh/tags/typescript/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="/en/tags/typescript/"
+                href="https://pixeldin.github.io/en/tags/typescript/"
                 />
   </url><url>
-    <loc>/en/categories/backend/</loc>
+    <loc>https://pixeldin.github.io/en/categories/backend/</loc>
     <lastmod>2022-06-23T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/en/tags/distributed-systems/</loc>
+    <loc>https://pixeldin.github.io/en/tags/distributed-systems/</loc>
     <lastmod>2022-06-23T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/en/tags/etcd/</loc>
+    <loc>https://pixeldin.github.io/en/tags/etcd/</loc>
     <lastmod>2022-06-23T00:00:00+00:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh"
-                href="/zh/tags/etcd/"
+                href="https://pixeldin.github.io/zh/tags/etcd/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="/en/tags/etcd/"
+                href="https://pixeldin.github.io/en/tags/etcd/"
                 />
   </url><url>
-    <loc>/en/categories/go/</loc>
+    <loc>https://pixeldin.github.io/en/categories/go/</loc>
     <lastmod>2022-06-23T00:00:00+00:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh"
-                href="/zh/categories/go/"
+                href="https://pixeldin.github.io/zh/categories/go/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="/en/categories/go/"
+                href="https://pixeldin.github.io/en/categories/go/"
                 />
   </url><url>
-    <loc>/en/tags/raft/</loc>
+    <loc>https://pixeldin.github.io/en/tags/raft/</loc>
     <lastmod>2022-06-23T00:00:00+00:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh"
-                href="/zh/tags/raft/"
+                href="https://pixeldin.github.io/zh/tags/raft/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="/en/tags/raft/"
+                href="https://pixeldin.github.io/en/tags/raft/"
                 />
   </url><url>
-    <loc>/en/2022/06/talk-about-etcd-part3-the-communication-protocol-between-client-and-server/</loc>
+    <loc>https://pixeldin.github.io/en/2022/06/talk-about-etcd-part3-the-communication-protocol-between-client-and-server/</loc>
     <lastmod>2022-06-23T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/en/2022/06/talk-about-etcd-part2-the-raft-consistency-protocol/</loc>
+    <loc>https://pixeldin.github.io/en/2022/06/talk-about-etcd-part2-the-raft-consistency-protocol/</loc>
     <lastmod>2022-06-03T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/en/2022/05/talk-about-etcd-part1-hierarchy-overview-with-birds-eye-view/</loc>
+    <loc>https://pixeldin.github.io/en/2022/05/talk-about-etcd-part1-hierarchy-overview-with-birds-eye-view/</loc>
     <lastmod>2022-05-17T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/en/categories/cache/</loc>
+    <loc>https://pixeldin.github.io/en/categories/cache/</loc>
     <lastmod>2022-04-23T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/en/tags/false-sharing/</loc>
+    <loc>https://pixeldin.github.io/en/tags/false-sharing/</loc>
     <lastmod>2022-04-23T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/en/tags/object-pool/</loc>
+    <loc>https://pixeldin.github.io/en/tags/object-pool/</loc>
     <lastmod>2022-04-23T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/en/tags/sync.pool/</loc>
+    <loc>https://pixeldin.github.io/en/tags/sync.pool/</loc>
     <lastmod>2022-04-23T00:00:00+00:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh"
-                href="/zh/tags/sync.pool/"
+                href="https://pixeldin.github.io/zh/tags/sync.pool/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="/en/tags/sync.pool/"
+                href="https://pixeldin.github.io/en/tags/sync.pool/"
                 />
   </url><url>
-    <loc>/en/tags/talk-about-go/</loc>
+    <loc>https://pixeldin.github.io/en/tags/talk-about-go/</loc>
     <lastmod>2022-04-23T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/en/2022/04/talk-about-go-a-high-performance-pool-for-reusing-object-sync.pool/</loc>
+    <loc>https://pixeldin.github.io/en/2022/04/talk-about-go-a-high-performance-pool-for-reusing-object-sync.pool/</loc>
     <lastmod>2022-04-23T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/en/tags/goroutine/</loc>
+    <loc>https://pixeldin.github.io/en/tags/goroutine/</loc>
     <lastmod>2022-03-17T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/en/tags/pprof/</loc>
+    <loc>https://pixeldin.github.io/en/tags/pprof/</loc>
     <lastmod>2022-03-17T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/en/2022/03/talk-about-go-goroutines-information-and-how-to-prevent-goroutine-leaks/</loc>
+    <loc>https://pixeldin.github.io/en/2022/03/talk-about-go-goroutines-information-and-how-to-prevent-goroutine-leaks/</loc>
     <lastmod>2022-03-17T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/en/tags/circuit-breaker/</loc>
+    <loc>https://pixeldin.github.io/en/tags/circuit-breaker/</loc>
     <lastmod>2022-02-25T00:00:00+00:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh"
-                href="/zh/tags/circuit-breaker/"
+                href="https://pixeldin.github.io/zh/tags/circuit-breaker/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="/en/tags/circuit-breaker/"
+                href="https://pixeldin.github.io/en/tags/circuit-breaker/"
                 />
   </url><url>
-    <loc>/en/categories/middleware/</loc>
+    <loc>https://pixeldin.github.io/en/categories/middleware/</loc>
     <lastmod>2022-02-25T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/en/2022/02/talk-about-go-a-simple-implement-of-circuit-breaker/</loc>
+    <loc>https://pixeldin.github.io/en/2022/02/talk-about-go-a-simple-implement-of-circuit-breaker/</loc>
     <lastmod>2022-02-25T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/en/categories/network/</loc>
+    <loc>https://pixeldin.github.io/en/categories/network/</loc>
     <lastmod>2022-02-04T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/en/2022/02/talk-about-go-network-programming-about-grouping-and-unpacking-in-tcp-flow/</loc>
+    <loc>https://pixeldin.github.io/en/2022/02/talk-about-go-network-programming-about-grouping-and-unpacking-in-tcp-flow/</loc>
     <lastmod>2022-02-04T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/en/categories/tcp/</loc>
+    <loc>https://pixeldin.github.io/en/categories/tcp/</loc>
     <lastmod>2022-02-04T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/en/tags/ha/</loc>
+    <loc>https://pixeldin.github.io/en/tags/ha/</loc>
     <lastmod>2021-12-23T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/en/tags/microservice/</loc>
+    <loc>https://pixeldin.github.io/en/tags/microservice/</loc>
     <lastmod>2021-12-23T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/en/categories/microservice/</loc>
+    <loc>https://pixeldin.github.io/en/categories/microservice/</loc>
     <lastmod>2021-12-23T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/en/tags/process-communication/</loc>
+    <loc>https://pixeldin.github.io/en/tags/process-communication/</loc>
     <lastmod>2021-12-23T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/en/2021/12/talk-about-go-the-gracefully-handling-of-service-restart/</loc>
+    <loc>https://pixeldin.github.io/en/2021/12/talk-about-go-the-gracefully-handling-of-service-restart/</loc>
     <lastmod>2021-12-23T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/en/2021/11/talk-about-go-the-gracefully-handling-of-service-shutdown/</loc>
+    <loc>https://pixeldin.github.io/en/2021/11/talk-about-go-the-gracefully-handling-of-service-shutdown/</loc>
     <lastmod>2021-11-02T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/en/tags/gin/</loc>
+    <loc>https://pixeldin.github.io/en/tags/gin/</loc>
     <lastmod>2021-10-15T00:00:00+00:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh"
-                href="/zh/tags/gin/"
+                href="https://pixeldin.github.io/zh/tags/gin/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="/en/tags/gin/"
+                href="https://pixeldin.github.io/en/tags/gin/"
                 />
   </url><url>
-    <loc>/en/tags/interceptor/</loc>
+    <loc>https://pixeldin.github.io/en/tags/interceptor/</loc>
     <lastmod>2021-10-15T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/en/2021/10/talk-about-go-how-to-custom-build-a-gateway-interceptor-in-gin-framwork/</loc>
+    <loc>https://pixeldin.github.io/en/2021/10/talk-about-go-how-to-custom-build-a-gateway-interceptor-in-gin-framwork/</loc>
     <lastmod>2021-10-15T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/en/2021/08/before-talking-about-the-gin-web-framework-lets-take-a-look-at-httprouter/</loc>
+    <loc>https://pixeldin.github.io/en/2021/08/before-talking-about-the-gin-web-framework-lets-take-a-look-at-httprouter/</loc>
     <lastmod>2021-08-16T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/en/2021/05/talk-about-go-network-programming--tcp-connection-management/</loc>
+    <loc>https://pixeldin.github.io/en/2021/05/talk-about-go-network-programming--tcp-connection-management/</loc>
     <lastmod>2021-05-16T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/en/2021/05/talk-about-go-network-programming--tcp-communication/</loc>
+    <loc>https://pixeldin.github.io/en/2021/05/talk-about-go-network-programming--tcp-communication/</loc>
     <lastmod>2021-05-15T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/en/categories/os/</loc>
+    <loc>https://pixeldin.github.io/en/categories/os/</loc>
     <lastmod>2020-10-18T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/en/2020/10/talk-about-go-the-operating-systems-thread-scheduling-and-goroutines/</loc>
+    <loc>https://pixeldin.github.io/en/2020/10/talk-about-go-the-operating-systems-thread-scheduling-and-goroutines/</loc>
     <lastmod>2020-10-18T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/en/archives/</loc>
+    <loc>https://pixeldin.github.io/en/archives/</loc>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh"
-                href="/zh/archives/"
+                href="https://pixeldin.github.io/zh/archives/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="/en/archives/"
+                href="https://pixeldin.github.io/en/archives/"
                 />
   </url>
 </urlset>

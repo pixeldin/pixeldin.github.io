@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>FrontEnd on pixelpig.tech</title>
-    <link>/en/categories/frontend/</link>
+    <link>https://pixeldin.github.io/en/categories/frontend/</link>
     <description>Recent content in FrontEnd on pixelpig.tech</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 04 Feb 2023 00:00:00 +0000</lastBuildDate><atom:link href="/en/categories/frontend/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 04 Feb 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://pixeldin.github.io/en/categories/frontend/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Talk about TypeScript&#39;s interface</title>
-      <link>/en/2023/02/talk-about-typescripts-interface/</link>
+      <link>https://pixeldin.github.io/en/2023/02/talk-about-typescripts-interface/</link>
       <pubDate>Sat, 04 Feb 2023 00:00:00 +0000</pubDate>
       
-      <guid>/en/2023/02/talk-about-typescripts-interface/</guid>
+      <guid>https://pixeldin.github.io/en/2023/02/talk-about-typescripts-interface/</guid>
       <description>&lt;p&gt;&amp;ldquo;&amp;ldquo;Call it a duck if it looks like one.&amp;rdquo; Interface is used to define the shape or structure of an object.&lt;/p&gt;</description>
     </item>
     

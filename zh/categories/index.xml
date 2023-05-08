@@ -2,179 +2,179 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Categories on pixelpig.tech</title>
-    <link>/zh/categories/</link>
+    <link>https://pixeldin.github.io/zh/categories/</link>
     <description>Recent content in Categories on pixelpig.tech</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Fri, 14 Apr 2023 00:00:00 +0000</lastBuildDate><atom:link href="/zh/categories/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 14 Apr 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://pixeldin.github.io/zh/categories/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>FrontEnd</title>
-      <link>/zh/categories/frontend/</link>
+      <link>https://pixeldin.github.io/zh/categories/frontend/</link>
       <pubDate>Fri, 14 Apr 2023 00:00:00 +0000</pubDate>
       
-      <guid>/zh/categories/frontend/</guid>
+      <guid>https://pixeldin.github.io/zh/categories/frontend/</guid>
       <description></description>
     </item>
     
     <item>
       <title>JavaScript</title>
-      <link>/zh/categories/javascript/</link>
+      <link>https://pixeldin.github.io/zh/categories/javascript/</link>
       <pubDate>Fri, 14 Apr 2023 00:00:00 +0000</pubDate>
       
-      <guid>/zh/categories/javascript/</guid>
+      <guid>https://pixeldin.github.io/zh/categories/javascript/</guid>
       <description></description>
     </item>
     
     <item>
       <title>gateway</title>
-      <link>/zh/categories/gateway/</link>
+      <link>https://pixeldin.github.io/zh/categories/gateway/</link>
       <pubDate>Fri, 20 Jan 2023 00:00:00 +0000</pubDate>
       
-      <guid>/zh/categories/gateway/</guid>
+      <guid>https://pixeldin.github.io/zh/categories/gateway/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Lua</title>
-      <link>/zh/categories/lua/</link>
+      <link>https://pixeldin.github.io/zh/categories/lua/</link>
       <pubDate>Fri, 20 Jan 2023 00:00:00 +0000</pubDate>
       
-      <guid>/zh/categories/lua/</guid>
+      <guid>https://pixeldin.github.io/zh/categories/lua/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Go</title>
-      <link>/zh/categories/go/</link>
+      <link>https://pixeldin.github.io/zh/categories/go/</link>
       <pubDate>Thu, 23 Jun 2022 00:00:00 +0000</pubDate>
       
-      <guid>/zh/categories/go/</guid>
+      <guid>https://pixeldin.github.io/zh/categories/go/</guid>
       <description></description>
     </item>
     
     <item>
       <title>后端</title>
-      <link>/zh/categories/%E5%90%8E%E7%AB%AF/</link>
+      <link>https://pixeldin.github.io/zh/categories/%E5%90%8E%E7%AB%AF/</link>
       <pubDate>Thu, 23 Jun 2022 00:00:00 +0000</pubDate>
       
-      <guid>/zh/categories/%E5%90%8E%E7%AB%AF/</guid>
+      <guid>https://pixeldin.github.io/zh/categories/%E5%90%8E%E7%AB%AF/</guid>
       <description></description>
     </item>
     
     <item>
       <title>缓存</title>
-      <link>/zh/categories/%E7%BC%93%E5%AD%98/</link>
+      <link>https://pixeldin.github.io/zh/categories/%E7%BC%93%E5%AD%98/</link>
       <pubDate>Sat, 23 Apr 2022 00:00:00 +0000</pubDate>
       
-      <guid>/zh/categories/%E7%BC%93%E5%AD%98/</guid>
+      <guid>https://pixeldin.github.io/zh/categories/%E7%BC%93%E5%AD%98/</guid>
       <description></description>
     </item>
     
     <item>
       <title>网关中间件</title>
-      <link>/zh/categories/%E7%BD%91%E5%85%B3%E4%B8%AD%E9%97%B4%E4%BB%B6/</link>
+      <link>https://pixeldin.github.io/zh/categories/%E7%BD%91%E5%85%B3%E4%B8%AD%E9%97%B4%E4%BB%B6/</link>
       <pubDate>Fri, 25 Feb 2022 00:00:00 +0000</pubDate>
       
-      <guid>/zh/categories/%E7%BD%91%E5%85%B3%E4%B8%AD%E9%97%B4%E4%BB%B6/</guid>
+      <guid>https://pixeldin.github.io/zh/categories/%E7%BD%91%E5%85%B3%E4%B8%AD%E9%97%B4%E4%BB%B6/</guid>
       <description></description>
     </item>
     
     <item>
       <title>网络编程</title>
-      <link>/zh/categories/%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/</link>
+      <link>https://pixeldin.github.io/zh/categories/%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/</link>
       <pubDate>Fri, 04 Feb 2022 00:00:00 +0000</pubDate>
       
-      <guid>/zh/categories/%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/</guid>
+      <guid>https://pixeldin.github.io/zh/categories/%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/</guid>
       <description></description>
     </item>
     
     <item>
       <title>HA</title>
-      <link>/zh/categories/ha/</link>
+      <link>https://pixeldin.github.io/zh/categories/ha/</link>
       <pubDate>Thu, 23 Dec 2021 00:00:00 +0000</pubDate>
       
-      <guid>/zh/categories/ha/</guid>
+      <guid>https://pixeldin.github.io/zh/categories/ha/</guid>
       <description></description>
     </item>
     
     <item>
       <title>gin</title>
-      <link>/zh/categories/gin/</link>
+      <link>https://pixeldin.github.io/zh/categories/gin/</link>
       <pubDate>Fri, 15 Oct 2021 00:00:00 +0000</pubDate>
       
-      <guid>/zh/categories/gin/</guid>
+      <guid>https://pixeldin.github.io/zh/categories/gin/</guid>
       <description></description>
     </item>
     
     <item>
       <title>并发</title>
-      <link>/zh/categories/%E5%B9%B6%E5%8F%91/</link>
+      <link>https://pixeldin.github.io/zh/categories/%E5%B9%B6%E5%8F%91/</link>
       <pubDate>Tue, 29 Jun 2021 00:00:00 +0000</pubDate>
       
-      <guid>/zh/categories/%E5%B9%B6%E5%8F%91/</guid>
+      <guid>https://pixeldin.github.io/zh/categories/%E5%B9%B6%E5%8F%91/</guid>
       <description></description>
     </item>
     
     <item>
       <title>计算机</title>
-      <link>/zh/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/</link>
+      <link>https://pixeldin.github.io/zh/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/</link>
       <pubDate>Mon, 18 Jan 2021 03:40:05 +0800</pubDate>
       
-      <guid>/zh/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/</guid>
+      <guid>https://pixeldin.github.io/zh/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/</guid>
       <description></description>
     </item>
     
     <item>
       <title>操作系统</title>
-      <link>/zh/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/</link>
+      <link>https://pixeldin.github.io/zh/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/</link>
       <pubDate>Sun, 18 Oct 2020 00:00:00 +0000</pubDate>
       
-      <guid>/zh/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/</guid>
+      <guid>https://pixeldin.github.io/zh/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/</guid>
       <description></description>
     </item>
     
     <item>
       <title>命令行编程</title>
-      <link>/zh/categories/%E5%91%BD%E4%BB%A4%E8%A1%8C%E7%BC%96%E7%A8%8B/</link>
+      <link>https://pixeldin.github.io/zh/categories/%E5%91%BD%E4%BB%A4%E8%A1%8C%E7%BC%96%E7%A8%8B/</link>
       <pubDate>Thu, 20 Feb 2020 00:00:00 +0000</pubDate>
       
-      <guid>/zh/categories/%E5%91%BD%E4%BB%A4%E8%A1%8C%E7%BC%96%E7%A8%8B/</guid>
+      <guid>https://pixeldin.github.io/zh/categories/%E5%91%BD%E4%BB%A4%E8%A1%8C%E7%BC%96%E7%A8%8B/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Java</title>
-      <link>/zh/categories/java/</link>
+      <link>https://pixeldin.github.io/zh/categories/java/</link>
       <pubDate>Sun, 11 Aug 2019 00:00:00 +0000</pubDate>
       
-      <guid>/zh/categories/java/</guid>
+      <guid>https://pixeldin.github.io/zh/categories/java/</guid>
       <description></description>
     </item>
     
     <item>
       <title>设计模式</title>
-      <link>/zh/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/</link>
+      <link>https://pixeldin.github.io/zh/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/</link>
       <pubDate>Sun, 11 Aug 2019 00:00:00 +0000</pubDate>
       
-      <guid>/zh/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/</guid>
+      <guid>https://pixeldin.github.io/zh/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/</guid>
       <description></description>
     </item>
     
     <item>
       <title>代理模式</title>
-      <link>/zh/categories/%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F/</link>
+      <link>https://pixeldin.github.io/zh/categories/%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F/</link>
       <pubDate>Fri, 15 Mar 2019 00:00:00 +0000</pubDate>
       
-      <guid>/zh/categories/%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F/</guid>
+      <guid>https://pixeldin.github.io/zh/categories/%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F/</guid>
       <description></description>
     </item>
     
     <item>
       <title>反射</title>
-      <link>/zh/categories/%E5%8F%8D%E5%B0%84/</link>
+      <link>https://pixeldin.github.io/zh/categories/%E5%8F%8D%E5%B0%84/</link>
       <pubDate>Fri, 15 Mar 2019 00:00:00 +0000</pubDate>
       
-      <guid>/zh/categories/%E5%8F%8D%E5%B0%84/</guid>
+      <guid>https://pixeldin.github.io/zh/categories/%E5%8F%8D%E5%B0%84/</guid>
       <description></description>
     </item>
     

@@ -2,107 +2,107 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Categories on pixelpig.tech</title>
-    <link>/en/categories/</link>
+    <link>https://pixeldin.github.io/en/categories/</link>
     <description>Recent content in Categories on pixelpig.tech</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 01 May 2023 00:00:00 +0000</lastBuildDate><atom:link href="/en/categories/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 01 May 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://pixeldin.github.io/en/categories/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>简历</title>
-      <link>/en/categories/%E7%AE%80%E5%8E%86/</link>
+      <link>https://pixeldin.github.io/en/categories/%E7%AE%80%E5%8E%86/</link>
       <pubDate>Mon, 01 May 2023 00:00:00 +0000</pubDate>
       
-      <guid>/en/categories/%E7%AE%80%E5%8E%86/</guid>
+      <guid>https://pixeldin.github.io/en/categories/%E7%AE%80%E5%8E%86/</guid>
       <description></description>
     </item>
     
     <item>
       <title>FrontEnd</title>
-      <link>/en/categories/frontend/</link>
+      <link>https://pixeldin.github.io/en/categories/frontend/</link>
       <pubDate>Sat, 04 Feb 2023 00:00:00 +0000</pubDate>
       
-      <guid>/en/categories/frontend/</guid>
+      <guid>https://pixeldin.github.io/en/categories/frontend/</guid>
       <description></description>
     </item>
     
     <item>
       <title>JavaScript</title>
-      <link>/en/categories/javascript/</link>
+      <link>https://pixeldin.github.io/en/categories/javascript/</link>
       <pubDate>Sat, 04 Feb 2023 00:00:00 +0000</pubDate>
       
-      <guid>/en/categories/javascript/</guid>
+      <guid>https://pixeldin.github.io/en/categories/javascript/</guid>
       <description></description>
     </item>
     
     <item>
       <title>backend</title>
-      <link>/en/categories/backend/</link>
+      <link>https://pixeldin.github.io/en/categories/backend/</link>
       <pubDate>Thu, 23 Jun 2022 00:00:00 +0000</pubDate>
       
-      <guid>/en/categories/backend/</guid>
+      <guid>https://pixeldin.github.io/en/categories/backend/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Go</title>
-      <link>/en/categories/go/</link>
+      <link>https://pixeldin.github.io/en/categories/go/</link>
       <pubDate>Thu, 23 Jun 2022 00:00:00 +0000</pubDate>
       
-      <guid>/en/categories/go/</guid>
+      <guid>https://pixeldin.github.io/en/categories/go/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Cache</title>
-      <link>/en/categories/cache/</link>
+      <link>https://pixeldin.github.io/en/categories/cache/</link>
       <pubDate>Sat, 23 Apr 2022 00:00:00 +0000</pubDate>
       
-      <guid>/en/categories/cache/</guid>
+      <guid>https://pixeldin.github.io/en/categories/cache/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Middleware</title>
-      <link>/en/categories/middleware/</link>
+      <link>https://pixeldin.github.io/en/categories/middleware/</link>
       <pubDate>Fri, 25 Feb 2022 00:00:00 +0000</pubDate>
       
-      <guid>/en/categories/middleware/</guid>
+      <guid>https://pixeldin.github.io/en/categories/middleware/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Network</title>
-      <link>/en/categories/network/</link>
+      <link>https://pixeldin.github.io/en/categories/network/</link>
       <pubDate>Fri, 04 Feb 2022 00:00:00 +0000</pubDate>
       
-      <guid>/en/categories/network/</guid>
+      <guid>https://pixeldin.github.io/en/categories/network/</guid>
       <description></description>
     </item>
     
     <item>
       <title>TCP</title>
-      <link>/en/categories/tcp/</link>
+      <link>https://pixeldin.github.io/en/categories/tcp/</link>
       <pubDate>Fri, 04 Feb 2022 00:00:00 +0000</pubDate>
       
-      <guid>/en/categories/tcp/</guid>
+      <guid>https://pixeldin.github.io/en/categories/tcp/</guid>
       <description></description>
     </item>
     
     <item>
       <title>microservice</title>
-      <link>/en/categories/microservice/</link>
+      <link>https://pixeldin.github.io/en/categories/microservice/</link>
       <pubDate>Thu, 23 Dec 2021 00:00:00 +0000</pubDate>
       
-      <guid>/en/categories/microservice/</guid>
+      <guid>https://pixeldin.github.io/en/categories/microservice/</guid>
       <description></description>
     </item>
     
     <item>
       <title>OS</title>
-      <link>/en/categories/os/</link>
+      <link>https://pixeldin.github.io/en/categories/os/</link>
       <pubDate>Sun, 18 Oct 2020 00:00:00 +0000</pubDate>
       
-      <guid>/en/categories/os/</guid>
+      <guid>https://pixeldin.github.io/en/categories/os/</guid>
       <description></description>
     </item>
     
