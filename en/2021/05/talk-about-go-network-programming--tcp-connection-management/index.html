@@ -2,10 +2,30 @@
 <html lang="en-us">
   <head>
     
+    <script type="application/ld+json">
+
+{  
+  "@context":"http://schema.org",
+  "@type":"Website",
+  "@id":"",
+  "author": {
+    "@type": "Person",
+    "name": "pixelpig",
+    
+    "image": "https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/pig.jpg"
+    
+  },
+  "name":"pixelpig.tech",
+  "description":"\u003cp\u003eIn the last article, we talked about how to initiate a TCP connection in Go, and listed a full-duplex demo. Today, we will talk about connection pool management further.\u003c\/p\u003e",
+  "url":"\/en\/2021\/05\/talk-about-go-network-programming--tcp-connection-management\/",
+  "keywords":"[]"
+}
+
+</script>
     <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="generator" content="Hugo 0.111.3 with theme Tranquilpeak 0.4.8-BETA">
+<meta name="generator" content="Hugo 0.111.3 with theme Tranquilpeak 0.5.3-BETA">
 <meta name="author" content="pixelpig">
 <meta name="keywords" content="">
 <meta name="description" content="In the last article, we talked about how to initiate a TCP connection in Go, and listed a full-duplex demo. Today, we will talk about connection pool management further.">
@@ -57,12 +77,12 @@
 
 
 
-
-
-
-
   <meta property="og:image" content="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/pig.jpg">
   <meta property="twitter:image" content="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/pig.jpg">
+
+
+
+
 
 
     <title>Talk about Go: Network programming--TCP Connection Management</title>
@@ -75,12 +95,12 @@
     <link rel="canonical" href="/en/2021/05/talk-about-go-network-programming--tcp-connection-management/">
 
     
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/jquery.fancybox.min.css" integrity="sha256-vuXZ9LGmmwtjqFX1F+EKin1ThZMub58gKULUyf0qECk=" crossorigin="anonymous" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/helpers/jquery.fancybox-thumbs.min.css" integrity="sha256-SEa4XYAHihTcEP1f5gARTB2K26Uk8PsndQYHQC1f4jU=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" integrity="sha512-H9jrZiiopUdsLpg94A333EfumgUBpO9MdbxStdeITo+KEIMaNfHNvwyjjDJb+ERPaRS6DpyRlKbvPUasNItRyw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     
     
-    <link rel="stylesheet" href="/css/style-twzjdbqhmnnacqs0pwwdzcdbt8yhv8giawvjqjmyfoqnvazl0dalmnhdkvp7.min.css" />
+    
+    <link rel="stylesheet" href="css/style-gcideuhm7ornpr6qzw6hxhweyjzkouh7ngmdzuxpliypneg3hdj9michdmee.min.css" />
     
     
 
@@ -95,12 +115,12 @@
       <header id="header" data-behavior="5">
   <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
   <div class="header-title">
-    <a class="header-title-link" href="/en/">pixelpig.tech</a>
+    <a class="header-title-link" href="/en/" aria-label="Go to homepage">pixelpig.tech</a>
   </div>
   
     
       <a class="header-right-picture "
-         href="/#about">
+         href="/#about" aria-label="Open the link: /#about">
     
     
     
@@ -116,7 +136,7 @@
   <div class="sidebar-container">
     
       <div class="sidebar-profile">
-        <a href="/#about">
+        <a href="/#about" aria-label="Read more about the author">
           <img class="sidebar-profile-picture" src="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/pig.jpg" alt="Author&#39;s picture" />
         </a>
         <h4 class="sidebar-profile-name">pixelpig</h4>
@@ -129,7 +149,7 @@
       
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="/zh">
+      <a class="sidebar-button-link " href="/zh" title="简体中文">
     
       <i class="sidebar-button-icon fa fa-lg fa-language"></i>
       
@@ -139,7 +159,7 @@
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="/en/">
+      <a class="sidebar-button-link " href="/en/" title="Home">
     
       <i class="sidebar-button-icon fa fa-lg fa-home"></i>
       
@@ -149,7 +169,7 @@
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="/en/categories">
+      <a class="sidebar-button-link " href="/en/categories" title="Categories">
     
       <i class="sidebar-button-icon fa fa-lg fa-bookmark"></i>
       
@@ -159,7 +179,7 @@
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="/en/tags">
+      <a class="sidebar-button-link " href="/en/tags" title="Tags">
     
       <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
       
@@ -169,7 +189,7 @@
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="/en/archives">
+      <a class="sidebar-button-link " href="/en/archives" title="Archives">
     
       <i class="sidebar-button-icon fa fa-lg fa-archive"></i>
       
@@ -179,7 +199,7 @@
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="/en/#about">
+      <a class="sidebar-button-link " href="/en/#about" title="About me">
     
       <i class="sidebar-button-icon fa fa-lg fa-question"></i>
       
@@ -189,32 +209,35 @@
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="https://twitter.com/pixelpigpigpig/" target="_blank" rel="noopener">
+      <a class="sidebar-button-link " href="https://twitter.com/pixelpigpigpig/" target="_blank" rel="noopener" title="Twitter">
     
-      <i class="sidebar-button-icon fa fa-lg fa-twitter"></i>
+      <i class="sidebar-button-icon fab fa-lg fa-twitter"></i>
       
-      <span class="sidebar-button-desc">Twitter</span>
+      <span class="sidebar-button-desc">twitter</span>
     </a>
   </li>
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="https://github.com/pixeldin" target="_blank" rel="noopener">
+      <a class="sidebar-button-link " href="https://github.com/pixeldin" target="_blank" rel="noopener" title="pixeldin">
     
-      <i class="sidebar-button-icon fa fa-lg fa-github"></i>
+      <i class="sidebar-button-icon fab fa-lg fa-github-alt"></i>
       
       <span class="sidebar-button-desc">pixeldin</span>
     </a>
   </li>
 
 
-    </ul>
-    <ul class="sidebar-buttons">
-      
 
     </ul>
     <ul class="sidebar-buttons">
       
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+
 
     </ul>
   </div>
@@ -226,19 +249,19 @@
         class="
                hasCoverMetaIn
                ">
-        <article class="post" itemscope itemType="http://schema.org/BlogPosting">
+        <article class="post" id="top">
           
           
             <div class="post-header main-content-wrap text-left">
   
-    <h1 class="post-title" itemprop="headline">
+    <h1 class="post-title">
       Talk about Go: Network programming--TCP Connection Management
     </h1>
   
   
   <div class="postShorten-meta post-meta">
     
-      <time itemprop="datePublished" datetime="2021-05-16T00:00:00Z">
+      <time datetime="2021-05-16T00:00:00Z">
         
   May 16, 2021
 
@@ -261,7 +284,7 @@
 
 </div>
           
-          <div class="post-content markdown" itemprop="articleBody">
+          <div class="post-content markdown">
             <div class="main-content-wrap">
               <p>In the last article, we talked about how to initiate a TCP connection in Go, and listed a full-duplex demo. Today, we will talk about connection pool management further.</p>
 <h3 id="foreword">Foreword</h3>
@@ -594,6 +617,8 @@ In addition, the above example uses the built-in two-way queue of Go to maintain
 <p>I wonder if you can feel that the communication model of blocking and awakening implemented by using the language features that comes with the Go channel looks more concise and elegant.<br>
 I have a deeper understanding of Go&rsquo;s concurrency philosophy: &ldquo;<em>Do not communicate through shared memory, but share memory through communication</em>&rdquo;.</p>
               
+
+
             </div>
           </div>
           <div id="post-footer" class="post-footer main-content-wrap">
@@ -610,47 +635,48 @@ I have a deeper understanding of Go&rsquo;s concurrency philosophy: &ldquo;<em>D
                 
               
             
-            <div class="post-actions-wrap">
-  
-      <nav >
-        <ul class="post-actions post-action-nav">
-          
-            <li class="post-action">
-              
-                <a class="post-action-btn btn btn--default tooltip--top" href="/en/2021/08/before-talking-about-the-gin-web-framework-lets-take-a-look-at-httprouter/" data-tooltip="Before talking about the Gin web framework, let&#39;s take a look at httprouter">
-              
-                  <i class="fa fa-angle-left"></i>
-                  <span class="hide-xs hide-sm text-small icon-ml">NEXT</span>
-                </a>
-            </li>
-            <li class="post-action">
-              
-                <a class="post-action-btn btn btn--default tooltip--top" href="/en/2021/05/talk-about-go-network-programming--tcp-communication/" data-tooltip="Talk about Go: Network programming--TCP Communication">
-              
-                  <span class="hide-xs hide-sm text-small icon-mr">PREVIOUS</span>
-                  <i class="fa fa-angle-right"></i>
-                </a>
-            </li>
-          
-        </ul>
-      </nav>
-    <ul class="post-actions post-action-share" >
+            
+<div class="post-actions-wrap">
+  <nav >
+    <ul class="post-actions post-action-nav">
       
+        <li class="post-action">
+          
+            <a class="post-action-btn btn btn--default tooltip--top" href="/en/2021/08/before-talking-about-the-gin-web-framework-lets-take-a-look-at-httprouter/" data-tooltip="Before talking about the Gin web framework, let&#39;s take a look at httprouter" aria-label="NEXT: Before talking about the Gin web framework, let&#39;s take a look at httprouter">
+          
+              <i class="fa fa-angle-left"></i>
+              <span class="hide-xs hide-sm text-small icon-ml">NEXT</span>
+            </a>
+        </li>
+        <li class="post-action">
+          
+            <a class="post-action-btn btn btn--default tooltip--top" href="/en/2021/05/talk-about-go-network-programming--tcp-communication/" data-tooltip="Talk about Go: Network programming--TCP Communication" aria-label="PREVIOUS: Talk about Go: Network programming--TCP Communication">
+          
+              <span class="hide-xs hide-sm text-small icon-mr">PREVIOUS</span>
+              <i class="fa fa-angle-right"></i>
+            </a>
+        </li>
       
-      <li class="post-action">
-        
-          <a class="post-action-btn btn btn--default" href="#">
-        
-          <i class="fa fa-list"></i>
-        </a>
-      </li>
     </ul>
+  </nav>
+<ul class="post-actions post-action-share" >
   
+  
+  <li class="post-action">
+    
+      <a class="post-action-btn btn btn--default" href="#top" aria-label="Back to top">
+      <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    
+    </a>
+  </li>
+</ul>
 </div>
 
+
             
-              
-            
+  
+
+
           </div>
         </article>
         <footer id="footer" class="main-content-wrap">
@@ -661,58 +687,53 @@ I have a deeper understanding of Go&rsquo;s concurrency philosophy: &ldquo;<em>D
 
       </div>
       <div id="bottom-bar" class="post-bottom-bar" data-behavior="5">
-        <div class="post-actions-wrap">
-  
-      <nav >
-        <ul class="post-actions post-action-nav">
-          
-            <li class="post-action">
-              
-                <a class="post-action-btn btn btn--default tooltip--top" href="/en/2021/08/before-talking-about-the-gin-web-framework-lets-take-a-look-at-httprouter/" data-tooltip="Before talking about the Gin web framework, let&#39;s take a look at httprouter">
-              
-                  <i class="fa fa-angle-left"></i>
-                  <span class="hide-xs hide-sm text-small icon-ml">NEXT</span>
-                </a>
-            </li>
-            <li class="post-action">
-              
-                <a class="post-action-btn btn btn--default tooltip--top" href="/en/2021/05/talk-about-go-network-programming--tcp-communication/" data-tooltip="Talk about Go: Network programming--TCP Communication">
-              
-                  <span class="hide-xs hide-sm text-small icon-mr">PREVIOUS</span>
-                  <i class="fa fa-angle-right"></i>
-                </a>
-            </li>
-          
-        </ul>
-      </nav>
-    <ul class="post-actions post-action-share" >
-      
-      
-      <li class="post-action">
         
-          <a class="post-action-btn btn btn--default" href="#">
-        
-          <i class="fa fa-list"></i>
-        </a>
-      </li>
+<div class="post-actions-wrap">
+  <nav >
+    <ul class="post-actions post-action-nav">
+      
+        <li class="post-action">
+          
+            <a class="post-action-btn btn btn--default tooltip--top" href="/en/2021/08/before-talking-about-the-gin-web-framework-lets-take-a-look-at-httprouter/" data-tooltip="Before talking about the Gin web framework, let&#39;s take a look at httprouter" aria-label="NEXT: Before talking about the Gin web framework, let&#39;s take a look at httprouter">
+          
+              <i class="fa fa-angle-left"></i>
+              <span class="hide-xs hide-sm text-small icon-ml">NEXT</span>
+            </a>
+        </li>
+        <li class="post-action">
+          
+            <a class="post-action-btn btn btn--default tooltip--top" href="/en/2021/05/talk-about-go-network-programming--tcp-communication/" data-tooltip="Talk about Go: Network programming--TCP Communication" aria-label="PREVIOUS: Talk about Go: Network programming--TCP Communication">
+          
+              <span class="hide-xs hide-sm text-small icon-mr">PREVIOUS</span>
+              <i class="fa fa-angle-right"></i>
+            </a>
+        </li>
+      
     </ul>
+  </nav>
+<ul class="post-actions post-action-share" >
   
+  
+  <li class="post-action">
+    
+      <a class="post-action-btn btn btn--default" href="#top" aria-label="Back to top">
+      <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    
+    </a>
+  </li>
+</ul>
 </div>
 
+
       </div>
-      <div id="share-options-bar" class="share-options-bar" data-behavior="5">
-  <i id="btn-close-shareoptions" class="fa fa-close"></i>
-  <ul class="share-options">
-    
-  </ul>
-</div>
-<div id="share-options-mask" class="share-options-mask"></div>
+      
+
     </div>
     
     <div id="about">
   <div id="about-card">
     <div id="about-btn-close">
-      <i class="fa fa-remove"></i>
+      <i class="fa fa-times"></i>
     </div>
     
       <img id="about-card-picture" src="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/pig.jpg" alt="Author&#39;s picture" />
@@ -724,7 +745,7 @@ I have a deeper understanding of Go&rsquo;s concurrency philosophy: &ldquo;<em>D
     
     
       <div id="about-card-location">
-        <i class="fa fa-map-marker"></i>
+        <i class="fa fa-map-marker-alt"></i>
         <br/>
         GuangDong - CHINA
       </div>
@@ -741,30 +762,16 @@ I have a deeper understanding of Go&rsquo;s concurrency philosophy: &ldquo;<em>D
 
 
     
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js" integrity="sha256-/BfiIkHlHoVihZdc6TFuj7MmJ0TWcWsMXkeDFwhi0zw=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.1.0/highlight.min.js" integrity="sha512-z+/WWfyD5tccCukM4VvONpEtLmbAm5LDu7eKiyMQJ9m7OfPEDL7gENyDRL3Yfe8XAuGsS2fS4xSMnl6d30kqGQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.7/js/jquery.fancybox.min.js" integrity="sha256-GEAnjcTqVP+vBp3SSc8bEDQqvWAZMiHyUSIorrWwH50=" crossorigin="anonymous"></script>
-
-
-<script src="/js/script-pcw6v3xilnxydl1vddzazdverrnn9ctynvnxgwho987mfyqkuylcb1nlt.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js" integrity="sha512-uURl+ZXMBrF4AwGaWmEetzrd+J5/8NRkWAvJx5sbPSSuOb0bZLqf+tOzniObO00BjHa/dD7gub9oCGMLPQHtQA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 
-<script lang="javascript">
-window.onload = updateMinWidth;
-window.onresize = updateMinWidth;
-document.getElementById("sidebar").addEventListener("transitionend", updateMinWidth);
-function updateMinWidth() {
-  var sidebar = document.getElementById("sidebar");
-  var main = document.getElementById("main");
-  main.style.minWidth = "";
-  var w1 = getComputedStyle(main).getPropertyValue("min-width");
-  var w2 = getComputedStyle(sidebar).getPropertyValue("width");
-  var w3 = getComputedStyle(sidebar).getPropertyValue("left");
-  main.style.minWidth = `calc(${w1} - ${w2} - ${w3})`;
-}
-</script>
+<script src="/js/script-cbbmiuls7teg9rnaxp90d329jy4eqjgymkbxensyywnyvsfb7fdpdol2hiz.min.js"></script>
+
+
 
 <script>
 $(document).ready(function() {
@@ -777,11 +784,6 @@ $(document).ready(function() {
   });
 });
 </script>
-
-
-  
-    
-  
 
 
 

@@ -2,10 +2,30 @@
 <html lang="zh-cn">
   <head>
     
+    <script type="application/ld+json">
+
+{  
+  "@context":"http://schema.org",
+  "@type":"Website",
+  "@id":"",
+  "author": {
+    "@type": "Person",
+    "name": "pixelpig",
+    
+    "image": "https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/pig.jpg"
+    
+  },
+  "name":"pixelpig.tech",
+  "description":"\u003cp\u003e在网络分层的七层协议中，我们知道TCP处于HTTP层的下方，本质上HTTP应用层包体解析是基于底层的TCP连接建立的。\u003c\/p\u003e",
+  "url":"\/zh\/2021\/05\/%E8%81%8A%E4%B8%80%E8%81%8Ago%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B%E4%B8%80--tcp%E9%80%9A%E4%BF%A1\/",
+  "keywords":"[]"
+}
+
+</script>
     <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="generator" content="Hugo 0.111.3 with theme Tranquilpeak 0.4.8-BETA">
+<meta name="generator" content="Hugo 0.111.3 with theme Tranquilpeak 0.5.3-BETA">
 <meta name="author" content="pixelpig">
 <meta name="keywords" content="">
 <meta name="description" content="在网络分层的七层协议中，我们知道TCP处于HTTP层的下方，本质上HTTP应用层包体解析是基于底层的TCP连接建立的。">
@@ -55,15 +75,15 @@
 
 
 
-  <meta property="og:image" content="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/blog/net-1.png">
-  <meta property="twitter:image" content="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/blog/net-1.png">
-
-
-
-
-
   <meta property="og:image" content="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/pig.jpg">
   <meta property="twitter:image" content="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/pig.jpg">
+
+
+
+
+
+  <meta property="og:image" content="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/blog/net-1.png">
+  <meta property="twitter:image" content="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/blog/net-1.png">
 
 
     <title>聊一聊Go网络编程(一)--TCP通信</title>
@@ -76,12 +96,12 @@
     <link rel="canonical" href="/zh/2021/05/%E8%81%8A%E4%B8%80%E8%81%8Ago%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B%E4%B8%80--tcp%E9%80%9A%E4%BF%A1/">
 
     
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/jquery.fancybox.min.css" integrity="sha256-vuXZ9LGmmwtjqFX1F+EKin1ThZMub58gKULUyf0qECk=" crossorigin="anonymous" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/helpers/jquery.fancybox-thumbs.min.css" integrity="sha256-SEa4XYAHihTcEP1f5gARTB2K26Uk8PsndQYHQC1f4jU=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" integrity="sha512-H9jrZiiopUdsLpg94A333EfumgUBpO9MdbxStdeITo+KEIMaNfHNvwyjjDJb+ERPaRS6DpyRlKbvPUasNItRyw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     
     
-    <link rel="stylesheet" href="/css/style-twzjdbqhmnnacqs0pwwdzcdbt8yhv8giawvjqjmyfoqnvazl0dalmnhdkvp7.min.css" />
+    
+    <link rel="stylesheet" href="css/style-gcideuhm7ornpr6qzw6hxhweyjzkouh7ngmdzuxpliypneg3hdj9michdmee.min.css" />
     
     
 
@@ -96,12 +116,12 @@
       <header id="header" data-behavior="5">
   <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
   <div class="header-title">
-    <a class="header-title-link" href="/zh/">pixelpig.tech</a>
+    <a class="header-title-link" href="/zh/" aria-label="去首页">pixelpig.tech</a>
   </div>
   
     
       <a class="header-right-picture "
-         href="/#about">
+         href="/#about" aria-label="打开链接: /#about">
     
     
     
@@ -117,7 +137,7 @@
   <div class="sidebar-container">
     
       <div class="sidebar-profile">
-        <a href="/#about">
+        <a href="/#about" aria-label="阅读有关作者的更多信息">
           <img class="sidebar-profile-picture" src="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/pig.jpg" alt="作者的图片" />
         </a>
         <h4 class="sidebar-profile-name">pixelpig</h4>
@@ -130,7 +150,7 @@
       
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="/en">
+      <a class="sidebar-button-link " href="/en" title="English">
     
       <i class="sidebar-button-icon fa fa-lg fa-language"></i>
       
@@ -140,7 +160,7 @@
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="/zh/">
+      <a class="sidebar-button-link " href="/zh/" title="Home">
     
       <i class="sidebar-button-icon fa fa-lg fa-home"></i>
       
@@ -150,7 +170,7 @@
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="/zh/categories">
+      <a class="sidebar-button-link " href="/zh/categories" title="Categories">
     
       <i class="sidebar-button-icon fa fa-lg fa-bookmark"></i>
       
@@ -160,7 +180,7 @@
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="/zh/tags">
+      <a class="sidebar-button-link " href="/zh/tags" title="Tags">
     
       <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
       
@@ -170,7 +190,7 @@
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="/zh/archives">
+      <a class="sidebar-button-link " href="/zh/archives" title="Archives">
     
       <i class="sidebar-button-icon fa fa-lg fa-archive"></i>
       
@@ -180,9 +200,9 @@
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="/zh/#about">
+      <a class="sidebar-button-link " href="/zh/#about" title="About">
     
-      <i class="sidebar-button-icon fa fa-lg fa-question"></i>
+      <i class="sidebar-button-icon fa fa-lg fa-question-circle"></i>
       
       <span class="sidebar-button-desc">关于我</span>
     </a>
@@ -190,22 +210,25 @@
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="https://github.com/pixeldin" target="_blank" rel="noopener">
+      <a class="sidebar-button-link " href="https://github.com/pixeldin" target="_blank" rel="noopener" title="pixeldin">
     
-      <i class="sidebar-button-icon fa fa-lg fa-github"></i>
+      <i class="sidebar-button-icon fab fa-lg fa-github-alt"></i>
       
-      <span class="sidebar-button-desc">pixeldin</span>
+      <span class="sidebar-button-desc">github</span>
     </a>
   </li>
 
 
-    </ul>
-    <ul class="sidebar-buttons">
-      
 
     </ul>
     <ul class="sidebar-buttons">
       
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+
 
     </ul>
   </div>
@@ -217,19 +240,19 @@
         class="
                hasCoverMetaIn
                ">
-        <article class="post" itemscope itemType="http://schema.org/BlogPosting">
+        <article class="post" id="top">
           
           
             <div class="post-header main-content-wrap text-left">
   
-    <h1 class="post-title" itemprop="headline">
+    <h1 class="post-title">
       聊一聊Go网络编程(一)--TCP通信
     </h1>
   
   
   <div class="postShorten-meta post-meta">
     
-      <time itemprop="datePublished" datetime="2021-05-15T00:00:00Z">
+      <time datetime="2021-05-15T00:00:00Z">
         
   五月 15, 2021
 
@@ -250,7 +273,7 @@
 
 </div>
           
-          <div class="post-content markdown" itemprop="articleBody">
+          <div class="post-content markdown">
             <div class="main-content-wrap">
               <p>在网络分层的七层协议中，我们知道TCP处于HTTP层的下方，本质上HTTP应用层包体解析是基于底层的TCP连接建立的。</p>
 <h3 id="tcp协议概要">TCP协议概要</h3>
@@ -617,6 +640,8 @@ FAIL
 <strong>Using TCP keepalive under Linux</strong><br>
 <a href="https://tldp.org/HOWTO/TCP-Keepalive-HOWTO/usingkeepalive.html">https://tldp.org/HOWTO/TCP-Keepalive-HOWTO/usingkeepalive.html</a></p>
               
+
+
             </div>
           </div>
           <div id="post-footer" class="post-footer main-content-wrap">
@@ -633,47 +658,48 @@ FAIL
                 
               
             
-            <div class="post-actions-wrap">
-  
-      <nav >
-        <ul class="post-actions post-action-nav">
-          
-            <li class="post-action">
-              
-                <a class="post-action-btn btn btn--default tooltip--top" href="/zh/2021/05/%E8%81%8A%E4%B8%80%E8%81%8Ago%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B%E4%BA%8C--tcp%E8%BF%9E%E6%8E%A5%E7%AE%A1%E7%90%86/" data-tooltip="聊一聊Go网络编程(二)--TCP连接管理">
-              
-                  <i class="fa fa-angle-left"></i>
-                  <span class="hide-xs hide-sm text-small icon-ml">下一篇</span>
-                </a>
-            </li>
-            <li class="post-action">
-              
-                <a class="post-action-btn btn btn--default tooltip--top" href="/zh/2021/01/go%E5%8D%8F%E7%A8%8B%E9%97%B4%E9%80%9A%E4%BF%A1%E4%B9%8B%E7%94%9F%E4%BA%A7%E8%80%85-%E6%B6%88%E8%B4%B9%E8%80%85%E6%A8%A1%E5%9E%8B/" data-tooltip="Go协程间通信之生产者-消费者模型">
-              
-                  <span class="hide-xs hide-sm text-small icon-mr">上一篇</span>
-                  <i class="fa fa-angle-right"></i>
-                </a>
-            </li>
-          
-        </ul>
-      </nav>
-    <ul class="post-actions post-action-share" >
+            
+<div class="post-actions-wrap">
+  <nav >
+    <ul class="post-actions post-action-nav">
       
+        <li class="post-action">
+          
+            <a class="post-action-btn btn btn--default tooltip--top" href="/zh/2021/05/%E8%81%8A%E4%B8%80%E8%81%8Ago%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B%E4%BA%8C--tcp%E8%BF%9E%E6%8E%A5%E7%AE%A1%E7%90%86/" data-tooltip="聊一聊Go网络编程(二)--TCP连接管理" aria-label="后一篇: 聊一聊Go网络编程(二)--TCP连接管理">
+          
+              <i class="fa fa-angle-left"></i>
+              <span class="hide-xs hide-sm text-small icon-ml">后一篇</span>
+            </a>
+        </li>
+        <li class="post-action">
+          
+            <a class="post-action-btn btn btn--default tooltip--top" href="/zh/2021/01/go%E5%8D%8F%E7%A8%8B%E9%97%B4%E9%80%9A%E4%BF%A1%E4%B9%8B%E7%94%9F%E4%BA%A7%E8%80%85-%E6%B6%88%E8%B4%B9%E8%80%85%E6%A8%A1%E5%9E%8B/" data-tooltip="Go协程间通信之生产者-消费者模型" aria-label="前一篇: Go协程间通信之生产者-消费者模型">
+          
+              <span class="hide-xs hide-sm text-small icon-mr">前一篇</span>
+              <i class="fa fa-angle-right"></i>
+            </a>
+        </li>
       
-      <li class="post-action">
-        
-          <a class="post-action-btn btn btn--default" href="#">
-        
-          <i class="fa fa-list"></i>
-        </a>
-      </li>
     </ul>
+  </nav>
+<ul class="post-actions post-action-share" >
   
+  
+  <li class="post-action">
+    
+      <a class="post-action-btn btn btn--default" href="#top" aria-label="回到顶部">
+      <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    
+    </a>
+  </li>
+</ul>
 </div>
 
+
             
-              
-            
+  
+
+
           </div>
         </article>
         <footer id="footer" class="main-content-wrap">
@@ -684,58 +710,53 @@ FAIL
 
       </div>
       <div id="bottom-bar" class="post-bottom-bar" data-behavior="5">
-        <div class="post-actions-wrap">
-  
-      <nav >
-        <ul class="post-actions post-action-nav">
-          
-            <li class="post-action">
-              
-                <a class="post-action-btn btn btn--default tooltip--top" href="/zh/2021/05/%E8%81%8A%E4%B8%80%E8%81%8Ago%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B%E4%BA%8C--tcp%E8%BF%9E%E6%8E%A5%E7%AE%A1%E7%90%86/" data-tooltip="聊一聊Go网络编程(二)--TCP连接管理">
-              
-                  <i class="fa fa-angle-left"></i>
-                  <span class="hide-xs hide-sm text-small icon-ml">下一篇</span>
-                </a>
-            </li>
-            <li class="post-action">
-              
-                <a class="post-action-btn btn btn--default tooltip--top" href="/zh/2021/01/go%E5%8D%8F%E7%A8%8B%E9%97%B4%E9%80%9A%E4%BF%A1%E4%B9%8B%E7%94%9F%E4%BA%A7%E8%80%85-%E6%B6%88%E8%B4%B9%E8%80%85%E6%A8%A1%E5%9E%8B/" data-tooltip="Go协程间通信之生产者-消费者模型">
-              
-                  <span class="hide-xs hide-sm text-small icon-mr">上一篇</span>
-                  <i class="fa fa-angle-right"></i>
-                </a>
-            </li>
-          
-        </ul>
-      </nav>
-    <ul class="post-actions post-action-share" >
-      
-      
-      <li class="post-action">
         
-          <a class="post-action-btn btn btn--default" href="#">
-        
-          <i class="fa fa-list"></i>
-        </a>
-      </li>
+<div class="post-actions-wrap">
+  <nav >
+    <ul class="post-actions post-action-nav">
+      
+        <li class="post-action">
+          
+            <a class="post-action-btn btn btn--default tooltip--top" href="/zh/2021/05/%E8%81%8A%E4%B8%80%E8%81%8Ago%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B%E4%BA%8C--tcp%E8%BF%9E%E6%8E%A5%E7%AE%A1%E7%90%86/" data-tooltip="聊一聊Go网络编程(二)--TCP连接管理" aria-label="后一篇: 聊一聊Go网络编程(二)--TCP连接管理">
+          
+              <i class="fa fa-angle-left"></i>
+              <span class="hide-xs hide-sm text-small icon-ml">后一篇</span>
+            </a>
+        </li>
+        <li class="post-action">
+          
+            <a class="post-action-btn btn btn--default tooltip--top" href="/zh/2021/01/go%E5%8D%8F%E7%A8%8B%E9%97%B4%E9%80%9A%E4%BF%A1%E4%B9%8B%E7%94%9F%E4%BA%A7%E8%80%85-%E6%B6%88%E8%B4%B9%E8%80%85%E6%A8%A1%E5%9E%8B/" data-tooltip="Go协程间通信之生产者-消费者模型" aria-label="前一篇: Go协程间通信之生产者-消费者模型">
+          
+              <span class="hide-xs hide-sm text-small icon-mr">前一篇</span>
+              <i class="fa fa-angle-right"></i>
+            </a>
+        </li>
+      
     </ul>
+  </nav>
+<ul class="post-actions post-action-share" >
   
+  
+  <li class="post-action">
+    
+      <a class="post-action-btn btn btn--default" href="#top" aria-label="回到顶部">
+      <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    
+    </a>
+  </li>
+</ul>
 </div>
 
+
       </div>
-      <div id="share-options-bar" class="share-options-bar" data-behavior="5">
-  <i id="btn-close-shareoptions" class="fa fa-close"></i>
-  <ul class="share-options">
-    
-  </ul>
-</div>
-<div id="share-options-mask" class="share-options-mask"></div>
+      
+
     </div>
     
     <div id="about">
   <div id="about-card">
     <div id="about-btn-close">
-      <i class="fa fa-remove"></i>
+      <i class="fa fa-times"></i>
     </div>
     
       <img id="about-card-picture" src="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/pig.jpg" alt="作者的图片" />
@@ -747,7 +768,7 @@ FAIL
     
     
       <div id="about-card-location">
-        <i class="fa fa-map-marker"></i>
+        <i class="fa fa-map-marker-alt"></i>
         <br/>
         GuangDong - CHINA
       </div>
@@ -764,30 +785,16 @@ FAIL
 
 
     
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js" integrity="sha256-/BfiIkHlHoVihZdc6TFuj7MmJ0TWcWsMXkeDFwhi0zw=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.1.0/highlight.min.js" integrity="sha512-z+/WWfyD5tccCukM4VvONpEtLmbAm5LDu7eKiyMQJ9m7OfPEDL7gENyDRL3Yfe8XAuGsS2fS4xSMnl6d30kqGQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.7/js/jquery.fancybox.min.js" integrity="sha256-GEAnjcTqVP+vBp3SSc8bEDQqvWAZMiHyUSIorrWwH50=" crossorigin="anonymous"></script>
-
-
-<script src="/js/script-pcw6v3xilnxydl1vddzazdverrnn9ctynvnxgwho987mfyqkuylcb1nlt.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js" integrity="sha512-uURl+ZXMBrF4AwGaWmEetzrd+J5/8NRkWAvJx5sbPSSuOb0bZLqf+tOzniObO00BjHa/dD7gub9oCGMLPQHtQA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 
-<script lang="javascript">
-window.onload = updateMinWidth;
-window.onresize = updateMinWidth;
-document.getElementById("sidebar").addEventListener("transitionend", updateMinWidth);
-function updateMinWidth() {
-  var sidebar = document.getElementById("sidebar");
-  var main = document.getElementById("main");
-  main.style.minWidth = "";
-  var w1 = getComputedStyle(main).getPropertyValue("min-width");
-  var w2 = getComputedStyle(sidebar).getPropertyValue("width");
-  var w3 = getComputedStyle(sidebar).getPropertyValue("left");
-  main.style.minWidth = `calc(${w1} - ${w2} - ${w3})`;
-}
-</script>
+<script src="/js/script-cbbmiuls7teg9rnaxp90d329jy4eqjgymkbxensyywnyvsfb7fdpdol2hiz.min.js"></script>
+
+
 
 <script>
 $(document).ready(function() {
@@ -800,11 +807,6 @@ $(document).ready(function() {
   });
 });
 </script>
-
-
-  
-    
-  
 
 
 
