@@ -2,161 +2,161 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Tags on pixelpig.tech</title>
-    <link>/en/tags/</link>
+    <link>https://pixeldin.github.io/en/tags/</link>
     <description>Recent content in Tags on pixelpig.tech</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 01 May 2023 00:00:00 +0000</lastBuildDate><atom:link href="/en/tags/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 01 May 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://pixeldin.github.io/en/tags/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>简历</title>
-      <link>/en/tags/%E7%AE%80%E5%8E%86/</link>
+      <link>https://pixeldin.github.io/en/tags/%E7%AE%80%E5%8E%86/</link>
       <pubDate>Mon, 01 May 2023 00:00:00 +0000</pubDate>
       
-      <guid>/en/tags/%E7%AE%80%E5%8E%86/</guid>
+      <guid>https://pixeldin.github.io/en/tags/%E7%AE%80%E5%8E%86/</guid>
       <description></description>
     </item>
     
     <item>
       <title>TypeScript</title>
-      <link>/en/tags/typescript/</link>
+      <link>https://pixeldin.github.io/en/tags/typescript/</link>
       <pubDate>Sat, 04 Feb 2023 00:00:00 +0000</pubDate>
       
-      <guid>/en/tags/typescript/</guid>
+      <guid>https://pixeldin.github.io/en/tags/typescript/</guid>
       <description></description>
     </item>
     
     <item>
       <title>distributed systems</title>
-      <link>/en/tags/distributed-systems/</link>
+      <link>https://pixeldin.github.io/en/tags/distributed-systems/</link>
       <pubDate>Thu, 23 Jun 2022 00:00:00 +0000</pubDate>
       
-      <guid>/en/tags/distributed-systems/</guid>
+      <guid>https://pixeldin.github.io/en/tags/distributed-systems/</guid>
       <description></description>
     </item>
     
     <item>
       <title>etcd</title>
-      <link>/en/tags/etcd/</link>
+      <link>https://pixeldin.github.io/en/tags/etcd/</link>
       <pubDate>Thu, 23 Jun 2022 00:00:00 +0000</pubDate>
       
-      <guid>/en/tags/etcd/</guid>
+      <guid>https://pixeldin.github.io/en/tags/etcd/</guid>
       <description></description>
     </item>
     
     <item>
       <title>raft</title>
-      <link>/en/tags/raft/</link>
+      <link>https://pixeldin.github.io/en/tags/raft/</link>
       <pubDate>Thu, 23 Jun 2022 00:00:00 +0000</pubDate>
       
-      <guid>/en/tags/raft/</guid>
+      <guid>https://pixeldin.github.io/en/tags/raft/</guid>
       <description></description>
     </item>
     
     <item>
       <title>false sharing</title>
-      <link>/en/tags/false-sharing/</link>
+      <link>https://pixeldin.github.io/en/tags/false-sharing/</link>
       <pubDate>Sat, 23 Apr 2022 00:00:00 +0000</pubDate>
       
-      <guid>/en/tags/false-sharing/</guid>
+      <guid>https://pixeldin.github.io/en/tags/false-sharing/</guid>
       <description></description>
     </item>
     
     <item>
       <title>object pool</title>
-      <link>/en/tags/object-pool/</link>
+      <link>https://pixeldin.github.io/en/tags/object-pool/</link>
       <pubDate>Sat, 23 Apr 2022 00:00:00 +0000</pubDate>
       
-      <guid>/en/tags/object-pool/</guid>
+      <guid>https://pixeldin.github.io/en/tags/object-pool/</guid>
       <description></description>
     </item>
     
     <item>
       <title>sync.Pool</title>
-      <link>/en/tags/sync.pool/</link>
+      <link>https://pixeldin.github.io/en/tags/sync.pool/</link>
       <pubDate>Sat, 23 Apr 2022 00:00:00 +0000</pubDate>
       
-      <guid>/en/tags/sync.pool/</guid>
+      <guid>https://pixeldin.github.io/en/tags/sync.pool/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Talk about Go</title>
-      <link>/en/tags/talk-about-go/</link>
+      <link>https://pixeldin.github.io/en/tags/talk-about-go/</link>
       <pubDate>Sat, 23 Apr 2022 00:00:00 +0000</pubDate>
       
-      <guid>/en/tags/talk-about-go/</guid>
+      <guid>https://pixeldin.github.io/en/tags/talk-about-go/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Goroutine</title>
-      <link>/en/tags/goroutine/</link>
+      <link>https://pixeldin.github.io/en/tags/goroutine/</link>
       <pubDate>Thu, 17 Mar 2022 00:00:00 +0000</pubDate>
       
-      <guid>/en/tags/goroutine/</guid>
+      <guid>https://pixeldin.github.io/en/tags/goroutine/</guid>
       <description></description>
     </item>
     
     <item>
       <title>pprof</title>
-      <link>/en/tags/pprof/</link>
+      <link>https://pixeldin.github.io/en/tags/pprof/</link>
       <pubDate>Thu, 17 Mar 2022 00:00:00 +0000</pubDate>
       
-      <guid>/en/tags/pprof/</guid>
+      <guid>https://pixeldin.github.io/en/tags/pprof/</guid>
       <description></description>
     </item>
     
     <item>
       <title>circuit breaker</title>
-      <link>/en/tags/circuit-breaker/</link>
+      <link>https://pixeldin.github.io/en/tags/circuit-breaker/</link>
       <pubDate>Fri, 25 Feb 2022 00:00:00 +0000</pubDate>
       
-      <guid>/en/tags/circuit-breaker/</guid>
+      <guid>https://pixeldin.github.io/en/tags/circuit-breaker/</guid>
       <description></description>
     </item>
     
     <item>
       <title>HA</title>
-      <link>/en/tags/ha/</link>
+      <link>https://pixeldin.github.io/en/tags/ha/</link>
       <pubDate>Thu, 23 Dec 2021 00:00:00 +0000</pubDate>
       
-      <guid>/en/tags/ha/</guid>
+      <guid>https://pixeldin.github.io/en/tags/ha/</guid>
       <description></description>
     </item>
     
     <item>
       <title>microservice</title>
-      <link>/en/tags/microservice/</link>
+      <link>https://pixeldin.github.io/en/tags/microservice/</link>
       <pubDate>Thu, 23 Dec 2021 00:00:00 +0000</pubDate>
       
-      <guid>/en/tags/microservice/</guid>
+      <guid>https://pixeldin.github.io/en/tags/microservice/</guid>
       <description></description>
     </item>
     
     <item>
       <title>process communication</title>
-      <link>/en/tags/process-communication/</link>
+      <link>https://pixeldin.github.io/en/tags/process-communication/</link>
       <pubDate>Thu, 23 Dec 2021 00:00:00 +0000</pubDate>
       
-      <guid>/en/tags/process-communication/</guid>
+      <guid>https://pixeldin.github.io/en/tags/process-communication/</guid>
       <description></description>
     </item>
     
     <item>
       <title>gin</title>
-      <link>/en/tags/gin/</link>
+      <link>https://pixeldin.github.io/en/tags/gin/</link>
       <pubDate>Fri, 15 Oct 2021 00:00:00 +0000</pubDate>
       
-      <guid>/en/tags/gin/</guid>
+      <guid>https://pixeldin.github.io/en/tags/gin/</guid>
       <description></description>
     </item>
     
     <item>
       <title>interceptor</title>
-      <link>/en/tags/interceptor/</link>
+      <link>https://pixeldin.github.io/en/tags/interceptor/</link>
       <pubDate>Fri, 15 Oct 2021 00:00:00 +0000</pubDate>
       
-      <guid>/en/tags/interceptor/</guid>
+      <guid>https://pixeldin.github.io/en/tags/interceptor/</guid>
       <description></description>
     </item>
     

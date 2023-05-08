@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>OS on pixelpig.tech</title>
-    <link>/en/categories/os/</link>
+    <link>https://pixeldin.github.io/en/categories/os/</link>
     <description>Recent content in OS on pixelpig.tech</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 18 Oct 2020 00:00:00 +0000</lastBuildDate><atom:link href="/en/categories/os/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 18 Oct 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://pixeldin.github.io/en/categories/os/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Talk about Go: The operating system&#39;s thread scheduling and Goroutines</title>
-      <link>/en/2020/10/talk-about-go-the-operating-systems-thread-scheduling-and-goroutines/</link>
+      <link>https://pixeldin.github.io/en/2020/10/talk-about-go-the-operating-systems-thread-scheduling-and-goroutines/</link>
       <pubDate>Sun, 18 Oct 2020 00:00:00 +0000</pubDate>
       
-      <guid>/en/2020/10/talk-about-go-the-operating-systems-thread-scheduling-and-goroutines/</guid>
+      <guid>https://pixeldin.github.io/en/2020/10/talk-about-go-the-operating-systems-thread-scheduling-and-goroutines/</guid>
       <description>&lt;p&gt;&lt;img src=&#34;https://miro.medium.com/max/2271/1*Y3cMxHqERb1htaJ0GbgixQ.png&#34; alt=&#34;Steal goroutine#ref by Renee French&#34;&gt;&lt;/p&gt;
 &lt;p&gt;Every task running on our computer is resource allocation at the operating system level. From starting a process to creating a thread, with a fixed number of cores, multiple threads execute concurrently.&lt;/p&gt;</description>
     </item>

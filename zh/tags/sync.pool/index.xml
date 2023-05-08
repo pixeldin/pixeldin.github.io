@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>sync.Pool on pixelpig.tech</title>
-    <link>/zh/tags/sync.pool/</link>
+    <link>https://pixeldin.github.io/zh/tags/sync.pool/</link>
     <description>Recent content in sync.Pool on pixelpig.tech</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Sat, 23 Apr 2022 00:00:00 +0000</lastBuildDate><atom:link href="/zh/tags/sync.pool/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 23 Apr 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://pixeldin.github.io/zh/tags/sync.pool/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>聊一聊Go的原生高性能对象复用池sync.Pool</title>
-      <link>/zh/2022/04/%E8%81%8A%E4%B8%80%E8%81%8Ago%E7%9A%84%E5%8E%9F%E7%94%9F%E9%AB%98%E6%80%A7%E8%83%BD%E5%AF%B9%E8%B1%A1%E5%A4%8D%E7%94%A8%E6%B1%A0sync.pool/</link>
+      <link>https://pixeldin.github.io/zh/2022/04/%E8%81%8A%E4%B8%80%E8%81%8Ago%E7%9A%84%E5%8E%9F%E7%94%9F%E9%AB%98%E6%80%A7%E8%83%BD%E5%AF%B9%E8%B1%A1%E5%A4%8D%E7%94%A8%E6%B1%A0sync.pool/</link>
       <pubDate>Sat, 23 Apr 2022 00:00:00 +0000</pubDate>
       
-      <guid>/zh/2022/04/%E8%81%8A%E4%B8%80%E8%81%8Ago%E7%9A%84%E5%8E%9F%E7%94%9F%E9%AB%98%E6%80%A7%E8%83%BD%E5%AF%B9%E8%B1%A1%E5%A4%8D%E7%94%A8%E6%B1%A0sync.pool/</guid>
+      <guid>https://pixeldin.github.io/zh/2022/04/%E8%81%8A%E4%B8%80%E8%81%8Ago%E7%9A%84%E5%8E%9F%E7%94%9F%E9%AB%98%E6%80%A7%E8%83%BD%E5%AF%B9%E8%B1%A1%E5%A4%8D%E7%94%A8%E6%B1%A0sync.pool/</guid>
       <description>&lt;p&gt;池化操作在计算机领域层出不穷，如连接池、线程\协程池、工作池。我们要知道，之所以引入资源池，本质上是为了复用资源。&lt;/p&gt;</description>
     </item>
     

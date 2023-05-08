@@ -7,7 +7,7 @@
 {  
   "@context":"http://schema.org",
   "@type":"Website",
-  "@id":"",
+  "@id":"https:\/\/pixeldin.github.io\/",
   "author": {
     "@type": "Person",
     "name": "pixelpig",
@@ -17,7 +17,7 @@
   },
   "name":"pixelpig.tech",
   "description":"\u003cp\u003e在微服务链路中，熔断是指在短时间内接口出现\u003cstrong\u003e多次异常\/超时\u003c\/strong\u003e(\u003cstrong\u003e错误率过高\u003c\/strong\u003e)，通过对接口\u003cstrong\u003e快速失败\u003c\/strong\u003e，避免上游反复重试以至于下游被压垮的一种保护策略。\u003c\/p\u003e",
-  "url":"\/zh\/2022\/02\/%E8%81%8A%E4%B8%80%E8%81%8Ago%E5%AE%9E%E7%8E%B0%E7%9A%84%E6%8E%A5%E5%8F%A3%E7%86%94%E6%96%AD%E5%99%A8-circuit-breaker\/",
+  "url":"https:\/\/pixeldin.github.io\/zh\/2022\/02\/%E8%81%8A%E4%B8%80%E8%81%8Ago%E5%AE%9E%E7%8E%B0%E7%9A%84%E6%8E%A5%E5%8F%A3%E7%86%94%E6%96%AD%E5%99%A8-circuit-breaker\/",
   "keywords":"[]"
 }
 
@@ -35,8 +35,8 @@
 <meta property="og:type" content="article">
 <meta property="og:title" content="聊一聊Go实现的接口熔断器: Circuit Breaker">
 <meta name="twitter:title" content="聊一聊Go实现的接口熔断器: Circuit Breaker">
-<meta property="og:url" content="/zh/2022/02/%E8%81%8A%E4%B8%80%E8%81%8Ago%E5%AE%9E%E7%8E%B0%E7%9A%84%E6%8E%A5%E5%8F%A3%E7%86%94%E6%96%AD%E5%99%A8-circuit-breaker/">
-<meta property="twitter:url" content="/zh/2022/02/%E8%81%8A%E4%B8%80%E8%81%8Ago%E5%AE%9E%E7%8E%B0%E7%9A%84%E6%8E%A5%E5%8F%A3%E7%86%94%E6%96%AD%E5%99%A8-circuit-breaker/">
+<meta property="og:url" content="https://pixeldin.github.io/zh/2022/02/%E8%81%8A%E4%B8%80%E8%81%8Ago%E5%AE%9E%E7%8E%B0%E7%9A%84%E6%8E%A5%E5%8F%A3%E7%86%94%E6%96%AD%E5%99%A8-circuit-breaker/">
+<meta property="twitter:url" content="https://pixeldin.github.io/zh/2022/02/%E8%81%8A%E4%B8%80%E8%81%8Ago%E5%AE%9E%E7%8E%B0%E7%9A%84%E6%8E%A5%E5%8F%A3%E7%86%94%E6%96%AD%E5%99%A8-circuit-breaker/">
 <meta property="og:site_name" content="pixelpig.tech">
 <meta property="og:description" content="在微服务链路中，熔断是指在短时间内接口出现多次异常/超时(错误率过高)，通过对接口快速失败，避免上游反复重试以至于下游被压垮的一种保护策略。">
 <meta name="twitter:description" content="在微服务链路中，熔断是指在短时间内接口出现多次异常/超时(错误率过高)，通过对接口快速失败，避免上游反复重试以至于下游被压垮的一种保护策略。">
@@ -97,7 +97,7 @@
 
     
 
-    <link rel="canonical" href="/zh/2022/02/%E8%81%8A%E4%B8%80%E8%81%8Ago%E5%AE%9E%E7%8E%B0%E7%9A%84%E6%8E%A5%E5%8F%A3%E7%86%94%E6%96%AD%E5%99%A8-circuit-breaker/">
+    <link rel="canonical" href="https://pixeldin.github.io/zh/2022/02/%E8%81%8A%E4%B8%80%E8%81%8Ago%E5%AE%9E%E7%8E%B0%E7%9A%84%E6%8E%A5%E5%8F%A3%E7%86%94%E6%96%AD%E5%99%A8-circuit-breaker/">
 
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -105,7 +105,7 @@
     
     
     
-    <link rel="stylesheet" href="css/style-hzezrmckmobe762t6uelutfaiasrbqfuvrnardmpe6x0eunosl9tyqk61.min.css" />
+    <link rel="stylesheet" href="https://pixeldin.github.io/css/style-hzezrmckmobe762t6uelutfaiasrbqfuvrnardmpe6x0eunosl9tyqk61.min.css" />
     
     
 
@@ -120,12 +120,12 @@
       <header id="header" data-behavior="5">
   <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
   <div class="header-title">
-    <a class="header-title-link" href="/zh/" aria-label="去首页">pixelpig.tech</a>
+    <a class="header-title-link" href="https://pixeldin.github.io/zh/" aria-label="去首页">pixelpig.tech</a>
   </div>
   
     
       <a class="header-right-picture "
-         href="/#about" aria-label="打开链接: /#about">
+         href="https://pixeldin.github.io/#about" aria-label="打开链接: /#about">
     
     
     
@@ -141,7 +141,7 @@
   <div class="sidebar-container">
     
       <div class="sidebar-profile">
-        <a href="/#about" aria-label="阅读有关作者的更多信息">
+        <a href="https://pixeldin.github.io/#about" aria-label="阅读有关作者的更多信息">
           <img class="sidebar-profile-picture" src="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/pig.jpg" alt="作者的图片" />
         </a>
         <h4 class="sidebar-profile-name">pixelpig</h4>
@@ -154,7 +154,7 @@
       
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="/en" title="English">
+      <a class="sidebar-button-link " href="https://pixeldin.github.io/en" title="English">
     
       <i class="sidebar-button-icon fa fa-lg fa-language"></i>
       
@@ -164,7 +164,7 @@
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="/zh/" title="Home">
+      <a class="sidebar-button-link " href="https://pixeldin.github.io/zh/" title="Home">
     
       <i class="sidebar-button-icon fa fa-lg fa-home"></i>
       
@@ -174,7 +174,7 @@
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="/zh/categories" title="Categories">
+      <a class="sidebar-button-link " href="https://pixeldin.github.io/zh/categories" title="Categories">
     
       <i class="sidebar-button-icon fa fa-lg fa-bookmark"></i>
       
@@ -184,7 +184,7 @@
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="/zh/tags" title="Tags">
+      <a class="sidebar-button-link " href="https://pixeldin.github.io/zh/tags" title="Tags">
     
       <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
       
@@ -194,7 +194,7 @@
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="/zh/archives" title="Archives">
+      <a class="sidebar-button-link " href="https://pixeldin.github.io/zh/archives" title="Archives">
     
       <i class="sidebar-button-icon fa fa-lg fa-archive"></i>
       
@@ -204,7 +204,7 @@
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="/zh/#about" title="About">
+      <a class="sidebar-button-link " href="https://pixeldin.github.io/zh/#about" title="About">
     
       <i class="sidebar-button-icon fa fa-lg fa-question-circle"></i>
       
@@ -267,9 +267,9 @@
   
     <span>发布在</span>
     
-      <a class="category-link" href="/zh/categories/go">Go</a>, 
+      <a class="category-link" href="https://pixeldin.github.io/zh/categories/go">Go</a>, 
     
-      <a class="category-link" href="/zh/categories/%e7%bd%91%e5%85%b3%e4%b8%ad%e9%97%b4%e4%bb%b6">网关中间件</a>
+      <a class="category-link" href="https://pixeldin.github.io/zh/categories/%e7%bd%91%e5%85%b3%e4%b8%ad%e9%97%b4%e4%bb%b6">网关中间件</a>
     
   
 
@@ -571,11 +571,11 @@
                   <div class="post-footer-tags">
                     <span class="text-color-light text-small">标签</span><br/>
                     
-  <a class="tag tag--primary tag--small" href="/zh/tags/%E7%86%94%E6%96%AD%E5%99%A8/">熔断器</a>
+  <a class="tag tag--primary tag--small" href="https://pixeldin.github.io/zh/tags/%E7%86%94%E6%96%AD%E5%99%A8/">熔断器</a>
 
-  <a class="tag tag--primary tag--small" href="/zh/tags/%E5%BF%AB%E9%80%9F%E5%A4%B1%E8%B4%A5/">快速失败</a>
+  <a class="tag tag--primary tag--small" href="https://pixeldin.github.io/zh/tags/%E5%BF%AB%E9%80%9F%E5%A4%B1%E8%B4%A5/">快速失败</a>
 
-  <a class="tag tag--primary tag--small" href="/zh/tags/circuit-breaker/">circuit breaker</a>
+  <a class="tag tag--primary tag--small" href="https://pixeldin.github.io/zh/tags/circuit-breaker/">circuit breaker</a>
 
                   </div>
                 
@@ -588,7 +588,7 @@
       
         <li class="post-action">
           
-            <a class="post-action-btn btn btn--default tooltip--top" href="/zh/2022/03/%E8%81%8A%E4%B8%80%E8%81%8Ago%E7%9A%84%E5%8D%8F%E7%A8%8B%E4%BF%A1%E6%81%AF%E5%92%8C%E5%A6%82%E4%BD%95%E9%A2%84%E9%98%B2%E6%B3%84%E9%9C%B2/" data-tooltip="聊一聊Go的协程信息和如何预防泄露" aria-label="后一篇: 聊一聊Go的协程信息和如何预防泄露">
+            <a class="post-action-btn btn btn--default tooltip--top" href="https://pixeldin.github.io/zh/2022/03/%E8%81%8A%E4%B8%80%E8%81%8Ago%E7%9A%84%E5%8D%8F%E7%A8%8B%E4%BF%A1%E6%81%AF%E5%92%8C%E5%A6%82%E4%BD%95%E9%A2%84%E9%98%B2%E6%B3%84%E9%9C%B2/" data-tooltip="聊一聊Go的协程信息和如何预防泄露" aria-label="后一篇: 聊一聊Go的协程信息和如何预防泄露">
           
               <i class="fa fa-angle-left"></i>
               <span class="hide-xs hide-sm text-small icon-ml">后一篇</span>
@@ -596,7 +596,7 @@
         </li>
         <li class="post-action">
           
-            <a class="post-action-btn btn btn--default tooltip--top" href="/zh/2022/02/%E8%81%8A%E4%B8%80%E8%81%8A%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8Btcp%E6%B5%81%E7%9A%84%E7%BB%84%E5%8C%85%E6%8B%86%E5%8C%85/" data-tooltip="聊一聊网络编程TCP流的组包拆包" aria-label="前一篇: 聊一聊网络编程TCP流的组包拆包">
+            <a class="post-action-btn btn btn--default tooltip--top" href="https://pixeldin.github.io/zh/2022/02/%E8%81%8A%E4%B8%80%E8%81%8A%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8Btcp%E6%B5%81%E7%9A%84%E7%BB%84%E5%8C%85%E6%8B%86%E5%8C%85/" data-tooltip="聊一聊网络编程TCP流的组包拆包" aria-label="前一篇: 聊一聊网络编程TCP流的组包拆包">
           
               <span class="hide-xs hide-sm text-small icon-mr">前一篇</span>
               <i class="fa fa-angle-right"></i>
@@ -647,7 +647,7 @@
       
         <li class="post-action">
           
-            <a class="post-action-btn btn btn--default tooltip--top" href="/zh/2022/03/%E8%81%8A%E4%B8%80%E8%81%8Ago%E7%9A%84%E5%8D%8F%E7%A8%8B%E4%BF%A1%E6%81%AF%E5%92%8C%E5%A6%82%E4%BD%95%E9%A2%84%E9%98%B2%E6%B3%84%E9%9C%B2/" data-tooltip="聊一聊Go的协程信息和如何预防泄露" aria-label="后一篇: 聊一聊Go的协程信息和如何预防泄露">
+            <a class="post-action-btn btn btn--default tooltip--top" href="https://pixeldin.github.io/zh/2022/03/%E8%81%8A%E4%B8%80%E8%81%8Ago%E7%9A%84%E5%8D%8F%E7%A8%8B%E4%BF%A1%E6%81%AF%E5%92%8C%E5%A6%82%E4%BD%95%E9%A2%84%E9%98%B2%E6%B3%84%E9%9C%B2/" data-tooltip="聊一聊Go的协程信息和如何预防泄露" aria-label="后一篇: 聊一聊Go的协程信息和如何预防泄露">
           
               <i class="fa fa-angle-left"></i>
               <span class="hide-xs hide-sm text-small icon-ml">后一篇</span>
@@ -655,7 +655,7 @@
         </li>
         <li class="post-action">
           
-            <a class="post-action-btn btn btn--default tooltip--top" href="/zh/2022/02/%E8%81%8A%E4%B8%80%E8%81%8A%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8Btcp%E6%B5%81%E7%9A%84%E7%BB%84%E5%8C%85%E6%8B%86%E5%8C%85/" data-tooltip="聊一聊网络编程TCP流的组包拆包" aria-label="前一篇: 聊一聊网络编程TCP流的组包拆包">
+            <a class="post-action-btn btn btn--default tooltip--top" href="https://pixeldin.github.io/zh/2022/02/%E8%81%8A%E4%B8%80%E8%81%8A%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8Btcp%E6%B5%81%E7%9A%84%E7%BB%84%E5%8C%85%E6%8B%86%E5%8C%85/" data-tooltip="聊一聊网络编程TCP流的组包拆包" aria-label="前一篇: 聊一聊网络编程TCP流的组包拆包">
           
               <span class="hide-xs hide-sm text-small icon-mr">前一篇</span>
               <i class="fa fa-angle-right"></i>
@@ -729,7 +729,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js" integrity="sha512-uURl+ZXMBrF4AwGaWmEetzrd+J5/8NRkWAvJx5sbPSSuOb0bZLqf+tOzniObO00BjHa/dD7gub9oCGMLPQHtQA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 
-<script src="/js/script-1zdg58d80rvvnb0viabadlivdd03cwll0zhobn8d3xl8weau7iwypjdnclx.min.js"></script>
+<script src="https://pixeldin.github.io/js/script-1zdg58d80rvvnb0viabadlivdd03cwll0zhobn8d3xl8weau7iwypjdnclx.min.js"></script>
 
 
 
