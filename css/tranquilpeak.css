@@ -3555,6 +3555,10 @@ pre > code {
   color: #ffffff;
 }
 
+pre > code.codeblock {
+  overflow-x: auto;
+}
+
 code {
   background-color: #f7f8f8;
 }
@@ -3684,17 +3688,20 @@ figure.highlight .deletion,
 }
 figure.highlight .formula,
 figure.highlight .operator,
-figure.highlight .params,
-figure.highlight .property,
 figure.highlight .punctuation,
-figure.highlight .tag,
 .codeblock .formula,
 .codeblock .operator,
+.codeblock .punctuation {
+  color: #88aece;
+}
+figure.highlight .params,
+figure.highlight .property,
+figure.highlight .tag,
 .codeblock .params,
 .codeblock .property,
-.codeblock .punctuation,
 .codeblock .tag {
   /* purposely ignored */
+  color: #41c941;
 }
 figure.highlight .emphasis,
 .codeblock .emphasis {
