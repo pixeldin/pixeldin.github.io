@@ -3560,7 +3560,7 @@ pre > code.codeblock {
 }
 
 code {
-  background-color: #f7f8f8;
+  background-color: #f7f8f88c;
 }
 
 .codeblock--tabbed figcaption .tab.active {
@@ -3586,7 +3586,7 @@ figure.highlight figcaption,
 figure.highlight .gutter,
 .codeblock .gutter {
   background: #1c1b1b;
-  border-right-color: #f7f8f8;
+  border-right-color: #f7f8f88c;
 }
 figure.highlight .gutter .line,
 .codeblock .gutter .line {
@@ -3595,7 +3595,7 @@ figure.highlight .gutter .line,
 figure.highlight .comment,
 .codeblock .comment {
   /* var(--highlight-comment) */
-  color: #999999;
+  color: #99999981;
 }
 figure.highlight .addition,
 .codeblock .addition {
