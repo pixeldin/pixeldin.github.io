@@ -27,8 +27,10 @@ Currently in the process of precipitating technology. I hope we can do something
       <guid>https://pixeldin.github.io/en/page/about-zh/</guid>
       <description>你好，我是 Pixelpig.
 一些足迹 Keep it simple, so as this bio.
-过去曾经在国内互联网与流媒体公司参与数据处理相关工作，大概4年服务端，1年全栈开发，目前在沉淀技术中，希望未来能做点什么好玩的事情 喜欢分享，对开源项目保持热情，参与过如APISIX，Sealos等开源社区feature开发和bugfix工作 近期对交互设计，流媒体处理也挺感兴趣，正在研究ffmpeg,迭代项目ffmpig 技能 熟悉服务端开发语言：Golang/Java/Lua/TypeScript 熟悉前端常用框架Vue.js/Next.js，能独立创建维护应用 熟悉主流数据库使用: Redis/MongoDB/MySQL/Kafka 熟悉常用微服务框架，掌握Linux常用命令与Shell脚本编写 项目经验 众创像素 前端可视化组件集成开发 结合Chart.js, D3.js前端框架，生成图表、地图和其他数据可视化组件 使用Next.js框架提供上游应用的预渲染，当用户访问 Next.js 应用程序时，从服务器获取页面的初始网页代码，加速应用程序能够快速地响应用户交互和更新 广州虎牙 (2021-2022) 负责云生产平台后端组件、通用模块开发 配合项目使用 go-micro 微服务框架，引入自定义插件，定制 Circuit Breaker熔断器保护组件，基于读写锁实现实时 API 错误率统计
-支持公司周边服务系统开发 参与日活 40 万直播间业务开发，负责积分礼物分发系统，引入事务管理协调器，使用 Redis+MySQL 搭建分布式事务系统，搭建异步消息延迟队列作库存一致性保障 负责年会游戏排队功能开发，接入内部 Tars RPC 框架，使用 DCache 内存队列存储用户报名信息 珠海金山网络游戏 (2018-2021) 剑网三游戏 PVP竞技场数据采集开发 搭建游戏数据实时上报链路：自定义 Kafka 分区分发策略、消费端 lag/lead 监控指标，使用 MongoDB 持久化存储日志，设置分片键与读写场景策略调优 负责日均 30 万竞技场数据 ETL 实时计算：组建 Redis 内存压缩队列（hash 表+zset 集合），采用上下游数据生产-消费模型，使用 Go channel 限流，构建失败重试队列，引入 Go 原生 sync.</description>
+过去曾经在国内互联网与流媒体公司参与数据处理相关工作，大概4年服务端，1年全栈开发，目前在沉淀技术中，希望未来能做点什么好玩的事情 喜欢分享，对开源项目保持热情，参与过如APISIX，Sealos等开源社区feature开发和bugfix工作 近期对交互设计，流媒体处理也挺感兴趣，正在研究ffmpeg,迭代项目ffmpig 开发技能
+熟悉服务端开发语言：Golang/Java/Lua/TypeScript 熟悉前端常用框架Vue.js/Next.js，能独立创建维护应用 熟悉主流数据库使用: Redis/MongoDB/MySQL/Kafka 熟悉常用微服务框架，掌握Linux常用命令与Shell脚本编写 项目经验
+@众创像素 前端可视化组件集成开发 结合Chart.js, D3.js前端框架，生成图表、地图和其他数据可视化组件 使用Next.js框架提供上游应用的预渲染，当用户访问Next.js应用程序时，从服务器获取页面的初始网页代码，加速应用程序能够快速地响应用户交互和更新 @广州虎牙 (2021-2022) 负责云生产平台后端组件、通用模块开发 配合项目使用go-micro微服务框架，引入自定义插件，定制 Circuit Breaker熔断器保护组件，基于读写锁实现实时 API 错误率统计
+支持公司周边服务系统开发 参与日活 40 万直播间业务开发，负责积分礼物分发系统，引入事务管理协调器，使用Redis+MySQL搭建分布式事务系统，搭建异步消息延迟队列作库存一致性保障 负责年会游戏排队功能开发，接入内部Tars RPC框架，使用DCache内存队列存储用户报名信息 @珠海金山网络游戏 (2018-2021) 剑网三游戏 PVP竞技场数据采集开发 搭建游戏数据实时上报链路：自定义Kafka分区分发策略、消费端lag/lead监控指标，使用 MongoDB 持久化存储日志，设置分片键与读写场景策略调优 负责日均 30 万竞技场数据“ETL”实时计算：组建Redis内存压缩队列（hash 表+zset 集合），采用上下游数据生产-消费模型，使用Go channel限流，构建失败重试队列，引入Go原生sync.Pool复用池，提升批量处理性能 搭建 Clickhouse 数据仓库：作为离线排序并导出游戏指标排名，选用 ReplacingMergeTree 表引擎，设置 Crontab 定时任务，小时增量/每天全量覆盖导入 游戏社区App 后端通用接口开发 掌握常见Go微服务调用框架用法，参与部门Gin Web框架中间件编写：结构体校验拦截器、接口耗时统计、上报链路追踪Grafana等通用模块 掌握常见数据库连接池的基本封装，使用 P/V 信号量通讯，维护连接队列获取与归还 熟悉Nginx、Kong等网关框架，编写配置Openresty自定义Lua插件 参与社区 app 首页推荐系统信息流开发 使用Grpc搭建基于Protobuf协议的Java+Go跨语言分词服务，实现文本相似计算服务，提供实时ElasticSearch自定义分数计算模块 组建用户信息流队列：使用Redis内存评分队列+多类目分发，基于版本号实现内容推送 拓展知识</description>
     </item>
     
     <item>
