@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>sync.Pool on pixelpig.space</title>
-    <link>/en/tags/sync.pool/</link>
-    <description>Recent content in sync.Pool on pixelpig.space</description>
+    <title>sync.Pool on pixelpig.tech</title>
+    <link>https://pixeldin.github.io/en/tags/sync.pool/</link>
+    <description>Recent content in sync.Pool on pixelpig.tech</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 23 Apr 2022 00:00:00 +0000</lastBuildDate><atom:link href="/en/tags/sync.pool/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 23 Apr 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://pixeldin.github.io/en/tags/sync.pool/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Talk about Go: A high performance pool for reusing object - Sync.Pool</title>
-      <link>/en/2022/04/talk-about-go-a-high-performance-pool-for-reusing-object-sync.pool/</link>
+      <link>https://pixeldin.github.io/en/2022/04/talk-about-go-a-high-performance-pool-for-reusing-object-sync.pool/</link>
       <pubDate>Sat, 23 Apr 2022 00:00:00 +0000</pubDate>
       
-      <guid>/en/2022/04/talk-about-go-a-high-performance-pool-for-reusing-object-sync.pool/</guid>
+      <guid>https://pixeldin.github.io/en/2022/04/talk-about-go-a-high-performance-pool-for-reusing-object-sync.pool/</guid>
       <description>&lt;p&gt;Pooling is frequently occurring in software field, such as connection pool\thread pool\routine poool etc. A pool is essentially to reuse resources.&lt;/p&gt;</description>
     </item>
     

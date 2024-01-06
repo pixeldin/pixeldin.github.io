@@ -2,11 +2,31 @@
 <html lang="en-us">
   <head>
     
+    <script type="application/ld+json">
+
+{  
+  "@context":"http://schema.org",
+  "@type":"Website",
+  "@id":"https:\/\/pixeldin.github.io\/",
+  "author": {
+    "@type": "Person",
+    "name": "@Pixelpig",
+    
+    "image": "https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/pig.jpg"
+    
+  },
+  "name":"pixelpig.tech",
+  "description":"\u003cp\u003eGoroutines are a common concept in Go, which starts and ends with the life cycle of a go program. Today, let\u0026rsquo;s talk about Go\u0026rsquo;s goroutine leak.\u003c\/p\u003e",
+  "url":"https:\/\/pixeldin.github.io\/en\/2022\/03\/talk-about-go-goroutines-information-and-how-to-prevent-goroutine-leaks\/",
+  "keywords":"[]"
+}
+
+</script>
     <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="generator" content="Hugo 0.80.0 with theme Tranquilpeak 0.4.8-BETA">
-<meta name="author" content="pixelpig">
+<meta name="generator" content="Hugo 0.111.3 with theme Tranquilpeak 0.5.3-BETA">
+<meta name="author" content="@Pixelpig">
 <meta name="keywords" content="">
 <meta name="description" content="Goroutines are a common concept in Go, which starts and ends with the life cycle of a go program. Today, let&rsquo;s talk about Go&rsquo;s goroutine leak.">
 
@@ -15,9 +35,9 @@
 <meta property="og:type" content="article">
 <meta property="og:title" content="Talk about Go: Goroutine&#39;s information and how to prevent goroutine leaks">
 <meta name="twitter:title" content="Talk about Go: Goroutine&#39;s information and how to prevent goroutine leaks">
-<meta property="og:url" content="/en/2022/03/talk-about-go-goroutines-information-and-how-to-prevent-goroutine-leaks/">
-<meta property="twitter:url" content="/en/2022/03/talk-about-go-goroutines-information-and-how-to-prevent-goroutine-leaks/">
-<meta property="og:site_name" content="pixelpig.space">
+<meta property="og:url" content="https://pixeldin.github.io/en/2022/03/talk-about-go-goroutines-information-and-how-to-prevent-goroutine-leaks/">
+<meta property="twitter:url" content="https://pixeldin.github.io/en/2022/03/talk-about-go-goroutines-information-and-how-to-prevent-goroutine-leaks/">
+<meta property="og:site_name" content="pixelpig.tech">
 <meta property="og:description" content="Goroutines are a common concept in Go, which starts and ends with the life cycle of a go program. Today, let&rsquo;s talk about Go&rsquo;s goroutine leak.">
 <meta name="twitter:description" content="Goroutines are a common concept in Go, which starts and ends with the life cycle of a go program. Today, let&rsquo;s talk about Go&rsquo;s goroutine leak.">
 <meta property="og:locale" content="en">
@@ -59,15 +79,15 @@
 
 
 
-  <meta property="og:image" content="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/blog/routine.PNG">
-  <meta property="twitter:image" content="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/blog/routine.PNG">
-
-
-
-
-
   <meta property="og:image" content="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/pig.jpg">
   <meta property="twitter:image" content="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/pig.jpg">
+
+
+
+
+
+  <meta property="og:image" content="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/blog/routine.PNG">
+  <meta property="twitter:image" content="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/blog/routine.PNG">
 
 
     <title>Talk about Go: Goroutine&#39;s information and how to prevent goroutine leaks</title>
@@ -77,15 +97,15 @@
 
     
 
-    <link rel="canonical" href="/en/2022/03/talk-about-go-goroutines-information-and-how-to-prevent-goroutine-leaks/">
+    <link rel="canonical" href="https://pixeldin.github.io/en/2022/03/talk-about-go-goroutines-information-and-how-to-prevent-goroutine-leaks/">
 
     
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/jquery.fancybox.min.css" integrity="sha256-vuXZ9LGmmwtjqFX1F+EKin1ThZMub58gKULUyf0qECk=" crossorigin="anonymous" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/helpers/jquery.fancybox-thumbs.min.css" integrity="sha256-SEa4XYAHihTcEP1f5gARTB2K26Uk8PsndQYHQC1f4jU=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" integrity="sha512-H9jrZiiopUdsLpg94A333EfumgUBpO9MdbxStdeITo+KEIMaNfHNvwyjjDJb+ERPaRS6DpyRlKbvPUasNItRyw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     
     
-    <link rel="stylesheet" href="/css/style-twzjdbqhmnnacqs0pwwdzcdbt8yhv8giawvjqjmyfoqnvazl0dalmnhdkvp7.min.css" />
+    
+    <link rel="stylesheet" href="https://pixeldin.github.io/css/style-fneuerdunt9vf6vafpewt2nttopqa9hdugoae6mfs7phtuibtq6qjxkds96.min.css" />
     
     
 
@@ -97,15 +117,15 @@
 
   <body>
     <div id="blog">
-      <header id="header" data-behavior="5">
+      <header id="header" data-behavior="1">
   <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
   <div class="header-title">
-    <a class="header-title-link" href="/en/">pixelpig.space</a>
+    <a class="header-title-link" href="https://pixeldin.github.io/en/" aria-label="Go to homepage">pixelpig.tech</a>
   </div>
   
     
       <a class="header-right-picture "
-         href="/#about">
+         href="https://pixeldin.github.io/#about" aria-label="Open the link: /#about">
     
     
     
@@ -117,16 +137,16 @@
   
 </header>
 
-      <nav id="sidebar" data-behavior="5">
+      <nav id="sidebar" data-behavior="1">
   <div class="sidebar-container">
     
       <div class="sidebar-profile">
-        <a href="/#about">
+        <a href="https://pixeldin.github.io/#about" aria-label="Read more about the author">
           <img class="sidebar-profile-picture" src="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/pig.jpg" alt="Author&#39;s picture" />
         </a>
-        <h4 class="sidebar-profile-name">pixelpig</h4>
+        <h4 class="sidebar-profile-name">@Pixelpig</h4>
         
-          <h5 class="sidebar-profile-bio">With enthusiasm for open source and I am looking forward to be a better developer. Stay hungry, stay foolish <strong>:）</strong></h5>
+          <h5 class="sidebar-profile-bio">Keep it simple, so as this bio <strong>:）</strong></h5>
         
       </div>
     
@@ -134,7 +154,7 @@
       
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="/zh">
+      <a class="sidebar-button-link " href="https://pixeldin.github.io/zh" title="简体中文">
     
       <i class="sidebar-button-icon fa fa-lg fa-language"></i>
       
@@ -144,7 +164,7 @@
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="/en/">
+      <a class="sidebar-button-link " href="https://pixeldin.github.io/en/" title="Home">
     
       <i class="sidebar-button-icon fa fa-lg fa-home"></i>
       
@@ -154,7 +174,7 @@
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="/en/categories">
+      <a class="sidebar-button-link " href="https://pixeldin.github.io/en/categories" title="Categories">
     
       <i class="sidebar-button-icon fa fa-lg fa-bookmark"></i>
       
@@ -164,7 +184,7 @@
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="/en/tags">
+      <a class="sidebar-button-link " href="https://pixeldin.github.io/en/tags" title="Tags">
     
       <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
       
@@ -174,7 +194,7 @@
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="/en/archives">
+      <a class="sidebar-button-link " href="https://pixeldin.github.io/en/archives" title="Archives">
     
       <i class="sidebar-button-icon fa fa-lg fa-archive"></i>
       
@@ -184,7 +204,7 @@
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="/en/#about">
+      <a class="sidebar-button-link " href="https://pixeldin.github.io/en/#about" title="About me">
     
       <i class="sidebar-button-icon fa fa-lg fa-question"></i>
       
@@ -194,32 +214,35 @@
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="https://twitter.com/pixelpigpigpig/" target="_blank" rel="noopener">
+      <a class="sidebar-button-link " href="https://twitter.com/pixelpigpigpig/" target="_blank" rel="noopener" title="Twitter">
     
-      <i class="sidebar-button-icon fa fa-lg fa-twitter"></i>
+      <i class="sidebar-button-icon fab fa-lg fa-twitter"></i>
       
-      <span class="sidebar-button-desc">Twitter</span>
+      <span class="sidebar-button-desc">twitter</span>
     </a>
   </li>
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="https://github.com/pixeldin" target="_blank" rel="noopener">
+      <a class="sidebar-button-link " href="https://github.com/pixeldin" target="_blank" rel="noopener" title="pixeldin">
     
-      <i class="sidebar-button-icon fa fa-lg fa-github"></i>
+      <i class="sidebar-button-icon fab fa-lg fa-github-alt"></i>
       
       <span class="sidebar-button-desc">pixeldin</span>
     </a>
   </li>
 
 
-    </ul>
-    <ul class="sidebar-buttons">
-      
 
     </ul>
     <ul class="sidebar-buttons">
       
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+
 
     </ul>
   </div>
@@ -227,23 +250,23 @@
 
       
 
-      <div id="main" data-behavior="5"
+      <div id="main" data-behavior="1"
         class="
                hasCoverMetaIn
                ">
-        <article class="post" itemscope itemType="http://schema.org/BlogPosting">
+        <article class="post" id="top">
           
           
             <div class="post-header main-content-wrap text-center">
   
-    <h1 class="post-title" itemprop="headline">
+    <h1 class="post-title">
       Talk about Go: Goroutine&#39;s information and how to prevent goroutine leaks
     </h1>
   
   
   <div class="postShorten-meta post-meta">
     
-      <time itemprop="datePublished" datetime="2022-03-17T00:00:00Z">
+      <time datetime="2022-03-17T00:00:00Z">
         
   March 17, 2022
 
@@ -254,9 +277,9 @@
   
     <span>in</span>
     
-      <a class="category-link" href="/en/categories/go">Go</a>, 
+      <a class="category-link" href="https://pixeldin.github.io/en/categories/go">Go</a>, 
     
-      <a class="category-link" href="/en/categories/backend">backend</a>
+      <a class="category-link" href="https://pixeldin.github.io/en/categories/backend">backend</a>
     
   
 
@@ -264,40 +287,40 @@
 
 </div>
           
-          <div class="post-content markdown" itemprop="articleBody">
+          <div class="post-content markdown">
             <div class="main-content-wrap">
               <p>Goroutines are a common concept in Go, which starts and ends with the life cycle of a go program. Today, let&rsquo;s talk about Go&rsquo;s goroutine leak.</p>
 <p><img src="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/blog/road.PNG" alt="协程通信"></p>
 <h2 id="foreword">Foreword</h2>
 <p>About the underlying concept of goroutine, GMP model, etc. It has been analyzed in the previous blog.<br>
-If you are interested, you can read the previous article <a href="/en/2020/10/talk-about-go-the-operating-systems-thread-scheduling-and-goroutines/">Talk about Go: The operating system&rsquo;s thread scheduling and Goroutines</a></p>
+If you are interested, you can read the previous article <a href="https://pixeldin.github.io/en/2020/10/talk-about-go-the-operating-systems-thread-scheduling-and-goroutines/">Talk about Go: The operating system&rsquo;s thread scheduling and Goroutines</a></p>
 <h2 id="leak-case">Leak case</h2>
 <p>The reason why goroutine leaks are common is that sometimes we ignore the problem until the resource load is abnormal.
 When excluding exceptions in the production environment before, I have encountered the scenario of memory leakage of the go program.</p>
 <p>Memory leakage is closely related to goroutine leakage, which is essentially caused by non-recycling of resources. Here is a brief restoration of the scene, the details have been deleted, and the approximate form is as follows:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">JumpForSignal</span>() <span style="color:#66d9ef">int</span> {
-    <span style="color:#a6e22e">ch</span> <span style="color:#f92672">:=</span> make(<span style="color:#66d9ef">chan</span> <span style="color:#66d9ef">int</span>)
-    <span style="color:#66d9ef">go</span> <span style="color:#66d9ef">func</span>() {
-        <span style="color:#a6e22e">ch</span> <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">bizMtx</span>
-    }()
-
-    <span style="color:#66d9ef">go</span> <span style="color:#66d9ef">func</span>() {
-        <span style="color:#a6e22e">ch</span> <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">bizMtx</span>
-    }()
-
-    <span style="color:#66d9ef">go</span> <span style="color:#66d9ef">func</span>() {
-        <span style="color:#a6e22e">ch</span> <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">bizMtx</span>
-    }()
-    <span style="color:#75715e">// Return as soon as there is input
-</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">return</span> <span style="color:#f92672">&lt;-</span><span style="color:#a6e22e">ch</span>
-}
-
-<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
-    <span style="color:#75715e">// ...
-</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">JumpForSignal</span>()
-    <span style="color:#75715e">// ...
-</span><span style="color:#75715e"></span>}
-</code></pre></div><p>After analyzing the demo, we can see that this function call will block two sub-coroutines, and only one goroutine is expected to exit normally.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">JumpForSignal</span>() <span style="color:#66d9ef">int</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">ch</span> <span style="color:#f92672">:=</span> make(<span style="color:#66d9ef">chan</span> <span style="color:#66d9ef">int</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">go</span> <span style="color:#66d9ef">func</span>() {
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">ch</span> <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">bizMtx</span>
+</span></span><span style="display:flex;"><span>    }()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">go</span> <span style="color:#66d9ef">func</span>() {
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">ch</span> <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">bizMtx</span>
+</span></span><span style="display:flex;"><span>    }()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">go</span> <span style="color:#66d9ef">func</span>() {
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">ch</span> <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">bizMtx</span>
+</span></span><span style="display:flex;"><span>    }()
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// Return as soon as there is input
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">return</span> <span style="color:#f92672">&lt;-</span><span style="color:#a6e22e">ch</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// ...
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#a6e22e">JumpForSignal</span>()
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// ...
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>}
+</span></span></code></pre></div><p>After analyzing the demo, we can see that this function call will block two sub-coroutines, and only one goroutine is expected to exit normally.</p>
 <h2 id="get-goroutine-information">Get goroutine information</h2>
 <p>Since there is a goroutine leak, how can we avoid or discover it in our daily work? Below we list a few ideas.</p>
 <h3 id="follow-the-guidelines">Follow the guidelines</h3>
@@ -305,313 +328,313 @@ When excluding exceptions in the production environment before, I have encounter
 <p>However, Go&rsquo;s <code>chan</code> has some guidelines when it is used. When it is determined that chan is no longer used, it can be closed on the output side to avoid other coroutines still waiting the <code>chan</code> for output.</p>
 <h3 id="number-of-coroutines">Number of coroutines</h3>
 <p>To find the leaked goroutine, the first thing you can think of is the number of goroutines. When your function processing logic is relatively simple, except for the main goroutine, the expected coroutines should all return before the end, which can be called at the end of the main function. <code>runtime</code> package functions:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#75715e">// NumGoroutine returns the number of goroutines that currently exist.
-</span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">NumGoroutine</span>() <span style="color:#66d9ef">int</span> {
-    <span style="color:#66d9ef">return</span> int(<span style="color:#a6e22e">gcount</span>())
-}
-</code></pre></div><p>We can return the total number of current coroutines by this:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">Count</span>()  {
-    <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;Number of goroutines:%d\n&#34;</span>, <span style="color:#a6e22e">runtime</span>.<span style="color:#a6e22e">NumGoroutine</span>())
-}
-
-<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
-    <span style="color:#66d9ef">defer</span> <span style="color:#a6e22e">Count</span>()
-    <span style="color:#a6e22e">Count</span>()
-    <span style="color:#a6e22e">JumpForSignal</span>()
-}
-</code></pre></div><p>Output：</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">Number of goroutines:1
-Number of goroutines:3
-</code></pre></div><h3 id="goroutine-function-stack">Goroutine function stack</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#75715e">// NumGoroutine returns the number of goroutines that currently exist.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">NumGoroutine</span>() <span style="color:#66d9ef">int</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> int(<span style="color:#a6e22e">gcount</span>())
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>We can return the total number of current coroutines by this:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">Count</span>()  {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;Number of goroutines:%d\n&#34;</span>, <span style="color:#a6e22e">runtime</span>.<span style="color:#a6e22e">NumGoroutine</span>())
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">defer</span> <span style="color:#a6e22e">Count</span>()
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">Count</span>()
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">JumpForSignal</span>()
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Output：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>Number of goroutines:1
+</span></span><span style="display:flex;"><span>Number of goroutines:3
+</span></span></code></pre></div><h3 id="goroutine-function-stack">Goroutine function stack</h3>
 <p>There is also a relatively common form of locating coroutines. In Go, it can be used to analyze the context of goroutine functions. Common ones, such as the pprof that comes with go, are also obtained in this way. In actual cases, conditions can be enabled. <strong>pprof</strong> facilitates analysis.</p>
 <p>Let&rsquo;s take a look at an example. We add a <code>http</code> port listener to the above example to access the <strong>pprof</strong> analysis tool that comes with go.</p>
 <p>Then enter in the browser:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#a6e22e">http</span>:<span style="color:#75715e">//localhost:8899/debug/pprof/goroutine?debug=1
-</span></code></pre></div><p>You can get a list of coroutines for the entire program:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">goroutine profile: total <span style="color:#ae81ff">7</span>
-<span style="color:#ae81ff">1</span> @ 0x165eb6 0x126465 0x126235 0x29341e 0x19de01
-<span style="color:#75715e">#   0x29341d    pixelgo/leak.JumpForSignal.func1+0x3d   F:/code/pixelGo/src/pix-demo/leak/leak.go:24</span>
-
-<span style="color:#ae81ff">1</span> @ 0x165eb6 0x126465 0x126235 0x29347e 0x19de01
-<span style="color:#75715e">#   0x29347d    pixelgo/leak.JumpForSignal.func2+0x3d   F:/code/pixelGo/src/pix-demo/leak/leak.go:28</span>
-
-<span style="color:#ae81ff">1</span> @ 0x165eb6 0x15bb3d 0x1975a5 0x228d05 0x229d8d 0x22c40d 0x321765 0x33437c 0x447c89 0x285239 0x285606 0x4493f3 0x450da8 0x19de01
-<span style="color:#75715e">#   0x1975a4    internal/poll.runtime_pollWait+0x64 D:/dev/go1.16/src/runtime/netpoll.go:227</span>
-<span style="color:#75715e">#   0x228d04    internal/poll.(*pollDesc).wait+0xa4 D:/dev/go1.16/src/internal/poll/fd_poll_runtime.go:87</span>
-<span style="color:#75715e">#   0x229d8c    internal/poll.execIO+0x2ac      D:/dev/go1.16/src/internal/poll/fd_windows.go:175</span>
-<span style="color:#75715e">#   0x22c40c    internal/poll.(*FD).Read+0x56c      </span>
-
-// ...
-</code></pre></div><p>The conclusion is: the current program has a total of 7 coroutines, it can be seen that there are 2 goroutine allocated in <code>F:/code/pixelGo/src/pix-demo/leak/leak.go:24</code> and <code>F:/code/pixelGo/src/pix-demo/leak/leak.go:28</code>.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">http</span>:<span style="color:#75715e">//localhost:8899/debug/pprof/goroutine?debug=1
+</span></span></span></code></pre></div><p>You can get a list of coroutines for the entire program:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>goroutine profile: total <span style="color:#ae81ff">7</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">1</span> @ 0x165eb6 0x126465 0x126235 0x29341e 0x19de01
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#   0x29341d    pixelgo/leak.JumpForSignal.func1+0x3d   F:/code/pixelGo/src/pix-demo/leak/leak.go:24</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">1</span> @ 0x165eb6 0x126465 0x126235 0x29347e 0x19de01
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#   0x29347d    pixelgo/leak.JumpForSignal.func2+0x3d   F:/code/pixelGo/src/pix-demo/leak/leak.go:28</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">1</span> @ 0x165eb6 0x15bb3d 0x1975a5 0x228d05 0x229d8d 0x22c40d 0x321765 0x33437c 0x447c89 0x285239 0x285606 0x4493f3 0x450da8 0x19de01
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#   0x1975a4    internal/poll.runtime_pollWait+0x64 D:/dev/go1.16/src/runtime/netpoll.go:227</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#   0x228d04    internal/poll.(*pollDesc).wait+0xa4 D:/dev/go1.16/src/internal/poll/fd_poll_runtime.go:87</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#   0x229d8c    internal/poll.execIO+0x2ac      D:/dev/go1.16/src/internal/poll/fd_windows.go:175</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#   0x22c40c    internal/poll.(*FD).Read+0x56c      </span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>// ...
+</span></span></code></pre></div><p>The conclusion is: the current program has a total of 7 coroutines, it can be seen that there are 2 goroutine allocated in <code>F:/code/pixelGo/src/pix-demo/leak/leak.go:24</code> and <code>F:/code/pixelGo/src/pix-demo/leak/leak.go:28</code>.</p>
 <p>Sometimes it can also be analyzed in multiple dimensions, such as :</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#a6e22e">http</span>:<span style="color:#75715e">//localhost:8899/debug/pprof/goroutine?debug=2
-</span></code></pre></div><p>You can see the different states of the current goroutine through the labels behind the goroutine, <strong>running/io wait/chan send</strong></p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#a6e22e">goroutine</span> <span style="color:#ae81ff">9</span> [<span style="color:#a6e22e">running</span>]:
-<span style="color:#a6e22e">runtime</span><span style="color:#f92672">/</span><span style="color:#a6e22e">pprof</span>.<span style="color:#a6e22e">writeGoroutineStacks</span>(<span style="color:#ae81ff">0x7f7d00</span>, <span style="color:#ae81ff">0xc0000aa000</span>, <span style="color:#ae81ff">0x0</span>, <span style="color:#ae81ff">0x0</span>)
-    <span style="color:#a6e22e">D</span>:<span style="color:#f92672">/</span><span style="color:#a6e22e">dev</span><span style="color:#f92672">/</span><span style="color:#a6e22e">go1</span><span style="color:#ae81ff">.16</span><span style="color:#f92672">/</span><span style="color:#a6e22e">src</span><span style="color:#f92672">/</span><span style="color:#a6e22e">runtime</span><span style="color:#f92672">/</span><span style="color:#a6e22e">pprof</span><span style="color:#f92672">/</span><span style="color:#a6e22e">pprof</span>.<span style="color:#66d9ef">go</span>:<span style="color:#ae81ff">693</span> <span style="color:#f92672">+</span><span style="color:#ae81ff">0xc5</span>
-<span style="color:#a6e22e">net</span><span style="color:#f92672">/</span><span style="color:#a6e22e">http</span><span style="color:#f92672">/</span><span style="color:#a6e22e">pprof</span>.<span style="color:#a6e22e">handler</span>.<span style="color:#a6e22e">ServeHTTP</span>(<span style="color:#ae81ff">0xc000094011</span>, <span style="color:#ae81ff">0x9</span>, <span style="color:#ae81ff">0x7fba40</span>, <span style="color:#ae81ff">0xc0000aa000</span>, <span style="color:#ae81ff">0xc000092000</span>)
-    <span style="color:#75715e">//..
-</span><span style="color:#75715e"></span>
-<span style="color:#a6e22e">goroutine</span> <span style="color:#ae81ff">1</span> [<span style="color:#a6e22e">IO</span> <span style="color:#a6e22e">wait</span>]:
-<span style="color:#a6e22e">internal</span><span style="color:#f92672">/</span><span style="color:#a6e22e">poll</span>.<span style="color:#a6e22e">runtime_pollWait</span>(<span style="color:#ae81ff">0x223debb10d8</span>, <span style="color:#ae81ff">0x72</span>, <span style="color:#ae81ff">0xc000152f48</span>)
-    <span style="color:#a6e22e">D</span>:<span style="color:#f92672">/</span><span style="color:#a6e22e">dev</span><span style="color:#f92672">/</span><span style="color:#a6e22e">go1</span><span style="color:#ae81ff">.16</span><span style="color:#f92672">/</span><span style="color:#a6e22e">src</span><span style="color:#f92672">/</span><span style="color:#a6e22e">runtime</span><span style="color:#f92672">/</span><span style="color:#a6e22e">netpoll</span>.<span style="color:#66d9ef">go</span>:<span style="color:#ae81ff">227</span> <span style="color:#f92672">+</span><span style="color:#ae81ff">0x65</span>
-<span style="color:#a6e22e">internal</span><span style="color:#f92672">/</span><span style="color:#a6e22e">poll</span>.(<span style="color:#f92672">*</span><span style="color:#a6e22e">pollDesc</span>).<span style="color:#a6e22e">wait</span>(<span style="color:#ae81ff">0xc0001530b8</span>, <span style="color:#ae81ff">0x72</span>, <span style="color:#ae81ff">0x93b400</span>, <span style="color:#ae81ff">0x0</span>, <span style="color:#ae81ff">0x0</span>)
-    <span style="color:#75715e">//...
-</span><span style="color:#75715e"></span>
-<span style="color:#a6e22e">goroutine</span> <span style="color:#ae81ff">6</span> [<span style="color:#66d9ef">chan</span> <span style="color:#a6e22e">send</span>]:
-<span style="color:#a6e22e">pixelgo</span><span style="color:#f92672">/</span><span style="color:#a6e22e">rout</span>.<span style="color:#a6e22e">JumpForSignal</span>.<span style="color:#a6e22e">func1</span>(<span style="color:#ae81ff">0xc000053800</span>)
-    <span style="color:#a6e22e">F</span>:<span style="color:#f92672">/</span><span style="color:#a6e22e">code</span><span style="color:#f92672">/</span><span style="color:#a6e22e">pixelGo</span><span style="color:#f92672">/</span><span style="color:#a6e22e">src</span><span style="color:#f92672">/</span><span style="color:#a6e22e">pix</span><span style="color:#f92672">-</span><span style="color:#a6e22e">demo</span><span style="color:#f92672">/</span><span style="color:#a6e22e">rout</span><span style="color:#f92672">/</span><span style="color:#a6e22e">leak</span>.<span style="color:#66d9ef">go</span>:<span style="color:#ae81ff">25</span> <span style="color:#f92672">+</span><span style="color:#ae81ff">0x10e</span>
-<span style="color:#a6e22e">created</span> <span style="color:#a6e22e">by</span> <span style="color:#a6e22e">pixelgo</span><span style="color:#f92672">/</span><span style="color:#a6e22e">rout</span>.<span style="color:#a6e22e">JumpForSignal</span>
-    <span style="color:#a6e22e">F</span>:<span style="color:#f92672">/</span><span style="color:#a6e22e">code</span><span style="color:#f92672">/</span><span style="color:#a6e22e">pixelGo</span><span style="color:#f92672">/</span><span style="color:#a6e22e">src</span><span style="color:#f92672">/</span><span style="color:#a6e22e">pix</span><span style="color:#f92672">-</span><span style="color:#a6e22e">demo</span><span style="color:#f92672">/</span><span style="color:#a6e22e">rout</span><span style="color:#f92672">/</span><span style="color:#a6e22e">leak</span>.<span style="color:#66d9ef">go</span>:<span style="color:#ae81ff">23</span> <span style="color:#f92672">+</span><span style="color:#ae81ff">0x71</span>
-
-<span style="color:#a6e22e">goroutine</span> <span style="color:#ae81ff">7</span> [<span style="color:#66d9ef">chan</span> <span style="color:#a6e22e">send</span>]:
-<span style="color:#a6e22e">pixelgo</span><span style="color:#f92672">/</span><span style="color:#a6e22e">rout</span>.<span style="color:#a6e22e">JumpForSignal</span>.<span style="color:#a6e22e">func2</span>(<span style="color:#ae81ff">0xc000053800</span>)
-    <span style="color:#a6e22e">F</span>:<span style="color:#f92672">/</span><span style="color:#a6e22e">code</span><span style="color:#f92672">/</span><span style="color:#a6e22e">pixelGo</span><span style="color:#f92672">/</span><span style="color:#a6e22e">src</span><span style="color:#f92672">/</span><span style="color:#a6e22e">pix</span><span style="color:#f92672">-</span><span style="color:#a6e22e">demo</span><span style="color:#f92672">/</span><span style="color:#a6e22e">rout</span><span style="color:#f92672">/</span><span style="color:#a6e22e">leak</span>.<span style="color:#66d9ef">go</span>:<span style="color:#ae81ff">30</span> <span style="color:#f92672">+</span><span style="color:#ae81ff">0x10e</span>
-<span style="color:#a6e22e">created</span> <span style="color:#a6e22e">by</span> <span style="color:#a6e22e">pixelgo</span><span style="color:#f92672">/</span><span style="color:#a6e22e">rout</span>.<span style="color:#a6e22e">JumpForSignal</span>
-    <span style="color:#a6e22e">F</span>:<span style="color:#f92672">/</span><span style="color:#a6e22e">code</span><span style="color:#f92672">/</span><span style="color:#a6e22e">pixelGo</span><span style="color:#f92672">/</span><span style="color:#a6e22e">src</span><span style="color:#f92672">/</span><span style="color:#a6e22e">pix</span><span style="color:#f92672">-</span><span style="color:#a6e22e">demo</span><span style="color:#f92672">/</span><span style="color:#a6e22e">rout</span><span style="color:#f92672">/</span><span style="color:#a6e22e">leak</span>.<span style="color:#66d9ef">go</span>:<span style="color:#ae81ff">28</span> <span style="color:#f92672">+</span><span style="color:#ae81ff">0x93</span>
-</code></pre></div><hr>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">http</span>:<span style="color:#75715e">//localhost:8899/debug/pprof/goroutine?debug=2
+</span></span></span></code></pre></div><p>You can see the different states of the current goroutine through the labels behind the goroutine, <strong>running/io wait/chan send</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">goroutine</span> <span style="color:#ae81ff">9</span> [<span style="color:#a6e22e">running</span>]:
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">runtime</span><span style="color:#f92672">/</span><span style="color:#a6e22e">pprof</span>.<span style="color:#a6e22e">writeGoroutineStacks</span>(<span style="color:#ae81ff">0x7f7d00</span>, <span style="color:#ae81ff">0xc0000aa000</span>, <span style="color:#ae81ff">0x0</span>, <span style="color:#ae81ff">0x0</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">D</span>:<span style="color:#f92672">/</span><span style="color:#a6e22e">dev</span><span style="color:#f92672">/</span><span style="color:#a6e22e">go1</span><span style="color:#ae81ff">.16</span><span style="color:#f92672">/</span><span style="color:#a6e22e">src</span><span style="color:#f92672">/</span><span style="color:#a6e22e">runtime</span><span style="color:#f92672">/</span><span style="color:#a6e22e">pprof</span><span style="color:#f92672">/</span><span style="color:#a6e22e">pprof</span>.<span style="color:#66d9ef">go</span>:<span style="color:#ae81ff">693</span> <span style="color:#f92672">+</span><span style="color:#ae81ff">0xc5</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">net</span><span style="color:#f92672">/</span><span style="color:#a6e22e">http</span><span style="color:#f92672">/</span><span style="color:#a6e22e">pprof</span>.<span style="color:#a6e22e">handler</span>.<span style="color:#a6e22e">ServeHTTP</span>(<span style="color:#ae81ff">0xc000094011</span>, <span style="color:#ae81ff">0x9</span>, <span style="color:#ae81ff">0x7fba40</span>, <span style="color:#ae81ff">0xc0000aa000</span>, <span style="color:#ae81ff">0xc000092000</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">//..
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">goroutine</span> <span style="color:#ae81ff">1</span> [<span style="color:#a6e22e">IO</span> <span style="color:#a6e22e">wait</span>]:
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">internal</span><span style="color:#f92672">/</span><span style="color:#a6e22e">poll</span>.<span style="color:#a6e22e">runtime_pollWait</span>(<span style="color:#ae81ff">0x223debb10d8</span>, <span style="color:#ae81ff">0x72</span>, <span style="color:#ae81ff">0xc000152f48</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">D</span>:<span style="color:#f92672">/</span><span style="color:#a6e22e">dev</span><span style="color:#f92672">/</span><span style="color:#a6e22e">go1</span><span style="color:#ae81ff">.16</span><span style="color:#f92672">/</span><span style="color:#a6e22e">src</span><span style="color:#f92672">/</span><span style="color:#a6e22e">runtime</span><span style="color:#f92672">/</span><span style="color:#a6e22e">netpoll</span>.<span style="color:#66d9ef">go</span>:<span style="color:#ae81ff">227</span> <span style="color:#f92672">+</span><span style="color:#ae81ff">0x65</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">internal</span><span style="color:#f92672">/</span><span style="color:#a6e22e">poll</span>.(<span style="color:#f92672">*</span><span style="color:#a6e22e">pollDesc</span>).<span style="color:#a6e22e">wait</span>(<span style="color:#ae81ff">0xc0001530b8</span>, <span style="color:#ae81ff">0x72</span>, <span style="color:#ae81ff">0x93b400</span>, <span style="color:#ae81ff">0x0</span>, <span style="color:#ae81ff">0x0</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">//...
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">goroutine</span> <span style="color:#ae81ff">6</span> [<span style="color:#66d9ef">chan</span> <span style="color:#a6e22e">send</span>]:
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">pixelgo</span><span style="color:#f92672">/</span><span style="color:#a6e22e">rout</span>.<span style="color:#a6e22e">JumpForSignal</span>.<span style="color:#a6e22e">func1</span>(<span style="color:#ae81ff">0xc000053800</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">F</span>:<span style="color:#f92672">/</span><span style="color:#a6e22e">code</span><span style="color:#f92672">/</span><span style="color:#a6e22e">pixelGo</span><span style="color:#f92672">/</span><span style="color:#a6e22e">src</span><span style="color:#f92672">/</span><span style="color:#a6e22e">pix</span><span style="color:#f92672">-</span><span style="color:#a6e22e">demo</span><span style="color:#f92672">/</span><span style="color:#a6e22e">rout</span><span style="color:#f92672">/</span><span style="color:#a6e22e">leak</span>.<span style="color:#66d9ef">go</span>:<span style="color:#ae81ff">25</span> <span style="color:#f92672">+</span><span style="color:#ae81ff">0x10e</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">created</span> <span style="color:#a6e22e">by</span> <span style="color:#a6e22e">pixelgo</span><span style="color:#f92672">/</span><span style="color:#a6e22e">rout</span>.<span style="color:#a6e22e">JumpForSignal</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">F</span>:<span style="color:#f92672">/</span><span style="color:#a6e22e">code</span><span style="color:#f92672">/</span><span style="color:#a6e22e">pixelGo</span><span style="color:#f92672">/</span><span style="color:#a6e22e">src</span><span style="color:#f92672">/</span><span style="color:#a6e22e">pix</span><span style="color:#f92672">-</span><span style="color:#a6e22e">demo</span><span style="color:#f92672">/</span><span style="color:#a6e22e">rout</span><span style="color:#f92672">/</span><span style="color:#a6e22e">leak</span>.<span style="color:#66d9ef">go</span>:<span style="color:#ae81ff">23</span> <span style="color:#f92672">+</span><span style="color:#ae81ff">0x71</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">goroutine</span> <span style="color:#ae81ff">7</span> [<span style="color:#66d9ef">chan</span> <span style="color:#a6e22e">send</span>]:
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">pixelgo</span><span style="color:#f92672">/</span><span style="color:#a6e22e">rout</span>.<span style="color:#a6e22e">JumpForSignal</span>.<span style="color:#a6e22e">func2</span>(<span style="color:#ae81ff">0xc000053800</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">F</span>:<span style="color:#f92672">/</span><span style="color:#a6e22e">code</span><span style="color:#f92672">/</span><span style="color:#a6e22e">pixelGo</span><span style="color:#f92672">/</span><span style="color:#a6e22e">src</span><span style="color:#f92672">/</span><span style="color:#a6e22e">pix</span><span style="color:#f92672">-</span><span style="color:#a6e22e">demo</span><span style="color:#f92672">/</span><span style="color:#a6e22e">rout</span><span style="color:#f92672">/</span><span style="color:#a6e22e">leak</span>.<span style="color:#66d9ef">go</span>:<span style="color:#ae81ff">30</span> <span style="color:#f92672">+</span><span style="color:#ae81ff">0x10e</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">created</span> <span style="color:#a6e22e">by</span> <span style="color:#a6e22e">pixelgo</span><span style="color:#f92672">/</span><span style="color:#a6e22e">rout</span>.<span style="color:#a6e22e">JumpForSignal</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">F</span>:<span style="color:#f92672">/</span><span style="color:#a6e22e">code</span><span style="color:#f92672">/</span><span style="color:#a6e22e">pixelGo</span><span style="color:#f92672">/</span><span style="color:#a6e22e">src</span><span style="color:#f92672">/</span><span style="color:#a6e22e">pix</span><span style="color:#f92672">-</span><span style="color:#a6e22e">demo</span><span style="color:#f92672">/</span><span style="color:#a6e22e">rout</span><span style="color:#f92672">/</span><span style="color:#a6e22e">leak</span>.<span style="color:#66d9ef">go</span>:<span style="color:#ae81ff">28</span> <span style="color:#f92672">+</span><span style="color:#ae81ff">0x93</span>
+</span></span></code></pre></div><hr>
 <h3 id="goroutine-id">Goroutine Id</h3>
 <p>Next, let&rsquo;s explore the goroutine identifier: <strong>goroutine id</strong>. In Go, each running goroutine will be assigned a goroutine id. A common way is to obtain it from the function running stack and refer to other students on the Internet. is written as:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
-    <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">getGID</span>())
-}
-
-<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">getGID</span>() <span style="color:#66d9ef">uint64</span> {
-    <span style="color:#a6e22e">b</span> <span style="color:#f92672">:=</span> make([]<span style="color:#66d9ef">byte</span>, <span style="color:#ae81ff">64</span>)
-    <span style="color:#a6e22e">b</span> = <span style="color:#a6e22e">b</span>[:<span style="color:#a6e22e">runtime</span>.<span style="color:#a6e22e">Stack</span>(<span style="color:#a6e22e">b</span>, <span style="color:#66d9ef">false</span>)]
-    <span style="color:#a6e22e">b</span> = <span style="color:#a6e22e">bytes</span>.<span style="color:#a6e22e">TrimPrefix</span>(<span style="color:#a6e22e">b</span>, []byte(<span style="color:#e6db74">&#34;goroutine &#34;</span>))
-    <span style="color:#a6e22e">b</span> = <span style="color:#a6e22e">b</span>[:<span style="color:#a6e22e">bytes</span>.<span style="color:#a6e22e">IndexByte</span>(<span style="color:#a6e22e">b</span>, <span style="color:#e6db74">&#39; &#39;</span>)]
-    <span style="color:#a6e22e">n</span>, <span style="color:#a6e22e">_</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">strconv</span>.<span style="color:#a6e22e">ParseUint</span>(string(<span style="color:#a6e22e">b</span>), <span style="color:#ae81ff">10</span>, <span style="color:#ae81ff">64</span>)
-    <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">n</span>
-}
-</code></pre></div><p>Let&rsquo;s see what <code>runtime.stack()</code> will return. The real content is this:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#a6e22e">goroutine</span> <span style="color:#ae81ff">21</span> [<span style="color:#a6e22e">running</span>]:
-<span style="color:#a6e22e">leaktest</span>.<span style="color:#a6e22e">interestingGoroutines</span>(<span style="color:#ae81ff">0xdb9980</span>, <span style="color:#ae81ff">0xc00038e018</span>, <span style="color:#ae81ff">0x0</span>, <span style="color:#ae81ff">0x0</span>, <span style="color:#ae81ff">0x0</span>)
-    <span style="color:#a6e22e">F</span>:<span style="color:#f92672">/</span><span style="color:#a6e22e">code</span><span style="color:#f92672">/</span><span style="color:#a6e22e">pixelGo</span><span style="color:#f92672">/</span><span style="color:#a6e22e">src</span><span style="color:#f92672">/</span><span style="color:#a6e22e">leaktest</span><span style="color:#f92672">/</span><span style="color:#a6e22e">leaktest</span>.<span style="color:#66d9ef">go</span>:<span style="color:#ae81ff">81</span> <span style="color:#f92672">+</span><span style="color:#ae81ff">0xbf</span>
-<span style="color:#a6e22e">leaktest</span>.<span style="color:#a6e22e">CheckContext</span>(<span style="color:#ae81ff">0xdbe398</span>, <span style="color:#ae81ff">0xc000108040</span>, <span style="color:#ae81ff">0xdb9980</span>, <span style="color:#ae81ff">0xc00038e018</span>, <span style="color:#ae81ff">0x0</span>)
-    <span style="color:#a6e22e">F</span>:<span style="color:#f92672">/</span><span style="color:#a6e22e">code</span><span style="color:#f92672">/</span><span style="color:#a6e22e">pixelGo</span><span style="color:#f92672">/</span><span style="color:#a6e22e">src</span><span style="color:#f92672">/</span><span style="color:#a6e22e">leaktest</span><span style="color:#f92672">/</span><span style="color:#a6e22e">leaktest</span>.<span style="color:#66d9ef">go</span>:<span style="color:#ae81ff">141</span> <span style="color:#f92672">+</span><span style="color:#ae81ff">0x6e</span>
-<span style="color:#a6e22e">leaktest</span>.<span style="color:#a6e22e">CheckTimeout</span>(<span style="color:#ae81ff">0xdb9980</span>, <span style="color:#ae81ff">0xc00038e018</span>, <span style="color:#ae81ff">0x3b9aca00</span>, <span style="color:#ae81ff">0x0</span>)
-    <span style="color:#a6e22e">F</span>:<span style="color:#f92672">/</span><span style="color:#a6e22e">code</span><span style="color:#f92672">/</span><span style="color:#a6e22e">pixelGo</span><span style="color:#f92672">/</span><span style="color:#a6e22e">src</span><span style="color:#f92672">/</span><span style="color:#a6e22e">leaktest</span><span style="color:#f92672">/</span><span style="color:#a6e22e">leaktest</span>.<span style="color:#66d9ef">go</span>:<span style="color:#ae81ff">127</span> <span style="color:#f92672">+</span><span style="color:#ae81ff">0xe5</span>
-<span style="color:#a6e22e">leaktest</span>.<span style="color:#a6e22e">TestCheck</span>.<span style="color:#a6e22e">func8</span>(<span style="color:#ae81ff">0xc000384780</span>)
-    <span style="color:#a6e22e">F</span>:<span style="color:#f92672">/</span><span style="color:#a6e22e">code</span><span style="color:#f92672">/</span><span style="color:#a6e22e">pixelGo</span><span style="color:#f92672">/</span><span style="color:#a6e22e">src</span><span style="color:#f92672">/</span><span style="color:#a6e22e">leaktest</span><span style="color:#f92672">/</span><span style="color:#a6e22e">leaktest_test</span>.<span style="color:#66d9ef">go</span>:<span style="color:#ae81ff">122</span> <span style="color:#f92672">+</span><span style="color:#ae81ff">0xaf</span>
-<span style="color:#a6e22e">testing</span>.<span style="color:#a6e22e">tRunner</span>(<span style="color:#ae81ff">0xc000384780</span>, <span style="color:#ae81ff">0xc000100050</span>)
-    <span style="color:#a6e22e">D</span>:<span style="color:#f92672">/</span><span style="color:#a6e22e">dev</span><span style="color:#f92672">/</span><span style="color:#a6e22e">go1</span><span style="color:#ae81ff">.16</span><span style="color:#f92672">/</span><span style="color:#a6e22e">src</span><span style="color:#f92672">/</span><span style="color:#a6e22e">testing</span><span style="color:#f92672">/</span><span style="color:#a6e22e">testing</span>.<span style="color:#66d9ef">go</span>:<span style="color:#ae81ff">1193</span> <span style="color:#f92672">+</span><span style="color:#ae81ff">0x1a3</span>
-<span style="color:#a6e22e">created</span> <span style="color:#a6e22e">by</span> <span style="color:#a6e22e">testing</span>.(<span style="color:#f92672">*</span><span style="color:#a6e22e">T</span>).<span style="color:#a6e22e">Run</span>
-    <span style="color:#a6e22e">D</span>:<span style="color:#f92672">/</span><span style="color:#a6e22e">dev</span><span style="color:#f92672">/</span><span style="color:#a6e22e">go1</span><span style="color:#ae81ff">.16</span><span style="color:#f92672">/</span><span style="color:#a6e22e">src</span><span style="color:#f92672">/</span><span style="color:#a6e22e">testing</span><span style="color:#f92672">/</span><span style="color:#a6e22e">testing</span>.<span style="color:#66d9ef">go</span>:<span style="color:#ae81ff">1238</span> <span style="color:#f92672">+</span><span style="color:#ae81ff">0x63c</span>
-
-<span style="color:#a6e22e">goroutine</span> <span style="color:#ae81ff">1</span> [<span style="color:#66d9ef">chan</span> <span style="color:#a6e22e">receive</span>]:
-<span style="color:#a6e22e">testing</span>.(<span style="color:#f92672">*</span><span style="color:#a6e22e">T</span>).<span style="color:#a6e22e">Run</span>(<span style="color:#ae81ff">0xc000037080</span>, <span style="color:#ae81ff">0xd8486a</span>, <span style="color:#ae81ff">0x9</span>, <span style="color:#ae81ff">0xd9ebc8</span>, <span style="color:#ae81ff">0x304bd824304bd800</span>)
-    <span style="color:#a6e22e">D</span>:<span style="color:#f92672">/</span><span style="color:#a6e22e">dev</span><span style="color:#f92672">/</span><span style="color:#a6e22e">go1</span><span style="color:#ae81ff">.16</span><span style="color:#f92672">/</span><span style="color:#a6e22e">src</span><span style="color:#f92672">/</span><span style="color:#a6e22e">testing</span><span style="color:#f92672">/</span><span style="color:#a6e22e">testing</span>.<span style="color:#66d9ef">go</span>:<span style="color:#ae81ff">1239</span> <span style="color:#f92672">+</span><span style="color:#ae81ff">0x66a</span>
-<span style="color:#a6e22e">testing</span>.<span style="color:#a6e22e">runTests</span>.<span style="color:#a6e22e">func1</span>(<span style="color:#ae81ff">0xc000036f00</span>)
-    <span style="color:#a6e22e">D</span>:<span style="color:#f92672">/</span><span style="color:#a6e22e">dev</span><span style="color:#f92672">/</span><span style="color:#a6e22e">go1</span><span style="color:#ae81ff">.16</span><span style="color:#f92672">/</span><span style="color:#a6e22e">src</span><span style="color:#f92672">/</span><span style="color:#a6e22e">testing</span><span style="color:#f92672">/</span><span style="color:#a6e22e">testing</span>.<span style="color:#66d9ef">go</span>:<span style="color:#ae81ff">1511</span> <span style="color:#f92672">+</span><span style="color:#ae81ff">0xbd</span>
-<span style="color:#a6e22e">testing</span>.<span style="color:#a6e22e">tRunner</span>(<span style="color:#ae81ff">0xc000036f00</span>, <span style="color:#ae81ff">0xc00008fc00</span>)
-    <span style="color:#a6e22e">D</span>:<span style="color:#f92672">/</span><span style="color:#a6e22e">dev</span><span style="color:#f92672">/</span><span style="color:#a6e22e">go1</span><span style="color:#ae81ff">.16</span><span style="color:#f92672">/</span><span style="color:#a6e22e">src</span><span style="color:#f92672">/</span><span style="color:#a6e22e">testing</span><span style="color:#f92672">/</span><span style="color:#a6e22e">testing</span>.<span style="color:#66d9ef">go</span>:<span style="color:#ae81ff">1193</span> <span style="color:#f92672">+</span><span style="color:#ae81ff">0x1a3</span>
-<span style="color:#a6e22e">testing</span>.<span style="color:#a6e22e">runTests</span>(<span style="color:#ae81ff">0xc0000040d8</span>, <span style="color:#ae81ff">0xf40460</span>, <span style="color:#ae81ff">0x5</span>, <span style="color:#ae81ff">0x5</span>, <span style="color:#ae81ff">0x0</span>, <span style="color:#ae81ff">0x0</span>, <span style="color:#ae81ff">0x0</span>, <span style="color:#ae81ff">0x21cbf1c0100</span>)
-    <span style="color:#a6e22e">D</span>:<span style="color:#f92672">/</span><span style="color:#a6e22e">dev</span><span style="color:#f92672">/</span><span style="color:#a6e22e">go1</span><span style="color:#ae81ff">.16</span><span style="color:#f92672">/</span><span style="color:#a6e22e">src</span><span style="color:#f92672">/</span><span style="color:#a6e22e">testing</span><span style="color:#f92672">/</span><span style="color:#a6e22e">testing</span>.<span style="color:#66d9ef">go</span>:<span style="color:#ae81ff">1509</span> <span style="color:#f92672">+</span><span style="color:#ae81ff">0x448</span>
-<span style="color:#a6e22e">testing</span>.(<span style="color:#f92672">*</span><span style="color:#a6e22e">M</span>).<span style="color:#a6e22e">Run</span>(<span style="color:#ae81ff">0xc0000c0000</span>, <span style="color:#ae81ff">0x0</span>)
-    <span style="color:#a6e22e">D</span>:<span style="color:#f92672">/</span><span style="color:#a6e22e">dev</span><span style="color:#f92672">/</span><span style="color:#a6e22e">go1</span><span style="color:#ae81ff">.16</span><span style="color:#f92672">/</span><span style="color:#a6e22e">src</span><span style="color:#f92672">/</span><span style="color:#a6e22e">testing</span><span style="color:#f92672">/</span><span style="color:#a6e22e">testing</span>.<span style="color:#66d9ef">go</span>:<span style="color:#ae81ff">1417</span> <span style="color:#f92672">+</span><span style="color:#ae81ff">0x514</span>
-<span style="color:#a6e22e">main</span>.<span style="color:#a6e22e">main</span>()
-    <span style="color:#a6e22e">_testmain</span>.<span style="color:#66d9ef">go</span>:<span style="color:#ae81ff">51</span> <span style="color:#f92672">+</span><span style="color:#ae81ff">0xc8</span>
-</code></pre></div><p>It can be found that this stack is very similar to the information thrown by us when we run panic. It should be noted that obtains the goroutine id in this way is not an efficient way.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">getGID</span>())
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">getGID</span>() <span style="color:#66d9ef">uint64</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">b</span> <span style="color:#f92672">:=</span> make([]<span style="color:#66d9ef">byte</span>, <span style="color:#ae81ff">64</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">b</span> = <span style="color:#a6e22e">b</span>[:<span style="color:#a6e22e">runtime</span>.<span style="color:#a6e22e">Stack</span>(<span style="color:#a6e22e">b</span>, <span style="color:#66d9ef">false</span>)]
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">b</span> = <span style="color:#a6e22e">bytes</span>.<span style="color:#a6e22e">TrimPrefix</span>(<span style="color:#a6e22e">b</span>, []byte(<span style="color:#e6db74">&#34;goroutine &#34;</span>))
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">b</span> = <span style="color:#a6e22e">b</span>[:<span style="color:#a6e22e">bytes</span>.<span style="color:#a6e22e">IndexByte</span>(<span style="color:#a6e22e">b</span>, <span style="color:#e6db74">&#39; &#39;</span>)]
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">n</span>, <span style="color:#a6e22e">_</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">strconv</span>.<span style="color:#a6e22e">ParseUint</span>(string(<span style="color:#a6e22e">b</span>), <span style="color:#ae81ff">10</span>, <span style="color:#ae81ff">64</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">n</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Let&rsquo;s see what <code>runtime.stack()</code> will return. The real content is this:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">goroutine</span> <span style="color:#ae81ff">21</span> [<span style="color:#a6e22e">running</span>]:
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">leaktest</span>.<span style="color:#a6e22e">interestingGoroutines</span>(<span style="color:#ae81ff">0xdb9980</span>, <span style="color:#ae81ff">0xc00038e018</span>, <span style="color:#ae81ff">0x0</span>, <span style="color:#ae81ff">0x0</span>, <span style="color:#ae81ff">0x0</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">F</span>:<span style="color:#f92672">/</span><span style="color:#a6e22e">code</span><span style="color:#f92672">/</span><span style="color:#a6e22e">pixelGo</span><span style="color:#f92672">/</span><span style="color:#a6e22e">src</span><span style="color:#f92672">/</span><span style="color:#a6e22e">leaktest</span><span style="color:#f92672">/</span><span style="color:#a6e22e">leaktest</span>.<span style="color:#66d9ef">go</span>:<span style="color:#ae81ff">81</span> <span style="color:#f92672">+</span><span style="color:#ae81ff">0xbf</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">leaktest</span>.<span style="color:#a6e22e">CheckContext</span>(<span style="color:#ae81ff">0xdbe398</span>, <span style="color:#ae81ff">0xc000108040</span>, <span style="color:#ae81ff">0xdb9980</span>, <span style="color:#ae81ff">0xc00038e018</span>, <span style="color:#ae81ff">0x0</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">F</span>:<span style="color:#f92672">/</span><span style="color:#a6e22e">code</span><span style="color:#f92672">/</span><span style="color:#a6e22e">pixelGo</span><span style="color:#f92672">/</span><span style="color:#a6e22e">src</span><span style="color:#f92672">/</span><span style="color:#a6e22e">leaktest</span><span style="color:#f92672">/</span><span style="color:#a6e22e">leaktest</span>.<span style="color:#66d9ef">go</span>:<span style="color:#ae81ff">141</span> <span style="color:#f92672">+</span><span style="color:#ae81ff">0x6e</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">leaktest</span>.<span style="color:#a6e22e">CheckTimeout</span>(<span style="color:#ae81ff">0xdb9980</span>, <span style="color:#ae81ff">0xc00038e018</span>, <span style="color:#ae81ff">0x3b9aca00</span>, <span style="color:#ae81ff">0x0</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">F</span>:<span style="color:#f92672">/</span><span style="color:#a6e22e">code</span><span style="color:#f92672">/</span><span style="color:#a6e22e">pixelGo</span><span style="color:#f92672">/</span><span style="color:#a6e22e">src</span><span style="color:#f92672">/</span><span style="color:#a6e22e">leaktest</span><span style="color:#f92672">/</span><span style="color:#a6e22e">leaktest</span>.<span style="color:#66d9ef">go</span>:<span style="color:#ae81ff">127</span> <span style="color:#f92672">+</span><span style="color:#ae81ff">0xe5</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">leaktest</span>.<span style="color:#a6e22e">TestCheck</span>.<span style="color:#a6e22e">func8</span>(<span style="color:#ae81ff">0xc000384780</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">F</span>:<span style="color:#f92672">/</span><span style="color:#a6e22e">code</span><span style="color:#f92672">/</span><span style="color:#a6e22e">pixelGo</span><span style="color:#f92672">/</span><span style="color:#a6e22e">src</span><span style="color:#f92672">/</span><span style="color:#a6e22e">leaktest</span><span style="color:#f92672">/</span><span style="color:#a6e22e">leaktest_test</span>.<span style="color:#66d9ef">go</span>:<span style="color:#ae81ff">122</span> <span style="color:#f92672">+</span><span style="color:#ae81ff">0xaf</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">testing</span>.<span style="color:#a6e22e">tRunner</span>(<span style="color:#ae81ff">0xc000384780</span>, <span style="color:#ae81ff">0xc000100050</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">D</span>:<span style="color:#f92672">/</span><span style="color:#a6e22e">dev</span><span style="color:#f92672">/</span><span style="color:#a6e22e">go1</span><span style="color:#ae81ff">.16</span><span style="color:#f92672">/</span><span style="color:#a6e22e">src</span><span style="color:#f92672">/</span><span style="color:#a6e22e">testing</span><span style="color:#f92672">/</span><span style="color:#a6e22e">testing</span>.<span style="color:#66d9ef">go</span>:<span style="color:#ae81ff">1193</span> <span style="color:#f92672">+</span><span style="color:#ae81ff">0x1a3</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">created</span> <span style="color:#a6e22e">by</span> <span style="color:#a6e22e">testing</span>.(<span style="color:#f92672">*</span><span style="color:#a6e22e">T</span>).<span style="color:#a6e22e">Run</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">D</span>:<span style="color:#f92672">/</span><span style="color:#a6e22e">dev</span><span style="color:#f92672">/</span><span style="color:#a6e22e">go1</span><span style="color:#ae81ff">.16</span><span style="color:#f92672">/</span><span style="color:#a6e22e">src</span><span style="color:#f92672">/</span><span style="color:#a6e22e">testing</span><span style="color:#f92672">/</span><span style="color:#a6e22e">testing</span>.<span style="color:#66d9ef">go</span>:<span style="color:#ae81ff">1238</span> <span style="color:#f92672">+</span><span style="color:#ae81ff">0x63c</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">goroutine</span> <span style="color:#ae81ff">1</span> [<span style="color:#66d9ef">chan</span> <span style="color:#a6e22e">receive</span>]:
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">testing</span>.(<span style="color:#f92672">*</span><span style="color:#a6e22e">T</span>).<span style="color:#a6e22e">Run</span>(<span style="color:#ae81ff">0xc000037080</span>, <span style="color:#ae81ff">0xd8486a</span>, <span style="color:#ae81ff">0x9</span>, <span style="color:#ae81ff">0xd9ebc8</span>, <span style="color:#ae81ff">0x304bd824304bd800</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">D</span>:<span style="color:#f92672">/</span><span style="color:#a6e22e">dev</span><span style="color:#f92672">/</span><span style="color:#a6e22e">go1</span><span style="color:#ae81ff">.16</span><span style="color:#f92672">/</span><span style="color:#a6e22e">src</span><span style="color:#f92672">/</span><span style="color:#a6e22e">testing</span><span style="color:#f92672">/</span><span style="color:#a6e22e">testing</span>.<span style="color:#66d9ef">go</span>:<span style="color:#ae81ff">1239</span> <span style="color:#f92672">+</span><span style="color:#ae81ff">0x66a</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">testing</span>.<span style="color:#a6e22e">runTests</span>.<span style="color:#a6e22e">func1</span>(<span style="color:#ae81ff">0xc000036f00</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">D</span>:<span style="color:#f92672">/</span><span style="color:#a6e22e">dev</span><span style="color:#f92672">/</span><span style="color:#a6e22e">go1</span><span style="color:#ae81ff">.16</span><span style="color:#f92672">/</span><span style="color:#a6e22e">src</span><span style="color:#f92672">/</span><span style="color:#a6e22e">testing</span><span style="color:#f92672">/</span><span style="color:#a6e22e">testing</span>.<span style="color:#66d9ef">go</span>:<span style="color:#ae81ff">1511</span> <span style="color:#f92672">+</span><span style="color:#ae81ff">0xbd</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">testing</span>.<span style="color:#a6e22e">tRunner</span>(<span style="color:#ae81ff">0xc000036f00</span>, <span style="color:#ae81ff">0xc00008fc00</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">D</span>:<span style="color:#f92672">/</span><span style="color:#a6e22e">dev</span><span style="color:#f92672">/</span><span style="color:#a6e22e">go1</span><span style="color:#ae81ff">.16</span><span style="color:#f92672">/</span><span style="color:#a6e22e">src</span><span style="color:#f92672">/</span><span style="color:#a6e22e">testing</span><span style="color:#f92672">/</span><span style="color:#a6e22e">testing</span>.<span style="color:#66d9ef">go</span>:<span style="color:#ae81ff">1193</span> <span style="color:#f92672">+</span><span style="color:#ae81ff">0x1a3</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">testing</span>.<span style="color:#a6e22e">runTests</span>(<span style="color:#ae81ff">0xc0000040d8</span>, <span style="color:#ae81ff">0xf40460</span>, <span style="color:#ae81ff">0x5</span>, <span style="color:#ae81ff">0x5</span>, <span style="color:#ae81ff">0x0</span>, <span style="color:#ae81ff">0x0</span>, <span style="color:#ae81ff">0x0</span>, <span style="color:#ae81ff">0x21cbf1c0100</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">D</span>:<span style="color:#f92672">/</span><span style="color:#a6e22e">dev</span><span style="color:#f92672">/</span><span style="color:#a6e22e">go1</span><span style="color:#ae81ff">.16</span><span style="color:#f92672">/</span><span style="color:#a6e22e">src</span><span style="color:#f92672">/</span><span style="color:#a6e22e">testing</span><span style="color:#f92672">/</span><span style="color:#a6e22e">testing</span>.<span style="color:#66d9ef">go</span>:<span style="color:#ae81ff">1509</span> <span style="color:#f92672">+</span><span style="color:#ae81ff">0x448</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">testing</span>.(<span style="color:#f92672">*</span><span style="color:#a6e22e">M</span>).<span style="color:#a6e22e">Run</span>(<span style="color:#ae81ff">0xc0000c0000</span>, <span style="color:#ae81ff">0x0</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">D</span>:<span style="color:#f92672">/</span><span style="color:#a6e22e">dev</span><span style="color:#f92672">/</span><span style="color:#a6e22e">go1</span><span style="color:#ae81ff">.16</span><span style="color:#f92672">/</span><span style="color:#a6e22e">src</span><span style="color:#f92672">/</span><span style="color:#a6e22e">testing</span><span style="color:#f92672">/</span><span style="color:#a6e22e">testing</span>.<span style="color:#66d9ef">go</span>:<span style="color:#ae81ff">1417</span> <span style="color:#f92672">+</span><span style="color:#ae81ff">0x514</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">main</span>.<span style="color:#a6e22e">main</span>()
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">_testmain</span>.<span style="color:#66d9ef">go</span>:<span style="color:#ae81ff">51</span> <span style="color:#f92672">+</span><span style="color:#ae81ff">0xc8</span>
+</span></span></code></pre></div><p>It can be found that this stack is very similar to the information thrown by us when we run panic. It should be noted that obtains the goroutine id in this way is not an efficient way.</p>
 <p>The actual production process is not recommended. It is worth mentioning that in order to facilitate us to better locate the problem context, sometimes the logging framework requires us to print out the current goroutine id.</p>
 <p>For example this is a production case log output:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#75715e">// gid-1 initialize resources
-</span><span style="color:#75715e"></span>[<span style="color:#ae81ff">0224</span><span style="color:#f92672">/</span><span style="color:#ae81ff">162532.310</span>:<span style="color:#a6e22e">INFO</span>:<span style="color:#a6e22e">gid</span><span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>:<span style="color:#a6e22e">yx_trace</span>.<span style="color:#66d9ef">go</span>:<span style="color:#ae81ff">66</span>] <span style="color:#a6e22e">cfg</span>:<span style="color:#f92672">&amp;</span>{ <span style="color:#66d9ef">false</span> <span style="color:#66d9ef">false</span> [] <span style="color:#ae81ff">0xc000295140</span> <span style="color:#ae81ff">0xc0001d4e00</span> &lt;<span style="color:#66d9ef">nil</span>&gt; &lt;<span style="color:#66d9ef">nil</span>&gt; &lt;<span style="color:#66d9ef">nil</span>&gt;}
-[<span style="color:#ae81ff">0224</span><span style="color:#f92672">/</span><span style="color:#ae81ff">162532.320</span>:<span style="color:#a6e22e">INFO</span>:<span style="color:#a6e22e">gid</span><span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>:<span style="color:#a6e22e">main</span>.<span style="color:#66d9ef">go</span>:<span style="color:#ae81ff">50</span>] <span style="color:#a6e22e">GameRoom</span> <span style="color:#a6e22e">Startup</span><span style="color:#f92672">-</span>&gt;
-[<span style="color:#ae81ff">0224</span><span style="color:#f92672">/</span><span style="color:#ae81ff">162532.320</span>:<span style="color:#a6e22e">INFO</span>:<span style="color:#a6e22e">gid</span><span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>:<span style="color:#a6e22e">config_manager</span>.<span style="color:#66d9ef">go</span>:<span style="color:#ae81ff">107</span>] <span style="color:#a6e22e">configManager</span> <span style="color:#a6e22e">SetHttpListenAddr</span>:<span style="color:#ae81ff">8080</span>
-[<span style="color:#ae81ff">0224</span><span style="color:#f92672">/</span><span style="color:#ae81ff">162532.320</span>:<span style="color:#a6e22e">INFO</span>:<span style="color:#a6e22e">gid</span><span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>:<span style="color:#a6e22e">room_manager</span>.<span style="color:#66d9ef">go</span>:<span style="color:#ae81ff">57</span>] <span style="color:#a6e22e">roomManager</span> <span style="color:#a6e22e">Startup</span>
-[<span style="color:#ae81ff">0224</span><span style="color:#f92672">/</span><span style="color:#ae81ff">162532.323</span>:<span style="color:#a6e22e">INFO</span>:<span style="color:#a6e22e">gid</span><span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>:<span style="color:#a6e22e">room_manager</span>.<span style="color:#66d9ef">go</span>:<span style="color:#ae81ff">72</span>] <span style="color:#a6e22e">roomManager</span> <span style="color:#a6e22e">initPrx</span>.
-[<span style="color:#ae81ff">0224</span><span style="color:#f92672">/</span><span style="color:#ae81ff">162532.330</span>:<span style="color:#a6e22e">INFO</span>:<span style="color:#a6e22e">gid</span><span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>:<span style="color:#a6e22e">bootstrap</span>.<span style="color:#66d9ef">go</span>:<span style="color:#ae81ff">153</span>] <span style="color:#a6e22e">GameRoom</span> <span style="color:#a6e22e">START</span> <span style="color:#a6e22e">ok</span>.
-<span style="color:#75715e">// gid-60 assigned to start HTTP Server
-</span><span style="color:#75715e"></span>[<span style="color:#ae81ff">0224</span><span style="color:#f92672">/</span><span style="color:#ae81ff">162533.277</span>:<span style="color:#a6e22e">INFO</span>:<span style="color:#a6e22e">gid</span><span style="color:#f92672">-</span><span style="color:#ae81ff">60</span>:<span style="color:#a6e22e">expose</span>.<span style="color:#66d9ef">go</span>:<span style="color:#ae81ff">36</span>] <span style="color:#a6e22e">Start</span> <span style="color:#66d9ef">for</span> <span style="color:#a6e22e">HTTP</span> <span style="color:#a6e22e">server</span><span style="color:#f92672">...</span>
-[<span style="color:#ae81ff">0224</span><span style="color:#f92672">/</span><span style="color:#ae81ff">162533.277</span>:<span style="color:#a6e22e">INFO</span>:<span style="color:#a6e22e">gid</span><span style="color:#f92672">-</span><span style="color:#ae81ff">60</span>:<span style="color:#a6e22e">expose</span>.<span style="color:#66d9ef">go</span>:<span style="color:#ae81ff">39</span>] <span style="color:#a6e22e">register</span> <span style="color:#66d9ef">for</span> <span style="color:#a6e22e">debug</span> <span style="color:#a6e22e">server</span><span style="color:#f92672">...</span>
-</code></pre></div><p>Often the logging framework strives to have the lowest impact on business performance. Since there are performance concerns, how does it obtain the goroutine id?<br>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#75715e">// gid-1 initialize resources
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>[<span style="color:#ae81ff">0224</span><span style="color:#f92672">/</span><span style="color:#ae81ff">162532.310</span>:<span style="color:#a6e22e">INFO</span>:<span style="color:#a6e22e">gid</span><span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>:<span style="color:#a6e22e">yx_trace</span>.<span style="color:#66d9ef">go</span>:<span style="color:#ae81ff">66</span>] <span style="color:#a6e22e">cfg</span>:<span style="color:#f92672">&amp;</span>{ <span style="color:#66d9ef">false</span> <span style="color:#66d9ef">false</span> [] <span style="color:#ae81ff">0xc000295140</span> <span style="color:#ae81ff">0xc0001d4e00</span> &lt;<span style="color:#66d9ef">nil</span>&gt; &lt;<span style="color:#66d9ef">nil</span>&gt; &lt;<span style="color:#66d9ef">nil</span>&gt;}
+</span></span><span style="display:flex;"><span>[<span style="color:#ae81ff">0224</span><span style="color:#f92672">/</span><span style="color:#ae81ff">162532.320</span>:<span style="color:#a6e22e">INFO</span>:<span style="color:#a6e22e">gid</span><span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>:<span style="color:#a6e22e">main</span>.<span style="color:#66d9ef">go</span>:<span style="color:#ae81ff">50</span>] <span style="color:#a6e22e">GameRoom</span> <span style="color:#a6e22e">Startup</span><span style="color:#f92672">-</span>&gt;
+</span></span><span style="display:flex;"><span>[<span style="color:#ae81ff">0224</span><span style="color:#f92672">/</span><span style="color:#ae81ff">162532.320</span>:<span style="color:#a6e22e">INFO</span>:<span style="color:#a6e22e">gid</span><span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>:<span style="color:#a6e22e">config_manager</span>.<span style="color:#66d9ef">go</span>:<span style="color:#ae81ff">107</span>] <span style="color:#a6e22e">configManager</span> <span style="color:#a6e22e">SetHttpListenAddr</span>:<span style="color:#ae81ff">8080</span>
+</span></span><span style="display:flex;"><span>[<span style="color:#ae81ff">0224</span><span style="color:#f92672">/</span><span style="color:#ae81ff">162532.320</span>:<span style="color:#a6e22e">INFO</span>:<span style="color:#a6e22e">gid</span><span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>:<span style="color:#a6e22e">room_manager</span>.<span style="color:#66d9ef">go</span>:<span style="color:#ae81ff">57</span>] <span style="color:#a6e22e">roomManager</span> <span style="color:#a6e22e">Startup</span>
+</span></span><span style="display:flex;"><span>[<span style="color:#ae81ff">0224</span><span style="color:#f92672">/</span><span style="color:#ae81ff">162532.323</span>:<span style="color:#a6e22e">INFO</span>:<span style="color:#a6e22e">gid</span><span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>:<span style="color:#a6e22e">room_manager</span>.<span style="color:#66d9ef">go</span>:<span style="color:#ae81ff">72</span>] <span style="color:#a6e22e">roomManager</span> <span style="color:#a6e22e">initPrx</span>.
+</span></span><span style="display:flex;"><span>[<span style="color:#ae81ff">0224</span><span style="color:#f92672">/</span><span style="color:#ae81ff">162532.330</span>:<span style="color:#a6e22e">INFO</span>:<span style="color:#a6e22e">gid</span><span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>:<span style="color:#a6e22e">bootstrap</span>.<span style="color:#66d9ef">go</span>:<span style="color:#ae81ff">153</span>] <span style="color:#a6e22e">GameRoom</span> <span style="color:#a6e22e">START</span> <span style="color:#a6e22e">ok</span>.
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// gid-60 assigned to start HTTP Server
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>[<span style="color:#ae81ff">0224</span><span style="color:#f92672">/</span><span style="color:#ae81ff">162533.277</span>:<span style="color:#a6e22e">INFO</span>:<span style="color:#a6e22e">gid</span><span style="color:#f92672">-</span><span style="color:#ae81ff">60</span>:<span style="color:#a6e22e">expose</span>.<span style="color:#66d9ef">go</span>:<span style="color:#ae81ff">36</span>] <span style="color:#a6e22e">Start</span> <span style="color:#66d9ef">for</span> <span style="color:#a6e22e">HTTP</span> <span style="color:#a6e22e">server</span><span style="color:#f92672">...</span>
+</span></span><span style="display:flex;"><span>[<span style="color:#ae81ff">0224</span><span style="color:#f92672">/</span><span style="color:#ae81ff">162533.277</span>:<span style="color:#a6e22e">INFO</span>:<span style="color:#a6e22e">gid</span><span style="color:#f92672">-</span><span style="color:#ae81ff">60</span>:<span style="color:#a6e22e">expose</span>.<span style="color:#66d9ef">go</span>:<span style="color:#ae81ff">39</span>] <span style="color:#a6e22e">register</span> <span style="color:#66d9ef">for</span> <span style="color:#a6e22e">debug</span> <span style="color:#a6e22e">server</span><span style="color:#f92672">...</span>
+</span></span></code></pre></div><p>Often the logging framework strives to have the lowest impact on business performance. Since there are performance concerns, how does it obtain the goroutine id?<br>
 In fact, in Go, there is a g pointer in the system thread structure bound to each goroutine. After getting the information of the g pointer, according to the offset of the g pointer structure (note that different go versions may be different ) to specify the fetch id.</p>
 <h3 id="compilation-method">Compilation Method</h3>
 <p>The G pointer bound by the goroutine is here for reference<a href="https://chai2010.cn/advanced-go-programming-book/ch3-asm/ch3-08-goroutine-id.html">《Go高级编程》</a></p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#75715e">// Record the offset of each version
-</span><span style="color:#75715e"></span><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">offsetDictMap</span> = <span style="color:#66d9ef">map</span>[<span style="color:#66d9ef">string</span>]<span style="color:#66d9ef">int64</span>{
-    <span style="color:#e6db74">&#34;go1.12&#34;</span>:    <span style="color:#ae81ff">152</span>,
-    <span style="color:#e6db74">&#34;go1.12.1&#34;</span>:  <span style="color:#ae81ff">152</span>,
-    <span style="color:#e6db74">&#34;go1.12.2&#34;</span>:  <span style="color:#ae81ff">152</span>,
-    <span style="color:#e6db74">&#34;go1.12.3&#34;</span>:  <span style="color:#ae81ff">152</span>,
-    <span style="color:#e6db74">&#34;go1.12.4&#34;</span>:  <span style="color:#ae81ff">152</span>,
-    <span style="color:#e6db74">&#34;go1.12.5&#34;</span>:  <span style="color:#ae81ff">152</span>,
-    <span style="color:#e6db74">&#34;go1.12.6&#34;</span>:  <span style="color:#ae81ff">152</span>,
-    <span style="color:#e6db74">&#34;go1.12.7&#34;</span>:  <span style="color:#ae81ff">152</span>,
-    <span style="color:#e6db74">&#34;go1.13&#34;</span>:    <span style="color:#ae81ff">152</span>,
-    <span style="color:#e6db74">&#34;go1.14&#34;</span>:    <span style="color:#ae81ff">152</span>,
-    <span style="color:#e6db74">&#34;go1.16.12&#34;</span>:    <span style="color:#ae81ff">152</span>,
-}
-
-<span style="color:#75715e">// offset for go1.12
-</span><span style="color:#75715e"></span><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">goid_offset</span> <span style="color:#66d9ef">uintptr</span> = <span style="color:#ae81ff">152</span>
-<span style="color:#75715e">//go:nosplit
-</span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">getG</span>() <span style="color:#66d9ef">interface</span>{}
-
-<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">GoId</span>() <span style="color:#66d9ef">int64</span>
-
-<span style="color:#75715e">// part of the assembly code
-</span><span style="color:#75715e">// func getGptr() unsafe.Pointer
-</span><span style="color:#75715e"></span><span style="color:#a6e22e">TEXT</span> <span style="color:#960050;background-color:#1e0010">·</span><span style="color:#a6e22e">getGptr</span>(<span style="color:#a6e22e">SB</span>), <span style="color:#a6e22e">NOSPLIT</span>, <span style="color:#960050;background-color:#1e0010">$</span><span style="color:#ae81ff">0</span><span style="color:#f92672">-</span><span style="color:#ae81ff">8</span>
-    <span style="color:#a6e22e">MOVQ</span> (<span style="color:#a6e22e">TLS</span>), <span style="color:#a6e22e">BX</span>
-    <span style="color:#a6e22e">MOVQ</span> <span style="color:#a6e22e">BX</span>, <span style="color:#a6e22e">ret</span><span style="color:#f92672">+</span><span style="color:#ae81ff">0</span>(<span style="color:#a6e22e">FP</span>)
-    <span style="color:#a6e22e">RET</span>
-
-<span style="color:#a6e22e">TEXT</span> <span style="color:#960050;background-color:#1e0010">·</span><span style="color:#a6e22e">GoId</span>(<span style="color:#a6e22e">SB</span>),<span style="color:#a6e22e">NOSPLIT</span>,<span style="color:#960050;background-color:#1e0010">$</span><span style="color:#ae81ff">0</span><span style="color:#f92672">-</span><span style="color:#ae81ff">8</span>
-    <span style="color:#a6e22e">NO_LOCAL_POINTERS</span>
-    <span style="color:#a6e22e">MOVQ</span> <span style="color:#960050;background-color:#1e0010">·</span><span style="color:#a6e22e">goid_offset</span>(<span style="color:#a6e22e">SB</span>),<span style="color:#a6e22e">AX</span>
-    <span style="color:#75715e">// get runtime.g
-</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">MOVQ</span> (<span style="color:#a6e22e">TLS</span>),<span style="color:#a6e22e">BX</span>
-    <span style="color:#a6e22e">ADDQ</span> <span style="color:#a6e22e">BX</span>,<span style="color:#a6e22e">AX</span>
-    <span style="color:#a6e22e">MOVQ</span> (<span style="color:#a6e22e">AX</span>),<span style="color:#a6e22e">BX</span>
-    <span style="color:#a6e22e">MOVQ</span> <span style="color:#a6e22e">BX</span>,<span style="color:#a6e22e">ret</span><span style="color:#f92672">+</span><span style="color:#ae81ff">0</span>(<span style="color:#a6e22e">FP</span>)
-    <span style="color:#a6e22e">RET</span>
-</code></pre></div><h3 id="performance-comparison">Performance comparison：</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#75715e">// Record the offset of each version
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">offsetDictMap</span> = <span style="color:#66d9ef">map</span>[<span style="color:#66d9ef">string</span>]<span style="color:#66d9ef">int64</span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;go1.12&#34;</span>:    <span style="color:#ae81ff">152</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;go1.12.1&#34;</span>:  <span style="color:#ae81ff">152</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;go1.12.2&#34;</span>:  <span style="color:#ae81ff">152</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;go1.12.3&#34;</span>:  <span style="color:#ae81ff">152</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;go1.12.4&#34;</span>:  <span style="color:#ae81ff">152</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;go1.12.5&#34;</span>:  <span style="color:#ae81ff">152</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;go1.12.6&#34;</span>:  <span style="color:#ae81ff">152</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;go1.12.7&#34;</span>:  <span style="color:#ae81ff">152</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;go1.13&#34;</span>:    <span style="color:#ae81ff">152</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;go1.14&#34;</span>:    <span style="color:#ae81ff">152</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;go1.16.12&#34;</span>:    <span style="color:#ae81ff">152</span>,
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// offset for go1.12
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">goid_offset</span> <span style="color:#66d9ef">uintptr</span> = <span style="color:#ae81ff">152</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">//go:nosplit
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">getG</span>() <span style="color:#66d9ef">interface</span>{}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">GoId</span>() <span style="color:#66d9ef">int64</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// part of the assembly code
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// func getGptr() unsafe.Pointer
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#a6e22e">TEXT</span> <span style="color:#960050;background-color:#1e0010">·</span><span style="color:#a6e22e">getGptr</span>(<span style="color:#a6e22e">SB</span>), <span style="color:#a6e22e">NOSPLIT</span>, <span style="color:#960050;background-color:#1e0010">$</span><span style="color:#ae81ff">0</span><span style="color:#f92672">-</span><span style="color:#ae81ff">8</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">MOVQ</span> (<span style="color:#a6e22e">TLS</span>), <span style="color:#a6e22e">BX</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">MOVQ</span> <span style="color:#a6e22e">BX</span>, <span style="color:#a6e22e">ret</span><span style="color:#f92672">+</span><span style="color:#ae81ff">0</span>(<span style="color:#a6e22e">FP</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">RET</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">TEXT</span> <span style="color:#960050;background-color:#1e0010">·</span><span style="color:#a6e22e">GoId</span>(<span style="color:#a6e22e">SB</span>),<span style="color:#a6e22e">NOSPLIT</span>,<span style="color:#960050;background-color:#1e0010">$</span><span style="color:#ae81ff">0</span><span style="color:#f92672">-</span><span style="color:#ae81ff">8</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">NO_LOCAL_POINTERS</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">MOVQ</span> <span style="color:#960050;background-color:#1e0010">·</span><span style="color:#a6e22e">goid_offset</span>(<span style="color:#a6e22e">SB</span>),<span style="color:#a6e22e">AX</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// get runtime.g
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#a6e22e">MOVQ</span> (<span style="color:#a6e22e">TLS</span>),<span style="color:#a6e22e">BX</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">ADDQ</span> <span style="color:#a6e22e">BX</span>,<span style="color:#a6e22e">AX</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">MOVQ</span> (<span style="color:#a6e22e">AX</span>),<span style="color:#a6e22e">BX</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">MOVQ</span> <span style="color:#a6e22e">BX</span>,<span style="color:#a6e22e">ret</span><span style="color:#f92672">+</span><span style="color:#ae81ff">0</span>(<span style="color:#a6e22e">FP</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">RET</span>
+</span></span></code></pre></div><h3 id="performance-comparison">Performance comparison：</h3>
 <p>Let&rsquo;s simply test the performance gap between the two methods of obtaining the go goroutine id：</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#75715e">// BenchmarkGRtId-8     1000000000           0.0005081 ns/op
-</span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">BenchmarkGRtId</span>(<span style="color:#a6e22e">b</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">testing</span>.<span style="color:#a6e22e">B</span>) {
-    <span style="color:#66d9ef">for</span> <span style="color:#a6e22e">n</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">0</span>; <span style="color:#a6e22e">n</span> &lt; <span style="color:#ae81ff">1000000000</span>; <span style="color:#a6e22e">n</span><span style="color:#f92672">++</span> {
-        <span style="color:#75715e">// runtime get goroutine id
-</span><span style="color:#75715e"></span>        <span style="color:#a6e22e">getGID</span>()
-    }
-}
-
-<span style="color:#75715e">// BenchmarkGoId-8      1000000000           0.05731 ns/op
-</span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">BenchmarkGoId</span>(<span style="color:#a6e22e">b</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">testing</span>.<span style="color:#a6e22e">B</span>) {
-    <span style="color:#66d9ef">for</span> <span style="color:#a6e22e">n</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">0</span>; <span style="color:#a6e22e">n</span> &lt; <span style="color:#ae81ff">1000000000</span>; <span style="color:#a6e22e">n</span><span style="color:#f92672">++</span> {
-        <span style="color:#75715e">// get it by assembly
-</span><span style="color:#75715e"></span>        <span style="color:#a6e22e">GoId</span>()
-    }
-}
-</code></pre></div><p>It can be seen that the way to obtain the goroutine id by assembly is better, and the difference is several orders of magnitude.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#75715e">// BenchmarkGRtId-8     1000000000           0.0005081 ns/op
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">BenchmarkGRtId</span>(<span style="color:#a6e22e">b</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">testing</span>.<span style="color:#a6e22e">B</span>) {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> <span style="color:#a6e22e">n</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">0</span>; <span style="color:#a6e22e">n</span> &lt; <span style="color:#ae81ff">1000000000</span>; <span style="color:#a6e22e">n</span><span style="color:#f92672">++</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// runtime get goroutine id
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        <span style="color:#a6e22e">getGID</span>()
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// BenchmarkGoId-8      1000000000           0.05731 ns/op
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">BenchmarkGoId</span>(<span style="color:#a6e22e">b</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">testing</span>.<span style="color:#a6e22e">B</span>) {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> <span style="color:#a6e22e">n</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">0</span>; <span style="color:#a6e22e">n</span> &lt; <span style="color:#ae81ff">1000000000</span>; <span style="color:#a6e22e">n</span><span style="color:#f92672">++</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// get it by assembly
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        <span style="color:#a6e22e">GoId</span>()
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>It can be seen that the way to obtain the goroutine id by assembly is better, and the difference is several orders of magnitude.</p>
 <hr>
 <h2 id="limit-coroutines">Limit coroutines</h2>
 <p>The above lists several methods for locating goroutine information. Is there any other way to control the program&rsquo;s go goroutine before the goroutine leaks? One way is to use a powerful channel to sit down restrictions.</p>
 <p>** ### Step by st**ep
 Here is a simple idea, that is, wrap a layer of <code>channel</code> for protection,</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#75715e">// limited quantity
-</span><span style="color:#75715e"></span><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">LIMIT_G_NUM</span> = make(<span style="color:#66d9ef">chan</span> <span style="color:#66d9ef">struct</span>{}, <span style="color:#ae81ff">100</span>)
-
-<span style="color:#75715e">// custom processing logic
-</span><span style="color:#75715e"></span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">HandleFun</span> <span style="color:#66d9ef">func</span>()
-
-<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">AsyncGoForHandle</span>(<span style="color:#a6e22e">fn</span> <span style="color:#a6e22e">HandleFun</span>)  {
-    <span style="color:#75715e">// mark as handling
-</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">LIMIT_G_NUM</span> <span style="color:#f92672">&lt;-</span> <span style="color:#66d9ef">struct</span>{}{}
-    <span style="color:#66d9ef">go</span> <span style="color:#66d9ef">func</span>() {
-        <span style="color:#66d9ef">defer</span> <span style="color:#66d9ef">func</span>() {
-            <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> recover(); <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
-                <span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Fatalf</span>(<span style="color:#e6db74">&#34;AsyncGoForHandle recover from err: %v&#34;</span>, <span style="color:#a6e22e">err</span>)
-            }
-            <span style="color:#75715e">// return token
-</span><span style="color:#75715e"></span>            <span style="color:#f92672">&lt;-</span><span style="color:#a6e22e">LIMIT_G_NUM</span>
-        }()
-
-        <span style="color:#75715e">// processing logic function
-</span><span style="color:#75715e"></span>        <span style="color:#a6e22e">fn</span>()
-    }()
-}
-</code></pre></div><p>The above idea is relatively simple, I believe everyone can understand it. Every time you need to create a goroutine asynchronously, you only need to call the <code>AsyncGoForHandle()</code> function. The disadvantage may be the processing logic <code>HandleFun()</code> Not general enough, you need to define your own specific implementation.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#75715e">// limited quantity
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">LIMIT_G_NUM</span> = make(<span style="color:#66d9ef">chan</span> <span style="color:#66d9ef">struct</span>{}, <span style="color:#ae81ff">100</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// custom processing logic
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">HandleFun</span> <span style="color:#66d9ef">func</span>()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">AsyncGoForHandle</span>(<span style="color:#a6e22e">fn</span> <span style="color:#a6e22e">HandleFun</span>)  {
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// mark as handling
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#a6e22e">LIMIT_G_NUM</span> <span style="color:#f92672">&lt;-</span> <span style="color:#66d9ef">struct</span>{}{}
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">go</span> <span style="color:#66d9ef">func</span>() {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">defer</span> <span style="color:#66d9ef">func</span>() {
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> recover(); <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>                <span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Fatalf</span>(<span style="color:#e6db74">&#34;AsyncGoForHandle recover from err: %v&#34;</span>, <span style="color:#a6e22e">err</span>)
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e">// return token
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>            <span style="color:#f92672">&lt;-</span><span style="color:#a6e22e">LIMIT_G_NUM</span>
+</span></span><span style="display:flex;"><span>        }()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// processing logic function
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        <span style="color:#a6e22e">fn</span>()
+</span></span><span style="display:flex;"><span>    }()
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>The above idea is relatively simple, I believe everyone can understand it. Every time you need to create a goroutine asynchronously, you only need to call the <code>AsyncGoForHandle()</code> function. The disadvantage may be the processing logic <code>HandleFun()</code> Not general enough, you need to define your own specific implementation.</p>
 <p>Another way is to introduce the concept of <strong>goroutine pool</strong>. The pool here is a bit similar to the database connection pool, that is, it is pre-created at the beginning. As long as the business layer is responsible for submitting data, there are already many mature packages in the industry.</p>
 <h3 id="reliable-solutiontunny">Reliable Solution：tunny</h3>
 <p>I saw that the community has a well-packaged goroutine pool named <strong>tunny</strong>. The number of lines of code is not many. Let&rsquo;s try to disassemble and analyze the code. The project address:https://github.com/Jeffail/tunny</p>
 <p><strong>Step 1: Define the processing logic interface</strong></p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Worker</span> <span style="color:#66d9ef">interface</span> {
-    <span style="color:#75715e">// Custom logic implementation, developers 
-</span><span style="color:#75715e"></span>    <span style="color:#75715e">// only need to care about input and output parameters
-</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">Process</span>(<span style="color:#66d9ef">interface</span>{}) <span style="color:#66d9ef">interface</span>{}
-}
-</code></pre></div><p><strong>Step 2: the input source of the wrapper worker workRequest</strong></p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">workerWrapper</span> <span style="color:#66d9ef">struct</span> {
-    <span style="color:#75715e">// inject internal implementation logic
-</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">worker</span>        <span style="color:#a6e22e">Worker</span>
-    <span style="color:#a6e22e">interruptChan</span> <span style="color:#66d9ef">chan</span> <span style="color:#66d9ef">struct</span>{}
-
-    <span style="color:#75715e">// request source
-</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">reqChan</span> <span style="color:#66d9ef">chan</span><span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">workRequest</span>
-
-    <span style="color:#75715e">// ...
-</span><span style="color:#75715e"></span>}
-</code></pre></div><p><strong>Step 3: input source structure</strong></p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">workRequest</span> <span style="color:#66d9ef">struct</span> {
-    <span style="color:#75715e">// input
-</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">jobChan</span> <span style="color:#66d9ef">chan</span><span style="color:#f92672">&lt;-</span> <span style="color:#66d9ef">interface</span>{}
-
-    <span style="color:#75715e">// handle result, the return of worker.Process()
-</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">retChan</span> <span style="color:#f92672">&lt;-</span><span style="color:#66d9ef">chan</span> <span style="color:#66d9ef">interface</span>{}
-
-    <span style="color:#75715e">// ...
-</span><span style="color:#75715e"></span>}
-</code></pre></div><p><strong>Step 4: implement</strong><br>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Worker</span> <span style="color:#66d9ef">interface</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// Custom logic implementation, developers 
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// only need to care about input and output parameters
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#a6e22e">Process</span>(<span style="color:#66d9ef">interface</span>{}) <span style="color:#66d9ef">interface</span>{}
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p><strong>Step 2: the input source of the wrapper worker workRequest</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">workerWrapper</span> <span style="color:#66d9ef">struct</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// inject internal implementation logic
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#a6e22e">worker</span>        <span style="color:#a6e22e">Worker</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">interruptChan</span> <span style="color:#66d9ef">chan</span> <span style="color:#66d9ef">struct</span>{}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// request source
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#a6e22e">reqChan</span> <span style="color:#66d9ef">chan</span><span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">workRequest</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// ...
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>}
+</span></span></code></pre></div><p><strong>Step 3: input source structure</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">workRequest</span> <span style="color:#66d9ef">struct</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// input
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#a6e22e">jobChan</span> <span style="color:#66d9ef">chan</span><span style="color:#f92672">&lt;-</span> <span style="color:#66d9ef">interface</span>{}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// handle result, the return of worker.Process()
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#a6e22e">retChan</span> <span style="color:#f92672">&lt;-</span><span style="color:#66d9ef">chan</span> <span style="color:#66d9ef">interface</span>{}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// ...
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>}
+</span></span></code></pre></div><p><strong>Step 4: implement</strong><br>
 As we know, Go&rsquo;s interfaces follow the duck model: as long as it behaves like a duck, it&rsquo;s a duck.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#75715e">// Worker implement
-</span><span style="color:#75715e"></span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">closureWorker</span> <span style="color:#66d9ef">struct</span> {
-    <span style="color:#a6e22e">processor</span> <span style="color:#66d9ef">func</span>(<span style="color:#66d9ef">interface</span>{}) <span style="color:#66d9ef">interface</span>{}
-}
-
-<span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">w</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">closureWorker</span>) <span style="color:#a6e22e">Process</span>(<span style="color:#a6e22e">payload</span> <span style="color:#66d9ef">interface</span>{}) <span style="color:#66d9ef">interface</span>{} {
-    <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">w</span>.<span style="color:#a6e22e">processor</span>(<span style="color:#a6e22e">payload</span>)
-}
-</code></pre></div><p><strong>Step 5: Define Work Pool Structure</strong></p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Pool</span> <span style="color:#66d9ef">struct</span> {
-    <span style="color:#a6e22e">queuedJobs</span> <span style="color:#66d9ef">int64</span>
-
-    <span style="color:#75715e">// member functions for duck entities
-</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">ctor</span>    <span style="color:#66d9ef">func</span>() <span style="color:#a6e22e">Worker</span>
-    <span style="color:#a6e22e">workers</span> []<span style="color:#f92672">*</span><span style="color:#a6e22e">workerWrapper</span>
-    <span style="color:#a6e22e">reqChan</span> <span style="color:#66d9ef">chan</span> <span style="color:#a6e22e">workRequest</span>
-
-    <span style="color:#a6e22e">workerMut</span> <span style="color:#a6e22e">sync</span>.<span style="color:#a6e22e">Mutex</span>
-}
-
-<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">NewFunc</span>(<span style="color:#a6e22e">n</span> <span style="color:#66d9ef">int</span>, <span style="color:#a6e22e">f</span> <span style="color:#66d9ef">func</span>(<span style="color:#66d9ef">interface</span>{}) <span style="color:#66d9ef">interface</span>{}) <span style="color:#f92672">*</span><span style="color:#a6e22e">Pool</span> {
-    <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">New</span>(<span style="color:#a6e22e">n</span>, <span style="color:#66d9ef">func</span>() <span style="color:#a6e22e">Worker</span> {
-        <span style="color:#66d9ef">return</span> <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">closureWorker</span>{
-            <span style="color:#75715e">// a real implement struct
-</span><span style="color:#75715e"></span>            <span style="color:#a6e22e">processor</span>: <span style="color:#a6e22e">f</span>,
-        }
-    })
-}
-
-<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">New</span>(<span style="color:#a6e22e">n</span> <span style="color:#66d9ef">int</span>, <span style="color:#a6e22e">ctor</span> <span style="color:#66d9ef">func</span>() <span style="color:#a6e22e">Worker</span>) <span style="color:#f92672">*</span><span style="color:#a6e22e">Pool</span> {
-    <span style="color:#a6e22e">p</span> <span style="color:#f92672">:=</span> <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">Pool</span>{
-        <span style="color:#a6e22e">ctor</span>:    <span style="color:#a6e22e">ctor</span>,
-        <span style="color:#a6e22e">reqChan</span>: make(<span style="color:#66d9ef">chan</span> <span style="color:#a6e22e">workRequest</span>),
-    }
-    <span style="color:#75715e">// create coroutines in batches, monitor and process tasks from &#39;reqChan&#39;
-</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">SetSize</span>(<span style="color:#a6e22e">n</span>)
-
-    <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">p</span>
-}
-</code></pre></div><p>The relevant entity structure is as follows, which is clearer when reading the source code.
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#75715e">// Worker implement
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">closureWorker</span> <span style="color:#66d9ef">struct</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">processor</span> <span style="color:#66d9ef">func</span>(<span style="color:#66d9ef">interface</span>{}) <span style="color:#66d9ef">interface</span>{}
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">w</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">closureWorker</span>) <span style="color:#a6e22e">Process</span>(<span style="color:#a6e22e">payload</span> <span style="color:#66d9ef">interface</span>{}) <span style="color:#66d9ef">interface</span>{} {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">w</span>.<span style="color:#a6e22e">processor</span>(<span style="color:#a6e22e">payload</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p><strong>Step 5: Define Work Pool Structure</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Pool</span> <span style="color:#66d9ef">struct</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">queuedJobs</span> <span style="color:#66d9ef">int64</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// member functions for duck entities
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#a6e22e">ctor</span>    <span style="color:#66d9ef">func</span>() <span style="color:#a6e22e">Worker</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">workers</span> []<span style="color:#f92672">*</span><span style="color:#a6e22e">workerWrapper</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">reqChan</span> <span style="color:#66d9ef">chan</span> <span style="color:#a6e22e">workRequest</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">workerMut</span> <span style="color:#a6e22e">sync</span>.<span style="color:#a6e22e">Mutex</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">NewFunc</span>(<span style="color:#a6e22e">n</span> <span style="color:#66d9ef">int</span>, <span style="color:#a6e22e">f</span> <span style="color:#66d9ef">func</span>(<span style="color:#66d9ef">interface</span>{}) <span style="color:#66d9ef">interface</span>{}) <span style="color:#f92672">*</span><span style="color:#a6e22e">Pool</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">New</span>(<span style="color:#a6e22e">n</span>, <span style="color:#66d9ef">func</span>() <span style="color:#a6e22e">Worker</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">closureWorker</span>{
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e">// a real implement struct
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>            <span style="color:#a6e22e">processor</span>: <span style="color:#a6e22e">f</span>,
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    })
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">New</span>(<span style="color:#a6e22e">n</span> <span style="color:#66d9ef">int</span>, <span style="color:#a6e22e">ctor</span> <span style="color:#66d9ef">func</span>() <span style="color:#a6e22e">Worker</span>) <span style="color:#f92672">*</span><span style="color:#a6e22e">Pool</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">p</span> <span style="color:#f92672">:=</span> <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">Pool</span>{
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">ctor</span>:    <span style="color:#a6e22e">ctor</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">reqChan</span>: make(<span style="color:#66d9ef">chan</span> <span style="color:#a6e22e">workRequest</span>),
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// create coroutines in batches, monitor and process tasks from &#39;reqChan&#39;
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">SetSize</span>(<span style="color:#a6e22e">n</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">p</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>The relevant entity structure is as follows, which is clearer when reading the source code.
 <img src="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/blog/sync-pool/en-job-pool.png" alt="实体模块"></p>
 <p>This framework creating a pool of coroutines in advance, and then the business layer only needs to continuously input &ldquo;processing data&rdquo; into the chan of <code>workRequest</code>, that is, <code>process()</code>function, <code>process()</code> module will input data to the internal <code>channel</code> for processing, and the <code>worker</code> in the pool will process it. <br>
 This factory pattern is worth learning from, and many frameworks in Go use this writing method.</p>
 <p>Quoting the usage example of the original project README.md:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#a6e22e">numCPUs</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">runtime</span>.<span style="color:#a6e22e">NumCPU</span>()
-
-<span style="color:#a6e22e">pool</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">tunny</span>.<span style="color:#a6e22e">NewFunc</span>(<span style="color:#a6e22e">numCPUs</span>, <span style="color:#66d9ef">func</span>(<span style="color:#a6e22e">payload</span> <span style="color:#66d9ef">interface</span>{}) <span style="color:#66d9ef">interface</span>{} {
-    <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">result</span> []<span style="color:#66d9ef">byte</span>    
-    <span style="color:#a6e22e">result</span> = <span style="color:#a6e22e">wrapSomething</span>()
-    <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">result</span>
-})
-<span style="color:#66d9ef">defer</span> <span style="color:#a6e22e">pool</span>.<span style="color:#a6e22e">Close</span>()
-
-<span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">HandleFunc</span>(<span style="color:#e6db74">&#34;/work&#34;</span>, <span style="color:#66d9ef">func</span>(<span style="color:#a6e22e">w</span> <span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">ResponseWriter</span>, <span style="color:#a6e22e">r</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">Request</span>) {
-    <span style="color:#a6e22e">input</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">ioutil</span>.<span style="color:#a6e22e">ReadAll</span>(<span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">Body</span>)
-    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
-        <span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">Error</span>(<span style="color:#a6e22e">w</span>, <span style="color:#e6db74">&#34;Internal error&#34;</span>, <span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">StatusInternalServerError</span>)
-    }
-    <span style="color:#66d9ef">defer</span> <span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">Body</span>.<span style="color:#a6e22e">Close</span>()
-
-    <span style="color:#a6e22e">result</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">pool</span>.<span style="color:#a6e22e">Process</span>(<span style="color:#a6e22e">input</span>)
-
-    <span style="color:#a6e22e">w</span>.<span style="color:#a6e22e">Write</span>(<span style="color:#a6e22e">result</span>.([]<span style="color:#66d9ef">byte</span>))
-})
-
-<span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">ListenAndServe</span>(<span style="color:#e6db74">&#34;:8080&#34;</span>, <span style="color:#66d9ef">nil</span>)
-</code></pre></div><h2 id="summary">Summary</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">numCPUs</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">runtime</span>.<span style="color:#a6e22e">NumCPU</span>()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">pool</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">tunny</span>.<span style="color:#a6e22e">NewFunc</span>(<span style="color:#a6e22e">numCPUs</span>, <span style="color:#66d9ef">func</span>(<span style="color:#a6e22e">payload</span> <span style="color:#66d9ef">interface</span>{}) <span style="color:#66d9ef">interface</span>{} {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">result</span> []<span style="color:#66d9ef">byte</span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">result</span> = <span style="color:#a6e22e">wrapSomething</span>()
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">result</span>
+</span></span><span style="display:flex;"><span>})
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">defer</span> <span style="color:#a6e22e">pool</span>.<span style="color:#a6e22e">Close</span>()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">HandleFunc</span>(<span style="color:#e6db74">&#34;/work&#34;</span>, <span style="color:#66d9ef">func</span>(<span style="color:#a6e22e">w</span> <span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">ResponseWriter</span>, <span style="color:#a6e22e">r</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">Request</span>) {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">input</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">ioutil</span>.<span style="color:#a6e22e">ReadAll</span>(<span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">Body</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">Error</span>(<span style="color:#a6e22e">w</span>, <span style="color:#e6db74">&#34;Internal error&#34;</span>, <span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">StatusInternalServerError</span>)
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">defer</span> <span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">Body</span>.<span style="color:#a6e22e">Close</span>()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">result</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">pool</span>.<span style="color:#a6e22e">Process</span>(<span style="color:#a6e22e">input</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">w</span>.<span style="color:#a6e22e">Write</span>(<span style="color:#a6e22e">result</span>.([]<span style="color:#66d9ef">byte</span>))
+</span></span><span style="display:flex;"><span>})
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">ListenAndServe</span>(<span style="color:#e6db74">&#34;:8080&#34;</span>, <span style="color:#66d9ef">nil</span>)
+</span></span></code></pre></div><h2 id="summary">Summary</h2>
 <ul>
 <li>Goutines have several built-in information, goroutine id, goroutine stack, goroutine status (running/io wait/chan send), which can help us avoid or locate problems to a certain extent.</li>
 <li>Only one Go keyword is required to create a goroutine in Go, but it is critical to recycle it reasonably. If necessary, the goroutine pool can be used as a limit</li>
@@ -631,6 +654,8 @@ This factory pattern is worth learning from, and many frameworks in Go use this 
 <li><a href="https://github.com/Jeffail/tunny">https://github.com/Jeffail/tunny</a></li>
 </ul>
               
+
+
             </div>
           </div>
           <div id="post-footer" class="post-footer main-content-wrap">
@@ -641,147 +666,149 @@ This factory pattern is worth learning from, and many frameworks in Go use this 
                   <div class="post-footer-tags">
                     <span class="text-color-light text-small">TAGGED IN</span><br/>
                     
-  <a class="tag tag--primary tag--small" href="/en/tags/talk-about-go/">Talk about Go</a>
+  <a class="tag tag--primary tag--small" href="https://pixeldin.github.io/en/tags/talk-about-go/">Talk about Go</a>
 
-  <a class="tag tag--primary tag--small" href="/en/tags/goroutine/">Goroutine</a>
+  <a class="tag tag--primary tag--small" href="https://pixeldin.github.io/en/tags/goroutine/">Goroutine</a>
 
-  <a class="tag tag--primary tag--small" href="/en/tags/pprof/">pprof</a>
+  <a class="tag tag--primary tag--small" href="https://pixeldin.github.io/en/tags/pprof/">pprof</a>
 
                   </div>
                 
               
             
-            <div class="post-actions-wrap">
-  
-      <nav >
-        <ul class="post-actions post-action-nav">
-          
-            <li class="post-action">
-              
-                <a class="post-action-btn btn btn--default tooltip--top" href="/en/2022/04/talk-about-go-a-high-performance-pool-for-reusing-object-sync.pool/" data-tooltip="Talk about Go: A high performance pool for reusing object - Sync.Pool">
-              
-                  <i class="fa fa-angle-left"></i>
-                  <span class="hide-xs hide-sm text-small icon-ml">NEXT</span>
-                </a>
-            </li>
-            <li class="post-action">
-              
-                <a class="post-action-btn btn btn--default tooltip--top" href="/en/2022/02/talk-about-go-a-simple-implement-of-circuit-breaker/" data-tooltip="Talk about Go: A simple implement of Circuit Breaker">
-              
-                  <span class="hide-xs hide-sm text-small icon-mr">PREVIOUS</span>
-                  <i class="fa fa-angle-right"></i>
-                </a>
-            </li>
-          
-        </ul>
-      </nav>
-    <ul class="post-actions post-action-share" >
+            
+<div class="post-actions-wrap">
+  <nav >
+    <ul class="post-actions post-action-nav">
       
-        <li class="post-action hide-lg hide-md hide-sm">
-          <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
-            <i class="fa fa-share-alt"></i>
-          </a>
+        <li class="post-action">
+          
+            <a class="post-action-btn btn btn--default tooltip--top" href="https://pixeldin.github.io/en/2022/04/talk-about-go-a-high-performance-pool-for-reusing-object-sync.pool/" data-tooltip="Talk about Go: A high performance pool for reusing object - Sync.Pool" aria-label="NEXT: Talk about Go: A high performance pool for reusing object - Sync.Pool">
+          
+              <i class="fa fa-angle-left"></i>
+              <span class="hide-xs hide-sm text-small icon-ml">NEXT</span>
+            </a>
         </li>
-        
+        <li class="post-action">
+          
+            <a class="post-action-btn btn btn--default tooltip--top" href="https://pixeldin.github.io/en/2022/02/talk-about-go-a-simple-implement-of-circuit-breaker/" data-tooltip="Talk about Go: A simple implement of Circuit Breaker" aria-label="PREVIOUS: Talk about Go: A simple implement of Circuit Breaker">
+          
+              <span class="hide-xs hide-sm text-small icon-mr">PREVIOUS</span>
+              <i class="fa fa-angle-right"></i>
+            </a>
+        </li>
       
-      
-      <li class="post-action">
-        
-          <a class="post-action-btn btn btn--default" href="#">
-        
-          <i class="fa fa-list"></i>
-        </a>
-      </li>
     </ul>
+  </nav>
+<ul class="post-actions post-action-share" >
   
+    <li class="post-action hide-lg hide-md hide-sm">
+      <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions" aria-label="Share this post">
+        <i class="fa fa-share-alt" aria-hidden="true"></i>
+      </a>
+    </li>
+    
+  
+  
+  <li class="post-action">
+    
+      <a class="post-action-btn btn btn--default" href="#top" aria-label="Back to top">
+      <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    
+    </a>
+  </li>
+</ul>
 </div>
 
+
             
-              
-            
+  
+
+
           </div>
         </article>
         <footer id="footer" class="main-content-wrap">
   <span class="copyrights">
-    &copy; 2024 <a href="https://github.com/pixeldin">pixeldin</a>. All Rights Reserved
+    &copy; 2023 <a href="https://github.com/pixeldin">pixeldin</a>. All Rights Reserved
   </span>
 </footer>
 
       </div>
-      <div id="bottom-bar" class="post-bottom-bar" data-behavior="5">
-        <div class="post-actions-wrap">
-  
-      <nav >
-        <ul class="post-actions post-action-nav">
-          
-            <li class="post-action">
-              
-                <a class="post-action-btn btn btn--default tooltip--top" href="/en/2022/04/talk-about-go-a-high-performance-pool-for-reusing-object-sync.pool/" data-tooltip="Talk about Go: A high performance pool for reusing object - Sync.Pool">
-              
-                  <i class="fa fa-angle-left"></i>
-                  <span class="hide-xs hide-sm text-small icon-ml">NEXT</span>
-                </a>
-            </li>
-            <li class="post-action">
-              
-                <a class="post-action-btn btn btn--default tooltip--top" href="/en/2022/02/talk-about-go-a-simple-implement-of-circuit-breaker/" data-tooltip="Talk about Go: A simple implement of Circuit Breaker">
-              
-                  <span class="hide-xs hide-sm text-small icon-mr">PREVIOUS</span>
-                  <i class="fa fa-angle-right"></i>
-                </a>
-            </li>
-          
-        </ul>
-      </nav>
-    <ul class="post-actions post-action-share" >
+      <div id="bottom-bar" class="post-bottom-bar" data-behavior="1">
+        
+<div class="post-actions-wrap">
+  <nav >
+    <ul class="post-actions post-action-nav">
       
-        <li class="post-action hide-lg hide-md hide-sm">
-          <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
-            <i class="fa fa-share-alt"></i>
-          </a>
+        <li class="post-action">
+          
+            <a class="post-action-btn btn btn--default tooltip--top" href="https://pixeldin.github.io/en/2022/04/talk-about-go-a-high-performance-pool-for-reusing-object-sync.pool/" data-tooltip="Talk about Go: A high performance pool for reusing object - Sync.Pool" aria-label="NEXT: Talk about Go: A high performance pool for reusing object - Sync.Pool">
+          
+              <i class="fa fa-angle-left"></i>
+              <span class="hide-xs hide-sm text-small icon-ml">NEXT</span>
+            </a>
         </li>
-        
+        <li class="post-action">
+          
+            <a class="post-action-btn btn btn--default tooltip--top" href="https://pixeldin.github.io/en/2022/02/talk-about-go-a-simple-implement-of-circuit-breaker/" data-tooltip="Talk about Go: A simple implement of Circuit Breaker" aria-label="PREVIOUS: Talk about Go: A simple implement of Circuit Breaker">
+          
+              <span class="hide-xs hide-sm text-small icon-mr">PREVIOUS</span>
+              <i class="fa fa-angle-right"></i>
+            </a>
+        </li>
       
-      
-      <li class="post-action">
-        
-          <a class="post-action-btn btn btn--default" href="#">
-        
-          <i class="fa fa-list"></i>
-        </a>
-      </li>
     </ul>
+  </nav>
+<ul class="post-actions post-action-share" >
   
+    <li class="post-action hide-lg hide-md hide-sm">
+      <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions" aria-label="Share this post">
+        <i class="fa fa-share-alt" aria-hidden="true"></i>
+      </a>
+    </li>
+    
+  
+  
+  <li class="post-action">
+    
+      <a class="post-action-btn btn btn--default" href="#top" aria-label="Back to top">
+      <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    
+    </a>
+  </li>
+</ul>
 </div>
 
+
       </div>
-      <div id="share-options-bar" class="share-options-bar" data-behavior="5">
-  <i id="btn-close-shareoptions" class="fa fa-close"></i>
-  <ul class="share-options">
-    
-  </ul>
-</div>
-<div id="share-options-mask" class="share-options-mask"></div>
+      
+
     </div>
     
     <div id="about">
   <div id="about-card">
     <div id="about-btn-close">
-      <i class="fa fa-remove"></i>
+      <i class="fa fa-times"></i>
     </div>
     
       <img id="about-card-picture" src="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/pig.jpg" alt="Author&#39;s picture" />
     
-    <h4 id="about-card-name">pixelpig</h4>
+    <h4 id="about-card-name">@Pixelpig</h4>
     
-      <div id="about-card-bio">With enthusiasm for open source and I am looking forward to be a better developer. Stay hungry, stay foolish <strong>:）</strong></div>
+      <div id="about-card-bio">Keep it simple, so as this bio <strong>:）</strong></div>
     
+    
+      <div id="about-card-job">
+        <i class="fa fa-briefcase"></i>
+        <br/>
+        Software Developer
+      </div>
     
     
       <div id="about-card-location">
-        <i class="fa fa-map-marker"></i>
+        <i class="fa fa-map-marker-alt"></i>
         <br/>
-        GuangDong - CHINA
+        GuangDong - China
       </div>
     
   </div>
@@ -796,30 +823,16 @@ This factory pattern is worth learning from, and many frameworks in Go use this 
 
 
     
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js" integrity="sha256-/BfiIkHlHoVihZdc6TFuj7MmJ0TWcWsMXkeDFwhi0zw=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.1.0/highlight.min.js" integrity="sha512-z+/WWfyD5tccCukM4VvONpEtLmbAm5LDu7eKiyMQJ9m7OfPEDL7gENyDRL3Yfe8XAuGsS2fS4xSMnl6d30kqGQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.7/js/jquery.fancybox.min.js" integrity="sha256-GEAnjcTqVP+vBp3SSc8bEDQqvWAZMiHyUSIorrWwH50=" crossorigin="anonymous"></script>
-
-
-<script src="/js/script-pcw6v3xilnxydl1vddzazdverrnn9ctynvnxgwho987mfyqkuylcb1nlt.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js" integrity="sha512-uURl+ZXMBrF4AwGaWmEetzrd+J5/8NRkWAvJx5sbPSSuOb0bZLqf+tOzniObO00BjHa/dD7gub9oCGMLPQHtQA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 
-<script lang="javascript">
-window.onload = updateMinWidth;
-window.onresize = updateMinWidth;
-document.getElementById("sidebar").addEventListener("transitionend", updateMinWidth);
-function updateMinWidth() {
-  var sidebar = document.getElementById("sidebar");
-  var main = document.getElementById("main");
-  main.style.minWidth = "";
-  var w1 = getComputedStyle(main).getPropertyValue("min-width");
-  var w2 = getComputedStyle(sidebar).getPropertyValue("width");
-  var w3 = getComputedStyle(sidebar).getPropertyValue("left");
-  main.style.minWidth = `calc(${w1} - ${w2} - ${w3})`;
-}
-</script>
+<script src="https://pixeldin.github.io/js/script-d9gfx1pdvbfdgoahypizomgoamlbumvk1ugdifqa59ynqvdh8wfsinmt5oj.min.js"></script>
+
+
 
 <script>
 $(document).ready(function() {
@@ -832,11 +845,6 @@ $(document).ready(function() {
   });
 });
 </script>
-
-
-  
-    
-  
 
 
 

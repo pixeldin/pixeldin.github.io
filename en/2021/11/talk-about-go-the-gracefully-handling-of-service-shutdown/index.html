@@ -2,11 +2,31 @@
 <html lang="en-us">
   <head>
     
+    <script type="application/ld+json">
+
+{  
+  "@context":"http://schema.org",
+  "@type":"Website",
+  "@id":"https:\/\/pixeldin.github.io\/",
+  "author": {
+    "@type": "Person",
+    "name": "@Pixelpig",
+    
+    "image": "https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/pig.jpg"
+    
+  },
+  "name":"pixelpig.tech",
+  "description":"\u003cp\u003eFrom high availability to graceful shutdown\/restart, to refinement to program offline\/restart, etc. So what can we do in Go? Today let\u0026rsquo;s talk about the graceful shutdown of go programs.\u003c\/p\u003e",
+  "url":"https:\/\/pixeldin.github.io\/en\/2021\/11\/talk-about-go-the-gracefully-handling-of-service-shutdown\/",
+  "keywords":"[]"
+}
+
+</script>
     <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="generator" content="Hugo 0.80.0 with theme Tranquilpeak 0.4.8-BETA">
-<meta name="author" content="pixelpig">
+<meta name="generator" content="Hugo 0.111.3 with theme Tranquilpeak 0.5.3-BETA">
+<meta name="author" content="@Pixelpig">
 <meta name="keywords" content="">
 <meta name="description" content="From high availability to graceful shutdown/restart, to refinement to program offline/restart, etc. So what can we do in Go? Today let&rsquo;s talk about the graceful shutdown of go programs.">
 
@@ -15,9 +35,9 @@
 <meta property="og:type" content="article">
 <meta property="og:title" content="Talk about Go: The gracefully handling of service shutdown">
 <meta name="twitter:title" content="Talk about Go: The gracefully handling of service shutdown">
-<meta property="og:url" content="/en/2021/11/talk-about-go-the-gracefully-handling-of-service-shutdown/">
-<meta property="twitter:url" content="/en/2021/11/talk-about-go-the-gracefully-handling-of-service-shutdown/">
-<meta property="og:site_name" content="pixelpig.space">
+<meta property="og:url" content="https://pixeldin.github.io/en/2021/11/talk-about-go-the-gracefully-handling-of-service-shutdown/">
+<meta property="twitter:url" content="https://pixeldin.github.io/en/2021/11/talk-about-go-the-gracefully-handling-of-service-shutdown/">
+<meta property="og:site_name" content="pixelpig.tech">
 <meta property="og:description" content="From high availability to graceful shutdown/restart, to refinement to program offline/restart, etc. So what can we do in Go? Today let&rsquo;s talk about the graceful shutdown of go programs.">
 <meta name="twitter:description" content="From high availability to graceful shutdown/restart, to refinement to program offline/restart, etc. So what can we do in Go? Today let&rsquo;s talk about the graceful shutdown of go programs.">
 <meta property="og:locale" content="en">
@@ -61,12 +81,12 @@
 
 
 
-
-
-
-
   <meta property="og:image" content="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/pig.jpg">
   <meta property="twitter:image" content="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/pig.jpg">
+
+
+
+
 
 
     <title>Talk about Go: The gracefully handling of service shutdown</title>
@@ -76,15 +96,15 @@
 
     
 
-    <link rel="canonical" href="/en/2021/11/talk-about-go-the-gracefully-handling-of-service-shutdown/">
+    <link rel="canonical" href="https://pixeldin.github.io/en/2021/11/talk-about-go-the-gracefully-handling-of-service-shutdown/">
 
     
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/jquery.fancybox.min.css" integrity="sha256-vuXZ9LGmmwtjqFX1F+EKin1ThZMub58gKULUyf0qECk=" crossorigin="anonymous" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/helpers/jquery.fancybox-thumbs.min.css" integrity="sha256-SEa4XYAHihTcEP1f5gARTB2K26Uk8PsndQYHQC1f4jU=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" integrity="sha512-H9jrZiiopUdsLpg94A333EfumgUBpO9MdbxStdeITo+KEIMaNfHNvwyjjDJb+ERPaRS6DpyRlKbvPUasNItRyw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     
     
-    <link rel="stylesheet" href="/css/style-twzjdbqhmnnacqs0pwwdzcdbt8yhv8giawvjqjmyfoqnvazl0dalmnhdkvp7.min.css" />
+    
+    <link rel="stylesheet" href="https://pixeldin.github.io/css/style-fneuerdunt9vf6vafpewt2nttopqa9hdugoae6mfs7phtuibtq6qjxkds96.min.css" />
     
     
 
@@ -96,15 +116,15 @@
 
   <body>
     <div id="blog">
-      <header id="header" data-behavior="5">
+      <header id="header" data-behavior="1">
   <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
   <div class="header-title">
-    <a class="header-title-link" href="/en/">pixelpig.space</a>
+    <a class="header-title-link" href="https://pixeldin.github.io/en/" aria-label="Go to homepage">pixelpig.tech</a>
   </div>
   
     
       <a class="header-right-picture "
-         href="/#about">
+         href="https://pixeldin.github.io/#about" aria-label="Open the link: /#about">
     
     
     
@@ -116,16 +136,16 @@
   
 </header>
 
-      <nav id="sidebar" data-behavior="5">
+      <nav id="sidebar" data-behavior="1">
   <div class="sidebar-container">
     
       <div class="sidebar-profile">
-        <a href="/#about">
+        <a href="https://pixeldin.github.io/#about" aria-label="Read more about the author">
           <img class="sidebar-profile-picture" src="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/pig.jpg" alt="Author&#39;s picture" />
         </a>
-        <h4 class="sidebar-profile-name">pixelpig</h4>
+        <h4 class="sidebar-profile-name">@Pixelpig</h4>
         
-          <h5 class="sidebar-profile-bio">With enthusiasm for open source and I am looking forward to be a better developer. Stay hungry, stay foolish <strong>:）</strong></h5>
+          <h5 class="sidebar-profile-bio">Keep it simple, so as this bio <strong>:）</strong></h5>
         
       </div>
     
@@ -133,7 +153,7 @@
       
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="/zh">
+      <a class="sidebar-button-link " href="https://pixeldin.github.io/zh" title="简体中文">
     
       <i class="sidebar-button-icon fa fa-lg fa-language"></i>
       
@@ -143,7 +163,7 @@
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="/en/">
+      <a class="sidebar-button-link " href="https://pixeldin.github.io/en/" title="Home">
     
       <i class="sidebar-button-icon fa fa-lg fa-home"></i>
       
@@ -153,7 +173,7 @@
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="/en/categories">
+      <a class="sidebar-button-link " href="https://pixeldin.github.io/en/categories" title="Categories">
     
       <i class="sidebar-button-icon fa fa-lg fa-bookmark"></i>
       
@@ -163,7 +183,7 @@
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="/en/tags">
+      <a class="sidebar-button-link " href="https://pixeldin.github.io/en/tags" title="Tags">
     
       <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
       
@@ -173,7 +193,7 @@
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="/en/archives">
+      <a class="sidebar-button-link " href="https://pixeldin.github.io/en/archives" title="Archives">
     
       <i class="sidebar-button-icon fa fa-lg fa-archive"></i>
       
@@ -183,7 +203,7 @@
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="/en/#about">
+      <a class="sidebar-button-link " href="https://pixeldin.github.io/en/#about" title="About me">
     
       <i class="sidebar-button-icon fa fa-lg fa-question"></i>
       
@@ -193,32 +213,35 @@
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="https://twitter.com/pixelpigpigpig/" target="_blank" rel="noopener">
+      <a class="sidebar-button-link " href="https://twitter.com/pixelpigpigpig/" target="_blank" rel="noopener" title="Twitter">
     
-      <i class="sidebar-button-icon fa fa-lg fa-twitter"></i>
+      <i class="sidebar-button-icon fab fa-lg fa-twitter"></i>
       
-      <span class="sidebar-button-desc">Twitter</span>
+      <span class="sidebar-button-desc">twitter</span>
     </a>
   </li>
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="https://github.com/pixeldin" target="_blank" rel="noopener">
+      <a class="sidebar-button-link " href="https://github.com/pixeldin" target="_blank" rel="noopener" title="pixeldin">
     
-      <i class="sidebar-button-icon fa fa-lg fa-github"></i>
+      <i class="sidebar-button-icon fab fa-lg fa-github-alt"></i>
       
       <span class="sidebar-button-desc">pixeldin</span>
     </a>
   </li>
 
 
-    </ul>
-    <ul class="sidebar-buttons">
-      
 
     </ul>
     <ul class="sidebar-buttons">
       
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+
 
     </ul>
   </div>
@@ -226,23 +249,23 @@
 
       
 
-      <div id="main" data-behavior="5"
+      <div id="main" data-behavior="1"
         class="
                hasCoverMetaIn
                ">
-        <article class="post" itemscope itemType="http://schema.org/BlogPosting">
+        <article class="post" id="top">
           
           
             <div class="post-header main-content-wrap text-center">
   
-    <h1 class="post-title" itemprop="headline">
+    <h1 class="post-title">
       Talk about Go: The gracefully handling of service shutdown
     </h1>
   
   
   <div class="postShorten-meta post-meta">
     
-      <time itemprop="datePublished" datetime="2021-11-02T00:00:00Z">
+      <time datetime="2021-11-02T00:00:00Z">
         
   November 2, 2021
 
@@ -253,9 +276,9 @@
   
     <span>in</span>
     
-      <a class="category-link" href="/en/categories/go">Go</a>, 
+      <a class="category-link" href="https://pixeldin.github.io/en/categories/go">Go</a>, 
     
-      <a class="category-link" href="/en/categories/microservice">microservice</a>
+      <a class="category-link" href="https://pixeldin.github.io/en/categories/microservice">microservice</a>
     
   
 
@@ -263,7 +286,7 @@
 
 </div>
           
-          <div class="post-content markdown" itemprop="articleBody">
+          <div class="post-content markdown">
             <div class="main-content-wrap">
               <p>From high availability to graceful shutdown/restart, to refinement to program offline/restart, etc. So what can we do in Go? Today let&rsquo;s talk about the graceful shutdown of go programs.</p>
 <p><img src="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/blog/graceful/recover.png" alt="recover"></p>
@@ -280,143 +303,143 @@
 </ul>
 <p>This time, let&rsquo;s talk about semaphores, such as P/V semaphores, It is often used for a process to wake up or wait for other processes in the critical section when it accesses the critical section. The semaphore is essentially an interrupt mechanism sent by the operating system. In addition to the P/V semaphore, there are common scenarios such as when we are interrupting by pressing <code>Ctrl+C</code> to notify the process to exit, actually it will send an interrupt signal, also called <code>SIGINT</code>.</p>
 <p>In Go, the semaphore semantics on the windows platform are as follows:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">const</span> (
-	<span style="color:#75715e">// More invented values for signals
-</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">SIGHUP</span>  = <span style="color:#a6e22e">Signal</span>(<span style="color:#ae81ff">0x1</span>)
-	<span style="color:#a6e22e">SIGINT</span>  = <span style="color:#a6e22e">Signal</span>(<span style="color:#ae81ff">0x2</span>)
-	<span style="color:#a6e22e">SIGQUIT</span> = <span style="color:#a6e22e">Signal</span>(<span style="color:#ae81ff">0x3</span>)
-	<span style="color:#a6e22e">SIGILL</span>  = <span style="color:#a6e22e">Signal</span>(<span style="color:#ae81ff">0x4</span>)
-	<span style="color:#a6e22e">SIGTRAP</span> = <span style="color:#a6e22e">Signal</span>(<span style="color:#ae81ff">0x5</span>)
-	<span style="color:#a6e22e">SIGABRT</span> = <span style="color:#a6e22e">Signal</span>(<span style="color:#ae81ff">0x6</span>)
-	<span style="color:#a6e22e">SIGBUS</span>  = <span style="color:#a6e22e">Signal</span>(<span style="color:#ae81ff">0x7</span>)
-	<span style="color:#a6e22e">SIGFPE</span>  = <span style="color:#a6e22e">Signal</span>(<span style="color:#ae81ff">0x8</span>)
-	<span style="color:#a6e22e">SIGKILL</span> = <span style="color:#a6e22e">Signal</span>(<span style="color:#ae81ff">0x9</span>)
-	<span style="color:#a6e22e">SIGSEGV</span> = <span style="color:#a6e22e">Signal</span>(<span style="color:#ae81ff">0xb</span>)
-	<span style="color:#a6e22e">SIGPIPE</span> = <span style="color:#a6e22e">Signal</span>(<span style="color:#ae81ff">0xd</span>)
-	<span style="color:#a6e22e">SIGALRM</span> = <span style="color:#a6e22e">Signal</span>(<span style="color:#ae81ff">0xe</span>)
-	<span style="color:#a6e22e">SIGTERM</span> = <span style="color:#a6e22e">Signal</span>(<span style="color:#ae81ff">0xf</span>)
-)
-
-<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">signals</span> = [<span style="color:#f92672">...</span>]<span style="color:#66d9ef">string</span>{
-	<span style="color:#ae81ff">1</span>:  <span style="color:#e6db74">&#34;hangup&#34;</span>,
-	<span style="color:#ae81ff">2</span>:  <span style="color:#e6db74">&#34;interrupt&#34;</span>,
-	<span style="color:#ae81ff">3</span>:  <span style="color:#e6db74">&#34;quit&#34;</span>,
-	<span style="color:#ae81ff">4</span>:  <span style="color:#e6db74">&#34;illegal instruction&#34;</span>,
-	<span style="color:#ae81ff">5</span>:  <span style="color:#e6db74">&#34;trace/breakpoint trap&#34;</span>,
-	<span style="color:#ae81ff">6</span>:  <span style="color:#e6db74">&#34;aborted&#34;</span>,
-	<span style="color:#ae81ff">7</span>:  <span style="color:#e6db74">&#34;bus error&#34;</span>,
-	<span style="color:#ae81ff">8</span>:  <span style="color:#e6db74">&#34;floating point exception&#34;</span>,
-	<span style="color:#ae81ff">9</span>:  <span style="color:#e6db74">&#34;killed&#34;</span>,
-	<span style="color:#ae81ff">10</span>: <span style="color:#e6db74">&#34;user defined signal 1&#34;</span>,
-	<span style="color:#ae81ff">11</span>: <span style="color:#e6db74">&#34;segmentation fault&#34;</span>,
-	<span style="color:#ae81ff">12</span>: <span style="color:#e6db74">&#34;user defined signal 2&#34;</span>,
-	<span style="color:#ae81ff">13</span>: <span style="color:#e6db74">&#34;broken pipe&#34;</span>,
-	<span style="color:#ae81ff">14</span>: <span style="color:#e6db74">&#34;alarm clock&#34;</span>,
-	<span style="color:#ae81ff">15</span>: <span style="color:#e6db74">&#34;terminated&#34;</span>,
-}
-</code></pre></div><p>Using 15 numbers to represent it in hexadecimal, then let&rsquo;s see how to monitor the system semaphore in go?</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">Notify</span>(<span style="color:#a6e22e">c</span> <span style="color:#66d9ef">chan</span><span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">os</span>.<span style="color:#a6e22e">Signal</span>, <span style="color:#a6e22e">sig</span> <span style="color:#f92672">...</span><span style="color:#a6e22e">os</span>.<span style="color:#a6e22e">Signal</span>) {
-	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">c</span> <span style="color:#f92672">==</span> <span style="color:#66d9ef">nil</span> {
-		panic(<span style="color:#e6db74">&#34;os/signal: Notify using nil channel&#34;</span>)
-	}
-	<span style="color:#75715e">// some code is omitted
-</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">add</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">func</span>(<span style="color:#a6e22e">n</span> <span style="color:#66d9ef">int</span>) {
-		<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">n</span> &lt; <span style="color:#ae81ff">0</span> {
-			<span style="color:#66d9ef">return</span>
-		}
-		<span style="color:#66d9ef">if</span> !<span style="color:#a6e22e">h</span>.<span style="color:#a6e22e">want</span>(<span style="color:#a6e22e">n</span>) {
-			<span style="color:#a6e22e">h</span>.<span style="color:#a6e22e">set</span>(<span style="color:#a6e22e">n</span>)
-			<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">handlers</span>.<span style="color:#a6e22e">ref</span>[<span style="color:#a6e22e">n</span>] <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span> {
-				<span style="color:#a6e22e">enableSignal</span>(<span style="color:#a6e22e">n</span>)
-
-				<span style="color:#75715e">// listening in singleton, make sure for regist logic before the program start.
-</span><span style="color:#75715e"></span>				<span style="color:#a6e22e">watchSignalLoopOnce</span>.<span style="color:#a6e22e">Do</span>(<span style="color:#66d9ef">func</span>() {
-					<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">watchSignalLoop</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
-						<span style="color:#66d9ef">go</span> <span style="color:#a6e22e">watchSignalLoop</span>()
-					}
-				})
-			}
-			<span style="color:#a6e22e">handlers</span>.<span style="color:#a6e22e">ref</span>[<span style="color:#a6e22e">n</span>]<span style="color:#f92672">++</span>
-		}
-	}
-	<span style="color:#75715e">// some code is omitted
-</span><span style="color:#75715e"></span>}
-</code></pre></div><p>The <code>watchSignalLoop</code> is a polling function in the unix version,</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">loop</span>() {
-	<span style="color:#66d9ef">for</span> {
-		<span style="color:#a6e22e">process</span>(<span style="color:#a6e22e">syscall</span>.<span style="color:#a6e22e">Signal</span>(<span style="color:#a6e22e">signal_recv</span>()))
-	}
-}
-
-<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">init</span>() {
-	<span style="color:#a6e22e">watchSignalLoop</span> = <span style="color:#a6e22e">loop</span>
-}
-</code></pre></div><p>So far, we know the general process of semaphore registration and monitoring. By registering a context with the target semaphore, a coroutine is created asynchronously to monitor system signals.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">const</span> (
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// More invented values for signals
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">SIGHUP</span>  = <span style="color:#a6e22e">Signal</span>(<span style="color:#ae81ff">0x1</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">SIGINT</span>  = <span style="color:#a6e22e">Signal</span>(<span style="color:#ae81ff">0x2</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">SIGQUIT</span> = <span style="color:#a6e22e">Signal</span>(<span style="color:#ae81ff">0x3</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">SIGILL</span>  = <span style="color:#a6e22e">Signal</span>(<span style="color:#ae81ff">0x4</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">SIGTRAP</span> = <span style="color:#a6e22e">Signal</span>(<span style="color:#ae81ff">0x5</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">SIGABRT</span> = <span style="color:#a6e22e">Signal</span>(<span style="color:#ae81ff">0x6</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">SIGBUS</span>  = <span style="color:#a6e22e">Signal</span>(<span style="color:#ae81ff">0x7</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">SIGFPE</span>  = <span style="color:#a6e22e">Signal</span>(<span style="color:#ae81ff">0x8</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">SIGKILL</span> = <span style="color:#a6e22e">Signal</span>(<span style="color:#ae81ff">0x9</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">SIGSEGV</span> = <span style="color:#a6e22e">Signal</span>(<span style="color:#ae81ff">0xb</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">SIGPIPE</span> = <span style="color:#a6e22e">Signal</span>(<span style="color:#ae81ff">0xd</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">SIGALRM</span> = <span style="color:#a6e22e">Signal</span>(<span style="color:#ae81ff">0xe</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">SIGTERM</span> = <span style="color:#a6e22e">Signal</span>(<span style="color:#ae81ff">0xf</span>)
+</span></span><span style="display:flex;"><span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">signals</span> = [<span style="color:#f92672">...</span>]<span style="color:#66d9ef">string</span>{
+</span></span><span style="display:flex;"><span>	<span style="color:#ae81ff">1</span>:  <span style="color:#e6db74">&#34;hangup&#34;</span>,
+</span></span><span style="display:flex;"><span>	<span style="color:#ae81ff">2</span>:  <span style="color:#e6db74">&#34;interrupt&#34;</span>,
+</span></span><span style="display:flex;"><span>	<span style="color:#ae81ff">3</span>:  <span style="color:#e6db74">&#34;quit&#34;</span>,
+</span></span><span style="display:flex;"><span>	<span style="color:#ae81ff">4</span>:  <span style="color:#e6db74">&#34;illegal instruction&#34;</span>,
+</span></span><span style="display:flex;"><span>	<span style="color:#ae81ff">5</span>:  <span style="color:#e6db74">&#34;trace/breakpoint trap&#34;</span>,
+</span></span><span style="display:flex;"><span>	<span style="color:#ae81ff">6</span>:  <span style="color:#e6db74">&#34;aborted&#34;</span>,
+</span></span><span style="display:flex;"><span>	<span style="color:#ae81ff">7</span>:  <span style="color:#e6db74">&#34;bus error&#34;</span>,
+</span></span><span style="display:flex;"><span>	<span style="color:#ae81ff">8</span>:  <span style="color:#e6db74">&#34;floating point exception&#34;</span>,
+</span></span><span style="display:flex;"><span>	<span style="color:#ae81ff">9</span>:  <span style="color:#e6db74">&#34;killed&#34;</span>,
+</span></span><span style="display:flex;"><span>	<span style="color:#ae81ff">10</span>: <span style="color:#e6db74">&#34;user defined signal 1&#34;</span>,
+</span></span><span style="display:flex;"><span>	<span style="color:#ae81ff">11</span>: <span style="color:#e6db74">&#34;segmentation fault&#34;</span>,
+</span></span><span style="display:flex;"><span>	<span style="color:#ae81ff">12</span>: <span style="color:#e6db74">&#34;user defined signal 2&#34;</span>,
+</span></span><span style="display:flex;"><span>	<span style="color:#ae81ff">13</span>: <span style="color:#e6db74">&#34;broken pipe&#34;</span>,
+</span></span><span style="display:flex;"><span>	<span style="color:#ae81ff">14</span>: <span style="color:#e6db74">&#34;alarm clock&#34;</span>,
+</span></span><span style="display:flex;"><span>	<span style="color:#ae81ff">15</span>: <span style="color:#e6db74">&#34;terminated&#34;</span>,
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Using 15 numbers to represent it in hexadecimal, then let&rsquo;s see how to monitor the system semaphore in go?</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">Notify</span>(<span style="color:#a6e22e">c</span> <span style="color:#66d9ef">chan</span><span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">os</span>.<span style="color:#a6e22e">Signal</span>, <span style="color:#a6e22e">sig</span> <span style="color:#f92672">...</span><span style="color:#a6e22e">os</span>.<span style="color:#a6e22e">Signal</span>) {
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">c</span> <span style="color:#f92672">==</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>		panic(<span style="color:#e6db74">&#34;os/signal: Notify using nil channel&#34;</span>)
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// some code is omitted
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#a6e22e">add</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">func</span>(<span style="color:#a6e22e">n</span> <span style="color:#66d9ef">int</span>) {
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">n</span> &lt; <span style="color:#ae81ff">0</span> {
+</span></span><span style="display:flex;"><span>			<span style="color:#66d9ef">return</span>
+</span></span><span style="display:flex;"><span>		}
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">if</span> !<span style="color:#a6e22e">h</span>.<span style="color:#a6e22e">want</span>(<span style="color:#a6e22e">n</span>) {
+</span></span><span style="display:flex;"><span>			<span style="color:#a6e22e">h</span>.<span style="color:#a6e22e">set</span>(<span style="color:#a6e22e">n</span>)
+</span></span><span style="display:flex;"><span>			<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">handlers</span>.<span style="color:#a6e22e">ref</span>[<span style="color:#a6e22e">n</span>] <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span> {
+</span></span><span style="display:flex;"><span>				<span style="color:#a6e22e">enableSignal</span>(<span style="color:#a6e22e">n</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>				<span style="color:#75715e">// listening in singleton, make sure for regist logic before the program start.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>				<span style="color:#a6e22e">watchSignalLoopOnce</span>.<span style="color:#a6e22e">Do</span>(<span style="color:#66d9ef">func</span>() {
+</span></span><span style="display:flex;"><span>					<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">watchSignalLoop</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>						<span style="color:#66d9ef">go</span> <span style="color:#a6e22e">watchSignalLoop</span>()
+</span></span><span style="display:flex;"><span>					}
+</span></span><span style="display:flex;"><span>				})
+</span></span><span style="display:flex;"><span>			}
+</span></span><span style="display:flex;"><span>			<span style="color:#a6e22e">handlers</span>.<span style="color:#a6e22e">ref</span>[<span style="color:#a6e22e">n</span>]<span style="color:#f92672">++</span>
+</span></span><span style="display:flex;"><span>		}
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// some code is omitted
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>}
+</span></span></code></pre></div><p>The <code>watchSignalLoop</code> is a polling function in the unix version,</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">loop</span>() {
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">for</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">process</span>(<span style="color:#a6e22e">syscall</span>.<span style="color:#a6e22e">Signal</span>(<span style="color:#a6e22e">signal_recv</span>()))
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">init</span>() {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">watchSignalLoop</span> = <span style="color:#a6e22e">loop</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>So far, we know the general process of semaphore registration and monitoring. By registering a context with the target semaphore, a coroutine is created asynchronously to monitor system signals.</p>
 <hr>
 <p>Next, let&rsquo;s take <code>interrupt</code> as an example to monitor the interrupt request of the system, which can be registered in Go as follows:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#75715e">// register a ctx bound to os.Interrupt
-</span><span style="color:#75715e"></span><span style="color:#a6e22e">ctx</span>, <span style="color:#a6e22e">stop</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">signal</span>.<span style="color:#a6e22e">NotifyContext</span>(<span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">Background</span>(), <span style="color:#a6e22e">os</span>.<span style="color:#a6e22e">Interrupt</span>)
-
-<span style="color:#75715e">//...
-</span><span style="color:#75715e"></span>
-<span style="color:#75715e">// unbind the context and semaphore
-</span><span style="color:#75715e"></span><span style="color:#66d9ef">defer</span> <span style="color:#a6e22e">stop</span>()
-</code></pre></div><p>After listening to the context returned by <code>os.Interrupt</code>, if the system call is interrupted, the ctx call <code>ctx.Done()</code> to be terminated, we can use this as our subsequent processing signal.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#75715e">// register a ctx bound to os.Interrupt
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#a6e22e">ctx</span>, <span style="color:#a6e22e">stop</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">signal</span>.<span style="color:#a6e22e">NotifyContext</span>(<span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">Background</span>(), <span style="color:#a6e22e">os</span>.<span style="color:#a6e22e">Interrupt</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">//...
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// unbind the context and semaphore
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">defer</span> <span style="color:#a6e22e">stop</span>()
+</span></span></code></pre></div><p>After listening to the context returned by <code>os.Interrupt</code>, if the system call is interrupted, the ctx call <code>ctx.Done()</code> to be terminated, we can use this as our subsequent processing signal.</p>
 <h4 id="graceful-shutdown">Graceful shutdown</h4>
 <p>After getting the interrupt semaphore, let&rsquo;s see how to exit gracefully. Let&rsquo;s take a look at this function</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#75715e">// Shutdown gracefully shuts down the server without interrupting any
-</span><span style="color:#75715e">// active connections. Shutdown works by first closing all open
-</span><span style="color:#75715e">// listeners, then closing all idle connections, and then waiting
-</span><span style="color:#75715e">// indefinitely for connections to return to idle and then shut down.
-</span><span style="color:#75715e">// If the provided context expires before the shutdown is complete,
-</span><span style="color:#75715e">// Shutdown returns the context&#39;s error, otherwise it returns any
-</span><span style="color:#75715e">// error returned from closing the Server&#39;s underlying Listener(s).
-</span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">srv</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Server</span>) <span style="color:#a6e22e">Shutdown</span>(<span style="color:#a6e22e">ctx</span> <span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">Context</span>) <span style="color:#66d9ef">error</span> {
-    <span style="color:#75715e">// ...
-</span><span style="color:#75715e"></span>}
-</code></pre></div><p>As you can see from the comments, the execution of <code>Shutdown()</code> will first close the open connection, then close the idle connection, and then wait for the used connection to become an idle connection before closing. Additionally, if the passed in <code>ctx</code> context expires before the shutdown is performed, <code>Shutdown()</code> will return an appropriate error.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#75715e">// Shutdown gracefully shuts down the server without interrupting any
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// active connections. Shutdown works by first closing all open
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// listeners, then closing all idle connections, and then waiting
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// indefinitely for connections to return to idle and then shut down.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// If the provided context expires before the shutdown is complete,
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// Shutdown returns the context&#39;s error, otherwise it returns any
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// error returned from closing the Server&#39;s underlying Listener(s).
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">srv</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Server</span>) <span style="color:#a6e22e">Shutdown</span>(<span style="color:#a6e22e">ctx</span> <span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">Context</span>) <span style="color:#66d9ef">error</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// ...
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>}
+</span></span></code></pre></div><p>As you can see from the comments, the execution of <code>Shutdown()</code> will first close the open connection, then close the idle connection, and then wait for the used connection to become an idle connection before closing. Additionally, if the passed in <code>ctx</code> context expires before the shutdown is performed, <code>Shutdown()</code> will return an appropriate error.</p>
 <p>So we can use <code>Shutdown()</code> to let the program perform the final finishing work at the point of interruption, and use the life cycle of the context to control the buffer period of the ending.</p>
 <p><strong>Code example:</strong></p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">var</span> (
-    <span style="color:#a6e22e">server</span> <span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">Server</span>
-)
-
-<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
-	<span style="color:#a6e22e">ctx</span>, <span style="color:#a6e22e">stop</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">signal</span>.<span style="color:#a6e22e">NotifyContext</span>(<span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">Background</span>(), <span style="color:#a6e22e">os</span>.<span style="color:#a6e22e">Interrupt</span>)
-	<span style="color:#66d9ef">defer</span> <span style="color:#a6e22e">stop</span>()
-
-	<span style="color:#a6e22e">server</span> = <span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">Server</span>{
-		<span style="color:#a6e22e">Addr</span>: <span style="color:#e6db74">&#34;:8080&#34;</span>,
-	}
-
-	<span style="color:#75715e">// register route
-</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">HandleFunc</span>(<span style="color:#e6db74">&#34;/&#34;</span>, <span style="color:#66d9ef">func</span>(<span style="color:#a6e22e">w</span> <span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">ResponseWriter</span>, <span style="color:#a6e22e">r</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">Request</span>) {
-		<span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Sleep</span>(<span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Second</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">3</span>)
-		<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Fprint</span>(<span style="color:#a6e22e">w</span>, <span style="color:#e6db74">&#34;Hello World&#34;</span>)
-	})
-
-	<span style="color:#75715e">// start listening
-</span><span style="color:#75715e"></span>	<span style="color:#66d9ef">go</span> <span style="color:#a6e22e">server</span>.<span style="color:#a6e22e">ListenAndServe</span>()
-
-	<span style="color:#75715e">// interrupt signal triggered
-</span><span style="color:#75715e"></span>	<span style="color:#f92672">&lt;-</span><span style="color:#a6e22e">ctx</span>.<span style="color:#a6e22e">Done</span>()
-
-	<span style="color:#75715e">// unbind the ctx and the signal
-</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">stop</span>()
-	<span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Print</span>(<span style="color:#e6db74">&#34;shutting down gracefully, press Ctrl+C again to force stop&#34;</span>)
-
-	<span style="color:#75715e">// use 10 seconds to recycle the connection
-</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">timeoutCtx</span>, <span style="color:#a6e22e">cancelFunc</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">WithTimeout</span>(<span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">Background</span>(), <span style="color:#ae81ff">10</span><span style="color:#f92672">*</span><span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Second</span>)
-	<span style="color:#66d9ef">defer</span> <span style="color:#a6e22e">cancelFunc</span>()
-
-	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">server</span>.<span style="color:#a6e22e">Shutdown</span>(<span style="color:#a6e22e">timeoutCtx</span>); <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
-		<span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Print</span>(<span style="color:#a6e22e">err</span>)
-	}
-
-	<span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Print</span>(<span style="color:#e6db74">&#34;graceful shutdown finished.&#34;</span>)
-
-}
-</code></pre></div><ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">var</span> (
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">server</span> <span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">Server</span>
+</span></span><span style="display:flex;"><span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">ctx</span>, <span style="color:#a6e22e">stop</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">signal</span>.<span style="color:#a6e22e">NotifyContext</span>(<span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">Background</span>(), <span style="color:#a6e22e">os</span>.<span style="color:#a6e22e">Interrupt</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">defer</span> <span style="color:#a6e22e">stop</span>()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">server</span> = <span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">Server</span>{
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">Addr</span>: <span style="color:#e6db74">&#34;:8080&#34;</span>,
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// register route
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">HandleFunc</span>(<span style="color:#e6db74">&#34;/&#34;</span>, <span style="color:#66d9ef">func</span>(<span style="color:#a6e22e">w</span> <span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">ResponseWriter</span>, <span style="color:#a6e22e">r</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">Request</span>) {
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Sleep</span>(<span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Second</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">3</span>)
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Fprint</span>(<span style="color:#a6e22e">w</span>, <span style="color:#e6db74">&#34;Hello World&#34;</span>)
+</span></span><span style="display:flex;"><span>	})
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// start listening
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#66d9ef">go</span> <span style="color:#a6e22e">server</span>.<span style="color:#a6e22e">ListenAndServe</span>()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// interrupt signal triggered
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#f92672">&lt;-</span><span style="color:#a6e22e">ctx</span>.<span style="color:#a6e22e">Done</span>()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// unbind the ctx and the signal
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">stop</span>()
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Print</span>(<span style="color:#e6db74">&#34;shutting down gracefully, press Ctrl+C again to force stop&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// use 10 seconds to recycle the connection
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">timeoutCtx</span>, <span style="color:#a6e22e">cancelFunc</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">WithTimeout</span>(<span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">Background</span>(), <span style="color:#ae81ff">10</span><span style="color:#f92672">*</span><span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Second</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">defer</span> <span style="color:#a6e22e">cancelFunc</span>()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">server</span>.<span style="color:#a6e22e">Shutdown</span>(<span style="color:#a6e22e">timeoutCtx</span>); <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Print</span>(<span style="color:#a6e22e">err</span>)
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Print</span>(<span style="color:#e6db74">&#34;graceful shutdown finished.&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><ol>
 <li>Register a simple routing request, wait 3 seconds and return &ldquo;Hello World&rdquo;</li>
 <li>Bind the system semaphore <code>Signal.SIGNINT</code> to the context</li>
 <li>Interrupting through context awareness</li>
@@ -425,27 +448,29 @@
 </ol>
 <p><strong>Output</strong><br>
 Start the program and press <code>Ctrl+C</code>, the program terminates quickly without request.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ go run main.go
-2021/11/06 23:58:03 shutting down gracefully, press Ctrl+C again to force stop
-2021/11/06 23:58:03 graceful shutdown finished.
-</code></pre></div><p>Then we call the request after the program starts</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ curl 127.0.0.1:8080
-Hello World
-</code></pre></div><p>and press <code>Ctrl+C</code> on the server side</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ go run main.go
-2021/11/06 23:58:33 shutting down gracefully, press Ctrl+C again to force stop
-2021/11/06 23:58:35 graceful shutdown finished.
-</code></pre></div><p>You can see the log output, the program no longer exits immediately, but waits for the request to terminate before closing.<br>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ go run main.go
+</span></span><span style="display:flex;"><span>2021/11/06 23:58:03 shutting down gracefully, press Ctrl+C again to force stop
+</span></span><span style="display:flex;"><span>2021/11/06 23:58:03 graceful shutdown finished.
+</span></span></code></pre></div><p>Then we call the request after the program starts</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ curl 127.0.0.1:8080
+</span></span><span style="display:flex;"><span>Hello World
+</span></span></code></pre></div><p>and press <code>Ctrl+C</code> on the server side</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ go run main.go
+</span></span><span style="display:flex;"><span>2021/11/06 23:58:33 shutting down gracefully, press Ctrl+C again to force stop
+</span></span><span style="display:flex;"><span>2021/11/06 23:58:35 graceful shutdown finished.
+</span></span></code></pre></div><p>You can see the log output, the program no longer exits immediately, but waits for the request to terminate before closing.<br>
 And if we adjust the request execution logic to take longer, when the processing time exceeds the context period bound by the <code>shutdown</code> function, the program will return a context timeout error.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">2021/11/07 00:02:46 shutting down gracefully, press Ctrl+C again to force stop
-2021/11/07 00:02:51 context deadline exceeded
-</code></pre></div><h4 id="expand-something">Expand something</h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>2021/11/07 00:02:46 shutting down gracefully, press Ctrl+C again to force stop
+</span></span><span style="display:flex;"><span>2021/11/07 00:02:51 context deadline exceeded
+</span></span></code></pre></div><h4 id="expand-something">Expand something</h4>
 <p>The above is the general implementation of graceful exit, about the idea of scalability:<br>
 In the production scenario, there are other specific detection measures when the service is offline or unavailable. For example, <strong>heartbeat timeout</strong>, service offline in k8s can be judged by <strong>monitoring a local file/handle</strong> in the polling cycle, etc. In fact, the semaphore is only a way for us to perceive program interruption. line, we know that we can finally use <code>Shutdown()</code> to perform the finalization.<br>
 What&rsquo;s more, after the execution is completed, if the context deadline exceeded is encountered, the business processing layer can generally archive the unprocessed requests, put them in the retry queue or record them in the form of writing logs down, as a follow-up repair credential.</p>
 <h3 id="reference-link">Reference link</h3>
 <p><a href="https://millhouse.dev/posts/graceful-shutdowns-in-golang-with-signal-notify-context">Graceful Shutdowns in Golang with signal.NotifyContext</a></p>
               
+
+
             </div>
           </div>
           <div id="post-footer" class="post-footer main-content-wrap">
@@ -456,149 +481,151 @@ What&rsquo;s more, after the execution is completed, if the context deadline exc
                   <div class="post-footer-tags">
                     <span class="text-color-light text-small">TAGGED IN</span><br/>
                     
-  <a class="tag tag--primary tag--small" href="/en/tags/talk-about-go/">Talk about Go</a>
+  <a class="tag tag--primary tag--small" href="https://pixeldin.github.io/en/tags/talk-about-go/">Talk about Go</a>
 
-  <a class="tag tag--primary tag--small" href="/en/tags/microservice/">microservice</a>
+  <a class="tag tag--primary tag--small" href="https://pixeldin.github.io/en/tags/microservice/">microservice</a>
 
-  <a class="tag tag--primary tag--small" href="/en/tags/ha/">HA</a>
+  <a class="tag tag--primary tag--small" href="https://pixeldin.github.io/en/tags/ha/">HA</a>
 
-  <a class="tag tag--primary tag--small" href="/en/tags/process-communication/">process communication</a>
+  <a class="tag tag--primary tag--small" href="https://pixeldin.github.io/en/tags/process-communication/">process communication</a>
 
                   </div>
                 
               
             
-            <div class="post-actions-wrap">
-  
-      <nav >
-        <ul class="post-actions post-action-nav">
-          
-            <li class="post-action">
-              
-                <a class="post-action-btn btn btn--default tooltip--top" href="/en/2021/12/talk-about-go-the-gracefully-handling-of-service-restart/" data-tooltip="Talk about Go: The gracefully handling of service restart">
-              
-                  <i class="fa fa-angle-left"></i>
-                  <span class="hide-xs hide-sm text-small icon-ml">NEXT</span>
-                </a>
-            </li>
-            <li class="post-action">
-              
-                <a class="post-action-btn btn btn--default tooltip--top" href="/en/2021/10/talk-about-go-how-to-custom-build-a-gateway-interceptor-in-gin-framwork/" data-tooltip="Talk about Go: How to custom build a gateway interceptor in Gin framwork">
-              
-                  <span class="hide-xs hide-sm text-small icon-mr">PREVIOUS</span>
-                  <i class="fa fa-angle-right"></i>
-                </a>
-            </li>
-          
-        </ul>
-      </nav>
-    <ul class="post-actions post-action-share" >
+            
+<div class="post-actions-wrap">
+  <nav >
+    <ul class="post-actions post-action-nav">
       
-        <li class="post-action hide-lg hide-md hide-sm">
-          <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
-            <i class="fa fa-share-alt"></i>
-          </a>
+        <li class="post-action">
+          
+            <a class="post-action-btn btn btn--default tooltip--top" href="https://pixeldin.github.io/en/2021/12/talk-about-go-the-gracefully-handling-of-service-restart/" data-tooltip="Talk about Go: The gracefully handling of service restart" aria-label="NEXT: Talk about Go: The gracefully handling of service restart">
+          
+              <i class="fa fa-angle-left"></i>
+              <span class="hide-xs hide-sm text-small icon-ml">NEXT</span>
+            </a>
         </li>
-        
+        <li class="post-action">
+          
+            <a class="post-action-btn btn btn--default tooltip--top" href="https://pixeldin.github.io/en/2021/10/talk-about-go-how-to-custom-build-a-gateway-interceptor-in-gin-framwork/" data-tooltip="Talk about Go: How to custom build a gateway interceptor in Gin framwork" aria-label="PREVIOUS: Talk about Go: How to custom build a gateway interceptor in Gin framwork">
+          
+              <span class="hide-xs hide-sm text-small icon-mr">PREVIOUS</span>
+              <i class="fa fa-angle-right"></i>
+            </a>
+        </li>
       
-      
-      <li class="post-action">
-        
-          <a class="post-action-btn btn btn--default" href="#">
-        
-          <i class="fa fa-list"></i>
-        </a>
-      </li>
     </ul>
+  </nav>
+<ul class="post-actions post-action-share" >
   
+    <li class="post-action hide-lg hide-md hide-sm">
+      <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions" aria-label="Share this post">
+        <i class="fa fa-share-alt" aria-hidden="true"></i>
+      </a>
+    </li>
+    
+  
+  
+  <li class="post-action">
+    
+      <a class="post-action-btn btn btn--default" href="#top" aria-label="Back to top">
+      <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    
+    </a>
+  </li>
+</ul>
 </div>
 
+
             
-              
-            
+  
+
+
           </div>
         </article>
         <footer id="footer" class="main-content-wrap">
   <span class="copyrights">
-    &copy; 2024 <a href="https://github.com/pixeldin">pixeldin</a>. All Rights Reserved
+    &copy; 2023 <a href="https://github.com/pixeldin">pixeldin</a>. All Rights Reserved
   </span>
 </footer>
 
       </div>
-      <div id="bottom-bar" class="post-bottom-bar" data-behavior="5">
-        <div class="post-actions-wrap">
-  
-      <nav >
-        <ul class="post-actions post-action-nav">
-          
-            <li class="post-action">
-              
-                <a class="post-action-btn btn btn--default tooltip--top" href="/en/2021/12/talk-about-go-the-gracefully-handling-of-service-restart/" data-tooltip="Talk about Go: The gracefully handling of service restart">
-              
-                  <i class="fa fa-angle-left"></i>
-                  <span class="hide-xs hide-sm text-small icon-ml">NEXT</span>
-                </a>
-            </li>
-            <li class="post-action">
-              
-                <a class="post-action-btn btn btn--default tooltip--top" href="/en/2021/10/talk-about-go-how-to-custom-build-a-gateway-interceptor-in-gin-framwork/" data-tooltip="Talk about Go: How to custom build a gateway interceptor in Gin framwork">
-              
-                  <span class="hide-xs hide-sm text-small icon-mr">PREVIOUS</span>
-                  <i class="fa fa-angle-right"></i>
-                </a>
-            </li>
-          
-        </ul>
-      </nav>
-    <ul class="post-actions post-action-share" >
+      <div id="bottom-bar" class="post-bottom-bar" data-behavior="1">
+        
+<div class="post-actions-wrap">
+  <nav >
+    <ul class="post-actions post-action-nav">
       
-        <li class="post-action hide-lg hide-md hide-sm">
-          <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
-            <i class="fa fa-share-alt"></i>
-          </a>
+        <li class="post-action">
+          
+            <a class="post-action-btn btn btn--default tooltip--top" href="https://pixeldin.github.io/en/2021/12/talk-about-go-the-gracefully-handling-of-service-restart/" data-tooltip="Talk about Go: The gracefully handling of service restart" aria-label="NEXT: Talk about Go: The gracefully handling of service restart">
+          
+              <i class="fa fa-angle-left"></i>
+              <span class="hide-xs hide-sm text-small icon-ml">NEXT</span>
+            </a>
         </li>
-        
+        <li class="post-action">
+          
+            <a class="post-action-btn btn btn--default tooltip--top" href="https://pixeldin.github.io/en/2021/10/talk-about-go-how-to-custom-build-a-gateway-interceptor-in-gin-framwork/" data-tooltip="Talk about Go: How to custom build a gateway interceptor in Gin framwork" aria-label="PREVIOUS: Talk about Go: How to custom build a gateway interceptor in Gin framwork">
+          
+              <span class="hide-xs hide-sm text-small icon-mr">PREVIOUS</span>
+              <i class="fa fa-angle-right"></i>
+            </a>
+        </li>
       
-      
-      <li class="post-action">
-        
-          <a class="post-action-btn btn btn--default" href="#">
-        
-          <i class="fa fa-list"></i>
-        </a>
-      </li>
     </ul>
+  </nav>
+<ul class="post-actions post-action-share" >
   
+    <li class="post-action hide-lg hide-md hide-sm">
+      <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions" aria-label="Share this post">
+        <i class="fa fa-share-alt" aria-hidden="true"></i>
+      </a>
+    </li>
+    
+  
+  
+  <li class="post-action">
+    
+      <a class="post-action-btn btn btn--default" href="#top" aria-label="Back to top">
+      <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    
+    </a>
+  </li>
+</ul>
 </div>
 
+
       </div>
-      <div id="share-options-bar" class="share-options-bar" data-behavior="5">
-  <i id="btn-close-shareoptions" class="fa fa-close"></i>
-  <ul class="share-options">
-    
-  </ul>
-</div>
-<div id="share-options-mask" class="share-options-mask"></div>
+      
+
     </div>
     
     <div id="about">
   <div id="about-card">
     <div id="about-btn-close">
-      <i class="fa fa-remove"></i>
+      <i class="fa fa-times"></i>
     </div>
     
       <img id="about-card-picture" src="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/pig.jpg" alt="Author&#39;s picture" />
     
-    <h4 id="about-card-name">pixelpig</h4>
+    <h4 id="about-card-name">@Pixelpig</h4>
     
-      <div id="about-card-bio">With enthusiasm for open source and I am looking forward to be a better developer. Stay hungry, stay foolish <strong>:）</strong></div>
+      <div id="about-card-bio">Keep it simple, so as this bio <strong>:）</strong></div>
     
+    
+      <div id="about-card-job">
+        <i class="fa fa-briefcase"></i>
+        <br/>
+        Software Developer
+      </div>
     
     
       <div id="about-card-location">
-        <i class="fa fa-map-marker"></i>
+        <i class="fa fa-map-marker-alt"></i>
         <br/>
-        GuangDong - CHINA
+        GuangDong - China
       </div>
     
   </div>
@@ -613,30 +640,16 @@ What&rsquo;s more, after the execution is completed, if the context deadline exc
 
 
     
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js" integrity="sha256-/BfiIkHlHoVihZdc6TFuj7MmJ0TWcWsMXkeDFwhi0zw=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.1.0/highlight.min.js" integrity="sha512-z+/WWfyD5tccCukM4VvONpEtLmbAm5LDu7eKiyMQJ9m7OfPEDL7gENyDRL3Yfe8XAuGsS2fS4xSMnl6d30kqGQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.7/js/jquery.fancybox.min.js" integrity="sha256-GEAnjcTqVP+vBp3SSc8bEDQqvWAZMiHyUSIorrWwH50=" crossorigin="anonymous"></script>
-
-
-<script src="/js/script-pcw6v3xilnxydl1vddzazdverrnn9ctynvnxgwho987mfyqkuylcb1nlt.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js" integrity="sha512-uURl+ZXMBrF4AwGaWmEetzrd+J5/8NRkWAvJx5sbPSSuOb0bZLqf+tOzniObO00BjHa/dD7gub9oCGMLPQHtQA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 
-<script lang="javascript">
-window.onload = updateMinWidth;
-window.onresize = updateMinWidth;
-document.getElementById("sidebar").addEventListener("transitionend", updateMinWidth);
-function updateMinWidth() {
-  var sidebar = document.getElementById("sidebar");
-  var main = document.getElementById("main");
-  main.style.minWidth = "";
-  var w1 = getComputedStyle(main).getPropertyValue("min-width");
-  var w2 = getComputedStyle(sidebar).getPropertyValue("width");
-  var w3 = getComputedStyle(sidebar).getPropertyValue("left");
-  main.style.minWidth = `calc(${w1} - ${w2} - ${w3})`;
-}
-</script>
+<script src="https://pixeldin.github.io/js/script-d9gfx1pdvbfdgoahypizomgoamlbumvk1ugdifqa59ynqvdh8wfsinmt5oj.min.js"></script>
+
+
 
 <script>
 $(document).ready(function() {
@@ -649,11 +662,6 @@ $(document).ready(function() {
   });
 });
 </script>
-
-
-  
-    
-  
 
 
 

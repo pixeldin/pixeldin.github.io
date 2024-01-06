@@ -2,11 +2,31 @@
 <html lang="zh-cn">
   <head>
     
+    <script type="application/ld+json">
+
+{  
+  "@context":"http://schema.org",
+  "@type":"Website",
+  "@id":"https:\/\/pixeldin.github.io\/",
+  "author": {
+    "@type": "Person",
+    "name": "@Pixelpig",
+    
+    "image": "https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/pig.jpg"
+    
+  },
+  "name":"pixelpig.tech",
+  "description":"\u003cp\u003e共识算法旨在机器集群出现异常时候能够维持一个一致认可的结论来保证对外提供服务，今天来聊一聊etcd的共识机制\u0026mdash;-raft协议。\u003c\/p\u003e",
+  "url":"https:\/\/pixeldin.github.io\/zh\/2022\/06\/%E8%81%8A%E4%B8%80%E8%81%8Aetcd%E7%B3%BB%E5%88%97%E4%B9%8B%E4%BA%8Craft%E4%B8%80%E8%87%B4%E6%80%A7%E5%8D%8F%E8%AE%AE\/",
+  "keywords":"[]"
+}
+
+</script>
     <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="generator" content="Hugo 0.80.0 with theme Tranquilpeak 0.4.8-BETA">
-<meta name="author" content="pixelpig">
+<meta name="generator" content="Hugo 0.111.3 with theme Tranquilpeak 0.5.3-BETA">
+<meta name="author" content="@Pixelpig">
 <meta name="keywords" content="">
 <meta name="description" content="共识算法旨在机器集群出现异常时候能够维持一个一致认可的结论来保证对外提供服务，今天来聊一聊etcd的共识机制&mdash;-raft协议。">
 
@@ -15,9 +35,9 @@
 <meta property="og:type" content="article">
 <meta property="og:title" content="聊一聊etcd系列之二：raft一致性协议">
 <meta name="twitter:title" content="聊一聊etcd系列之二：raft一致性协议">
-<meta property="og:url" content="/zh/2022/06/%E8%81%8A%E4%B8%80%E8%81%8Aetcd%E7%B3%BB%E5%88%97%E4%B9%8B%E4%BA%8Craft%E4%B8%80%E8%87%B4%E6%80%A7%E5%8D%8F%E8%AE%AE/">
-<meta property="twitter:url" content="/zh/2022/06/%E8%81%8A%E4%B8%80%E8%81%8Aetcd%E7%B3%BB%E5%88%97%E4%B9%8B%E4%BA%8Craft%E4%B8%80%E8%87%B4%E6%80%A7%E5%8D%8F%E8%AE%AE/">
-<meta property="og:site_name" content="pixelpig.space">
+<meta property="og:url" content="https://pixeldin.github.io/zh/2022/06/%E8%81%8A%E4%B8%80%E8%81%8Aetcd%E7%B3%BB%E5%88%97%E4%B9%8B%E4%BA%8Craft%E4%B8%80%E8%87%B4%E6%80%A7%E5%8D%8F%E8%AE%AE/">
+<meta property="twitter:url" content="https://pixeldin.github.io/zh/2022/06/%E8%81%8A%E4%B8%80%E8%81%8Aetcd%E7%B3%BB%E5%88%97%E4%B9%8B%E4%BA%8Craft%E4%B8%80%E8%87%B4%E6%80%A7%E5%8D%8F%E8%AE%AE/">
+<meta property="og:site_name" content="pixelpig.tech">
 <meta property="og:description" content="共识算法旨在机器集群出现异常时候能够维持一个一致认可的结论来保证对外提供服务，今天来聊一聊etcd的共识机制&mdash;-raft协议。">
 <meta name="twitter:description" content="共识算法旨在机器集群出现异常时候能够维持一个一致认可的结论来保证对外提供服务，今天来聊一聊etcd的共识机制&mdash;-raft协议。">
 <meta property="og:locale" content="zh">
@@ -59,15 +79,15 @@
 
 
 
-  <meta property="og:image" content="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/blog/etcd/raft/FG-%E8%84%91%E8%A3%82case.png">
-  <meta property="twitter:image" content="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/blog/etcd/raft/FG-%E8%84%91%E8%A3%82case.png">
-
-
-
-
-
   <meta property="og:image" content="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/pig.jpg">
   <meta property="twitter:image" content="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/pig.jpg">
+
+
+
+
+
+  <meta property="og:image" content="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/blog/etcd/raft/FG-%E8%84%91%E8%A3%82case.png">
+  <meta property="twitter:image" content="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/blog/etcd/raft/FG-%E8%84%91%E8%A3%82case.png">
 
 
     <title>聊一聊etcd系列之二：raft一致性协议</title>
@@ -77,15 +97,15 @@
 
     
 
-    <link rel="canonical" href="/zh/2022/06/%E8%81%8A%E4%B8%80%E8%81%8Aetcd%E7%B3%BB%E5%88%97%E4%B9%8B%E4%BA%8Craft%E4%B8%80%E8%87%B4%E6%80%A7%E5%8D%8F%E8%AE%AE/">
+    <link rel="canonical" href="https://pixeldin.github.io/zh/2022/06/%E8%81%8A%E4%B8%80%E8%81%8Aetcd%E7%B3%BB%E5%88%97%E4%B9%8B%E4%BA%8Craft%E4%B8%80%E8%87%B4%E6%80%A7%E5%8D%8F%E8%AE%AE/">
 
     
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/jquery.fancybox.min.css" integrity="sha256-vuXZ9LGmmwtjqFX1F+EKin1ThZMub58gKULUyf0qECk=" crossorigin="anonymous" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/helpers/jquery.fancybox-thumbs.min.css" integrity="sha256-SEa4XYAHihTcEP1f5gARTB2K26Uk8PsndQYHQC1f4jU=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" integrity="sha512-H9jrZiiopUdsLpg94A333EfumgUBpO9MdbxStdeITo+KEIMaNfHNvwyjjDJb+ERPaRS6DpyRlKbvPUasNItRyw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     
     
-    <link rel="stylesheet" href="/css/style-twzjdbqhmnnacqs0pwwdzcdbt8yhv8giawvjqjmyfoqnvazl0dalmnhdkvp7.min.css" />
+    
+    <link rel="stylesheet" href="https://pixeldin.github.io/css/style-fneuerdunt9vf6vafpewt2nttopqa9hdugoae6mfs7phtuibtq6qjxkds96.min.css" />
     
     
 
@@ -97,15 +117,15 @@
 
   <body>
     <div id="blog">
-      <header id="header" data-behavior="5">
+      <header id="header" data-behavior="1">
   <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
   <div class="header-title">
-    <a class="header-title-link" href="/zh/">pixelpig.space</a>
+    <a class="header-title-link" href="https://pixeldin.github.io/zh/" aria-label="去首页">pixelpig.tech</a>
   </div>
   
     
       <a class="header-right-picture "
-         href="/#about">
+         href="https://pixeldin.github.io/#about" aria-label="打开链接: /#about">
     
     
     
@@ -117,16 +137,16 @@
   
 </header>
 
-      <nav id="sidebar" data-behavior="5">
+      <nav id="sidebar" data-behavior="1">
   <div class="sidebar-container">
     
       <div class="sidebar-profile">
-        <a href="/#about">
+        <a href="https://pixeldin.github.io/#about" aria-label="阅读有关作者的更多信息">
           <img class="sidebar-profile-picture" src="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/pig.jpg" alt="作者的图片" />
         </a>
-        <h4 class="sidebar-profile-name">pixelpig</h4>
+        <h4 class="sidebar-profile-name">@Pixelpig</h4>
         
-          <h5 class="sidebar-profile-bio">With enthusiasm for open source and I am looking forward to be a better developer. Stay hungry, stay foolish <strong>:）</strong></h5>
+          <h5 class="sidebar-profile-bio">Keep it simple, so as this bio <strong>:）</strong></h5>
         
       </div>
     
@@ -134,7 +154,7 @@
       
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="/en">
+      <a class="sidebar-button-link " href="https://pixeldin.github.io/en" title="English">
     
       <i class="sidebar-button-icon fa fa-lg fa-language"></i>
       
@@ -144,7 +164,7 @@
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="/zh/">
+      <a class="sidebar-button-link " href="https://pixeldin.github.io/zh/" title="Home">
     
       <i class="sidebar-button-icon fa fa-lg fa-home"></i>
       
@@ -154,7 +174,7 @@
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="/zh/categories">
+      <a class="sidebar-button-link " href="https://pixeldin.github.io/zh/categories" title="Categories">
     
       <i class="sidebar-button-icon fa fa-lg fa-bookmark"></i>
       
@@ -164,7 +184,7 @@
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="/zh/tags">
+      <a class="sidebar-button-link " href="https://pixeldin.github.io/zh/tags" title="Tags">
     
       <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
       
@@ -174,7 +194,7 @@
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="/zh/archives">
+      <a class="sidebar-button-link " href="https://pixeldin.github.io/zh/archives" title="Archives">
     
       <i class="sidebar-button-icon fa fa-lg fa-archive"></i>
       
@@ -184,9 +204,9 @@
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="/zh/#about">
+      <a class="sidebar-button-link " href="https://pixeldin.github.io/zh/#about" title="About">
     
-      <i class="sidebar-button-icon fa fa-lg fa-question"></i>
+      <i class="sidebar-button-icon fa fa-lg fa-question-circle"></i>
       
       <span class="sidebar-button-desc">关于我</span>
     </a>
@@ -194,22 +214,25 @@
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="https://github.com/pixeldin" target="_blank" rel="noopener">
+      <a class="sidebar-button-link " href="https://github.com/pixeldin" target="_blank" rel="noopener" title="pixeldin">
     
-      <i class="sidebar-button-icon fa fa-lg fa-github"></i>
+      <i class="sidebar-button-icon fab fa-lg fa-github-alt"></i>
       
-      <span class="sidebar-button-desc">pixeldin</span>
+      <span class="sidebar-button-desc">github</span>
     </a>
   </li>
 
 
-    </ul>
-    <ul class="sidebar-buttons">
-      
 
     </ul>
     <ul class="sidebar-buttons">
       
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+
 
     </ul>
   </div>
@@ -217,23 +240,23 @@
 
       
 
-      <div id="main" data-behavior="5"
+      <div id="main" data-behavior="1"
         class="
                hasCoverMetaIn
                ">
-        <article class="post" itemscope itemType="http://schema.org/BlogPosting">
+        <article class="post" id="top">
           
           
             <div class="post-header main-content-wrap text-center">
   
-    <h1 class="post-title" itemprop="headline">
+    <h1 class="post-title">
       聊一聊etcd系列之二：raft一致性协议
     </h1>
   
   
   <div class="postShorten-meta post-meta">
     
-      <time itemprop="datePublished" datetime="2022-06-03T00:00:00Z">
+      <time datetime="2022-06-03T00:00:00Z">
         
   六月 3, 2022
 
@@ -244,9 +267,9 @@
   
     <span>发布在</span>
     
-      <a class="category-link" href="/zh/categories/go">Go</a>, 
+      <a class="category-link" href="https://pixeldin.github.io/zh/categories/go">Go</a>, 
     
-      <a class="category-link" href="/zh/categories/%e5%90%8e%e7%ab%af">后端</a>
+      <a class="category-link" href="https://pixeldin.github.io/zh/categories/%e5%90%8e%e7%ab%af">后端</a>
     
   
 
@@ -254,7 +277,7 @@
 
 </div>
           
-          <div class="post-content markdown" itemprop="articleBody">
+          <div class="post-content markdown">
             <div class="main-content-wrap">
               <p>共识算法旨在机器集群出现异常时候能够维持一个一致认可的结论来保证对外提供服务，今天来聊一聊etcd的共识机制&mdash;-raft协议。</p>
 <p><img src="https://images.pexels.com/photos/966927/pexels-photo-966927.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=1260&amp;h=750&amp;dpr=1" alt="etcd-cover-raft"></p>
@@ -286,93 +309,93 @@ Leader和Follower通过<code>MatchIndex</code>和<code>NextIndex</code>来交互
 <img src="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/blog/etcd/raft/etcd-logIndex.png" alt="log-Index"></p>
 <p><strong>通过<code>MatchIndex</code>，Leader节点能够知道当前集群已被大多数节点认可的记录，则可以通过广播Msg告知其他Follower一块提交。</strong></p>
 <p>同步请求体结构如下：</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Entry</span> <span style="color:#66d9ef">struct</span> {
-    <span style="color:#75715e">// 任期id
-</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">Term</span>  <span style="color:#66d9ef">uint64</span>    <span style="color:#e6db74">`protobuf:&#34;varint,2,opt,name=Term&#34; json:&#34;Term&#34;`</span>         
-	<span style="color:#75715e">// 日志下标
-</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">Index</span> <span style="color:#66d9ef">uint64</span>    <span style="color:#e6db74">`protobuf:&#34;varint,3,opt,name=Index&#34; json:&#34;Index&#34;`</span>
-	<span style="color:#a6e22e">Type</span>  <span style="color:#a6e22e">EntryType</span> <span style="color:#e6db74">`protobuf:&#34;varint,1,opt,name=Type,enum=raftpb.EntryType&#34; json:&#34;Type&#34;`</span>
-	<span style="color:#a6e22e">Data</span>  []<span style="color:#66d9ef">byte</span>    <span style="color:#e6db74">`protobuf:&#34;bytes,4,opt,name=Data&#34; json:&#34;Data,omitempty&#34;`</span>
-}
-<span style="color:#75715e">// AppendEntries RPC请求：尝试同步记录给节点
-</span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">r</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">raft</span>) <span style="color:#a6e22e">appendEntry</span>(<span style="color:#a6e22e">es</span> <span style="color:#f92672">...</span><span style="color:#a6e22e">pb</span>.<span style="color:#a6e22e">Entry</span>) (<span style="color:#a6e22e">accepted</span> <span style="color:#66d9ef">bool</span>) {
-	<span style="color:#a6e22e">li</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">raftLog</span>.<span style="color:#a6e22e">lastIndex</span>()
-	<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">range</span> <span style="color:#a6e22e">es</span> {
-		<span style="color:#a6e22e">es</span>[<span style="color:#a6e22e">i</span>].<span style="color:#a6e22e">Term</span> = <span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">Term</span>
-		<span style="color:#a6e22e">es</span>[<span style="color:#a6e22e">i</span>].<span style="color:#a6e22e">Index</span> = <span style="color:#a6e22e">li</span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">+</span> uint64(<span style="color:#a6e22e">i</span>)
-	}
-	<span style="color:#75715e">// Track the size of this uncommitted proposal.
-</span><span style="color:#75715e"></span>	<span style="color:#66d9ef">if</span> !<span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">increaseUncommittedSize</span>(<span style="color:#a6e22e">es</span>) {
-	    <span style="color:#75715e">// 当前记录日志没有跟上Leader
-</span><span style="color:#75715e"></span>		<span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">logger</span>.<span style="color:#a6e22e">Debugf</span>(
-			<span style="color:#e6db74">&#34;%x appending new entries to log would exceed uncommitted entry size limit; dropping proposal&#34;</span>,
-			<span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">id</span>,
-		)
-		<span style="color:#75715e">// 拒绝Leader的新记录，需要获得旧记录来对齐
-</span><span style="color:#75715e"></span>		<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">false</span>
-	}
-	<span style="color:#75715e">// use latest &#34;last&#34; index after truncate/append
-</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">li</span> = <span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">raftLog</span>.append(<span style="color:#a6e22e">es</span><span style="color:#f92672">...</span>)
-	<span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">prs</span>.<span style="color:#a6e22e">Progress</span>[<span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">id</span>].<span style="color:#a6e22e">MaybeUpdate</span>(<span style="color:#a6e22e">li</span>)
-	<span style="color:#75715e">// Regardless of maybeCommit&#39;s return, our caller will call bcastAppend.
-</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">maybeCommit</span>()
-	<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">true</span>
-}
-</code></pre></div><h3 id="日志压缩">日志压缩</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Entry</span> <span style="color:#66d9ef">struct</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 任期id
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">Term</span>  <span style="color:#66d9ef">uint64</span>    <span style="color:#e6db74">`protobuf:&#34;varint,2,opt,name=Term&#34; json:&#34;Term&#34;`</span>         
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// 日志下标
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">Index</span> <span style="color:#66d9ef">uint64</span>    <span style="color:#e6db74">`protobuf:&#34;varint,3,opt,name=Index&#34; json:&#34;Index&#34;`</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">Type</span>  <span style="color:#a6e22e">EntryType</span> <span style="color:#e6db74">`protobuf:&#34;varint,1,opt,name=Type,enum=raftpb.EntryType&#34; json:&#34;Type&#34;`</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">Data</span>  []<span style="color:#66d9ef">byte</span>    <span style="color:#e6db74">`protobuf:&#34;bytes,4,opt,name=Data&#34; json:&#34;Data,omitempty&#34;`</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// AppendEntries RPC请求：尝试同步记录给节点
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">r</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">raft</span>) <span style="color:#a6e22e">appendEntry</span>(<span style="color:#a6e22e">es</span> <span style="color:#f92672">...</span><span style="color:#a6e22e">pb</span>.<span style="color:#a6e22e">Entry</span>) (<span style="color:#a6e22e">accepted</span> <span style="color:#66d9ef">bool</span>) {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">li</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">raftLog</span>.<span style="color:#a6e22e">lastIndex</span>()
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">range</span> <span style="color:#a6e22e">es</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">es</span>[<span style="color:#a6e22e">i</span>].<span style="color:#a6e22e">Term</span> = <span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">Term</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">es</span>[<span style="color:#a6e22e">i</span>].<span style="color:#a6e22e">Index</span> = <span style="color:#a6e22e">li</span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">+</span> uint64(<span style="color:#a6e22e">i</span>)
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// Track the size of this uncommitted proposal.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#66d9ef">if</span> !<span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">increaseUncommittedSize</span>(<span style="color:#a6e22e">es</span>) {
+</span></span><span style="display:flex;"><span>	    <span style="color:#75715e">// 当前记录日志没有跟上Leader
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>		<span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">logger</span>.<span style="color:#a6e22e">Debugf</span>(
+</span></span><span style="display:flex;"><span>			<span style="color:#e6db74">&#34;%x appending new entries to log would exceed uncommitted entry size limit; dropping proposal&#34;</span>,
+</span></span><span style="display:flex;"><span>			<span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">id</span>,
+</span></span><span style="display:flex;"><span>		)
+</span></span><span style="display:flex;"><span>		<span style="color:#75715e">// 拒绝Leader的新记录，需要获得旧记录来对齐
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>		<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">false</span>
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// use latest &#34;last&#34; index after truncate/append
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">li</span> = <span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">raftLog</span>.append(<span style="color:#a6e22e">es</span><span style="color:#f92672">...</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">prs</span>.<span style="color:#a6e22e">Progress</span>[<span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">id</span>].<span style="color:#a6e22e">MaybeUpdate</span>(<span style="color:#a6e22e">li</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// Regardless of maybeCommit&#39;s return, our caller will call bcastAppend.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">maybeCommit</span>()
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">true</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h3 id="日志压缩">日志压缩</h3>
 <p>由于操作更新日志的增量追加，raft节点在达成一致之后，会对日志版本进行定期归档压缩，有点类似于Redis的AOF和Snapshot备份策略，一次压缩可以释放空间，减轻存储空间避免对大量操作日志进行重放，也方便落后太多日志的节点快速赶上Leader。</p>
 <p>其中，raft启动会有个关联成员<code>storage</code>用来存储日志数据集合，具体相关操作是在etcd的<code>raft.Storage</code>接口实现的。核心的成员如下</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">bootstrappedRaft</span> <span style="color:#66d9ef">struct</span> {
-	<span style="color:#a6e22e">lg</span>        <span style="color:#f92672">*</span><span style="color:#a6e22e">zap</span>.<span style="color:#a6e22e">Logger</span>
-	<span style="color:#a6e22e">heartbeat</span> <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Duration</span>
-
-	<span style="color:#a6e22e">peers</span>   []<span style="color:#a6e22e">raft</span>.<span style="color:#a6e22e">Peer</span>
-	<span style="color:#a6e22e">config</span>  <span style="color:#f92672">*</span><span style="color:#a6e22e">raft</span>.<span style="color:#a6e22e">Config</span>
-	<span style="color:#75715e">// raft server启动关联存储实现类
-</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">storage</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">raft</span>.<span style="color:#a6e22e">MemoryStorage</span>
-}
-
-<span style="color:#75715e">//...
-</span><span style="color:#75715e"></span>
-<span style="color:#75715e">//Storage接口实现类MemoryStorage
-</span><span style="color:#75715e"></span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">MemoryStorage</span> <span style="color:#66d9ef">struct</span> {
-	<span style="color:#a6e22e">sync</span>.<span style="color:#a6e22e">Mutex</span>
-	<span style="color:#a6e22e">hardState</span> <span style="color:#a6e22e">pb</span>.<span style="color:#a6e22e">HardState</span>
-	<span style="color:#a6e22e">snapshot</span>  <span style="color:#a6e22e">pb</span>.<span style="color:#a6e22e">Snapshot</span>
-	<span style="color:#75715e">// ents存放当前节点操作集合，每个Entry表示日志附加属性
-</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">ents</span> []<span style="color:#a6e22e">pb</span>.<span style="color:#a6e22e">Entry</span>
-}
-
-<span style="color:#75715e">//Entry附加属性
-</span><span style="color:#75715e"></span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Entry</span> <span style="color:#66d9ef">struct</span> {
-	<span style="color:#a6e22e">Term</span>  <span style="color:#66d9ef">uint64</span>    <span style="color:#e6db74">`protobuf:&#34;varint,2,opt,name=Term&#34; json:&#34;Term&#34;`</span>
-	<span style="color:#a6e22e">Index</span> <span style="color:#66d9ef">uint64</span>    <span style="color:#e6db74">`protobuf:&#34;varint,3,opt,name=Index&#34; json:&#34;Index&#34;`</span>
-	<span style="color:#a6e22e">Type</span>  <span style="color:#a6e22e">EntryType</span> <span style="color:#e6db74">`protobuf:&#34;varint,1,opt,name=Type,enum=raftpb.EntryType&#34; json:&#34;Type&#34;`</span>
-	<span style="color:#a6e22e">Data</span>  []<span style="color:#66d9ef">byte</span>    <span style="color:#e6db74">`protobuf:&#34;bytes,4,opt,name=Data&#34; json:&#34;Data,omitempty&#34;`</span>
-}
-</code></pre></div><p>raft会定期创建快照来对日志进行压缩，相当于保存快照到本地文件，之后执行<code>Compact()</code>函数对<code>ents</code>字段进行轮转，保留新一轮的下标。</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#75715e">// Compact discards all log entries prior to compactIndex.
-</span><span style="color:#75715e">// It is the application&#39;s responsibility to not attempt to compact an index
-</span><span style="color:#75715e">// greater than raftLog.applied.
-</span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">ms</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">MemoryStorage</span>) <span style="color:#a6e22e">Compact</span>(<span style="color:#a6e22e">compactIndex</span> <span style="color:#66d9ef">uint64</span>) <span style="color:#66d9ef">error</span> {
-	<span style="color:#a6e22e">ms</span>.<span style="color:#a6e22e">Lock</span>()
-	<span style="color:#66d9ef">defer</span> <span style="color:#a6e22e">ms</span>.<span style="color:#a6e22e">Unlock</span>()
-	<span style="color:#a6e22e">offset</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">ms</span>.<span style="color:#a6e22e">ents</span>[<span style="color:#ae81ff">0</span>].<span style="color:#a6e22e">Index</span>
-	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">compactIndex</span> <span style="color:#f92672">&lt;=</span> <span style="color:#a6e22e">offset</span> {
-		<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">ErrCompacted</span>
-	}
-	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">compactIndex</span> &gt; <span style="color:#a6e22e">ms</span>.<span style="color:#a6e22e">lastIndex</span>() {
-		<span style="color:#a6e22e">getLogger</span>().<span style="color:#a6e22e">Panicf</span>(<span style="color:#e6db74">&#34;compact %d is out of bound lastindex(%d)&#34;</span>, <span style="color:#a6e22e">compactIndex</span>, <span style="color:#a6e22e">ms</span>.<span style="color:#a6e22e">lastIndex</span>())
-	}
-
-	<span style="color:#a6e22e">i</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">compactIndex</span> <span style="color:#f92672">-</span> <span style="color:#a6e22e">offset</span>
-	<span style="color:#a6e22e">ents</span> <span style="color:#f92672">:=</span> make([]<span style="color:#a6e22e">pb</span>.<span style="color:#a6e22e">Entry</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">1</span><span style="color:#f92672">+</span>uint64(len(<span style="color:#a6e22e">ms</span>.<span style="color:#a6e22e">ents</span>))<span style="color:#f92672">-</span><span style="color:#a6e22e">i</span>)
-	<span style="color:#a6e22e">ents</span>[<span style="color:#ae81ff">0</span>].<span style="color:#a6e22e">Index</span> = <span style="color:#a6e22e">ms</span>.<span style="color:#a6e22e">ents</span>[<span style="color:#a6e22e">i</span>].<span style="color:#a6e22e">Index</span>
-	<span style="color:#a6e22e">ents</span>[<span style="color:#ae81ff">0</span>].<span style="color:#a6e22e">Term</span> = <span style="color:#a6e22e">ms</span>.<span style="color:#a6e22e">ents</span>[<span style="color:#a6e22e">i</span>].<span style="color:#a6e22e">Term</span>
-	<span style="color:#a6e22e">ents</span> = append(<span style="color:#a6e22e">ents</span>, <span style="color:#a6e22e">ms</span>.<span style="color:#a6e22e">ents</span>[<span style="color:#a6e22e">i</span><span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>:]<span style="color:#f92672">...</span>)
-	<span style="color:#a6e22e">ms</span>.<span style="color:#a6e22e">ents</span> = <span style="color:#a6e22e">ents</span>
-	<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>
-}
-</code></pre></div><p>其实，在<code>MemoryStorage</code>提交之前，节点还会先写到本地磁盘持久化，一旦故障拉起可以重建数据，这个过程叫做WAL预写日志。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">bootstrappedRaft</span> <span style="color:#66d9ef">struct</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">lg</span>        <span style="color:#f92672">*</span><span style="color:#a6e22e">zap</span>.<span style="color:#a6e22e">Logger</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">heartbeat</span> <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Duration</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">peers</span>   []<span style="color:#a6e22e">raft</span>.<span style="color:#a6e22e">Peer</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">config</span>  <span style="color:#f92672">*</span><span style="color:#a6e22e">raft</span>.<span style="color:#a6e22e">Config</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// raft server启动关联存储实现类
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">storage</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">raft</span>.<span style="color:#a6e22e">MemoryStorage</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">//...
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">//Storage接口实现类MemoryStorage
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">MemoryStorage</span> <span style="color:#66d9ef">struct</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">sync</span>.<span style="color:#a6e22e">Mutex</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">hardState</span> <span style="color:#a6e22e">pb</span>.<span style="color:#a6e22e">HardState</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">snapshot</span>  <span style="color:#a6e22e">pb</span>.<span style="color:#a6e22e">Snapshot</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// ents存放当前节点操作集合，每个Entry表示日志附加属性
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">ents</span> []<span style="color:#a6e22e">pb</span>.<span style="color:#a6e22e">Entry</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">//Entry附加属性
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Entry</span> <span style="color:#66d9ef">struct</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">Term</span>  <span style="color:#66d9ef">uint64</span>    <span style="color:#e6db74">`protobuf:&#34;varint,2,opt,name=Term&#34; json:&#34;Term&#34;`</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">Index</span> <span style="color:#66d9ef">uint64</span>    <span style="color:#e6db74">`protobuf:&#34;varint,3,opt,name=Index&#34; json:&#34;Index&#34;`</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">Type</span>  <span style="color:#a6e22e">EntryType</span> <span style="color:#e6db74">`protobuf:&#34;varint,1,opt,name=Type,enum=raftpb.EntryType&#34; json:&#34;Type&#34;`</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">Data</span>  []<span style="color:#66d9ef">byte</span>    <span style="color:#e6db74">`protobuf:&#34;bytes,4,opt,name=Data&#34; json:&#34;Data,omitempty&#34;`</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>raft会定期创建快照来对日志进行压缩，相当于保存快照到本地文件，之后执行<code>Compact()</code>函数对<code>ents</code>字段进行轮转，保留新一轮的下标。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#75715e">// Compact discards all log entries prior to compactIndex.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// It is the application&#39;s responsibility to not attempt to compact an index
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// greater than raftLog.applied.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">ms</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">MemoryStorage</span>) <span style="color:#a6e22e">Compact</span>(<span style="color:#a6e22e">compactIndex</span> <span style="color:#66d9ef">uint64</span>) <span style="color:#66d9ef">error</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">ms</span>.<span style="color:#a6e22e">Lock</span>()
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">defer</span> <span style="color:#a6e22e">ms</span>.<span style="color:#a6e22e">Unlock</span>()
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">offset</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">ms</span>.<span style="color:#a6e22e">ents</span>[<span style="color:#ae81ff">0</span>].<span style="color:#a6e22e">Index</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">compactIndex</span> <span style="color:#f92672">&lt;=</span> <span style="color:#a6e22e">offset</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">ErrCompacted</span>
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">compactIndex</span> &gt; <span style="color:#a6e22e">ms</span>.<span style="color:#a6e22e">lastIndex</span>() {
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">getLogger</span>().<span style="color:#a6e22e">Panicf</span>(<span style="color:#e6db74">&#34;compact %d is out of bound lastindex(%d)&#34;</span>, <span style="color:#a6e22e">compactIndex</span>, <span style="color:#a6e22e">ms</span>.<span style="color:#a6e22e">lastIndex</span>())
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">i</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">compactIndex</span> <span style="color:#f92672">-</span> <span style="color:#a6e22e">offset</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">ents</span> <span style="color:#f92672">:=</span> make([]<span style="color:#a6e22e">pb</span>.<span style="color:#a6e22e">Entry</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">1</span><span style="color:#f92672">+</span>uint64(len(<span style="color:#a6e22e">ms</span>.<span style="color:#a6e22e">ents</span>))<span style="color:#f92672">-</span><span style="color:#a6e22e">i</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">ents</span>[<span style="color:#ae81ff">0</span>].<span style="color:#a6e22e">Index</span> = <span style="color:#a6e22e">ms</span>.<span style="color:#a6e22e">ents</span>[<span style="color:#a6e22e">i</span>].<span style="color:#a6e22e">Index</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">ents</span>[<span style="color:#ae81ff">0</span>].<span style="color:#a6e22e">Term</span> = <span style="color:#a6e22e">ms</span>.<span style="color:#a6e22e">ents</span>[<span style="color:#a6e22e">i</span>].<span style="color:#a6e22e">Term</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">ents</span> = append(<span style="color:#a6e22e">ents</span>, <span style="color:#a6e22e">ms</span>.<span style="color:#a6e22e">ents</span>[<span style="color:#a6e22e">i</span><span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>:]<span style="color:#f92672">...</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">ms</span>.<span style="color:#a6e22e">ents</span> = <span style="color:#a6e22e">ents</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>其实，在<code>MemoryStorage</code>提交之前，节点还会先写到本地磁盘持久化，一旦故障拉起可以重建数据，这个过程叫做WAL预写日志。</p>
 <p>关于日志存储更多细节，将在本系列的 <em>etcd存储分析</em> 展开聊。</p>
 <h3 id="网络分区处理">网络分区处理</h3>
 <p>我们知道网络节点故障其实是会发生的，这里我们分为两种情况来分析如何保证一致性，假设现在有一个场景：<br>
@@ -393,90 +416,90 @@ Leader故障情况可以再次细分，在宕机时刻数据日志到达Leader�
 </li>
 </ul>
 <p>此外，针对脑裂的场景，etcd还提供了一个Leader自检查票数的开关</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#75715e">// CheckQuorum specifies if the leader should check quorum activity. Leader
-</span><span style="color:#75715e">// steps down when quorum is not active for an electionTimeout.
-</span><span style="color:#75715e"></span><span style="color:#a6e22e">CheckQuorum</span> <span style="color:#66d9ef">bool</span>    
-</code></pre></div><p><strong>每隔一段时间，Leader从其他节点获得心跳并记录连接数，如果心跳连接数小于半数，Leader会自动降为Follower</strong>。</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#75715e">// tickHeartbeat is run by leaders to send a MsgBeat after r.heartbeatTimeout.
-</span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">r</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">raft</span>) <span style="color:#a6e22e">tickHeartbeat</span>() {
-    <span style="color:#75715e">// ...
-</span><span style="color:#75715e"></span>    <span style="color:#75715e">// 自检
-</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">checkQuorum</span> {
-    	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">Step</span>(<span style="color:#a6e22e">pb</span>.<span style="color:#a6e22e">Message</span>{<span style="color:#a6e22e">From</span>: <span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">id</span>, <span style="color:#a6e22e">Type</span>: <span style="color:#a6e22e">pb</span>.<span style="color:#a6e22e">MsgCheckQuorum</span>}); <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
-    		<span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">logger</span>.<span style="color:#a6e22e">Debugf</span>(<span style="color:#e6db74">&#34;error occurred during checking sending heartbeat: %v&#34;</span>, <span style="color:#a6e22e">err</span>)
-    	}
-    }
-    <span style="color:#75715e">//...
-</span><span style="color:#75715e"></span>}
-<span style="color:#75715e">// Leader消息处理
-</span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">stepLeader</span>(<span style="color:#a6e22e">r</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">raft</span>, <span style="color:#a6e22e">m</span> <span style="color:#a6e22e">pb</span>.<span style="color:#a6e22e">Message</span>) <span style="color:#66d9ef">error</span> {
-	<span style="color:#75715e">// These message types do not require any progress for m.From.
-</span><span style="color:#75715e"></span>	<span style="color:#66d9ef">switch</span> <span style="color:#a6e22e">m</span>.<span style="color:#a6e22e">Type</span> {
-	<span style="color:#75715e">// ...
-</span><span style="color:#75715e"></span>	<span style="color:#66d9ef">case</span> <span style="color:#a6e22e">pb</span>.<span style="color:#a6e22e">MsgCheckQuorum</span>:
-		<span style="color:#75715e">// ...
-</span><span style="color:#75715e"></span>		<span style="color:#75715e">// 检测Leader是否有大多数人票选
-</span><span style="color:#75715e"></span>		<span style="color:#66d9ef">if</span> !<span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">prs</span>.<span style="color:#a6e22e">QuorumActive</span>() {
-			<span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">logger</span>.<span style="color:#a6e22e">Warningf</span>(<span style="color:#e6db74">&#34;%x stepped down to follower since quorum is not active&#34;</span>, <span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">id</span>)
-			<span style="color:#75715e">// 降为Follower
-</span><span style="color:#75715e"></span>			<span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">becomeFollower</span>(<span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">Term</span>, <span style="color:#a6e22e">None</span>)
-		}
-	    <span style="color:#75715e">// ...
-</span><span style="color:#75715e"></span>    }
-    <span style="color:#75715e">// ...
-</span><span style="color:#75715e"></span>}
-</code></pre></div><h3 id="线性读">线性读</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#75715e">// CheckQuorum specifies if the leader should check quorum activity. Leader
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// steps down when quorum is not active for an electionTimeout.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#a6e22e">CheckQuorum</span> <span style="color:#66d9ef">bool</span>    
+</span></span></code></pre></div><p><strong>每隔一段时间，Leader从其他节点获得心跳并记录连接数，如果心跳连接数小于半数，Leader会自动降为Follower</strong>。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#75715e">// tickHeartbeat is run by leaders to send a MsgBeat after r.heartbeatTimeout.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">r</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">raft</span>) <span style="color:#a6e22e">tickHeartbeat</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// ...
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// 自检
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">checkQuorum</span> {
+</span></span><span style="display:flex;"><span>    	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">Step</span>(<span style="color:#a6e22e">pb</span>.<span style="color:#a6e22e">Message</span>{<span style="color:#a6e22e">From</span>: <span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">id</span>, <span style="color:#a6e22e">Type</span>: <span style="color:#a6e22e">pb</span>.<span style="color:#a6e22e">MsgCheckQuorum</span>}); <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>    		<span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">logger</span>.<span style="color:#a6e22e">Debugf</span>(<span style="color:#e6db74">&#34;error occurred during checking sending heartbeat: %v&#34;</span>, <span style="color:#a6e22e">err</span>)
+</span></span><span style="display:flex;"><span>    	}
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">//...
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>}
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// Leader消息处理
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">stepLeader</span>(<span style="color:#a6e22e">r</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">raft</span>, <span style="color:#a6e22e">m</span> <span style="color:#a6e22e">pb</span>.<span style="color:#a6e22e">Message</span>) <span style="color:#66d9ef">error</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// These message types do not require any progress for m.From.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#66d9ef">switch</span> <span style="color:#a6e22e">m</span>.<span style="color:#a6e22e">Type</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// ...
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#66d9ef">case</span> <span style="color:#a6e22e">pb</span>.<span style="color:#a6e22e">MsgCheckQuorum</span>:
+</span></span><span style="display:flex;"><span>		<span style="color:#75715e">// ...
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>		<span style="color:#75715e">// 检测Leader是否有大多数人票选
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>		<span style="color:#66d9ef">if</span> !<span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">prs</span>.<span style="color:#a6e22e">QuorumActive</span>() {
+</span></span><span style="display:flex;"><span>			<span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">logger</span>.<span style="color:#a6e22e">Warningf</span>(<span style="color:#e6db74">&#34;%x stepped down to follower since quorum is not active&#34;</span>, <span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">id</span>)
+</span></span><span style="display:flex;"><span>			<span style="color:#75715e">// 降为Follower
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>			<span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">becomeFollower</span>(<span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">Term</span>, <span style="color:#a6e22e">None</span>)
+</span></span><span style="display:flex;"><span>		}
+</span></span><span style="display:flex;"><span>	    <span style="color:#75715e">// ...
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// ...
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>}
+</span></span></code></pre></div><h3 id="线性读">线性读</h3>
 <p>在上面的网络分区故障场景中，我们知道了有可能有一段时间存在双Leader，即数据版本可能有脏数据。其实，在etcd数据集合上有一个最大提交下标<code>CommitIndex</code>，表示当前大多数节点认可的下标，<code>ReadIndex</code>表示当前节点可以获取的最新的下标(可能还没被大多数认可)。<br>
 etcd通过这两个记录，提供了<strong>是否开启线性读的选项(Serializable bool类型 )</strong>，用于阻塞读请求，在需要强一致性的情况下，开启线性读，请求则会<strong>等到Follower版本<code>ReadIndex</code>追上一致下标<code>CommitIndex</code>再返回数据</strong>，这个时候就能保证读到的记录是集群中一致ack的。</p>
 <p>相关源码如下：</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">RangeRequest</span> <span style="color:#66d9ef">struct</span> {
-	<span style="color:#75715e">// key is the first key for the range. If range_end is not given, the request only looks up key.
-</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">Key</span> []<span style="color:#66d9ef">byte</span> <span style="color:#e6db74">`protobuf:&#34;bytes,1,opt,name=key,proto3&#34; json:&#34;key,omitempty&#34;`</span>
-	
-	<span style="color:#75715e">// ...
-</span><span style="color:#75715e"></span>	<span style="color:#75715e">// serializable sets the range request to use serializable member-local reads.
-</span><span style="color:#75715e"></span>	<span style="color:#75715e">// Range requests are linearizable by default; linearizable requests have higher
-</span><span style="color:#75715e"></span>	<span style="color:#75715e">// latency and lower throughput than serializable requests but reflect the current
-</span><span style="color:#75715e"></span>	<span style="color:#75715e">// consensus of the cluster. For better performance, in exchange for possible stale reads,
-</span><span style="color:#75715e"></span>	<span style="color:#75715e">// a serializable range request is served locally without needing to reach consensus
-</span><span style="color:#75715e"></span>	<span style="color:#75715e">// with other nodes in the cluster.
-</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">Serializable</span> <span style="color:#66d9ef">bool</span>
-	
-	<span style="color:#75715e">// ...
-</span><span style="color:#75715e"></span>}
-
-<span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">s</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">EtcdServer</span>) <span style="color:#a6e22e">Range</span>(<span style="color:#a6e22e">ctx</span> <span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">Context</span>, <span style="color:#a6e22e">r</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">pb</span>.<span style="color:#a6e22e">RangeRequest</span>) (<span style="color:#f92672">*</span><span style="color:#a6e22e">pb</span>.<span style="color:#a6e22e">RangeResponse</span>, <span style="color:#66d9ef">error</span>) {
-	<span style="color:#a6e22e">trace</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">traceutil</span>.<span style="color:#a6e22e">New</span>(<span style="color:#e6db74">&#34;range&#34;</span>,
-		<span style="color:#a6e22e">s</span>.<span style="color:#a6e22e">Logger</span>(),
-		<span style="color:#a6e22e">traceutil</span>.<span style="color:#a6e22e">Field</span>{<span style="color:#a6e22e">Key</span>: <span style="color:#e6db74">&#34;range_begin&#34;</span>, <span style="color:#a6e22e">Value</span>: string(<span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">Key</span>)},
-		<span style="color:#a6e22e">traceutil</span>.<span style="color:#a6e22e">Field</span>{<span style="color:#a6e22e">Key</span>: <span style="color:#e6db74">&#34;range_end&#34;</span>, <span style="color:#a6e22e">Value</span>: string(<span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">RangeEnd</span>)},
-	)
-	<span style="color:#a6e22e">ctx</span> = <span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">WithValue</span>(<span style="color:#a6e22e">ctx</span>, <span style="color:#a6e22e">traceutil</span>.<span style="color:#a6e22e">TraceKey</span>, <span style="color:#a6e22e">trace</span>)
-
-	<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">resp</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">pb</span>.<span style="color:#a6e22e">RangeResponse</span>
-	<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">err</span> <span style="color:#66d9ef">error</span>
-	<span style="color:#75715e">//...
-</span><span style="color:#75715e"></span>
-	<span style="color:#66d9ef">if</span> !<span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">Serializable</span> {
-		<span style="color:#75715e">// 线性读, 阻塞等待
-</span><span style="color:#75715e"></span>		<span style="color:#a6e22e">err</span> = <span style="color:#a6e22e">s</span>.<span style="color:#a6e22e">linearizableReadNotify</span>(<span style="color:#a6e22e">ctx</span>)
-		<span style="color:#a6e22e">trace</span>.<span style="color:#a6e22e">Step</span>(<span style="color:#e6db74">&#34;agreement among raft nodes before linearized reading&#34;</span>)
-		<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
-			<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>, <span style="color:#a6e22e">err</span>
-		}
-	}
-	<span style="color:#a6e22e">chk</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">func</span>(<span style="color:#a6e22e">ai</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">auth</span>.<span style="color:#a6e22e">AuthInfo</span>) <span style="color:#66d9ef">error</span> {
-		<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">s</span>.<span style="color:#a6e22e">authStore</span>.<span style="color:#a6e22e">IsRangePermitted</span>(<span style="color:#a6e22e">ai</span>, <span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">Key</span>, <span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">RangeEnd</span>)
-	}
-
-	<span style="color:#a6e22e">get</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">func</span>() { <span style="color:#a6e22e">resp</span>, <span style="color:#a6e22e">err</span> = <span style="color:#a6e22e">txn</span>.<span style="color:#a6e22e">Range</span>(<span style="color:#a6e22e">ctx</span>, <span style="color:#a6e22e">s</span>.<span style="color:#a6e22e">Logger</span>(), <span style="color:#a6e22e">s</span>.<span style="color:#a6e22e">KV</span>(), <span style="color:#66d9ef">nil</span>, <span style="color:#a6e22e">r</span>) }
-	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">serr</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">s</span>.<span style="color:#a6e22e">doSerialize</span>(<span style="color:#a6e22e">ctx</span>, <span style="color:#a6e22e">chk</span>, <span style="color:#a6e22e">get</span>); <span style="color:#a6e22e">serr</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
-		<span style="color:#a6e22e">err</span> = <span style="color:#a6e22e">serr</span>
-		<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>, <span style="color:#a6e22e">err</span>
-	}
-	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">resp</span>, <span style="color:#a6e22e">err</span>
-}
-</code></pre></div><h3 id="总结">总结</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">RangeRequest</span> <span style="color:#66d9ef">struct</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// key is the first key for the range. If range_end is not given, the request only looks up key.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">Key</span> []<span style="color:#66d9ef">byte</span> <span style="color:#e6db74">`protobuf:&#34;bytes,1,opt,name=key,proto3&#34; json:&#34;key,omitempty&#34;`</span>
+</span></span><span style="display:flex;"><span>	
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// ...
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#75715e">// serializable sets the range request to use serializable member-local reads.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#75715e">// Range requests are linearizable by default; linearizable requests have higher
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#75715e">// latency and lower throughput than serializable requests but reflect the current
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#75715e">// consensus of the cluster. For better performance, in exchange for possible stale reads,
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#75715e">// a serializable range request is served locally without needing to reach consensus
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#75715e">// with other nodes in the cluster.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">Serializable</span> <span style="color:#66d9ef">bool</span>
+</span></span><span style="display:flex;"><span>	
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// ...
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">s</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">EtcdServer</span>) <span style="color:#a6e22e">Range</span>(<span style="color:#a6e22e">ctx</span> <span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">Context</span>, <span style="color:#a6e22e">r</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">pb</span>.<span style="color:#a6e22e">RangeRequest</span>) (<span style="color:#f92672">*</span><span style="color:#a6e22e">pb</span>.<span style="color:#a6e22e">RangeResponse</span>, <span style="color:#66d9ef">error</span>) {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">trace</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">traceutil</span>.<span style="color:#a6e22e">New</span>(<span style="color:#e6db74">&#34;range&#34;</span>,
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">s</span>.<span style="color:#a6e22e">Logger</span>(),
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">traceutil</span>.<span style="color:#a6e22e">Field</span>{<span style="color:#a6e22e">Key</span>: <span style="color:#e6db74">&#34;range_begin&#34;</span>, <span style="color:#a6e22e">Value</span>: string(<span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">Key</span>)},
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">traceutil</span>.<span style="color:#a6e22e">Field</span>{<span style="color:#a6e22e">Key</span>: <span style="color:#e6db74">&#34;range_end&#34;</span>, <span style="color:#a6e22e">Value</span>: string(<span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">RangeEnd</span>)},
+</span></span><span style="display:flex;"><span>	)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">ctx</span> = <span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">WithValue</span>(<span style="color:#a6e22e">ctx</span>, <span style="color:#a6e22e">traceutil</span>.<span style="color:#a6e22e">TraceKey</span>, <span style="color:#a6e22e">trace</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">resp</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">pb</span>.<span style="color:#a6e22e">RangeResponse</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">err</span> <span style="color:#66d9ef">error</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">//...
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> !<span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">Serializable</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#75715e">// 线性读, 阻塞等待
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>		<span style="color:#a6e22e">err</span> = <span style="color:#a6e22e">s</span>.<span style="color:#a6e22e">linearizableReadNotify</span>(<span style="color:#a6e22e">ctx</span>)
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">trace</span>.<span style="color:#a6e22e">Step</span>(<span style="color:#e6db74">&#34;agreement among raft nodes before linearized reading&#34;</span>)
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>			<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>, <span style="color:#a6e22e">err</span>
+</span></span><span style="display:flex;"><span>		}
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">chk</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">func</span>(<span style="color:#a6e22e">ai</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">auth</span>.<span style="color:#a6e22e">AuthInfo</span>) <span style="color:#66d9ef">error</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">s</span>.<span style="color:#a6e22e">authStore</span>.<span style="color:#a6e22e">IsRangePermitted</span>(<span style="color:#a6e22e">ai</span>, <span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">Key</span>, <span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">RangeEnd</span>)
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">get</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">func</span>() { <span style="color:#a6e22e">resp</span>, <span style="color:#a6e22e">err</span> = <span style="color:#a6e22e">txn</span>.<span style="color:#a6e22e">Range</span>(<span style="color:#a6e22e">ctx</span>, <span style="color:#a6e22e">s</span>.<span style="color:#a6e22e">Logger</span>(), <span style="color:#a6e22e">s</span>.<span style="color:#a6e22e">KV</span>(), <span style="color:#66d9ef">nil</span>, <span style="color:#a6e22e">r</span>) }
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">serr</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">s</span>.<span style="color:#a6e22e">doSerialize</span>(<span style="color:#a6e22e">ctx</span>, <span style="color:#a6e22e">chk</span>, <span style="color:#a6e22e">get</span>); <span style="color:#a6e22e">serr</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">err</span> = <span style="color:#a6e22e">serr</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>, <span style="color:#a6e22e">err</span>
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">resp</span>, <span style="color:#a6e22e">err</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h3 id="总结">总结</h3>
 <p>这是这几天通过对etcd内部共识机制的一些理解，主要涉及选举状态转移、日志压缩等概念。本系列的下一篇章将聊一聊etcd节点是怎么通信的。</p>
 <h2 id="参考链接">参考链接</h2>
 <ul>
@@ -486,6 +509,8 @@ etcd通过这两个记录，提供了<strong>是否开启线性读的选项(Seri
 <li>云原生分布式存储基石etcd深入解析 - 华为云</li>
 </ul>
               
+
+
             </div>
           </div>
           <div id="post-footer" class="post-footer main-content-wrap">
@@ -496,147 +521,149 @@ etcd通过这两个记录，提供了<strong>是否开启线性读的选项(Seri
                   <div class="post-footer-tags">
                     <span class="text-color-light text-small">标签</span><br/>
                     
-  <a class="tag tag--primary tag--small" href="/zh/tags/raft/">raft</a>
+  <a class="tag tag--primary tag--small" href="https://pixeldin.github.io/zh/tags/raft/">raft</a>
 
-  <a class="tag tag--primary tag--small" href="/zh/tags/etcd/">etcd</a>
+  <a class="tag tag--primary tag--small" href="https://pixeldin.github.io/zh/tags/etcd/">etcd</a>
 
-  <a class="tag tag--primary tag--small" href="/zh/tags/%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F/">分布式系统</a>
+  <a class="tag tag--primary tag--small" href="https://pixeldin.github.io/zh/tags/%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F/">分布式系统</a>
 
                   </div>
                 
               
             
-            <div class="post-actions-wrap">
-  
-      <nav >
-        <ul class="post-actions post-action-nav">
-          
-            <li class="post-action">
-              
-                <a class="post-action-btn btn btn--default tooltip--top" href="/zh/2022/06/%E8%81%8A%E4%B8%80%E8%81%8Aetcd%E7%B3%BB%E5%88%97%E4%B9%8B%E4%B8%89%E8%8A%82%E7%82%B9%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE/" data-tooltip="聊一聊etcd系列之三：节点通信协议">
-              
-                  <i class="fa fa-angle-left"></i>
-                  <span class="hide-xs hide-sm text-small icon-ml">下一篇</span>
-                </a>
-            </li>
-            <li class="post-action">
-              
-                <a class="post-action-btn btn btn--default tooltip--top" href="/zh/2022/05/%E8%81%8A%E4%B8%80%E8%81%8Aetcd%E7%B3%BB%E5%88%97%E4%B9%8B%E4%B8%80%E5%B1%82%E7%BA%A7%E6%A6%82%E5%86%B5%E4%B8%8E%E7%9F%A5%E8%AF%86%E6%A2%B3%E7%90%86/" data-tooltip="聊一聊etcd系列之一：层级概况与知识梳理">
-              
-                  <span class="hide-xs hide-sm text-small icon-mr">上一篇</span>
-                  <i class="fa fa-angle-right"></i>
-                </a>
-            </li>
-          
-        </ul>
-      </nav>
-    <ul class="post-actions post-action-share" >
+            
+<div class="post-actions-wrap">
+  <nav >
+    <ul class="post-actions post-action-nav">
       
-        <li class="post-action hide-lg hide-md hide-sm">
-          <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
-            <i class="fa fa-share-alt"></i>
-          </a>
+        <li class="post-action">
+          
+            <a class="post-action-btn btn btn--default tooltip--top" href="https://pixeldin.github.io/zh/2022/06/%E8%81%8A%E4%B8%80%E8%81%8Aetcd%E7%B3%BB%E5%88%97%E4%B9%8B%E4%B8%89%E8%8A%82%E7%82%B9%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE/" data-tooltip="聊一聊etcd系列之三：节点通信协议" aria-label="后一篇: 聊一聊etcd系列之三：节点通信协议">
+          
+              <i class="fa fa-angle-left"></i>
+              <span class="hide-xs hide-sm text-small icon-ml">后一篇</span>
+            </a>
         </li>
-        
+        <li class="post-action">
+          
+            <a class="post-action-btn btn btn--default tooltip--top" href="https://pixeldin.github.io/zh/2022/05/%E8%81%8A%E4%B8%80%E8%81%8Aetcd%E7%B3%BB%E5%88%97%E4%B9%8B%E4%B8%80%E5%B1%82%E7%BA%A7%E6%A6%82%E5%86%B5%E4%B8%8E%E7%9F%A5%E8%AF%86%E6%A2%B3%E7%90%86/" data-tooltip="聊一聊etcd系列之一：层级概况与知识梳理" aria-label="前一篇: 聊一聊etcd系列之一：层级概况与知识梳理">
+          
+              <span class="hide-xs hide-sm text-small icon-mr">前一篇</span>
+              <i class="fa fa-angle-right"></i>
+            </a>
+        </li>
       
-      
-      <li class="post-action">
-        
-          <a class="post-action-btn btn btn--default" href="#">
-        
-          <i class="fa fa-list"></i>
-        </a>
-      </li>
     </ul>
+  </nav>
+<ul class="post-actions post-action-share" >
   
+    <li class="post-action hide-lg hide-md hide-sm">
+      <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions" aria-label="分享这个帖子">
+        <i class="fa fa-share-alt" aria-hidden="true"></i>
+      </a>
+    </li>
+    
+  
+  
+  <li class="post-action">
+    
+      <a class="post-action-btn btn btn--default" href="#top" aria-label="回到顶部">
+      <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    
+    </a>
+  </li>
+</ul>
 </div>
 
+
             
-              
-            
+  
+
+
           </div>
         </article>
         <footer id="footer" class="main-content-wrap">
   <span class="copyrights">
-    &copy; 2024 <a href="https://github.com/pixeldin">pixeldin</a>. All Rights Reserved
+    &copy; 2023 <a href="https://github.com/pixeldin">pixeldin</a>. All Rights Reserved
   </span>
 </footer>
 
       </div>
-      <div id="bottom-bar" class="post-bottom-bar" data-behavior="5">
-        <div class="post-actions-wrap">
-  
-      <nav >
-        <ul class="post-actions post-action-nav">
-          
-            <li class="post-action">
-              
-                <a class="post-action-btn btn btn--default tooltip--top" href="/zh/2022/06/%E8%81%8A%E4%B8%80%E8%81%8Aetcd%E7%B3%BB%E5%88%97%E4%B9%8B%E4%B8%89%E8%8A%82%E7%82%B9%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE/" data-tooltip="聊一聊etcd系列之三：节点通信协议">
-              
-                  <i class="fa fa-angle-left"></i>
-                  <span class="hide-xs hide-sm text-small icon-ml">下一篇</span>
-                </a>
-            </li>
-            <li class="post-action">
-              
-                <a class="post-action-btn btn btn--default tooltip--top" href="/zh/2022/05/%E8%81%8A%E4%B8%80%E8%81%8Aetcd%E7%B3%BB%E5%88%97%E4%B9%8B%E4%B8%80%E5%B1%82%E7%BA%A7%E6%A6%82%E5%86%B5%E4%B8%8E%E7%9F%A5%E8%AF%86%E6%A2%B3%E7%90%86/" data-tooltip="聊一聊etcd系列之一：层级概况与知识梳理">
-              
-                  <span class="hide-xs hide-sm text-small icon-mr">上一篇</span>
-                  <i class="fa fa-angle-right"></i>
-                </a>
-            </li>
-          
-        </ul>
-      </nav>
-    <ul class="post-actions post-action-share" >
+      <div id="bottom-bar" class="post-bottom-bar" data-behavior="1">
+        
+<div class="post-actions-wrap">
+  <nav >
+    <ul class="post-actions post-action-nav">
       
-        <li class="post-action hide-lg hide-md hide-sm">
-          <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
-            <i class="fa fa-share-alt"></i>
-          </a>
+        <li class="post-action">
+          
+            <a class="post-action-btn btn btn--default tooltip--top" href="https://pixeldin.github.io/zh/2022/06/%E8%81%8A%E4%B8%80%E8%81%8Aetcd%E7%B3%BB%E5%88%97%E4%B9%8B%E4%B8%89%E8%8A%82%E7%82%B9%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE/" data-tooltip="聊一聊etcd系列之三：节点通信协议" aria-label="后一篇: 聊一聊etcd系列之三：节点通信协议">
+          
+              <i class="fa fa-angle-left"></i>
+              <span class="hide-xs hide-sm text-small icon-ml">后一篇</span>
+            </a>
         </li>
-        
+        <li class="post-action">
+          
+            <a class="post-action-btn btn btn--default tooltip--top" href="https://pixeldin.github.io/zh/2022/05/%E8%81%8A%E4%B8%80%E8%81%8Aetcd%E7%B3%BB%E5%88%97%E4%B9%8B%E4%B8%80%E5%B1%82%E7%BA%A7%E6%A6%82%E5%86%B5%E4%B8%8E%E7%9F%A5%E8%AF%86%E6%A2%B3%E7%90%86/" data-tooltip="聊一聊etcd系列之一：层级概况与知识梳理" aria-label="前一篇: 聊一聊etcd系列之一：层级概况与知识梳理">
+          
+              <span class="hide-xs hide-sm text-small icon-mr">前一篇</span>
+              <i class="fa fa-angle-right"></i>
+            </a>
+        </li>
       
-      
-      <li class="post-action">
-        
-          <a class="post-action-btn btn btn--default" href="#">
-        
-          <i class="fa fa-list"></i>
-        </a>
-      </li>
     </ul>
+  </nav>
+<ul class="post-actions post-action-share" >
   
+    <li class="post-action hide-lg hide-md hide-sm">
+      <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions" aria-label="分享这个帖子">
+        <i class="fa fa-share-alt" aria-hidden="true"></i>
+      </a>
+    </li>
+    
+  
+  
+  <li class="post-action">
+    
+      <a class="post-action-btn btn btn--default" href="#top" aria-label="回到顶部">
+      <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    
+    </a>
+  </li>
+</ul>
 </div>
 
+
       </div>
-      <div id="share-options-bar" class="share-options-bar" data-behavior="5">
-  <i id="btn-close-shareoptions" class="fa fa-close"></i>
-  <ul class="share-options">
-    
-  </ul>
-</div>
-<div id="share-options-mask" class="share-options-mask"></div>
+      
+
     </div>
     
     <div id="about">
   <div id="about-card">
     <div id="about-btn-close">
-      <i class="fa fa-remove"></i>
+      <i class="fa fa-times"></i>
     </div>
     
       <img id="about-card-picture" src="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/pig.jpg" alt="作者的图片" />
     
-    <h4 id="about-card-name">pixelpig</h4>
+    <h4 id="about-card-name">@Pixelpig</h4>
     
-      <div id="about-card-bio">With enthusiasm for open source and I am looking forward to be a better developer. Stay hungry, stay foolish <strong>:）</strong></div>
+      <div id="about-card-bio">Keep it simple, so as this bio <strong>:）</strong></div>
     
+    
+      <div id="about-card-job">
+        <i class="fa fa-briefcase"></i>
+        <br/>
+        Software Developer
+      </div>
     
     
       <div id="about-card-location">
-        <i class="fa fa-map-marker"></i>
+        <i class="fa fa-map-marker-alt"></i>
         <br/>
-        GuangDong - CHINA
+        GuangDong - China
       </div>
     
   </div>
@@ -651,30 +678,16 @@ etcd通过这两个记录，提供了<strong>是否开启线性读的选项(Seri
 
 
     
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js" integrity="sha256-/BfiIkHlHoVihZdc6TFuj7MmJ0TWcWsMXkeDFwhi0zw=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.1.0/highlight.min.js" integrity="sha512-z+/WWfyD5tccCukM4VvONpEtLmbAm5LDu7eKiyMQJ9m7OfPEDL7gENyDRL3Yfe8XAuGsS2fS4xSMnl6d30kqGQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.7/js/jquery.fancybox.min.js" integrity="sha256-GEAnjcTqVP+vBp3SSc8bEDQqvWAZMiHyUSIorrWwH50=" crossorigin="anonymous"></script>
-
-
-<script src="/js/script-pcw6v3xilnxydl1vddzazdverrnn9ctynvnxgwho987mfyqkuylcb1nlt.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js" integrity="sha512-uURl+ZXMBrF4AwGaWmEetzrd+J5/8NRkWAvJx5sbPSSuOb0bZLqf+tOzniObO00BjHa/dD7gub9oCGMLPQHtQA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 
-<script lang="javascript">
-window.onload = updateMinWidth;
-window.onresize = updateMinWidth;
-document.getElementById("sidebar").addEventListener("transitionend", updateMinWidth);
-function updateMinWidth() {
-  var sidebar = document.getElementById("sidebar");
-  var main = document.getElementById("main");
-  main.style.minWidth = "";
-  var w1 = getComputedStyle(main).getPropertyValue("min-width");
-  var w2 = getComputedStyle(sidebar).getPropertyValue("width");
-  var w3 = getComputedStyle(sidebar).getPropertyValue("left");
-  main.style.minWidth = `calc(${w1} - ${w2} - ${w3})`;
-}
-</script>
+<script src="https://pixeldin.github.io/js/script-d9gfx1pdvbfdgoahypizomgoamlbumvk1ugdifqa59ynqvdh8wfsinmt5oj.min.js"></script>
+
+
 
 <script>
 $(document).ready(function() {
@@ -687,11 +700,6 @@ $(document).ready(function() {
   });
 });
 </script>
-
-
-  
-    
-  
 
 
 
