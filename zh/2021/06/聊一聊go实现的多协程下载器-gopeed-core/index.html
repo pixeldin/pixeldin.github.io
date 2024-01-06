@@ -2,31 +2,11 @@
 <html lang="zh-cn">
   <head>
     
-    <script type="application/ld+json">
-
-{  
-  "@context":"http://schema.org",
-  "@type":"Website",
-  "@id":"https:\/\/pixeldin.github.io\/",
-  "author": {
-    "@type": "Person",
-    "name": "@Pixelpig",
-    
-    "image": "https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/pig.jpg"
-    
-  },
-  "name":"pixelpig.tech",
-  "description":"\u003cp\u003e之前在Github社区偶然发现一个Go实现的下载器，作为个人学习的一个参照模板，这里要感谢一下作者monkeyWie(网名)的开源项目\u003ca href=\u0022github.com\/monkeyWie\/gopeed-core\u0022\u003egopeed-core\u003c\/a\u003e。\u003c\/p\u003e",
-  "url":"https:\/\/pixeldin.github.io\/zh\/2021\/06\/%E8%81%8A%E4%B8%80%E8%81%8Ago%E5%AE%9E%E7%8E%B0%E7%9A%84%E5%A4%9A%E5%8D%8F%E7%A8%8B%E4%B8%8B%E8%BD%BD%E5%99%A8-gopeed-core\/",
-  "keywords":"[]"
-}
-
-</script>
     <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="generator" content="Hugo 0.111.3 with theme Tranquilpeak 0.5.3-BETA">
-<meta name="author" content="@Pixelpig">
+<meta name="generator" content="Hugo 0.80.0 with theme Tranquilpeak 0.4.8-BETA">
+<meta name="author" content="pixelpig">
 <meta name="keywords" content="">
 <meta name="description" content="之前在Github社区偶然发现一个Go实现的下载器，作为个人学习的一个参照模板，这里要感谢一下作者monkeyWie(网名)的开源项目gopeed-core。">
 
@@ -35,9 +15,9 @@
 <meta property="og:type" content="article">
 <meta property="og:title" content="聊一聊Go实现的多协程下载器: gopeed-core">
 <meta name="twitter:title" content="聊一聊Go实现的多协程下载器: gopeed-core">
-<meta property="og:url" content="https://pixeldin.github.io/zh/2021/06/%E8%81%8A%E4%B8%80%E8%81%8Ago%E5%AE%9E%E7%8E%B0%E7%9A%84%E5%A4%9A%E5%8D%8F%E7%A8%8B%E4%B8%8B%E8%BD%BD%E5%99%A8-gopeed-core/">
-<meta property="twitter:url" content="https://pixeldin.github.io/zh/2021/06/%E8%81%8A%E4%B8%80%E8%81%8Ago%E5%AE%9E%E7%8E%B0%E7%9A%84%E5%A4%9A%E5%8D%8F%E7%A8%8B%E4%B8%8B%E8%BD%BD%E5%99%A8-gopeed-core/">
-<meta property="og:site_name" content="pixelpig.tech">
+<meta property="og:url" content="/zh/2021/06/%E8%81%8A%E4%B8%80%E8%81%8Ago%E5%AE%9E%E7%8E%B0%E7%9A%84%E5%A4%9A%E5%8D%8F%E7%A8%8B%E4%B8%8B%E8%BD%BD%E5%99%A8-gopeed-core/">
+<meta property="twitter:url" content="/zh/2021/06/%E8%81%8A%E4%B8%80%E8%81%8Ago%E5%AE%9E%E7%8E%B0%E7%9A%84%E5%A4%9A%E5%8D%8F%E7%A8%8B%E4%B8%8B%E8%BD%BD%E5%99%A8-gopeed-core/">
+<meta property="og:site_name" content="pixelpig.space">
 <meta property="og:description" content="之前在Github社区偶然发现一个Go实现的下载器，作为个人学习的一个参照模板，这里要感谢一下作者monkeyWie(网名)的开源项目gopeed-core。">
 <meta name="twitter:description" content="之前在Github社区偶然发现一个Go实现的下载器，作为个人学习的一个参照模板，这里要感谢一下作者monkeyWie(网名)的开源项目gopeed-core。">
 <meta property="og:locale" content="zh">
@@ -81,12 +61,12 @@
 
 
 
+
+
+
+
   <meta property="og:image" content="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/pig.jpg">
   <meta property="twitter:image" content="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/pig.jpg">
-
-
-
-
 
 
     <title>聊一聊Go实现的多协程下载器: gopeed-core</title>
@@ -96,15 +76,15 @@
 
     
 
-    <link rel="canonical" href="https://pixeldin.github.io/zh/2021/06/%E8%81%8A%E4%B8%80%E8%81%8Ago%E5%AE%9E%E7%8E%B0%E7%9A%84%E5%A4%9A%E5%8D%8F%E7%A8%8B%E4%B8%8B%E8%BD%BD%E5%99%A8-gopeed-core/">
+    <link rel="canonical" href="/zh/2021/06/%E8%81%8A%E4%B8%80%E8%81%8Ago%E5%AE%9E%E7%8E%B0%E7%9A%84%E5%A4%9A%E5%8D%8F%E7%A8%8B%E4%B8%8B%E8%BD%BD%E5%99%A8-gopeed-core/">
 
     
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" integrity="sha512-H9jrZiiopUdsLpg94A333EfumgUBpO9MdbxStdeITo+KEIMaNfHNvwyjjDJb+ERPaRS6DpyRlKbvPUasNItRyw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/jquery.fancybox.min.css" integrity="sha256-vuXZ9LGmmwtjqFX1F+EKin1ThZMub58gKULUyf0qECk=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/helpers/jquery.fancybox-thumbs.min.css" integrity="sha256-SEa4XYAHihTcEP1f5gARTB2K26Uk8PsndQYHQC1f4jU=" crossorigin="anonymous" />
     
     
-    
-    <link rel="stylesheet" href="https://pixeldin.github.io/css/style-fneuerdunt9vf6vafpewt2nttopqa9hdugoae6mfs7phtuibtq6qjxkds96.min.css" />
+    <link rel="stylesheet" href="/css/style-twzjdbqhmnnacqs0pwwdzcdbt8yhv8giawvjqjmyfoqnvazl0dalmnhdkvp7.min.css" />
     
     
 
@@ -116,15 +96,15 @@
 
   <body>
     <div id="blog">
-      <header id="header" data-behavior="1">
+      <header id="header" data-behavior="5">
   <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
   <div class="header-title">
-    <a class="header-title-link" href="https://pixeldin.github.io/zh/" aria-label="去首页">pixelpig.tech</a>
+    <a class="header-title-link" href="/zh/">pixelpig.space</a>
   </div>
   
     
       <a class="header-right-picture "
-         href="https://pixeldin.github.io/#about" aria-label="打开链接: /#about">
+         href="/#about">
     
     
     
@@ -136,16 +116,16 @@
   
 </header>
 
-      <nav id="sidebar" data-behavior="1">
+      <nav id="sidebar" data-behavior="5">
   <div class="sidebar-container">
     
       <div class="sidebar-profile">
-        <a href="https://pixeldin.github.io/#about" aria-label="阅读有关作者的更多信息">
+        <a href="/#about">
           <img class="sidebar-profile-picture" src="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/pig.jpg" alt="作者的图片" />
         </a>
-        <h4 class="sidebar-profile-name">@Pixelpig</h4>
+        <h4 class="sidebar-profile-name">pixelpig</h4>
         
-          <h5 class="sidebar-profile-bio">Keep it simple, so as this bio <strong>:）</strong></h5>
+          <h5 class="sidebar-profile-bio">With enthusiasm for open source and I am looking forward to be a better developer. Stay hungry, stay foolish <strong>:）</strong></h5>
         
       </div>
     
@@ -153,7 +133,7 @@
       
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="https://pixeldin.github.io/en" title="English">
+      <a class="sidebar-button-link " href="/en">
     
       <i class="sidebar-button-icon fa fa-lg fa-language"></i>
       
@@ -163,7 +143,7 @@
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="https://pixeldin.github.io/zh/" title="Home">
+      <a class="sidebar-button-link " href="/zh/">
     
       <i class="sidebar-button-icon fa fa-lg fa-home"></i>
       
@@ -173,7 +153,7 @@
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="https://pixeldin.github.io/zh/categories" title="Categories">
+      <a class="sidebar-button-link " href="/zh/categories">
     
       <i class="sidebar-button-icon fa fa-lg fa-bookmark"></i>
       
@@ -183,7 +163,7 @@
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="https://pixeldin.github.io/zh/tags" title="Tags">
+      <a class="sidebar-button-link " href="/zh/tags">
     
       <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
       
@@ -193,7 +173,7 @@
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="https://pixeldin.github.io/zh/archives" title="Archives">
+      <a class="sidebar-button-link " href="/zh/archives">
     
       <i class="sidebar-button-icon fa fa-lg fa-archive"></i>
       
@@ -203,9 +183,9 @@
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="https://pixeldin.github.io/zh/#about" title="About">
+      <a class="sidebar-button-link " href="/zh/#about">
     
-      <i class="sidebar-button-icon fa fa-lg fa-question-circle"></i>
+      <i class="sidebar-button-icon fa fa-lg fa-question"></i>
       
       <span class="sidebar-button-desc">关于我</span>
     </a>
@@ -213,25 +193,22 @@
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="https://github.com/pixeldin" target="_blank" rel="noopener" title="pixeldin">
+      <a class="sidebar-button-link " href="https://github.com/pixeldin" target="_blank" rel="noopener">
     
-      <i class="sidebar-button-icon fab fa-lg fa-github-alt"></i>
+      <i class="sidebar-button-icon fa fa-lg fa-github"></i>
       
-      <span class="sidebar-button-desc">github</span>
+      <span class="sidebar-button-desc">pixeldin</span>
     </a>
   </li>
 
 
-
     </ul>
     <ul class="sidebar-buttons">
       
 
-
     </ul>
     <ul class="sidebar-buttons">
       
-
 
     </ul>
   </div>
@@ -239,23 +216,23 @@
 
       
 
-      <div id="main" data-behavior="1"
+      <div id="main" data-behavior="5"
         class="
                hasCoverMetaIn
                ">
-        <article class="post" id="top">
+        <article class="post" itemscope itemType="http://schema.org/BlogPosting">
           
           
             <div class="post-header main-content-wrap text-center">
   
-    <h1 class="post-title">
+    <h1 class="post-title" itemprop="headline">
       聊一聊Go实现的多协程下载器: gopeed-core
     </h1>
   
   
   <div class="postShorten-meta post-meta">
     
-      <time datetime="2021-06-29T00:00:00Z">
+      <time itemprop="datePublished" datetime="2021-06-29T00:00:00Z">
         
   六月 29, 2021
 
@@ -266,11 +243,11 @@
   
     <span>发布在</span>
     
-      <a class="category-link" href="https://pixeldin.github.io/zh/categories/go">Go</a>, 
+      <a class="category-link" href="/zh/categories/go">Go</a>, 
     
-      <a class="category-link" href="https://pixeldin.github.io/zh/categories/%e5%b9%b6%e5%8f%91">并发</a>, 
+      <a class="category-link" href="/zh/categories/%e5%b9%b6%e5%8f%91">并发</a>, 
     
-      <a class="category-link" href="https://pixeldin.github.io/zh/categories/%e7%bd%91%e7%bb%9c%e7%bc%96%e7%a8%8b">网络编程</a>
+      <a class="category-link" href="/zh/categories/%e7%bd%91%e7%bb%9c%e7%bc%96%e7%a8%8b">网络编程</a>
     
   
 
@@ -278,7 +255,7 @@
 
 </div>
           
-          <div class="post-content markdown">
+          <div class="post-content markdown" itemprop="articleBody">
             <div class="main-content-wrap">
               <p>之前在Github社区偶然发现一个Go实现的下载器，作为个人学习的一个参照模板，这里要感谢一下作者monkeyWie(网名)的开源项目<a href="github.com/monkeyWie/gopeed-core">gopeed-core</a>。</p>
 <h2 id="前言">前言</h2>
@@ -310,74 +287,74 @@
 </blockquote>
 <p><strong>使用方法:</strong><br>
 errGroup通常伴随一个errCtx上下文出现，用于通知同一个组内的协程，处理逻辑可以由代码控制。</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#75715e">// 创建一个errGroup，以及一个errCtx上下文
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#a6e22e">eg</span>, <span style="color:#a6e22e">errCtx</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">errgroup</span>.<span style="color:#a6e22e">WithContext</span>(<span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">Background</span>())
-</span></span></code></pre></div><p>使用<code>eg.Go()</code>启动，传入签名为<code>func() error</code>的函数作为参数：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">eg</span>.<span style="color:#a6e22e">Go</span>(<span style="color:#66d9ef">func</span>() <span style="color:#66d9ef">error</span> {
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 任意业务错误
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">errors</span>.<span style="color:#a6e22e">New</span>(<span style="color:#e6db74">&#34;egError&#34;</span>)
-</span></span><span style="display:flex;"><span>})
-</span></span></code></pre></div><p><strong>内部分析：</strong><br>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#75715e">// 创建一个errGroup，以及一个errCtx上下文
+</span><span style="color:#75715e"></span><span style="color:#a6e22e">eg</span>, <span style="color:#a6e22e">errCtx</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">errgroup</span>.<span style="color:#a6e22e">WithContext</span>(<span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">Background</span>())
+</code></pre></div><p>使用<code>eg.Go()</code>启动，传入签名为<code>func() error</code>的函数作为参数：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#a6e22e">eg</span>.<span style="color:#a6e22e">Go</span>(<span style="color:#66d9ef">func</span>() <span style="color:#66d9ef">error</span> {
+    <span style="color:#75715e">// 任意业务错误
+</span><span style="color:#75715e"></span>	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">errors</span>.<span style="color:#a6e22e">New</span>(<span style="color:#e6db74">&#34;egError&#34;</span>)
+})
+</code></pre></div><p><strong>内部分析：</strong><br>
 观察源码可以知道出错时会调用<code>g.cancel()</code>，对应着上面返回err上下文的<code>errCtx.Done()</code></p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#75715e">// Go calls the given function in a new goroutine.
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">//
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// The first call to return a non-nil error cancels the group; its error will be
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// returned by Wait.
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">g</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Group</span>) <span style="color:#a6e22e">Go</span>(<span style="color:#a6e22e">f</span> <span style="color:#66d9ef">func</span>() <span style="color:#66d9ef">error</span>) {
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">g</span>.<span style="color:#a6e22e">wg</span>.<span style="color:#a6e22e">Add</span>(<span style="color:#ae81ff">1</span>)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">go</span> <span style="color:#66d9ef">func</span>() {
-</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">defer</span> <span style="color:#a6e22e">g</span>.<span style="color:#a6e22e">wg</span>.<span style="color:#a6e22e">Done</span>()
-</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// 如果任务返回err，显式调用g绑定的cancel()函数
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>		<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">f</span>(); <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
-</span></span><span style="display:flex;"><span>			<span style="color:#a6e22e">g</span>.<span style="color:#a6e22e">errOnce</span>.<span style="color:#a6e22e">Do</span>(<span style="color:#66d9ef">func</span>() {
-</span></span><span style="display:flex;"><span>			    <span style="color:#75715e">// 这里的err不会有shadowed，即只上报第一个错误
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>				<span style="color:#a6e22e">g</span>.<span style="color:#a6e22e">err</span> = <span style="color:#a6e22e">err</span>
-</span></span><span style="display:flex;"><span>				<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">g</span>.<span style="color:#a6e22e">cancel</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
-</span></span><span style="display:flex;"><span>				    <span style="color:#75715e">// 触发errCtx.Done()
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>					<span style="color:#a6e22e">g</span>.<span style="color:#a6e22e">cancel</span>()
-</span></span><span style="display:flex;"><span>				}
-</span></span><span style="display:flex;"><span>			})
-</span></span><span style="display:flex;"><span>		}
-</span></span><span style="display:flex;"><span>	}()
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p><strong>示例demo：</strong></p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">const</span> (
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">CON</span> = <span style="color:#ae81ff">10</span>
-</span></span><span style="display:flex;"><span>)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">eg</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">errgroup</span>.<span style="color:#a6e22e">Group</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">eg</span>, <span style="color:#a6e22e">errCtx</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">errgroup</span>.<span style="color:#a6e22e">WithContext</span>(<span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">Background</span>())
-</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">0</span>; <span style="color:#a6e22e">i</span> &lt; <span style="color:#a6e22e">CON</span>; <span style="color:#a6e22e">i</span><span style="color:#f92672">++</span> {
-</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">i</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">i</span>
-</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">eg</span>.<span style="color:#a6e22e">Go</span>(<span style="color:#66d9ef">func</span>() <span style="color:#66d9ef">error</span> {
-</span></span><span style="display:flex;"><span>			<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">==</span> <span style="color:#ae81ff">3</span> {
-</span></span><span style="display:flex;"><span>				<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">errors</span>.<span style="color:#a6e22e">New</span>(<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Sprintf</span>(<span style="color:#e6db74">&#34;Mock err: %d&#34;</span>, <span style="color:#a6e22e">i</span>))
-</span></span><span style="display:flex;"><span>			}
-</span></span><span style="display:flex;"><span>			<span style="color:#66d9ef">select</span> {
-</span></span><span style="display:flex;"><span>			<span style="color:#75715e">// 让Done分支判断在Mock err出现后命中, 等待1s
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>			<span style="color:#66d9ef">case</span> <span style="color:#f92672">&lt;-</span><span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">After</span>(<span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Duration</span>(<span style="color:#ae81ff">1</span>) <span style="color:#f92672">*</span> <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Second</span>):
-</span></span><span style="display:flex;"><span>			<span style="color:#66d9ef">case</span> <span style="color:#f92672">&lt;-</span><span style="color:#a6e22e">errCtx</span>.<span style="color:#a6e22e">Done</span>():
-</span></span><span style="display:flex;"><span>			    <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;meet err in job:&#34;</span>, <span style="color:#a6e22e">i</span>)
-</span></span><span style="display:flex;"><span>				<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">errCtx</span>.<span style="color:#a6e22e">Err</span>()
-</span></span><span style="display:flex;"><span>			}
-</span></span><span style="display:flex;"><span>			<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">i</span>)
-</span></span><span style="display:flex;"><span>			<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>
-</span></span><span style="display:flex;"><span>		})
-</span></span><span style="display:flex;"><span>	}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// wait for done or err occurs
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">eg</span>.<span style="color:#a6e22e">Wait</span>(); <span style="color:#a6e22e">err</span> <span style="color:#f92672">==</span> <span style="color:#66d9ef">nil</span> {
-</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Print</span>(<span style="color:#e6db74">&#34;all looks good.&#34;</span>)
-</span></span><span style="display:flex;"><span>	} <span style="color:#66d9ef">else</span> {
-</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;errors occurs: %v&#34;</span>, <span style="color:#a6e22e">err</span>)
-</span></span><span style="display:flex;"><span>	}
-</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span>
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p><strong>输出：</strong><br>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#75715e">// Go calls the given function in a new goroutine.
+</span><span style="color:#75715e">//
+</span><span style="color:#75715e">// The first call to return a non-nil error cancels the group; its error will be
+</span><span style="color:#75715e">// returned by Wait.
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">g</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Group</span>) <span style="color:#a6e22e">Go</span>(<span style="color:#a6e22e">f</span> <span style="color:#66d9ef">func</span>() <span style="color:#66d9ef">error</span>) {
+	<span style="color:#a6e22e">g</span>.<span style="color:#a6e22e">wg</span>.<span style="color:#a6e22e">Add</span>(<span style="color:#ae81ff">1</span>)
+
+	<span style="color:#66d9ef">go</span> <span style="color:#66d9ef">func</span>() {
+		<span style="color:#66d9ef">defer</span> <span style="color:#a6e22e">g</span>.<span style="color:#a6e22e">wg</span>.<span style="color:#a6e22e">Done</span>()
+        <span style="color:#75715e">// 如果任务返回err，显式调用g绑定的cancel()函数
+</span><span style="color:#75715e"></span>		<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">f</span>(); <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+			<span style="color:#a6e22e">g</span>.<span style="color:#a6e22e">errOnce</span>.<span style="color:#a6e22e">Do</span>(<span style="color:#66d9ef">func</span>() {
+			    <span style="color:#75715e">// 这里的err不会有shadowed，即只上报第一个错误
+</span><span style="color:#75715e"></span>				<span style="color:#a6e22e">g</span>.<span style="color:#a6e22e">err</span> = <span style="color:#a6e22e">err</span>
+				<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">g</span>.<span style="color:#a6e22e">cancel</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+				    <span style="color:#75715e">// 触发errCtx.Done()
+</span><span style="color:#75715e"></span>					<span style="color:#a6e22e">g</span>.<span style="color:#a6e22e">cancel</span>()
+				}
+			})
+		}
+	}()
+}
+</code></pre></div><p><strong>示例demo：</strong></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">const</span> (
+	<span style="color:#a6e22e">CON</span> = <span style="color:#ae81ff">10</span>
+)
+
+<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+    <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">eg</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">errgroup</span>.<span style="color:#a6e22e">Group</span>
+	<span style="color:#a6e22e">eg</span>, <span style="color:#a6e22e">errCtx</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">errgroup</span>.<span style="color:#a6e22e">WithContext</span>(<span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">Background</span>())
+	<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">0</span>; <span style="color:#a6e22e">i</span> &lt; <span style="color:#a6e22e">CON</span>; <span style="color:#a6e22e">i</span><span style="color:#f92672">++</span> {
+		<span style="color:#a6e22e">i</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">i</span>
+		<span style="color:#a6e22e">eg</span>.<span style="color:#a6e22e">Go</span>(<span style="color:#66d9ef">func</span>() <span style="color:#66d9ef">error</span> {
+			<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">==</span> <span style="color:#ae81ff">3</span> {
+				<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">errors</span>.<span style="color:#a6e22e">New</span>(<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Sprintf</span>(<span style="color:#e6db74">&#34;Mock err: %d&#34;</span>, <span style="color:#a6e22e">i</span>))
+			}
+			<span style="color:#66d9ef">select</span> {
+			<span style="color:#75715e">// 让Done分支判断在Mock err出现后命中, 等待1s
+</span><span style="color:#75715e"></span>			<span style="color:#66d9ef">case</span> <span style="color:#f92672">&lt;-</span><span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">After</span>(<span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Duration</span>(<span style="color:#ae81ff">1</span>) <span style="color:#f92672">*</span> <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Second</span>):
+			<span style="color:#66d9ef">case</span> <span style="color:#f92672">&lt;-</span><span style="color:#a6e22e">errCtx</span>.<span style="color:#a6e22e">Done</span>():
+			    <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;meet err in job:&#34;</span>, <span style="color:#a6e22e">i</span>)
+				<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">errCtx</span>.<span style="color:#a6e22e">Err</span>()
+			}
+			<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">i</span>)
+			<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>
+		})
+	}
+
+	<span style="color:#75715e">// wait for done or err occurs
+</span><span style="color:#75715e"></span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">eg</span>.<span style="color:#a6e22e">Wait</span>(); <span style="color:#a6e22e">err</span> <span style="color:#f92672">==</span> <span style="color:#66d9ef">nil</span> {
+		<span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Print</span>(<span style="color:#e6db74">&#34;all looks good.&#34;</span>)
+	} <span style="color:#66d9ef">else</span> {
+		<span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;errors occurs: %v&#34;</span>, <span style="color:#a6e22e">err</span>)
+	}
+	<span style="color:#66d9ef">return</span>
+}
+</code></pre></div><p><strong>输出：</strong><br>
 可以看到，在组内i等于3的协程抛出错误之后，组内其他协程<code>errCtx.Done()</code>分支都命中了，所以它们直接返回errGroup捕获的<strong>第一个错误</strong>。</p>
-<pre tabindex="0"><code>2021/06/24 07:24:55 meet err in job: 9
+<pre><code>2021/06/24 07:24:55 meet err in job: 9
 2021/06/24 07:24:55 meet err in job: 1
 2021/06/24 07:24:55 meet err in job: 4
 2021/06/24 07:24:55 meet err in job: 2
@@ -421,74 +398,74 @@ errGroup通常伴随一个errCtx上下文出现，用于通知同一个组内的
 <ul>
 <li>启动本地文件服务器</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#75715e">// 启动本地文件服务器，打开127.0.0.1:8899可以看到共享文件列表
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">Handle</span>(<span style="color:#e6db74">&#34;/&#34;</span>, <span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">FileServer</span>(<span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">Dir</span>(<span style="color:#e6db74">&#34;D:\\测试下载\\serverFile&#34;</span>)))
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">ListenAndServe</span>(<span style="color:#e6db74">&#34;:8899&#34;</span>, <span style="color:#66d9ef">nil</span>); <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;err:&#34;</span>, <span style="color:#a6e22e">err</span>)
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#75715e">// 启动本地文件服务器，打开127.0.0.1:8899可以看到共享文件列表
+</span><span style="color:#75715e"></span><span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">Handle</span>(<span style="color:#e6db74">&#34;/&#34;</span>, <span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">FileServer</span>(<span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">Dir</span>(<span style="color:#e6db74">&#34;D:\\测试下载\\serverFile&#34;</span>)))
+<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">ListenAndServe</span>(<span style="color:#e6db74">&#34;:8899&#34;</span>, <span style="color:#66d9ef">nil</span>); <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;err:&#34;</span>, <span style="color:#a6e22e">err</span>)
+}
+</code></pre></div><ul>
 <li>相关常量</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#75715e">// basic/downloader/mdl/constansts.go
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">const</span> (
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">HttpCodeOK</span>             = <span style="color:#ae81ff">200</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">HttpCodePartialContent</span> = <span style="color:#ae81ff">206</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">HttpHeaderRange</span>              = <span style="color:#e6db74">&#34;Range&#34;</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">HttpHeaderContentLength</span>      = <span style="color:#e6db74">&#34;Content-Length&#34;</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">HttpHeaderContentRange</span>       = <span style="color:#e6db74">&#34;Content-Range&#34;</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">HttpHeaderContentDisposition</span> = <span style="color:#e6db74">&#34;Content-Disposition&#34;</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">HttpHeaderRangeFormat</span> = <span style="color:#e6db74">&#34;bytes=%d-%d&#34;</span>
-</span></span><span style="display:flex;"><span>)
-</span></span></code></pre></div><ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#75715e">// basic/downloader/mdl/constansts.go
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">const</span> (
+	<span style="color:#a6e22e">HttpCodeOK</span>             = <span style="color:#ae81ff">200</span>
+	<span style="color:#a6e22e">HttpCodePartialContent</span> = <span style="color:#ae81ff">206</span>
+
+	<span style="color:#a6e22e">HttpHeaderRange</span>              = <span style="color:#e6db74">&#34;Range&#34;</span>
+	<span style="color:#a6e22e">HttpHeaderContentLength</span>      = <span style="color:#e6db74">&#34;Content-Length&#34;</span>
+	<span style="color:#a6e22e">HttpHeaderContentRange</span>       = <span style="color:#e6db74">&#34;Content-Range&#34;</span>
+	<span style="color:#a6e22e">HttpHeaderContentDisposition</span> = <span style="color:#e6db74">&#34;Content-Disposition&#34;</span>
+
+	<span style="color:#a6e22e">HttpHeaderRangeFormat</span> = <span style="color:#e6db74">&#34;bytes=%d-%d&#34;</span>
+)
+</code></pre></div><ul>
 <li>解析目标文件信息(获取文件大小/是否支持断点续传)</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">const</span> (
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">DOWNLOAD_URL</span> = <span style="color:#e6db74">&#34;http://127.0.0.1:8899/demo.zip&#34;</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">SAVE_PATH</span>    = <span style="color:#e6db74">&#34;D:\\测试下载\\download&#34;</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">CON</span>          = <span style="color:#ae81ff">8</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">RETRY_COUNT</span>  = <span style="color:#ae81ff">5</span>
-</span></span><span style="display:flex;"><span>)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">// ...
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">// 构造请求并设置header
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#a6e22e">req</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">buildReq</span>(<span style="color:#a6e22e">ctx</span>, <span style="color:#a6e22e">reqURL</span>)
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
-</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>, <span style="color:#a6e22e">err</span>
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">// 只访问一个字节，测试资源是否支持Range请求
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#a6e22e">req</span>.<span style="color:#a6e22e">Header</span>.<span style="color:#a6e22e">Set</span>(<span style="color:#a6e22e">mdl</span>.<span style="color:#a6e22e">HttpHeaderRange</span>, <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Sprintf</span>(<span style="color:#a6e22e">mdl</span>.<span style="color:#a6e22e">HttpHeaderRangeFormat</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>))
-</span></span><span style="display:flex;"><span><span style="color:#a6e22e">resp</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">DefaultClient</span>.<span style="color:#a6e22e">Do</span>(<span style="color:#a6e22e">req</span>)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">// 解析是否支持断点续传/文件大小
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">if</span> <span style="color:#a6e22e">resp</span>.<span style="color:#a6e22e">StatusCode</span> <span style="color:#f92672">==</span> <span style="color:#a6e22e">mdl</span>.<span style="color:#a6e22e">HttpCodePartialContent</span> {
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// 支持断点下载
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">res</span>.<span style="color:#a6e22e">Range</span> = <span style="color:#66d9ef">true</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// 从Content-Range:bytes 0-0/137783533 获取大小
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">totalSize</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">path</span>.<span style="color:#a6e22e">Base</span>(<span style="color:#a6e22e">resp</span>.<span style="color:#a6e22e">Header</span>.<span style="color:#a6e22e">Get</span>(<span style="color:#a6e22e">mdl</span>.<span style="color:#a6e22e">HttpHeaderContentRange</span>))
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><h3 id="文件读写">文件读写</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">const</span> (
+	<span style="color:#a6e22e">DOWNLOAD_URL</span> = <span style="color:#e6db74">&#34;http://127.0.0.1:8899/demo.zip&#34;</span>
+	<span style="color:#a6e22e">SAVE_PATH</span>    = <span style="color:#e6db74">&#34;D:\\测试下载\\download&#34;</span>
+	<span style="color:#a6e22e">CON</span>          = <span style="color:#ae81ff">8</span>
+	<span style="color:#a6e22e">RETRY_COUNT</span>  = <span style="color:#ae81ff">5</span>
+)
+
+<span style="color:#75715e">// ...
+</span><span style="color:#75715e"></span>
+<span style="color:#75715e">// 构造请求并设置header
+</span><span style="color:#75715e"></span><span style="color:#a6e22e">req</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">buildReq</span>(<span style="color:#a6e22e">ctx</span>, <span style="color:#a6e22e">reqURL</span>)
+<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+	<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>, <span style="color:#a6e22e">err</span>
+}
+
+<span style="color:#75715e">// 只访问一个字节，测试资源是否支持Range请求
+</span><span style="color:#75715e"></span><span style="color:#a6e22e">req</span>.<span style="color:#a6e22e">Header</span>.<span style="color:#a6e22e">Set</span>(<span style="color:#a6e22e">mdl</span>.<span style="color:#a6e22e">HttpHeaderRange</span>, <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Sprintf</span>(<span style="color:#a6e22e">mdl</span>.<span style="color:#a6e22e">HttpHeaderRangeFormat</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>))
+<span style="color:#a6e22e">resp</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">DefaultClient</span>.<span style="color:#a6e22e">Do</span>(<span style="color:#a6e22e">req</span>)
+
+<span style="color:#75715e">// 解析是否支持断点续传/文件大小
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">if</span> <span style="color:#a6e22e">resp</span>.<span style="color:#a6e22e">StatusCode</span> <span style="color:#f92672">==</span> <span style="color:#a6e22e">mdl</span>.<span style="color:#a6e22e">HttpCodePartialContent</span> {
+	<span style="color:#75715e">// 支持断点下载
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">res</span>.<span style="color:#a6e22e">Range</span> = <span style="color:#66d9ef">true</span>
+	<span style="color:#75715e">// 从Content-Range:bytes 0-0/137783533 获取大小
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">totalSize</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">path</span>.<span style="color:#a6e22e">Base</span>(<span style="color:#a6e22e">resp</span>.<span style="color:#a6e22e">Header</span>.<span style="color:#a6e22e">Get</span>(<span style="color:#a6e22e">mdl</span>.<span style="color:#a6e22e">HttpHeaderContentRange</span>))
+}
+</code></pre></div><h3 id="文件读写">文件读写</h3>
 <p>这部分是下载过程，主要是文件的操作</p>
 <ul>
 <li>
 <p>文件创建<br>
 在上一个初始化下载链接之后拿到文件大小了，所以可以预创建文件并分配总占用字节数。</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">touch</span>(<span style="color:#a6e22e">fileName</span> <span style="color:#66d9ef">string</span>, <span style="color:#a6e22e">size</span> <span style="color:#66d9ef">int64</span>) (<span style="color:#a6e22e">file</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">os</span>.<span style="color:#a6e22e">File</span>, <span style="color:#a6e22e">err</span> <span style="color:#66d9ef">error</span>) {
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 创建文件
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">file</span>, <span style="color:#a6e22e">err</span> = <span style="color:#a6e22e">os</span>.<span style="color:#a6e22e">Create</span>(<span style="color:#a6e22e">fileName</span>)
-</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">size</span> &gt; <span style="color:#ae81ff">0</span> {
-</span></span><span style="display:flex;"><span>	    <span style="color:#75715e">// 分配大小
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>		<span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">os</span>.<span style="color:#a6e22e">Truncate</span>(<span style="color:#a6e22e">fileName</span>, <span style="color:#a6e22e">size</span>)
-</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
-</span></span><span style="display:flex;"><span>			<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>, <span style="color:#a6e22e">err</span>
-</span></span><span style="display:flex;"><span>		}
-</span></span><span style="display:flex;"><span>	}
-</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span>
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div></li>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">touch</span>(<span style="color:#a6e22e">fileName</span> <span style="color:#66d9ef">string</span>, <span style="color:#a6e22e">size</span> <span style="color:#66d9ef">int64</span>) (<span style="color:#a6e22e">file</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">os</span>.<span style="color:#a6e22e">File</span>, <span style="color:#a6e22e">err</span> <span style="color:#66d9ef">error</span>) {
+    <span style="color:#75715e">// 创建文件
+</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">file</span>, <span style="color:#a6e22e">err</span> = <span style="color:#a6e22e">os</span>.<span style="color:#a6e22e">Create</span>(<span style="color:#a6e22e">fileName</span>)
+    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">size</span> &gt; <span style="color:#ae81ff">0</span> {
+        <span style="color:#75715e">// 分配大小
+</span><span style="color:#75715e"></span>        <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">os</span>.<span style="color:#a6e22e">Truncate</span>(<span style="color:#a6e22e">fileName</span>, <span style="color:#a6e22e">size</span>)
+        <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+            <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>, <span style="color:#a6e22e">err</span>
+        }
+    }
+    <span style="color:#66d9ef">return</span>
+}
+</code></pre></div></li>
 <li>
 <p>文件写入<br>
 在并发数大于0以及文件协议支持断点续传的前提下，开启多协程并发下载，这里引出了一个困惑。<br>
@@ -499,150 +476,151 @@ errGroup通常伴随一个errCtx上下文出现，用于通知同一个组内的
 <p>之后回想其实并发操作文件并无影响，因为我们在刚开始就创建文件并分配总大小，后续子协程只需要根据自己负责的文件字节下标区间去写入就好了，这里与写顺序无关，因此其实不需要加锁。（笔者后来也找作者再次确认这个猜想）</p>
 <p>最终作者实现的代码如下，<br>
 <strong>定义每个文件切分的块，下标用于向服务器申请文件区间：</strong></p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Chunk</span> <span style="color:#66d9ef">struct</span> {
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">Status</span> <span style="color:#a6e22e">Status</span>       <span style="color:#75715e">// 文件块下载状态
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">Begin</span>  <span style="color:#66d9ef">int64</span>        <span style="color:#75715e">// 开始下标
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">End</span>    <span style="color:#66d9ef">int64</span>        <span style="color:#75715e">// 结束下标
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">Downloaded</span> <span style="color:#66d9ef">int64</span>    <span style="color:#75715e">// 当前文件块已下载字节, 用于文件追加或者出错断点续传
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>}
-</span></span></code></pre></div><p><strong>定义文件块数组并分配区间：</strong></p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">var</span> (
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// 切分文件块
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">chunks</span> []<span style="color:#f92672">*</span><span style="color:#a6e22e">mdl</span>.<span style="color:#a6e22e">Chunk</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// 切分块数
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">ckTol</span> <span style="color:#66d9ef">int</span>
-</span></span><span style="display:flex;"><span>)
-</span></span><span style="display:flex;"><span><span style="color:#75715e">// 支持切分
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">if</span> <span style="color:#a6e22e">res</span>.<span style="color:#a6e22e">Range</span> {
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 并发8个协程下载
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">ckTol</span> = <span style="color:#ae81ff">8</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">chunks</span> = make([]<span style="color:#f92672">*</span><span style="color:#a6e22e">mdl</span>.<span style="color:#a6e22e">Chunk</span>, <span style="color:#a6e22e">ckTol</span>)
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">partSize</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">res</span>.<span style="color:#a6e22e">TotalSize</span> <span style="color:#f92672">/</span> int64(<span style="color:#a6e22e">ckTol</span>)
-</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">0</span>; <span style="color:#a6e22e">i</span> &lt; <span style="color:#a6e22e">ckTol</span>; <span style="color:#a6e22e">i</span><span style="color:#f92672">++</span> {
-</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">var</span> (
-</span></span><span style="display:flex;"><span>			<span style="color:#a6e22e">begin</span> = <span style="color:#a6e22e">partSize</span> <span style="color:#f92672">*</span> int64(<span style="color:#a6e22e">i</span>)
-</span></span><span style="display:flex;"><span>			<span style="color:#a6e22e">end</span>   <span style="color:#66d9ef">int64</span>
-</span></span><span style="display:flex;"><span>		)
-</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">==</span> (<span style="color:#a6e22e">ckTol</span> <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>) {
-</span></span><span style="display:flex;"><span>			<span style="color:#a6e22e">end</span> = <span style="color:#a6e22e">res</span>.<span style="color:#a6e22e">TotalSize</span> <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>
-</span></span><span style="display:flex;"><span>		} <span style="color:#66d9ef">else</span> {
-</span></span><span style="display:flex;"><span>			<span style="color:#a6e22e">end</span> = <span style="color:#a6e22e">begin</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">partSize</span> <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>
-</span></span><span style="display:flex;"><span>		}
-</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">ck</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">mdl</span>.<span style="color:#a6e22e">NewChunk</span>(<span style="color:#a6e22e">begin</span>, <span style="color:#a6e22e">end</span>)
-</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">chunks</span>[<span style="color:#a6e22e">i</span>] = <span style="color:#a6e22e">ck</span>
-</span></span><span style="display:flex;"><span>	}
-</span></span><span style="display:flex;"><span>} <span style="color:#66d9ef">else</span> {
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">ckTol</span> = <span style="color:#ae81ff">1</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// 单连接下载
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">chunks</span> = make([]<span style="color:#f92672">*</span><span style="color:#a6e22e">mdl</span>.<span style="color:#a6e22e">Chunk</span>, <span style="color:#a6e22e">ckTol</span>)
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">chunks</span>[<span style="color:#ae81ff">0</span>] = <span style="color:#a6e22e">mdl</span>.<span style="color:#a6e22e">NewChunk</span>(<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>)
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p><strong>下载细节：</strong></p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">fetch</span>(<span style="color:#a6e22e">ctx</span> <span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">Context</span>, <span style="color:#a6e22e">res</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">mdl</span>.<span style="color:#a6e22e">Resource</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">file</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">os</span>.<span style="color:#a6e22e">File</span>, <span style="color:#a6e22e">chks</span> []<span style="color:#f92672">*</span><span style="color:#a6e22e">mdl</span>.<span style="color:#a6e22e">Chunk</span>, <span style="color:#a6e22e">c</span> <span style="color:#66d9ef">int</span>, <span style="color:#a6e22e">doneCh</span> <span style="color:#66d9ef">chan</span> <span style="color:#66d9ef">error</span>) {
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 使用errgroup捕获异常并通知外部doneCh通道
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">eg</span>, <span style="color:#a6e22e">_</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">errgroup</span>.<span style="color:#a6e22e">WithContext</span>(<span style="color:#a6e22e">ctx</span>)
-</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">0</span>; <span style="color:#a6e22e">i</span> &lt; <span style="color:#a6e22e">c</span>; <span style="color:#a6e22e">i</span><span style="color:#f92672">++</span> {
-</span></span><span style="display:flex;"><span>	    <span style="color:#75715e">// 注意闭包写法
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>		<span style="color:#a6e22e">i</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">i</span>
-</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">eg</span>.<span style="color:#a6e22e">Go</span>(<span style="color:#66d9ef">func</span>() <span style="color:#66d9ef">error</span> {
-</span></span><span style="display:flex;"><span>		    <span style="color:#75715e">// 并发下载
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>			<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">fetchChunk</span>(<span style="color:#a6e22e">ctx</span>, <span style="color:#a6e22e">res</span>, <span style="color:#a6e22e">file</span>, <span style="color:#a6e22e">i</span>, <span style="color:#a6e22e">chks</span>)
-</span></span><span style="display:flex;"><span>		})
-</span></span><span style="display:flex;"><span>	}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">go</span> <span style="color:#66d9ef">func</span>() {
-</span></span><span style="display:flex;"><span>		<span style="color:#75715e">// error from errgroup
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>		<span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">eg</span>.<span style="color:#a6e22e">Wait</span>()
-</span></span><span style="display:flex;"><span>		<span style="color:#75715e">// 关闭文件
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>		<span style="color:#a6e22e">file</span>.<span style="color:#a6e22e">Close</span>()
-</span></span><span style="display:flex;"><span>		<span style="color:#75715e">// 接收fetchChunk()内部状态
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>		<span style="color:#a6e22e">doneCh</span> <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">err</span>
-</span></span><span style="display:flex;"><span>	}()
-</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span>
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">fetchChunk</span>(<span style="color:#a6e22e">ctx</span> <span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">Context</span>, <span style="color:#a6e22e">res</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">mdl</span>.<span style="color:#a6e22e">Resource</span>, <span style="color:#a6e22e">file</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">os</span>.<span style="color:#a6e22e">File</span>, <span style="color:#a6e22e">index</span> <span style="color:#66d9ef">int</span>, <span style="color:#a6e22e">chks</span> []<span style="color:#f92672">*</span><span style="color:#a6e22e">mdl</span>.<span style="color:#a6e22e">Chunk</span>) (<span style="color:#a6e22e">err</span> <span style="color:#66d9ef">error</span>) {
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">ck</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">chks</span>[<span style="color:#a6e22e">index</span>]
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">req</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">buildReq</span>(<span style="color:#a6e22e">ctx</span>, <span style="color:#a6e22e">DOWNLOAD_URL</span>)
-</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
-</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">err</span>
-</span></span><span style="display:flex;"><span>	}
-</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">var</span> (
-</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">client</span> = <span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">DefaultClient</span>
-</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">buf</span>    = make([]<span style="color:#66d9ef">byte</span>, <span style="color:#ae81ff">8192</span>)
-</span></span><span style="display:flex;"><span>	)
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e">/**************重试区间开始**************/</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// 根据是否分块下载设置header
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#75715e">//	- 根据当前chunk设置文件区间到header
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#75715e">//	- 判断请求返回status
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#75715e">//		- 失败: 少于5次则做重试
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#75715e">//		- 成功:
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#75715e">//				根据offset, 把buf写入文件
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#75715e">//				- 成功: return, 通知外部
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#75715e">//				- 失败: 重试少于5次, 返回重试
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">0</span>; <span style="color:#a6e22e">i</span> &lt; <span style="color:#a6e22e">RETRY_COUNT</span>; <span style="color:#a6e22e">i</span><span style="color:#f92672">++</span> {
-</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">resp</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">Response</span>
-</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">res</span>.<span style="color:#a6e22e">Range</span> {
-</span></span><span style="display:flex;"><span>			<span style="color:#a6e22e">req</span>.<span style="color:#a6e22e">Header</span>.<span style="color:#a6e22e">Set</span>(<span style="color:#a6e22e">mdl</span>.<span style="color:#a6e22e">HttpHeaderRange</span>,
-</span></span><span style="display:flex;"><span>				<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Sprintf</span>(<span style="color:#a6e22e">mdl</span>.<span style="color:#a6e22e">HttpHeaderRangeFormat</span>, <span style="color:#a6e22e">chks</span>[<span style="color:#a6e22e">index</span>].<span style="color:#a6e22e">Begin</span><span style="color:#f92672">+</span><span style="color:#a6e22e">ck</span>.<span style="color:#a6e22e">Downloaded</span>, <span style="color:#a6e22e">chks</span>[<span style="color:#a6e22e">index</span>].<span style="color:#a6e22e">End</span>))
-</span></span><span style="display:flex;"><span>		} <span style="color:#66d9ef">else</span> {
-</span></span><span style="display:flex;"><span>			<span style="color:#75715e">// 单连接重试没有断点续传
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>			<span style="color:#a6e22e">ck</span>.<span style="color:#a6e22e">Downloaded</span> = <span style="color:#ae81ff">0</span>
-</span></span><span style="display:flex;"><span>		}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>		<span style="color:#75715e">// 获取字节区间
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>		<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">func</span>() <span style="color:#66d9ef">error</span> {
-</span></span><span style="display:flex;"><span>			<span style="color:#a6e22e">resp</span>, <span style="color:#a6e22e">err</span> = <span style="color:#a6e22e">client</span>.<span style="color:#a6e22e">Do</span>(<span style="color:#a6e22e">req</span>)
-</span></span><span style="display:flex;"><span>			<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
-</span></span><span style="display:flex;"><span>				<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">err</span>
-</span></span><span style="display:flex;"><span>			}
-</span></span><span style="display:flex;"><span>			<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">resp</span>.<span style="color:#a6e22e">StatusCode</span> <span style="color:#f92672">!=</span> <span style="color:#a6e22e">mdl</span>.<span style="color:#a6e22e">HttpCodeOK</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#a6e22e">resp</span>.<span style="color:#a6e22e">StatusCode</span> <span style="color:#f92672">!=</span> <span style="color:#a6e22e">mdl</span>.<span style="color:#a6e22e">HttpCodePartialContent</span> {
-</span></span><span style="display:flex;"><span>				<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">errors</span>.<span style="color:#a6e22e">New</span>(<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Sprintf</span>(<span style="color:#e6db74">&#34;%d,%s&#34;</span>, <span style="color:#a6e22e">resp</span>.<span style="color:#a6e22e">StatusCode</span>, <span style="color:#a6e22e">resp</span>.<span style="color:#a6e22e">Status</span>))
-</span></span><span style="display:flex;"><span>			}
-</span></span><span style="display:flex;"><span>			<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>
-</span></span><span style="display:flex;"><span>		}(); <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
-</span></span><span style="display:flex;"><span>			<span style="color:#66d9ef">continue</span>
-</span></span><span style="display:flex;"><span>		}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>		<span style="color:#75715e">// 从body提取buf写入文件, 重置重试标识
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>		<span style="color:#a6e22e">i</span> = <span style="color:#ae81ff">0</span>
-</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">retry</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">false</span>
-</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">retry</span>, <span style="color:#a6e22e">err</span> = <span style="color:#66d9ef">func</span>() (<span style="color:#66d9ef">bool</span>, <span style="color:#66d9ef">error</span>) {
-</span></span><span style="display:flex;"><span>			<span style="color:#66d9ef">defer</span> <span style="color:#a6e22e">resp</span>.<span style="color:#a6e22e">Body</span>.<span style="color:#a6e22e">Close</span>()
-</span></span><span style="display:flex;"><span>			<span style="color:#66d9ef">for</span> {
-</span></span><span style="display:flex;"><span>				<span style="color:#a6e22e">n</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">resp</span>.<span style="color:#a6e22e">Body</span>.<span style="color:#a6e22e">Read</span>(<span style="color:#a6e22e">buf</span>)
-</span></span><span style="display:flex;"><span>				<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">n</span> &gt; <span style="color:#ae81ff">0</span> {
-</span></span><span style="display:flex;"><span>				    <span style="color:#75715e">// 每次写入从已下载位置开始写，保证字节顺序
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>					<span style="color:#a6e22e">_</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">file</span>.<span style="color:#a6e22e">WriteAt</span>(<span style="color:#a6e22e">buf</span>[:<span style="color:#a6e22e">n</span>], <span style="color:#a6e22e">ck</span>.<span style="color:#a6e22e">Begin</span><span style="color:#f92672">+</span><span style="color:#a6e22e">ck</span>.<span style="color:#a6e22e">Downloaded</span>)
-</span></span><span style="display:flex;"><span>					<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
-</span></span><span style="display:flex;"><span>						<span style="color:#75715e">// 文件出错不重试
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>						<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">false</span>, <span style="color:#a6e22e">err</span>
-</span></span><span style="display:flex;"><span>					}
-</span></span><span style="display:flex;"><span>					<span style="color:#75715e">// 记录已下载, 用于断点续传
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>					<span style="color:#a6e22e">ck</span>.<span style="color:#a6e22e">Downloaded</span> <span style="color:#f92672">+=</span> int64(<span style="color:#a6e22e">n</span>)
-</span></span><span style="display:flex;"><span>				}
-</span></span><span style="display:flex;"><span>				<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
-</span></span><span style="display:flex;"><span>					<span style="color:#75715e">// err from read
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>					<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#a6e22e">io</span>.<span style="color:#a6e22e">EOF</span> {
-</span></span><span style="display:flex;"><span>						<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">true</span>, <span style="color:#a6e22e">err</span>
-</span></span><span style="display:flex;"><span>					}
-</span></span><span style="display:flex;"><span>					<span style="color:#66d9ef">break</span>
-</span></span><span style="display:flex;"><span>				}
-</span></span><span style="display:flex;"><span>			}
-</span></span><span style="display:flex;"><span>			<span style="color:#75715e">// success exit
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>			<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">false</span>, <span style="color:#66d9ef">nil</span>
-</span></span><span style="display:flex;"><span>		}()
-</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">if</span> !<span style="color:#a6e22e">retry</span> {
-</span></span><span style="display:flex;"><span>			<span style="color:#66d9ef">break</span>
-</span></span><span style="display:flex;"><span>		}
-</span></span><span style="display:flex;"><span>	}
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e">/**************重试区间结束**************/</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// 通知外部
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#66d9ef">return</span>
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>其实代码逻辑相对简单，只是加多了错误重试所以读起来有点绕，关键点在于<code>ck.Downloaded</code>字段的维护更新，无论是正常下载还是失败重试，都需要严格保证<code>ck.Downloaded</code>当前值的准确性。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Chunk</span> <span style="color:#66d9ef">struct</span> {
+    <span style="color:#a6e22e">Status</span> <span style="color:#a6e22e">Status</span>       <span style="color:#75715e">// 文件块下载状态
+</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">Begin</span>  <span style="color:#66d9ef">int64</span>        <span style="color:#75715e">// 开始下标
+</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">End</span>    <span style="color:#66d9ef">int64</span>        <span style="color:#75715e">// 结束下标
+</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">Downloaded</span> <span style="color:#66d9ef">int64</span>    <span style="color:#75715e">// 当前文件块已下载字节, 用于文件追加或者出错断点续传
+</span><span style="color:#75715e"></span>}
+</code></pre></div><p><strong>定义文件块数组并分配区间：</strong></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">var</span> (
+    <span style="color:#75715e">// 切分文件块
+</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">chunks</span> []<span style="color:#f92672">*</span><span style="color:#a6e22e">mdl</span>.<span style="color:#a6e22e">Chunk</span>
+    <span style="color:#75715e">// 切分块数
+</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">ckTol</span> <span style="color:#66d9ef">int</span>
+)
+<span style="color:#75715e">// 支持切分
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">if</span> <span style="color:#a6e22e">res</span>.<span style="color:#a6e22e">Range</span> {
+    <span style="color:#75715e">// 并发8个协程下载
+</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">ckTol</span> = <span style="color:#ae81ff">8</span>
+    <span style="color:#a6e22e">chunks</span> = make([]<span style="color:#f92672">*</span><span style="color:#a6e22e">mdl</span>.<span style="color:#a6e22e">Chunk</span>, <span style="color:#a6e22e">ckTol</span>)
+    <span style="color:#a6e22e">partSize</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">res</span>.<span style="color:#a6e22e">TotalSize</span> <span style="color:#f92672">/</span> int64(<span style="color:#a6e22e">ckTol</span>)
+    <span style="color:#66d9ef">for</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">0</span>; <span style="color:#a6e22e">i</span> &lt; <span style="color:#a6e22e">ckTol</span>; <span style="color:#a6e22e">i</span><span style="color:#f92672">++</span> {
+        <span style="color:#66d9ef">var</span> (
+            <span style="color:#a6e22e">begin</span> = <span style="color:#a6e22e">partSize</span> <span style="color:#f92672">*</span> int64(<span style="color:#a6e22e">i</span>)
+            <span style="color:#a6e22e">end</span>   <span style="color:#66d9ef">int64</span>
+        )
+        <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">==</span> (<span style="color:#a6e22e">ckTol</span> <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>) {
+            <span style="color:#a6e22e">end</span> = <span style="color:#a6e22e">res</span>.<span style="color:#a6e22e">TotalSize</span> <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>
+        } <span style="color:#66d9ef">else</span> {
+            <span style="color:#a6e22e">end</span> = <span style="color:#a6e22e">begin</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">partSize</span> <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>
+        }
+        <span style="color:#a6e22e">ck</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">mdl</span>.<span style="color:#a6e22e">NewChunk</span>(<span style="color:#a6e22e">begin</span>, <span style="color:#a6e22e">end</span>)
+        <span style="color:#a6e22e">chunks</span>[<span style="color:#a6e22e">i</span>] = <span style="color:#a6e22e">ck</span>
+    }
+} <span style="color:#66d9ef">else</span> {
+    <span style="color:#a6e22e">ckTol</span> = <span style="color:#ae81ff">1</span>
+    <span style="color:#75715e">// 单连接下载
+</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">chunks</span> = make([]<span style="color:#f92672">*</span><span style="color:#a6e22e">mdl</span>.<span style="color:#a6e22e">Chunk</span>, <span style="color:#a6e22e">ckTol</span>)
+    <span style="color:#a6e22e">chunks</span>[<span style="color:#ae81ff">0</span>] = <span style="color:#a6e22e">mdl</span>.<span style="color:#a6e22e">NewChunk</span>(<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>)
+}
+</code></pre></div><p><strong>下载细节：</strong></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">fetch</span>(<span style="color:#a6e22e">ctx</span> <span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">Context</span>, <span style="color:#a6e22e">res</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">mdl</span>.<span style="color:#a6e22e">Resource</span>,
+    <span style="color:#a6e22e">file</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">os</span>.<span style="color:#a6e22e">File</span>, <span style="color:#a6e22e">chks</span> []<span style="color:#f92672">*</span><span style="color:#a6e22e">mdl</span>.<span style="color:#a6e22e">Chunk</span>, <span style="color:#a6e22e">c</span> <span style="color:#66d9ef">int</span>, <span style="color:#a6e22e">doneCh</span> <span style="color:#66d9ef">chan</span> <span style="color:#66d9ef">error</span>) {
+    <span style="color:#75715e">// 使用errgroup捕获异常并通知外部doneCh通道
+</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">eg</span>, <span style="color:#a6e22e">_</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">errgroup</span>.<span style="color:#a6e22e">WithContext</span>(<span style="color:#a6e22e">ctx</span>)
+    <span style="color:#66d9ef">for</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">0</span>; <span style="color:#a6e22e">i</span> &lt; <span style="color:#a6e22e">c</span>; <span style="color:#a6e22e">i</span><span style="color:#f92672">++</span> {
+        <span style="color:#75715e">// 注意闭包写法
+</span><span style="color:#75715e"></span>        <span style="color:#a6e22e">i</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">i</span>
+        <span style="color:#a6e22e">eg</span>.<span style="color:#a6e22e">Go</span>(<span style="color:#66d9ef">func</span>() <span style="color:#66d9ef">error</span> {
+            <span style="color:#75715e">// 并发下载
+</span><span style="color:#75715e"></span>            <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">fetchChunk</span>(<span style="color:#a6e22e">ctx</span>, <span style="color:#a6e22e">res</span>, <span style="color:#a6e22e">file</span>, <span style="color:#a6e22e">i</span>, <span style="color:#a6e22e">chks</span>)
+        })
+    }
+  
+    <span style="color:#66d9ef">go</span> <span style="color:#66d9ef">func</span>() {
+        <span style="color:#75715e">// error from errgroup
+</span><span style="color:#75715e"></span>        <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">eg</span>.<span style="color:#a6e22e">Wait</span>()
+        <span style="color:#75715e">// 关闭文件
+</span><span style="color:#75715e"></span>        <span style="color:#a6e22e">file</span>.<span style="color:#a6e22e">Close</span>()
+        <span style="color:#75715e">// 接收fetchChunk()内部状态
+</span><span style="color:#75715e"></span>        <span style="color:#a6e22e">doneCh</span> <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">err</span>
+    }()
+    <span style="color:#66d9ef">return</span>
+}
+  
+<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">fetchChunk</span>(<span style="color:#a6e22e">ctx</span> <span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">Context</span>, <span style="color:#a6e22e">res</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">mdl</span>.<span style="color:#a6e22e">Resource</span>, <span style="color:#a6e22e">file</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">os</span>.<span style="color:#a6e22e">File</span>, <span style="color:#a6e22e">index</span> <span style="color:#66d9ef">int</span>, <span style="color:#a6e22e">chks</span> []<span style="color:#f92672">*</span><span style="color:#a6e22e">mdl</span>.<span style="color:#a6e22e">Chunk</span>) (<span style="color:#a6e22e">err</span> <span style="color:#66d9ef">error</span>) {
+    <span style="color:#a6e22e">ck</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">chks</span>[<span style="color:#a6e22e">index</span>]
+    <span style="color:#a6e22e">req</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">buildReq</span>(<span style="color:#a6e22e">ctx</span>, <span style="color:#a6e22e">DOWNLOAD_URL</span>)
+    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+        <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">err</span>
+    }
+    <span style="color:#66d9ef">var</span> (
+        <span style="color:#a6e22e">client</span> = <span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">DefaultClient</span>
+        <span style="color:#a6e22e">buf</span>    = make([]<span style="color:#66d9ef">byte</span>, <span style="color:#ae81ff">8192</span>)
+    )
+    <span style="color:#75715e">/**************重试区间开始**************/</span>
+    <span style="color:#75715e">// 根据是否分块下载设置header
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">//	- 根据当前chunk设置文件区间到header
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">//	- 判断请求返回status
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">//		- 失败: 少于5次则做重试
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">//		- 成功:
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">//				根据offset, 把buf写入文件
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">//				- 成功: return, 通知外部
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">//				- 失败: 重试少于5次, 返回重试
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">for</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">0</span>; <span style="color:#a6e22e">i</span> &lt; <span style="color:#a6e22e">RETRY_COUNT</span>; <span style="color:#a6e22e">i</span><span style="color:#f92672">++</span> {
+        <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">resp</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">Response</span>
+        <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">res</span>.<span style="color:#a6e22e">Range</span> {
+            <span style="color:#a6e22e">req</span>.<span style="color:#a6e22e">Header</span>.<span style="color:#a6e22e">Set</span>(<span style="color:#a6e22e">mdl</span>.<span style="color:#a6e22e">HttpHeaderRange</span>,
+                <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Sprintf</span>(<span style="color:#a6e22e">mdl</span>.<span style="color:#a6e22e">HttpHeaderRangeFormat</span>, <span style="color:#a6e22e">chks</span>[<span style="color:#a6e22e">index</span>].<span style="color:#a6e22e">Begin</span><span style="color:#f92672">+</span><span style="color:#a6e22e">ck</span>.<span style="color:#a6e22e">Downloaded</span>, <span style="color:#a6e22e">chks</span>[<span style="color:#a6e22e">index</span>].<span style="color:#a6e22e">End</span>))
+        } <span style="color:#66d9ef">else</span> {
+            <span style="color:#75715e">// 单连接重试没有断点续传
+</span><span style="color:#75715e"></span>            <span style="color:#a6e22e">ck</span>.<span style="color:#a6e22e">Downloaded</span> = <span style="color:#ae81ff">0</span>
+        }
+  
+        <span style="color:#75715e">// 获取字节区间
+</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">func</span>() <span style="color:#66d9ef">error</span> {
+            <span style="color:#a6e22e">resp</span>, <span style="color:#a6e22e">err</span> = <span style="color:#a6e22e">client</span>.<span style="color:#a6e22e">Do</span>(<span style="color:#a6e22e">req</span>)
+            <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+                <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">err</span>
+            }
+            <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">resp</span>.<span style="color:#a6e22e">StatusCode</span> <span style="color:#f92672">!=</span> <span style="color:#a6e22e">mdl</span>.<span style="color:#a6e22e">HttpCodeOK</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#a6e22e">resp</span>.<span style="color:#a6e22e">StatusCode</span> <span style="color:#f92672">!=</span> <span style="color:#a6e22e">mdl</span>.<span style="color:#a6e22e">HttpCodePartialContent</span> {
+                <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">errors</span>.<span style="color:#a6e22e">New</span>(<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Sprintf</span>(<span style="color:#e6db74">&#34;%d,%s&#34;</span>, <span style="color:#a6e22e">resp</span>.<span style="color:#a6e22e">StatusCode</span>, <span style="color:#a6e22e">resp</span>.<span style="color:#a6e22e">Status</span>))
+            }
+            <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>
+        }(); <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+            <span style="color:#66d9ef">continue</span>
+        }
+  
+        <span style="color:#75715e">// 从body提取buf写入文件, 重置重试标识
+</span><span style="color:#75715e"></span>        <span style="color:#a6e22e">i</span> = <span style="color:#ae81ff">0</span>
+        <span style="color:#a6e22e">retry</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">false</span>
+        <span style="color:#a6e22e">retry</span>, <span style="color:#a6e22e">err</span> = <span style="color:#66d9ef">func</span>() (<span style="color:#66d9ef">bool</span>, <span style="color:#66d9ef">error</span>) {
+            <span style="color:#66d9ef">defer</span> <span style="color:#a6e22e">resp</span>.<span style="color:#a6e22e">Body</span>.<span style="color:#a6e22e">Close</span>()
+            <span style="color:#66d9ef">for</span> {
+                <span style="color:#a6e22e">n</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">resp</span>.<span style="color:#a6e22e">Body</span>.<span style="color:#a6e22e">Read</span>(<span style="color:#a6e22e">buf</span>)
+                <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">n</span> &gt; <span style="color:#ae81ff">0</span> {
+                    <span style="color:#75715e">// 每次写入从已下载位置开始写，保证字节顺序
+</span><span style="color:#75715e"></span>                    <span style="color:#a6e22e">_</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">file</span>.<span style="color:#a6e22e">WriteAt</span>(<span style="color:#a6e22e">buf</span>[:<span style="color:#a6e22e">n</span>], <span style="color:#a6e22e">ck</span>.<span style="color:#a6e22e">Begin</span><span style="color:#f92672">+</span><span style="color:#a6e22e">ck</span>.<span style="color:#a6e22e">Downloaded</span>)
+                    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+                        <span style="color:#75715e">// 文件出错不重试
+</span><span style="color:#75715e"></span>                        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">false</span>, <span style="color:#a6e22e">err</span>
+                    }
+                    <span style="color:#75715e">// 记录已下载, 用于断点续传
+</span><span style="color:#75715e"></span>                    <span style="color:#a6e22e">ck</span>.<span style="color:#a6e22e">Downloaded</span> <span style="color:#f92672">+=</span> int64(<span style="color:#a6e22e">n</span>)
+                }
+                <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+                    <span style="color:#75715e">// err from read
+</span><span style="color:#75715e"></span>                    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#a6e22e">io</span>.<span style="color:#a6e22e">EOF</span> {
+                        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">true</span>, <span style="color:#a6e22e">err</span>
+                    }
+                    <span style="color:#66d9ef">break</span>
+                }
+            }
+            <span style="color:#75715e">// success exit
+</span><span style="color:#75715e"></span>            <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">false</span>, <span style="color:#66d9ef">nil</span>
+        }()
+        <span style="color:#66d9ef">if</span> !<span style="color:#a6e22e">retry</span> {
+            <span style="color:#66d9ef">break</span>
+        }
+    }
+    <span style="color:#75715e">/**************重试区间结束**************/</span>
+  
+    <span style="color:#75715e">// 通知外部
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">return</span>
+}
+  
+</code></pre></div><p>其实代码逻辑相对简单，只是加多了错误重试所以读起来有点绕，关键点在于<code>ck.Downloaded</code>字段的维护更新，无论是正常下载还是失败重试，都需要严格保证<code>ck.Downloaded</code>当前值的准确性。</p>
 </li>
 </ul>
 <h2 id="代码分析">代码分析</h2>
@@ -653,8 +631,6 @@ errGroup通常伴随一个errCtx上下文出现，用于通知同一个组内的
 <strong>monkeyWie/gopeed-core</strong><br>
 <a href="https://github.com/monkeyWie/gopeed-core">https://github.com/monkeyWie/gopeed-core</a></p>
               
-
-
             </div>
           </div>
           <div id="post-footer" class="post-footer main-content-wrap">
@@ -665,149 +641,147 @@ errGroup通常伴随一个errCtx上下文出现，用于通知同一个组内的
                   <div class="post-footer-tags">
                     <span class="text-color-light text-small">标签</span><br/>
                     
-  <a class="tag tag--primary tag--small" href="https://pixeldin.github.io/zh/tags/%E6%96%87%E4%BB%B6%E8%AF%BB%E5%86%99/">文件读写</a>
+  <a class="tag tag--primary tag--small" href="/zh/tags/%E6%96%87%E4%BB%B6%E8%AF%BB%E5%86%99/">文件读写</a>
 
-  <a class="tag tag--primary tag--small" href="https://pixeldin.github.io/zh/tags/http-header/">HTTP header</a>
+  <a class="tag tag--primary tag--small" href="/zh/tags/http-header/">HTTP header</a>
 
-  <a class="tag tag--primary tag--small" href="https://pixeldin.github.io/zh/tags/errgroup/">errgroup</a>
+  <a class="tag tag--primary tag--small" href="/zh/tags/errgroup/">errgroup</a>
 
                   </div>
                 
               
             
-            
-<div class="post-actions-wrap">
-  <nav >
-    <ul class="post-actions post-action-nav">
+            <div class="post-actions-wrap">
+  
+      <nav >
+        <ul class="post-actions post-action-nav">
+          
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="/zh/2021/10/%E8%81%8A%E4%B8%80%E8%81%8Ago%E7%BD%91%E7%BB%9C%E6%A1%86%E6%9E%B6gin%E4%B9%8B%E5%A6%82%E4%BD%95%E5%AE%9A%E5%88%B6%E9%80%9A%E7%94%A8%E6%8B%A6%E6%88%AA%E5%99%A8/" data-tooltip="聊一聊Go网络框架Gin之如何定制通用拦截器">
+              
+                  <i class="fa fa-angle-left"></i>
+                  <span class="hide-xs hide-sm text-small icon-ml">下一篇</span>
+                </a>
+            </li>
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="/zh/2021/05/%E8%81%8A%E4%B8%80%E8%81%8Ago%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B%E4%BA%8C-tcp%E8%BF%9E%E6%8E%A5%E7%AE%A1%E7%90%86/" data-tooltip="聊一聊Go网络编程(二)--TCP连接管理">
+              
+                  <span class="hide-xs hide-sm text-small icon-mr">上一篇</span>
+                  <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+          
+        </ul>
+      </nav>
+    <ul class="post-actions post-action-share" >
       
-        <li class="post-action">
-          
-            <a class="post-action-btn btn btn--default tooltip--top" href="https://pixeldin.github.io/zh/2021/10/%E8%81%8A%E4%B8%80%E8%81%8Ago%E7%BD%91%E7%BB%9C%E6%A1%86%E6%9E%B6gin%E4%B9%8B%E5%A6%82%E4%BD%95%E5%AE%9A%E5%88%B6%E9%80%9A%E7%94%A8%E6%8B%A6%E6%88%AA%E5%99%A8/" data-tooltip="聊一聊Go网络框架Gin之如何定制通用拦截器" aria-label="后一篇: 聊一聊Go网络框架Gin之如何定制通用拦截器">
-          
-              <i class="fa fa-angle-left"></i>
-              <span class="hide-xs hide-sm text-small icon-ml">后一篇</span>
-            </a>
+        <li class="post-action hide-lg hide-md hide-sm">
+          <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
+            <i class="fa fa-share-alt"></i>
+          </a>
         </li>
-        <li class="post-action">
-          
-            <a class="post-action-btn btn btn--default tooltip--top" href="https://pixeldin.github.io/zh/2021/05/%E8%81%8A%E4%B8%80%E8%81%8Ago%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B%E4%BA%8C--tcp%E8%BF%9E%E6%8E%A5%E7%AE%A1%E7%90%86/" data-tooltip="聊一聊Go网络编程(二)--TCP连接管理" aria-label="前一篇: 聊一聊Go网络编程(二)--TCP连接管理">
-          
-              <span class="hide-xs hide-sm text-small icon-mr">前一篇</span>
-              <i class="fa fa-angle-right"></i>
-            </a>
-        </li>
+        
       
+      
+      <li class="post-action">
+        
+          <a class="post-action-btn btn btn--default" href="#">
+        
+          <i class="fa fa-list"></i>
+        </a>
+      </li>
     </ul>
-  </nav>
-<ul class="post-actions post-action-share" >
   
-    <li class="post-action hide-lg hide-md hide-sm">
-      <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions" aria-label="分享这个帖子">
-        <i class="fa fa-share-alt" aria-hidden="true"></i>
-      </a>
-    </li>
-    
-  
-  
-  <li class="post-action">
-    
-      <a class="post-action-btn btn btn--default" href="#top" aria-label="回到顶部">
-      <i class="fa fa-arrow-up" aria-hidden="true"></i>
-    
-    </a>
-  </li>
-</ul>
 </div>
 
-
             
-  
-
-
+              
+            
           </div>
         </article>
         <footer id="footer" class="main-content-wrap">
   <span class="copyrights">
-    &copy; 2023 <a href="https://github.com/pixeldin">pixeldin</a>. All Rights Reserved
+    &copy; 2024 <a href="https://github.com/pixeldin">pixeldin</a>. All Rights Reserved
   </span>
 </footer>
 
       </div>
-      <div id="bottom-bar" class="post-bottom-bar" data-behavior="1">
+      <div id="bottom-bar" class="post-bottom-bar" data-behavior="5">
+        <div class="post-actions-wrap">
+  
+      <nav >
+        <ul class="post-actions post-action-nav">
+          
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="/zh/2021/10/%E8%81%8A%E4%B8%80%E8%81%8Ago%E7%BD%91%E7%BB%9C%E6%A1%86%E6%9E%B6gin%E4%B9%8B%E5%A6%82%E4%BD%95%E5%AE%9A%E5%88%B6%E9%80%9A%E7%94%A8%E6%8B%A6%E6%88%AA%E5%99%A8/" data-tooltip="聊一聊Go网络框架Gin之如何定制通用拦截器">
+              
+                  <i class="fa fa-angle-left"></i>
+                  <span class="hide-xs hide-sm text-small icon-ml">下一篇</span>
+                </a>
+            </li>
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="/zh/2021/05/%E8%81%8A%E4%B8%80%E8%81%8Ago%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B%E4%BA%8C-tcp%E8%BF%9E%E6%8E%A5%E7%AE%A1%E7%90%86/" data-tooltip="聊一聊Go网络编程(二)--TCP连接管理">
+              
+                  <span class="hide-xs hide-sm text-small icon-mr">上一篇</span>
+                  <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+          
+        </ul>
+      </nav>
+    <ul class="post-actions post-action-share" >
+      
+        <li class="post-action hide-lg hide-md hide-sm">
+          <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
+            <i class="fa fa-share-alt"></i>
+          </a>
+        </li>
         
-<div class="post-actions-wrap">
-  <nav >
-    <ul class="post-actions post-action-nav">
       
-        <li class="post-action">
-          
-            <a class="post-action-btn btn btn--default tooltip--top" href="https://pixeldin.github.io/zh/2021/10/%E8%81%8A%E4%B8%80%E8%81%8Ago%E7%BD%91%E7%BB%9C%E6%A1%86%E6%9E%B6gin%E4%B9%8B%E5%A6%82%E4%BD%95%E5%AE%9A%E5%88%B6%E9%80%9A%E7%94%A8%E6%8B%A6%E6%88%AA%E5%99%A8/" data-tooltip="聊一聊Go网络框架Gin之如何定制通用拦截器" aria-label="后一篇: 聊一聊Go网络框架Gin之如何定制通用拦截器">
-          
-              <i class="fa fa-angle-left"></i>
-              <span class="hide-xs hide-sm text-small icon-ml">后一篇</span>
-            </a>
-        </li>
-        <li class="post-action">
-          
-            <a class="post-action-btn btn btn--default tooltip--top" href="https://pixeldin.github.io/zh/2021/05/%E8%81%8A%E4%B8%80%E8%81%8Ago%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B%E4%BA%8C--tcp%E8%BF%9E%E6%8E%A5%E7%AE%A1%E7%90%86/" data-tooltip="聊一聊Go网络编程(二)--TCP连接管理" aria-label="前一篇: 聊一聊Go网络编程(二)--TCP连接管理">
-          
-              <span class="hide-xs hide-sm text-small icon-mr">前一篇</span>
-              <i class="fa fa-angle-right"></i>
-            </a>
-        </li>
       
+      <li class="post-action">
+        
+          <a class="post-action-btn btn btn--default" href="#">
+        
+          <i class="fa fa-list"></i>
+        </a>
+      </li>
     </ul>
-  </nav>
-<ul class="post-actions post-action-share" >
   
-    <li class="post-action hide-lg hide-md hide-sm">
-      <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions" aria-label="分享这个帖子">
-        <i class="fa fa-share-alt" aria-hidden="true"></i>
-      </a>
-    </li>
-    
-  
-  
-  <li class="post-action">
-    
-      <a class="post-action-btn btn btn--default" href="#top" aria-label="回到顶部">
-      <i class="fa fa-arrow-up" aria-hidden="true"></i>
-    
-    </a>
-  </li>
-</ul>
 </div>
 
-
       </div>
-      
-
+      <div id="share-options-bar" class="share-options-bar" data-behavior="5">
+  <i id="btn-close-shareoptions" class="fa fa-close"></i>
+  <ul class="share-options">
+    
+  </ul>
+</div>
+<div id="share-options-mask" class="share-options-mask"></div>
     </div>
     
     <div id="about">
   <div id="about-card">
     <div id="about-btn-close">
-      <i class="fa fa-times"></i>
+      <i class="fa fa-remove"></i>
     </div>
     
       <img id="about-card-picture" src="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/pig.jpg" alt="作者的图片" />
     
-    <h4 id="about-card-name">@Pixelpig</h4>
+    <h4 id="about-card-name">pixelpig</h4>
     
-      <div id="about-card-bio">Keep it simple, so as this bio <strong>:）</strong></div>
+      <div id="about-card-bio">With enthusiasm for open source and I am looking forward to be a better developer. Stay hungry, stay foolish <strong>:）</strong></div>
     
-    
-      <div id="about-card-job">
-        <i class="fa fa-briefcase"></i>
-        <br/>
-        Software Developer
-      </div>
     
     
       <div id="about-card-location">
-        <i class="fa fa-map-marker-alt"></i>
+        <i class="fa fa-map-marker"></i>
         <br/>
-        GuangDong - China
+        GuangDong - CHINA
       </div>
     
   </div>
@@ -822,16 +796,30 @@ errGroup通常伴随一个errCtx上下文出现，用于通知同一个组内的
 
 
     
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.1.0/highlight.min.js" integrity="sha512-z+/WWfyD5tccCukM4VvONpEtLmbAm5LDu7eKiyMQJ9m7OfPEDL7gENyDRL3Yfe8XAuGsS2fS4xSMnl6d30kqGQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js" integrity="sha256-/BfiIkHlHoVihZdc6TFuj7MmJ0TWcWsMXkeDFwhi0zw=" crossorigin="anonymous"></script>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js" integrity="sha512-uURl+ZXMBrF4AwGaWmEetzrd+J5/8NRkWAvJx5sbPSSuOb0bZLqf+tOzniObO00BjHa/dD7gub9oCGMLPQHtQA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
-
-<script src="https://pixeldin.github.io/js/script-d9gfx1pdvbfdgoahypizomgoamlbumvk1ugdifqa59ynqvdh8wfsinmt5oj.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.7/js/jquery.fancybox.min.js" integrity="sha256-GEAnjcTqVP+vBp3SSc8bEDQqvWAZMiHyUSIorrWwH50=" crossorigin="anonymous"></script>
 
 
+<script src="/js/script-pcw6v3xilnxydl1vddzazdverrnn9ctynvnxgwho987mfyqkuylcb1nlt.min.js"></script>
+
+
+<script lang="javascript">
+window.onload = updateMinWidth;
+window.onresize = updateMinWidth;
+document.getElementById("sidebar").addEventListener("transitionend", updateMinWidth);
+function updateMinWidth() {
+  var sidebar = document.getElementById("sidebar");
+  var main = document.getElementById("main");
+  main.style.minWidth = "";
+  var w1 = getComputedStyle(main).getPropertyValue("min-width");
+  var w2 = getComputedStyle(sidebar).getPropertyValue("width");
+  var w3 = getComputedStyle(sidebar).getPropertyValue("left");
+  main.style.minWidth = `calc(${w1} - ${w2} - ${w3})`;
+}
+</script>
 
 <script>
 $(document).ready(function() {
@@ -844,6 +832,11 @@ $(document).ready(function() {
   });
 });
 </script>
+
+
+  
+    
+  
 
 
 

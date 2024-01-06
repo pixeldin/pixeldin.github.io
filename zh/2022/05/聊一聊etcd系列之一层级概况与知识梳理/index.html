@@ -2,31 +2,11 @@
 <html lang="zh-cn">
   <head>
     
-    <script type="application/ld+json">
-
-{  
-  "@context":"http://schema.org",
-  "@type":"Website",
-  "@id":"https:\/\/pixeldin.github.io\/",
-  "author": {
-    "@type": "Person",
-    "name": "@Pixelpig",
-    
-    "image": "https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/pig.jpg"
-    
-  },
-  "name":"pixelpig.tech",
-  "description":"\u003cp\u003eetcd在微服务领域使用场景十分普遍，经常用于作为一个注册中心，提供服务注册与发现。本系列将聊一聊etcd解决了什么问题、它是如何解决的角度来逐步分析。\u003c\/p\u003e",
-  "url":"https:\/\/pixeldin.github.io\/zh\/2022\/05\/%E8%81%8A%E4%B8%80%E8%81%8Aetcd%E7%B3%BB%E5%88%97%E4%B9%8B%E4%B8%80%E5%B1%82%E7%BA%A7%E6%A6%82%E5%86%B5%E4%B8%8E%E7%9F%A5%E8%AF%86%E6%A2%B3%E7%90%86\/",
-  "keywords":"[]"
-}
-
-</script>
     <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="generator" content="Hugo 0.111.3 with theme Tranquilpeak 0.5.3-BETA">
-<meta name="author" content="@Pixelpig">
+<meta name="generator" content="Hugo 0.80.0 with theme Tranquilpeak 0.4.8-BETA">
+<meta name="author" content="pixelpig">
 <meta name="keywords" content="">
 <meta name="description" content="etcd在微服务领域使用场景十分普遍，经常用于作为一个注册中心，提供服务注册与发现。本系列将聊一聊etcd解决了什么问题、它是如何解决的角度来逐步分析。">
 
@@ -35,9 +15,9 @@
 <meta property="og:type" content="article">
 <meta property="og:title" content="聊一聊etcd系列之一：层级概况与知识梳理">
 <meta name="twitter:title" content="聊一聊etcd系列之一：层级概况与知识梳理">
-<meta property="og:url" content="https://pixeldin.github.io/zh/2022/05/%E8%81%8A%E4%B8%80%E8%81%8Aetcd%E7%B3%BB%E5%88%97%E4%B9%8B%E4%B8%80%E5%B1%82%E7%BA%A7%E6%A6%82%E5%86%B5%E4%B8%8E%E7%9F%A5%E8%AF%86%E6%A2%B3%E7%90%86/">
-<meta property="twitter:url" content="https://pixeldin.github.io/zh/2022/05/%E8%81%8A%E4%B8%80%E8%81%8Aetcd%E7%B3%BB%E5%88%97%E4%B9%8B%E4%B8%80%E5%B1%82%E7%BA%A7%E6%A6%82%E5%86%B5%E4%B8%8E%E7%9F%A5%E8%AF%86%E6%A2%B3%E7%90%86/">
-<meta property="og:site_name" content="pixelpig.tech">
+<meta property="og:url" content="/zh/2022/05/%E8%81%8A%E4%B8%80%E8%81%8Aetcd%E7%B3%BB%E5%88%97%E4%B9%8B%E4%B8%80%E5%B1%82%E7%BA%A7%E6%A6%82%E5%86%B5%E4%B8%8E%E7%9F%A5%E8%AF%86%E6%A2%B3%E7%90%86/">
+<meta property="twitter:url" content="/zh/2022/05/%E8%81%8A%E4%B8%80%E8%81%8Aetcd%E7%B3%BB%E5%88%97%E4%B9%8B%E4%B8%80%E5%B1%82%E7%BA%A7%E6%A6%82%E5%86%B5%E4%B8%8E%E7%9F%A5%E8%AF%86%E6%A2%B3%E7%90%86/">
+<meta property="og:site_name" content="pixelpig.space">
 <meta property="og:description" content="etcd在微服务领域使用场景十分普遍，经常用于作为一个注册中心，提供服务注册与发现。本系列将聊一聊etcd解决了什么问题、它是如何解决的角度来逐步分析。">
 <meta name="twitter:description" content="etcd在微服务领域使用场景十分普遍，经常用于作为一个注册中心，提供服务注册与发现。本系列将聊一聊etcd解决了什么问题、它是如何解决的角度来逐步分析。">
 <meta property="og:locale" content="zh">
@@ -79,15 +59,15 @@
 
 
 
-  <meta property="og:image" content="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/pig.jpg">
-  <meta property="twitter:image" content="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/pig.jpg">
-
-
-
-
-
   <meta property="og:image" content="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/blog/etcd/raft/s0-%E8%84%91%E5%9B%BE.png">
   <meta property="twitter:image" content="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/blog/etcd/raft/s0-%E8%84%91%E5%9B%BE.png">
+
+
+
+
+
+  <meta property="og:image" content="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/pig.jpg">
+  <meta property="twitter:image" content="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/pig.jpg">
 
 
     <title>聊一聊etcd系列之一：层级概况与知识梳理</title>
@@ -97,15 +77,15 @@
 
     
 
-    <link rel="canonical" href="https://pixeldin.github.io/zh/2022/05/%E8%81%8A%E4%B8%80%E8%81%8Aetcd%E7%B3%BB%E5%88%97%E4%B9%8B%E4%B8%80%E5%B1%82%E7%BA%A7%E6%A6%82%E5%86%B5%E4%B8%8E%E7%9F%A5%E8%AF%86%E6%A2%B3%E7%90%86/">
+    <link rel="canonical" href="/zh/2022/05/%E8%81%8A%E4%B8%80%E8%81%8Aetcd%E7%B3%BB%E5%88%97%E4%B9%8B%E4%B8%80%E5%B1%82%E7%BA%A7%E6%A6%82%E5%86%B5%E4%B8%8E%E7%9F%A5%E8%AF%86%E6%A2%B3%E7%90%86/">
 
     
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" integrity="sha512-H9jrZiiopUdsLpg94A333EfumgUBpO9MdbxStdeITo+KEIMaNfHNvwyjjDJb+ERPaRS6DpyRlKbvPUasNItRyw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/jquery.fancybox.min.css" integrity="sha256-vuXZ9LGmmwtjqFX1F+EKin1ThZMub58gKULUyf0qECk=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/helpers/jquery.fancybox-thumbs.min.css" integrity="sha256-SEa4XYAHihTcEP1f5gARTB2K26Uk8PsndQYHQC1f4jU=" crossorigin="anonymous" />
     
     
-    
-    <link rel="stylesheet" href="https://pixeldin.github.io/css/style-fneuerdunt9vf6vafpewt2nttopqa9hdugoae6mfs7phtuibtq6qjxkds96.min.css" />
+    <link rel="stylesheet" href="/css/style-twzjdbqhmnnacqs0pwwdzcdbt8yhv8giawvjqjmyfoqnvazl0dalmnhdkvp7.min.css" />
     
     
 
@@ -117,15 +97,15 @@
 
   <body>
     <div id="blog">
-      <header id="header" data-behavior="1">
+      <header id="header" data-behavior="5">
   <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
   <div class="header-title">
-    <a class="header-title-link" href="https://pixeldin.github.io/zh/" aria-label="去首页">pixelpig.tech</a>
+    <a class="header-title-link" href="/zh/">pixelpig.space</a>
   </div>
   
     
       <a class="header-right-picture "
-         href="https://pixeldin.github.io/#about" aria-label="打开链接: /#about">
+         href="/#about">
     
     
     
@@ -137,16 +117,16 @@
   
 </header>
 
-      <nav id="sidebar" data-behavior="1">
+      <nav id="sidebar" data-behavior="5">
   <div class="sidebar-container">
     
       <div class="sidebar-profile">
-        <a href="https://pixeldin.github.io/#about" aria-label="阅读有关作者的更多信息">
+        <a href="/#about">
           <img class="sidebar-profile-picture" src="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/pig.jpg" alt="作者的图片" />
         </a>
-        <h4 class="sidebar-profile-name">@Pixelpig</h4>
+        <h4 class="sidebar-profile-name">pixelpig</h4>
         
-          <h5 class="sidebar-profile-bio">Keep it simple, so as this bio <strong>:）</strong></h5>
+          <h5 class="sidebar-profile-bio">With enthusiasm for open source and I am looking forward to be a better developer. Stay hungry, stay foolish <strong>:）</strong></h5>
         
       </div>
     
@@ -154,7 +134,7 @@
       
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="https://pixeldin.github.io/en" title="English">
+      <a class="sidebar-button-link " href="/en">
     
       <i class="sidebar-button-icon fa fa-lg fa-language"></i>
       
@@ -164,7 +144,7 @@
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="https://pixeldin.github.io/zh/" title="Home">
+      <a class="sidebar-button-link " href="/zh/">
     
       <i class="sidebar-button-icon fa fa-lg fa-home"></i>
       
@@ -174,7 +154,7 @@
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="https://pixeldin.github.io/zh/categories" title="Categories">
+      <a class="sidebar-button-link " href="/zh/categories">
     
       <i class="sidebar-button-icon fa fa-lg fa-bookmark"></i>
       
@@ -184,7 +164,7 @@
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="https://pixeldin.github.io/zh/tags" title="Tags">
+      <a class="sidebar-button-link " href="/zh/tags">
     
       <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
       
@@ -194,7 +174,7 @@
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="https://pixeldin.github.io/zh/archives" title="Archives">
+      <a class="sidebar-button-link " href="/zh/archives">
     
       <i class="sidebar-button-icon fa fa-lg fa-archive"></i>
       
@@ -204,9 +184,9 @@
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="https://pixeldin.github.io/zh/#about" title="About">
+      <a class="sidebar-button-link " href="/zh/#about">
     
-      <i class="sidebar-button-icon fa fa-lg fa-question-circle"></i>
+      <i class="sidebar-button-icon fa fa-lg fa-question"></i>
       
       <span class="sidebar-button-desc">关于我</span>
     </a>
@@ -214,25 +194,22 @@
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="https://github.com/pixeldin" target="_blank" rel="noopener" title="pixeldin">
+      <a class="sidebar-button-link " href="https://github.com/pixeldin" target="_blank" rel="noopener">
     
-      <i class="sidebar-button-icon fab fa-lg fa-github-alt"></i>
+      <i class="sidebar-button-icon fa fa-lg fa-github"></i>
       
-      <span class="sidebar-button-desc">github</span>
+      <span class="sidebar-button-desc">pixeldin</span>
     </a>
   </li>
 
 
-
     </ul>
     <ul class="sidebar-buttons">
       
 
-
     </ul>
     <ul class="sidebar-buttons">
       
-
 
     </ul>
   </div>
@@ -240,23 +217,23 @@
 
       
 
-      <div id="main" data-behavior="1"
+      <div id="main" data-behavior="5"
         class="
                hasCoverMetaIn
                ">
-        <article class="post" id="top">
+        <article class="post" itemscope itemType="http://schema.org/BlogPosting">
           
           
             <div class="post-header main-content-wrap text-center">
   
-    <h1 class="post-title">
+    <h1 class="post-title" itemprop="headline">
       聊一聊etcd系列之一：层级概况与知识梳理
     </h1>
   
   
   <div class="postShorten-meta post-meta">
     
-      <time datetime="2022-05-17T00:00:00Z">
+      <time itemprop="datePublished" datetime="2022-05-17T00:00:00Z">
         
   五月 17, 2022
 
@@ -267,9 +244,9 @@
   
     <span>发布在</span>
     
-      <a class="category-link" href="https://pixeldin.github.io/zh/categories/go">Go</a>, 
+      <a class="category-link" href="/zh/categories/go">Go</a>, 
     
-      <a class="category-link" href="https://pixeldin.github.io/zh/categories/%e5%90%8e%e7%ab%af">后端</a>
+      <a class="category-link" href="/zh/categories/%e5%90%8e%e7%ab%af">后端</a>
     
   
 
@@ -277,7 +254,7 @@
 
 </div>
           
-          <div class="post-content markdown">
+          <div class="post-content markdown" itemprop="articleBody">
             <div class="main-content-wrap">
               <p>etcd在微服务领域使用场景十分普遍，经常用于作为一个注册中心，提供服务注册与发现。本系列将聊一聊etcd解决了什么问题、它是如何解决的角度来逐步分析。</p>
 <p><img src="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/blog/etcd/raft/etcd-tree.png" alt="etcd-cover-tree"></p>
@@ -321,8 +298,6 @@
 <a href="https://raft.github.io/raft.pdf">https://raft.github.io/raft.pdf</a></li>
 </ul>
               
-
-
             </div>
           </div>
           <div id="post-footer" class="post-footer main-content-wrap">
@@ -333,149 +308,147 @@
                   <div class="post-footer-tags">
                     <span class="text-color-light text-small">标签</span><br/>
                     
-  <a class="tag tag--primary tag--small" href="https://pixeldin.github.io/zh/tags/raft/">raft</a>
+  <a class="tag tag--primary tag--small" href="/zh/tags/raft/">raft</a>
 
-  <a class="tag tag--primary tag--small" href="https://pixeldin.github.io/zh/tags/etcd/">etcd</a>
+  <a class="tag tag--primary tag--small" href="/zh/tags/etcd/">etcd</a>
 
-  <a class="tag tag--primary tag--small" href="https://pixeldin.github.io/zh/tags/%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F/">分布式系统</a>
+  <a class="tag tag--primary tag--small" href="/zh/tags/%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F/">分布式系统</a>
 
                   </div>
                 
               
             
-            
-<div class="post-actions-wrap">
-  <nav >
-    <ul class="post-actions post-action-nav">
+            <div class="post-actions-wrap">
+  
+      <nav >
+        <ul class="post-actions post-action-nav">
+          
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="/zh/2022/06/%E8%81%8A%E4%B8%80%E8%81%8Aetcd%E7%B3%BB%E5%88%97%E4%B9%8B%E4%BA%8Craft%E4%B8%80%E8%87%B4%E6%80%A7%E5%8D%8F%E8%AE%AE/" data-tooltip="聊一聊etcd系列之二：raft一致性协议">
+              
+                  <i class="fa fa-angle-left"></i>
+                  <span class="hide-xs hide-sm text-small icon-ml">下一篇</span>
+                </a>
+            </li>
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="/zh/2022/04/%E8%81%8A%E4%B8%80%E8%81%8Ago%E7%9A%84%E5%8E%9F%E7%94%9F%E9%AB%98%E6%80%A7%E8%83%BD%E5%AF%B9%E8%B1%A1%E5%A4%8D%E7%94%A8%E6%B1%A0sync.pool/" data-tooltip="聊一聊Go的原生高性能对象复用池sync.Pool">
+              
+                  <span class="hide-xs hide-sm text-small icon-mr">上一篇</span>
+                  <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+          
+        </ul>
+      </nav>
+    <ul class="post-actions post-action-share" >
       
-        <li class="post-action">
-          
-            <a class="post-action-btn btn btn--default tooltip--top" href="https://pixeldin.github.io/zh/2022/06/%E8%81%8A%E4%B8%80%E8%81%8Aetcd%E7%B3%BB%E5%88%97%E4%B9%8B%E4%BA%8Craft%E4%B8%80%E8%87%B4%E6%80%A7%E5%8D%8F%E8%AE%AE/" data-tooltip="聊一聊etcd系列之二：raft一致性协议" aria-label="后一篇: 聊一聊etcd系列之二：raft一致性协议">
-          
-              <i class="fa fa-angle-left"></i>
-              <span class="hide-xs hide-sm text-small icon-ml">后一篇</span>
-            </a>
+        <li class="post-action hide-lg hide-md hide-sm">
+          <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
+            <i class="fa fa-share-alt"></i>
+          </a>
         </li>
-        <li class="post-action">
-          
-            <a class="post-action-btn btn btn--default tooltip--top" href="https://pixeldin.github.io/zh/2022/04/%E8%81%8A%E4%B8%80%E8%81%8Ago%E7%9A%84%E5%8E%9F%E7%94%9F%E9%AB%98%E6%80%A7%E8%83%BD%E5%AF%B9%E8%B1%A1%E5%A4%8D%E7%94%A8%E6%B1%A0sync.pool/" data-tooltip="聊一聊Go的原生高性能对象复用池sync.Pool" aria-label="前一篇: 聊一聊Go的原生高性能对象复用池sync.Pool">
-          
-              <span class="hide-xs hide-sm text-small icon-mr">前一篇</span>
-              <i class="fa fa-angle-right"></i>
-            </a>
-        </li>
+        
       
+      
+      <li class="post-action">
+        
+          <a class="post-action-btn btn btn--default" href="#">
+        
+          <i class="fa fa-list"></i>
+        </a>
+      </li>
     </ul>
-  </nav>
-<ul class="post-actions post-action-share" >
   
-    <li class="post-action hide-lg hide-md hide-sm">
-      <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions" aria-label="分享这个帖子">
-        <i class="fa fa-share-alt" aria-hidden="true"></i>
-      </a>
-    </li>
-    
-  
-  
-  <li class="post-action">
-    
-      <a class="post-action-btn btn btn--default" href="#top" aria-label="回到顶部">
-      <i class="fa fa-arrow-up" aria-hidden="true"></i>
-    
-    </a>
-  </li>
-</ul>
 </div>
 
-
             
-  
-
-
+              
+            
           </div>
         </article>
         <footer id="footer" class="main-content-wrap">
   <span class="copyrights">
-    &copy; 2023 <a href="https://github.com/pixeldin">pixeldin</a>. All Rights Reserved
+    &copy; 2024 <a href="https://github.com/pixeldin">pixeldin</a>. All Rights Reserved
   </span>
 </footer>
 
       </div>
-      <div id="bottom-bar" class="post-bottom-bar" data-behavior="1">
+      <div id="bottom-bar" class="post-bottom-bar" data-behavior="5">
+        <div class="post-actions-wrap">
+  
+      <nav >
+        <ul class="post-actions post-action-nav">
+          
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="/zh/2022/06/%E8%81%8A%E4%B8%80%E8%81%8Aetcd%E7%B3%BB%E5%88%97%E4%B9%8B%E4%BA%8Craft%E4%B8%80%E8%87%B4%E6%80%A7%E5%8D%8F%E8%AE%AE/" data-tooltip="聊一聊etcd系列之二：raft一致性协议">
+              
+                  <i class="fa fa-angle-left"></i>
+                  <span class="hide-xs hide-sm text-small icon-ml">下一篇</span>
+                </a>
+            </li>
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="/zh/2022/04/%E8%81%8A%E4%B8%80%E8%81%8Ago%E7%9A%84%E5%8E%9F%E7%94%9F%E9%AB%98%E6%80%A7%E8%83%BD%E5%AF%B9%E8%B1%A1%E5%A4%8D%E7%94%A8%E6%B1%A0sync.pool/" data-tooltip="聊一聊Go的原生高性能对象复用池sync.Pool">
+              
+                  <span class="hide-xs hide-sm text-small icon-mr">上一篇</span>
+                  <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+          
+        </ul>
+      </nav>
+    <ul class="post-actions post-action-share" >
+      
+        <li class="post-action hide-lg hide-md hide-sm">
+          <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
+            <i class="fa fa-share-alt"></i>
+          </a>
+        </li>
         
-<div class="post-actions-wrap">
-  <nav >
-    <ul class="post-actions post-action-nav">
       
-        <li class="post-action">
-          
-            <a class="post-action-btn btn btn--default tooltip--top" href="https://pixeldin.github.io/zh/2022/06/%E8%81%8A%E4%B8%80%E8%81%8Aetcd%E7%B3%BB%E5%88%97%E4%B9%8B%E4%BA%8Craft%E4%B8%80%E8%87%B4%E6%80%A7%E5%8D%8F%E8%AE%AE/" data-tooltip="聊一聊etcd系列之二：raft一致性协议" aria-label="后一篇: 聊一聊etcd系列之二：raft一致性协议">
-          
-              <i class="fa fa-angle-left"></i>
-              <span class="hide-xs hide-sm text-small icon-ml">后一篇</span>
-            </a>
-        </li>
-        <li class="post-action">
-          
-            <a class="post-action-btn btn btn--default tooltip--top" href="https://pixeldin.github.io/zh/2022/04/%E8%81%8A%E4%B8%80%E8%81%8Ago%E7%9A%84%E5%8E%9F%E7%94%9F%E9%AB%98%E6%80%A7%E8%83%BD%E5%AF%B9%E8%B1%A1%E5%A4%8D%E7%94%A8%E6%B1%A0sync.pool/" data-tooltip="聊一聊Go的原生高性能对象复用池sync.Pool" aria-label="前一篇: 聊一聊Go的原生高性能对象复用池sync.Pool">
-          
-              <span class="hide-xs hide-sm text-small icon-mr">前一篇</span>
-              <i class="fa fa-angle-right"></i>
-            </a>
-        </li>
       
+      <li class="post-action">
+        
+          <a class="post-action-btn btn btn--default" href="#">
+        
+          <i class="fa fa-list"></i>
+        </a>
+      </li>
     </ul>
-  </nav>
-<ul class="post-actions post-action-share" >
   
-    <li class="post-action hide-lg hide-md hide-sm">
-      <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions" aria-label="分享这个帖子">
-        <i class="fa fa-share-alt" aria-hidden="true"></i>
-      </a>
-    </li>
-    
-  
-  
-  <li class="post-action">
-    
-      <a class="post-action-btn btn btn--default" href="#top" aria-label="回到顶部">
-      <i class="fa fa-arrow-up" aria-hidden="true"></i>
-    
-    </a>
-  </li>
-</ul>
 </div>
 
-
       </div>
-      
-
+      <div id="share-options-bar" class="share-options-bar" data-behavior="5">
+  <i id="btn-close-shareoptions" class="fa fa-close"></i>
+  <ul class="share-options">
+    
+  </ul>
+</div>
+<div id="share-options-mask" class="share-options-mask"></div>
     </div>
     
     <div id="about">
   <div id="about-card">
     <div id="about-btn-close">
-      <i class="fa fa-times"></i>
+      <i class="fa fa-remove"></i>
     </div>
     
       <img id="about-card-picture" src="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/pig.jpg" alt="作者的图片" />
     
-    <h4 id="about-card-name">@Pixelpig</h4>
+    <h4 id="about-card-name">pixelpig</h4>
     
-      <div id="about-card-bio">Keep it simple, so as this bio <strong>:）</strong></div>
+      <div id="about-card-bio">With enthusiasm for open source and I am looking forward to be a better developer. Stay hungry, stay foolish <strong>:）</strong></div>
     
-    
-      <div id="about-card-job">
-        <i class="fa fa-briefcase"></i>
-        <br/>
-        Software Developer
-      </div>
     
     
       <div id="about-card-location">
-        <i class="fa fa-map-marker-alt"></i>
+        <i class="fa fa-map-marker"></i>
         <br/>
-        GuangDong - China
+        GuangDong - CHINA
       </div>
     
   </div>
@@ -490,16 +463,30 @@
 
 
     
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.1.0/highlight.min.js" integrity="sha512-z+/WWfyD5tccCukM4VvONpEtLmbAm5LDu7eKiyMQJ9m7OfPEDL7gENyDRL3Yfe8XAuGsS2fS4xSMnl6d30kqGQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js" integrity="sha256-/BfiIkHlHoVihZdc6TFuj7MmJ0TWcWsMXkeDFwhi0zw=" crossorigin="anonymous"></script>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js" integrity="sha512-uURl+ZXMBrF4AwGaWmEetzrd+J5/8NRkWAvJx5sbPSSuOb0bZLqf+tOzniObO00BjHa/dD7gub9oCGMLPQHtQA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
-
-<script src="https://pixeldin.github.io/js/script-d9gfx1pdvbfdgoahypizomgoamlbumvk1ugdifqa59ynqvdh8wfsinmt5oj.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.7/js/jquery.fancybox.min.js" integrity="sha256-GEAnjcTqVP+vBp3SSc8bEDQqvWAZMiHyUSIorrWwH50=" crossorigin="anonymous"></script>
 
 
+<script src="/js/script-pcw6v3xilnxydl1vddzazdverrnn9ctynvnxgwho987mfyqkuylcb1nlt.min.js"></script>
+
+
+<script lang="javascript">
+window.onload = updateMinWidth;
+window.onresize = updateMinWidth;
+document.getElementById("sidebar").addEventListener("transitionend", updateMinWidth);
+function updateMinWidth() {
+  var sidebar = document.getElementById("sidebar");
+  var main = document.getElementById("main");
+  main.style.minWidth = "";
+  var w1 = getComputedStyle(main).getPropertyValue("min-width");
+  var w2 = getComputedStyle(sidebar).getPropertyValue("width");
+  var w3 = getComputedStyle(sidebar).getPropertyValue("left");
+  main.style.minWidth = `calc(${w1} - ${w2} - ${w3})`;
+}
+</script>
 
 <script>
 $(document).ready(function() {
@@ -512,6 +499,11 @@ $(document).ready(function() {
   });
 });
 </script>
+
+
+  
+    
+  
 
 
 
