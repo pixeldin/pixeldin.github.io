@@ -2,11 +2,31 @@
 <html lang="en-us">
   <head>
     
+    <script type="application/ld+json">
+
+{  
+  "@context":"http://schema.org",
+  "@type":"Website",
+  "@id":"https:\/\/pixeldin.github.io\/",
+  "author": {
+    "@type": "Person",
+    "name": "@Pixelpig",
+    
+    "image": "https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/pig.jpg"
+    
+  },
+  "name":"pixelpig.tech",
+  "description":"\u003cp\u003ePooling is frequently occurring in software field, such as connection pool\\thread pool\\routine poool etc. A pool is essentially to reuse resources.\u003c\/p\u003e",
+  "url":"https:\/\/pixeldin.github.io\/en\/2022\/04\/talk-about-go-a-high-performance-pool-for-reusing-object-sync.pool\/",
+  "keywords":"[]"
+}
+
+</script>
     <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="generator" content="Hugo 0.80.0 with theme Tranquilpeak 0.4.8-BETA">
-<meta name="author" content="pixelpig">
+<meta name="generator" content="Hugo 0.111.3 with theme Tranquilpeak 0.5.3-BETA">
+<meta name="author" content="@Pixelpig">
 <meta name="keywords" content="">
 <meta name="description" content="Pooling is frequently occurring in software field, such as connection pool\thread pool\routine poool etc. A pool is essentially to reuse resources.">
 
@@ -15,9 +35,9 @@
 <meta property="og:type" content="article">
 <meta property="og:title" content="Talk about Go: A high performance pool for reusing object - Sync.Pool">
 <meta name="twitter:title" content="Talk about Go: A high performance pool for reusing object - Sync.Pool">
-<meta property="og:url" content="/en/2022/04/talk-about-go-a-high-performance-pool-for-reusing-object-sync.pool/">
-<meta property="twitter:url" content="/en/2022/04/talk-about-go-a-high-performance-pool-for-reusing-object-sync.pool/">
-<meta property="og:site_name" content="pixelpig.space">
+<meta property="og:url" content="https://pixeldin.github.io/en/2022/04/talk-about-go-a-high-performance-pool-for-reusing-object-sync.pool/">
+<meta property="twitter:url" content="https://pixeldin.github.io/en/2022/04/talk-about-go-a-high-performance-pool-for-reusing-object-sync.pool/">
+<meta property="og:site_name" content="pixelpig.tech">
 <meta property="og:description" content="Pooling is frequently occurring in software field, such as connection pool\thread pool\routine poool etc. A pool is essentially to reuse resources.">
 <meta name="twitter:description" content="Pooling is frequently occurring in software field, such as connection pool\thread pool\routine poool etc. A pool is essentially to reuse resources.">
 <meta property="og:locale" content="en">
@@ -61,15 +81,15 @@
 
 
 
-  <meta property="og:image" content="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/blog/sync-pool/sync-pool-icon.png">
-  <meta property="twitter:image" content="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/blog/sync-pool/sync-pool-icon.png">
-
-
-
-
-
   <meta property="og:image" content="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/pig.jpg">
   <meta property="twitter:image" content="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/pig.jpg">
+
+
+
+
+
+  <meta property="og:image" content="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/blog/sync-pool/sync-pool-icon.png">
+  <meta property="twitter:image" content="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/blog/sync-pool/sync-pool-icon.png">
 
 
     <title>Talk about Go: A high performance pool for reusing object - Sync.Pool</title>
@@ -79,15 +99,15 @@
 
     
 
-    <link rel="canonical" href="/en/2022/04/talk-about-go-a-high-performance-pool-for-reusing-object-sync.pool/">
+    <link rel="canonical" href="https://pixeldin.github.io/en/2022/04/talk-about-go-a-high-performance-pool-for-reusing-object-sync.pool/">
 
     
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/jquery.fancybox.min.css" integrity="sha256-vuXZ9LGmmwtjqFX1F+EKin1ThZMub58gKULUyf0qECk=" crossorigin="anonymous" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/helpers/jquery.fancybox-thumbs.min.css" integrity="sha256-SEa4XYAHihTcEP1f5gARTB2K26Uk8PsndQYHQC1f4jU=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" integrity="sha512-H9jrZiiopUdsLpg94A333EfumgUBpO9MdbxStdeITo+KEIMaNfHNvwyjjDJb+ERPaRS6DpyRlKbvPUasNItRyw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     
     
-    <link rel="stylesheet" href="/css/style-twzjdbqhmnnacqs0pwwdzcdbt8yhv8giawvjqjmyfoqnvazl0dalmnhdkvp7.min.css" />
+    
+    <link rel="stylesheet" href="https://pixeldin.github.io/css/style-fneuerdunt9vf6vafpewt2nttopqa9hdugoae6mfs7phtuibtq6qjxkds96.min.css" />
     
     
 
@@ -99,15 +119,15 @@
 
   <body>
     <div id="blog">
-      <header id="header" data-behavior="5">
+      <header id="header" data-behavior="1">
   <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
   <div class="header-title">
-    <a class="header-title-link" href="/en/">pixelpig.space</a>
+    <a class="header-title-link" href="https://pixeldin.github.io/en/" aria-label="Go to homepage">pixelpig.tech</a>
   </div>
   
     
       <a class="header-right-picture "
-         href="/#about">
+         href="https://pixeldin.github.io/#about" aria-label="Open the link: /#about">
     
     
     
@@ -119,16 +139,16 @@
   
 </header>
 
-      <nav id="sidebar" data-behavior="5">
+      <nav id="sidebar" data-behavior="1">
   <div class="sidebar-container">
     
       <div class="sidebar-profile">
-        <a href="/#about">
+        <a href="https://pixeldin.github.io/#about" aria-label="Read more about the author">
           <img class="sidebar-profile-picture" src="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/pig.jpg" alt="Author&#39;s picture" />
         </a>
-        <h4 class="sidebar-profile-name">pixelpig</h4>
+        <h4 class="sidebar-profile-name">@Pixelpig</h4>
         
-          <h5 class="sidebar-profile-bio">With enthusiasm for open source and I am looking forward to be a better developer. Stay hungry, stay foolish <strong>:）</strong></h5>
+          <h5 class="sidebar-profile-bio">Keep it simple, so as this bio <strong>:）</strong></h5>
         
       </div>
     
@@ -136,7 +156,7 @@
       
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="/zh">
+      <a class="sidebar-button-link " href="https://pixeldin.github.io/zh" title="简体中文">
     
       <i class="sidebar-button-icon fa fa-lg fa-language"></i>
       
@@ -146,7 +166,7 @@
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="/en/">
+      <a class="sidebar-button-link " href="https://pixeldin.github.io/en/" title="Home">
     
       <i class="sidebar-button-icon fa fa-lg fa-home"></i>
       
@@ -156,7 +176,7 @@
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="/en/categories">
+      <a class="sidebar-button-link " href="https://pixeldin.github.io/en/categories" title="Categories">
     
       <i class="sidebar-button-icon fa fa-lg fa-bookmark"></i>
       
@@ -166,7 +186,7 @@
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="/en/tags">
+      <a class="sidebar-button-link " href="https://pixeldin.github.io/en/tags" title="Tags">
     
       <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
       
@@ -176,7 +196,7 @@
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="/en/archives">
+      <a class="sidebar-button-link " href="https://pixeldin.github.io/en/archives" title="Archives">
     
       <i class="sidebar-button-icon fa fa-lg fa-archive"></i>
       
@@ -186,7 +206,7 @@
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="/en/#about">
+      <a class="sidebar-button-link " href="https://pixeldin.github.io/en/#about" title="About me">
     
       <i class="sidebar-button-icon fa fa-lg fa-question"></i>
       
@@ -196,32 +216,35 @@
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="https://twitter.com/pixelpigpigpig/" target="_blank" rel="noopener">
+      <a class="sidebar-button-link " href="https://twitter.com/pixelpigpigpig/" target="_blank" rel="noopener" title="Twitter">
     
-      <i class="sidebar-button-icon fa fa-lg fa-twitter"></i>
+      <i class="sidebar-button-icon fab fa-lg fa-twitter"></i>
       
-      <span class="sidebar-button-desc">Twitter</span>
+      <span class="sidebar-button-desc">twitter</span>
     </a>
   </li>
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="https://github.com/pixeldin" target="_blank" rel="noopener">
+      <a class="sidebar-button-link " href="https://github.com/pixeldin" target="_blank" rel="noopener" title="pixeldin">
     
-      <i class="sidebar-button-icon fa fa-lg fa-github"></i>
+      <i class="sidebar-button-icon fab fa-lg fa-github-alt"></i>
       
       <span class="sidebar-button-desc">pixeldin</span>
     </a>
   </li>
 
 
-    </ul>
-    <ul class="sidebar-buttons">
-      
 
     </ul>
     <ul class="sidebar-buttons">
       
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+
 
     </ul>
   </div>
@@ -229,23 +252,23 @@
 
       
 
-      <div id="main" data-behavior="5"
+      <div id="main" data-behavior="1"
         class="
                hasCoverMetaIn
                ">
-        <article class="post" itemscope itemType="http://schema.org/BlogPosting">
+        <article class="post" id="top">
           
           
             <div class="post-header main-content-wrap text-center">
   
-    <h1 class="post-title" itemprop="headline">
+    <h1 class="post-title">
       Talk about Go: A high performance pool for reusing object - Sync.Pool
     </h1>
   
   
   <div class="postShorten-meta post-meta">
     
-      <time itemprop="datePublished" datetime="2022-04-23T00:00:00Z">
+      <time datetime="2022-04-23T00:00:00Z">
         
   April 23, 2022
 
@@ -256,9 +279,9 @@
   
     <span>in</span>
     
-      <a class="category-link" href="/en/categories/go">Go</a>, 
+      <a class="category-link" href="https://pixeldin.github.io/en/categories/go">Go</a>, 
     
-      <a class="category-link" href="/en/categories/cache">Cache</a>
+      <a class="category-link" href="https://pixeldin.github.io/en/categories/cache">Cache</a>
     
   
 
@@ -266,7 +289,7 @@
 
 </div>
           
-          <div class="post-content markdown" itemprop="articleBody">
+          <div class="post-content markdown">
             <div class="main-content-wrap">
               <p>Pooling is frequently occurring in software field, such as connection pool\thread pool\routine poool etc. A pool is essentially to reuse resources.</p>
 <p><img src="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/blog/sync-pool/sync-pool-cover.png" alt="对象池"></p>
@@ -276,39 +299,39 @@
 <p>Let’s talk about the conclusion first. It is a temporary storage and reusable object pool, which is suitable for objects that are frequently applied for and used, and is often used to reduce the burden of GC.</p>
 <h2 id="syncpools-usage">Sync.Pool&rsquo;s Usage</h2>
 <h3 id="common-case">Common case：</h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">TestSyncPool</span>(<span style="color:#a6e22e">t</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">testing</span>.<span style="color:#a6e22e">T</span>) {
-    <span style="color:#75715e">// initialization for mallocating something
-</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">mp</span> <span style="color:#f92672">:=</span> <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">sync</span>.<span style="color:#a6e22e">Pool</span>{
-        <span style="color:#a6e22e">New</span>: <span style="color:#66d9ef">func</span>() <span style="color:#66d9ef">interface</span>{} {
-            <span style="color:#a6e22e">t</span>.<span style="color:#a6e22e">Log</span>(<span style="color:#e6db74">&#34;create instance&#34;</span>)
-            <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>
-        }}
-
-    <span style="color:#a6e22e">ist</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">mp</span>.<span style="color:#a6e22e">Get</span>()
-    <span style="color:#a6e22e">t</span>.<span style="color:#a6e22e">Log</span>(<span style="color:#e6db74">&#34;ist = &#34;</span>, <span style="color:#a6e22e">ist</span>)
-    <span style="color:#a6e22e">ist</span> = <span style="color:#ae81ff">10</span>
-
-    <span style="color:#75715e">// return to pool
-</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">mp</span>.<span style="color:#a6e22e">Put</span>(<span style="color:#a6e22e">ist</span>)
-    <span style="color:#a6e22e">ist</span> = <span style="color:#a6e22e">mp</span>.<span style="color:#a6e22e">Get</span>()
-    <span style="color:#a6e22e">t</span>.<span style="color:#a6e22e">Log</span>(<span style="color:#e6db74">&#34;ist = &#34;</span>, <span style="color:#a6e22e">ist</span>)
-
-    <span style="color:#a6e22e">mp</span>.<span style="color:#a6e22e">Put</span>(<span style="color:#a6e22e">ist</span>)
-    <span style="color:#a6e22e">runtime</span>.<span style="color:#a6e22e">GC</span>()
-    <span style="color:#75715e">// After executing gc, the object will be temporarily stored in victim. 
-</span><span style="color:#75715e"></span>    <span style="color:#75715e">// That will be explained below. Let&#39;s mark it as a garbage can first.
-</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">ist</span> = <span style="color:#a6e22e">mp</span>.<span style="color:#a6e22e">Get</span>()
-    <span style="color:#a6e22e">t</span>.<span style="color:#a6e22e">Log</span>(<span style="color:#e6db74">&#34;ist = &#34;</span>, <span style="color:#a6e22e">ist</span>)
-}
-</code></pre></div><p><strong>Run：</strong></p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#f92672">===</span> RUN   TestSyncPool
-    heypool_test.go:12: create instance
-    heypool_test.go:17: ist <span style="color:#f92672">=</span>  <span style="color:#ae81ff">0</span>
-    heypool_test.go:22: ist <span style="color:#f92672">=</span>  <span style="color:#ae81ff">10</span>
-    heypool_test.go:27: ist <span style="color:#f92672">=</span>  <span style="color:#ae81ff">10</span>  <span style="color:#f92672">(</span>If the obtained P and the P of the Put<span style="color:#f92672">()</span> operation are the same, you can still get <span style="color:#ae81ff">10</span> after the first GC<span style="color:#f92672">)</span>
---- PASS: TestSyncPool <span style="color:#f92672">(</span>0.00s<span style="color:#f92672">)</span>
-PASS
-</code></pre></div><p>It seems to be the same as the regular buffer pool usage, but we look at the comments of the official <code>Get()</code> function,</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">TestSyncPool</span>(<span style="color:#a6e22e">t</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">testing</span>.<span style="color:#a6e22e">T</span>) {
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// initialization for mallocating something
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#a6e22e">mp</span> <span style="color:#f92672">:=</span> <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">sync</span>.<span style="color:#a6e22e">Pool</span>{
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">New</span>: <span style="color:#66d9ef">func</span>() <span style="color:#66d9ef">interface</span>{} {
+</span></span><span style="display:flex;"><span>            <span style="color:#a6e22e">t</span>.<span style="color:#a6e22e">Log</span>(<span style="color:#e6db74">&#34;create instance&#34;</span>)
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>        }}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">ist</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">mp</span>.<span style="color:#a6e22e">Get</span>()
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">t</span>.<span style="color:#a6e22e">Log</span>(<span style="color:#e6db74">&#34;ist = &#34;</span>, <span style="color:#a6e22e">ist</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">ist</span> = <span style="color:#ae81ff">10</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// return to pool
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#a6e22e">mp</span>.<span style="color:#a6e22e">Put</span>(<span style="color:#a6e22e">ist</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">ist</span> = <span style="color:#a6e22e">mp</span>.<span style="color:#a6e22e">Get</span>()
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">t</span>.<span style="color:#a6e22e">Log</span>(<span style="color:#e6db74">&#34;ist = &#34;</span>, <span style="color:#a6e22e">ist</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">mp</span>.<span style="color:#a6e22e">Put</span>(<span style="color:#a6e22e">ist</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">runtime</span>.<span style="color:#a6e22e">GC</span>()
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// After executing gc, the object will be temporarily stored in victim. 
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// That will be explained below. Let&#39;s mark it as a garbage can first.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#a6e22e">ist</span> = <span style="color:#a6e22e">mp</span>.<span style="color:#a6e22e">Get</span>()
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">t</span>.<span style="color:#a6e22e">Log</span>(<span style="color:#e6db74">&#34;ist = &#34;</span>, <span style="color:#a6e22e">ist</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p><strong>Run：</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#f92672">===</span> RUN   TestSyncPool
+</span></span><span style="display:flex;"><span>    heypool_test.go:12: create instance
+</span></span><span style="display:flex;"><span>    heypool_test.go:17: ist <span style="color:#f92672">=</span>  <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>    heypool_test.go:22: ist <span style="color:#f92672">=</span>  <span style="color:#ae81ff">10</span>
+</span></span><span style="display:flex;"><span>    heypool_test.go:27: ist <span style="color:#f92672">=</span>  <span style="color:#ae81ff">10</span>  <span style="color:#f92672">(</span>If the obtained P and the P of the Put<span style="color:#f92672">()</span> operation are the same, you can still get <span style="color:#ae81ff">10</span> after the first GC<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>--- PASS: TestSyncPool <span style="color:#f92672">(</span>0.00s<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>PASS
+</span></span></code></pre></div><p>It seems to be the same as the regular buffer pool usage, but we look at the comments of the official <code>Get()</code> function,</p>
 <blockquote>
 <p>Get may choose to ignore the pool and treat it as empty.<br>
 Callers should not assume any relation between values passed to Put and
@@ -317,194 +340,194 @@ the values returned by Get.</p>
 <p>Here we don&rsquo;t delve into it first, just look at the comments to tell us that we can&rsquo;t make association assumptions between put and get operations, <strong>we cannot guarantee the GC triggering and the recycling status of the object pool, so sync.Pool is not suitable for scenarios such as database connection pools.</strong></p>
 <h3 id="official-example">Official example：</h3>
 <p>This is an official test case, we can further predict the usage intention of <code>sync.Pool</code></p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">TestPool</span>(<span style="color:#a6e22e">t</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">testing</span>.<span style="color:#a6e22e">T</span>) {
-    <span style="color:#75715e">// Temporarily disable system-triggered GC
-</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">defer</span> <span style="color:#a6e22e">debug</span>.<span style="color:#a6e22e">SetGCPercent</span>(<span style="color:#a6e22e">debug</span>.<span style="color:#a6e22e">SetGCPercent</span>(<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>))
-    <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">p</span> <span style="color:#a6e22e">Pool</span>
-    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">Get</span>() <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
-        <span style="color:#a6e22e">t</span>.<span style="color:#a6e22e">Fatal</span>(<span style="color:#e6db74">&#34;expected empty&#34;</span>)
-    }
-
-    <span style="color:#75715e">// Let the running coroutine hang on the current P 
-</span><span style="color:#75715e"></span>    <span style="color:#75715e">// to ensure that the object pool and the program read 
-</span><span style="color:#75715e"></span>    <span style="color:#75715e">// and write one-to-one correspondence
-</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">Runtime_procPin</span>()
-    <span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">Put</span>(<span style="color:#e6db74">&#34;a&#34;</span>)
-    <span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">Put</span>(<span style="color:#e6db74">&#34;b&#34;</span>)
-    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">g</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">Get</span>(); <span style="color:#a6e22e">g</span> <span style="color:#f92672">!=</span> <span style="color:#e6db74">&#34;a&#34;</span> {
-        <span style="color:#a6e22e">t</span>.<span style="color:#a6e22e">Fatalf</span>(<span style="color:#e6db74">&#34;got %#v; want a&#34;</span>, <span style="color:#a6e22e">g</span>)
-    }
-    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">g</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">Get</span>(); <span style="color:#a6e22e">g</span> <span style="color:#f92672">!=</span> <span style="color:#e6db74">&#34;b&#34;</span> {
-        <span style="color:#a6e22e">t</span>.<span style="color:#a6e22e">Fatalf</span>(<span style="color:#e6db74">&#34;got %#v; want b&#34;</span>, <span style="color:#a6e22e">g</span>)
-    }
-    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">g</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">Get</span>(); <span style="color:#a6e22e">g</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
-        <span style="color:#a6e22e">t</span>.<span style="color:#a6e22e">Fatalf</span>(<span style="color:#e6db74">&#34;got %#v; want nil&#34;</span>, <span style="color:#a6e22e">g</span>)
-    }
-    <span style="color:#a6e22e">Runtime_procUnpin</span>()
-
-    <span style="color:#66d9ef">for</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">0</span>; <span style="color:#a6e22e">i</span> &lt; <span style="color:#ae81ff">100</span>; <span style="color:#a6e22e">i</span><span style="color:#f92672">++</span> {
-        <span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">Put</span>(<span style="color:#e6db74">&#34;c&#34;</span>)
-    }
-    <span style="color:#75715e">// Due to the existence of the victim excessive structure, 
-</span><span style="color:#75715e"></span>    <span style="color:#75715e">// the object pool has not been emptied after gc
-</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">runtime</span>.<span style="color:#a6e22e">GC</span>()
-    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">g</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">Get</span>(); <span style="color:#a6e22e">g</span> <span style="color:#f92672">!=</span> <span style="color:#e6db74">&#34;c&#34;</span> {
-        <span style="color:#a6e22e">t</span>.<span style="color:#a6e22e">Fatalf</span>(<span style="color:#e6db74">&#34;got %#v; want c after GC&#34;</span>, <span style="color:#a6e22e">g</span>)
-    }
-    <span style="color:#75715e">// From the test code assertion, the second gc will really eliminate them in the victim
-</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">runtime</span>.<span style="color:#a6e22e">GC</span>()
-    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">g</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">Get</span>(); <span style="color:#a6e22e">g</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
-        <span style="color:#a6e22e">t</span>.<span style="color:#a6e22e">Fatalf</span>(<span style="color:#e6db74">&#34;got %#v; want nil after second GC&#34;</span>, <span style="color:#a6e22e">g</span>)
-    }
-}
-</code></pre></div><h3 id="benchmarks">Benchmarks</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">TestPool</span>(<span style="color:#a6e22e">t</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">testing</span>.<span style="color:#a6e22e">T</span>) {
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// Temporarily disable system-triggered GC
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">defer</span> <span style="color:#a6e22e">debug</span>.<span style="color:#a6e22e">SetGCPercent</span>(<span style="color:#a6e22e">debug</span>.<span style="color:#a6e22e">SetGCPercent</span>(<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>))
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">p</span> <span style="color:#a6e22e">Pool</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">Get</span>() <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">t</span>.<span style="color:#a6e22e">Fatal</span>(<span style="color:#e6db74">&#34;expected empty&#34;</span>)
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// Let the running coroutine hang on the current P 
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// to ensure that the object pool and the program read 
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// and write one-to-one correspondence
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#a6e22e">Runtime_procPin</span>()
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">Put</span>(<span style="color:#e6db74">&#34;a&#34;</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">Put</span>(<span style="color:#e6db74">&#34;b&#34;</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">g</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">Get</span>(); <span style="color:#a6e22e">g</span> <span style="color:#f92672">!=</span> <span style="color:#e6db74">&#34;a&#34;</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">t</span>.<span style="color:#a6e22e">Fatalf</span>(<span style="color:#e6db74">&#34;got %#v; want a&#34;</span>, <span style="color:#a6e22e">g</span>)
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">g</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">Get</span>(); <span style="color:#a6e22e">g</span> <span style="color:#f92672">!=</span> <span style="color:#e6db74">&#34;b&#34;</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">t</span>.<span style="color:#a6e22e">Fatalf</span>(<span style="color:#e6db74">&#34;got %#v; want b&#34;</span>, <span style="color:#a6e22e">g</span>)
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">g</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">Get</span>(); <span style="color:#a6e22e">g</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">t</span>.<span style="color:#a6e22e">Fatalf</span>(<span style="color:#e6db74">&#34;got %#v; want nil&#34;</span>, <span style="color:#a6e22e">g</span>)
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">Runtime_procUnpin</span>()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">0</span>; <span style="color:#a6e22e">i</span> &lt; <span style="color:#ae81ff">100</span>; <span style="color:#a6e22e">i</span><span style="color:#f92672">++</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">Put</span>(<span style="color:#e6db74">&#34;c&#34;</span>)
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// Due to the existence of the victim excessive structure, 
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// the object pool has not been emptied after gc
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#a6e22e">runtime</span>.<span style="color:#a6e22e">GC</span>()
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">g</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">Get</span>(); <span style="color:#a6e22e">g</span> <span style="color:#f92672">!=</span> <span style="color:#e6db74">&#34;c&#34;</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">t</span>.<span style="color:#a6e22e">Fatalf</span>(<span style="color:#e6db74">&#34;got %#v; want c after GC&#34;</span>, <span style="color:#a6e22e">g</span>)
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// From the test code assertion, the second gc will really eliminate them in the victim
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#a6e22e">runtime</span>.<span style="color:#a6e22e">GC</span>()
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">g</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">Get</span>(); <span style="color:#a6e22e">g</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">t</span>.<span style="color:#a6e22e">Fatalf</span>(<span style="color:#e6db74">&#34;got %#v; want nil after second GC&#34;</span>, <span style="color:#a6e22e">g</span>)
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h3 id="benchmarks">Benchmarks</h3>
 <p>Let&rsquo;s take a look at the performance comparison before and after the introduction of <code>sync.Pool</code>:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Pixel</span> <span style="color:#66d9ef">struct</span> {
-    <span style="color:#a6e22e">a</span> <span style="color:#66d9ef">int</span>
-}
-
-<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">pool</span> = <span style="color:#a6e22e">sync</span>.<span style="color:#a6e22e">Pool</span>{
-    <span style="color:#a6e22e">New</span>: <span style="color:#66d9ef">func</span>() <span style="color:#66d9ef">interface</span>{} { <span style="color:#66d9ef">return</span> new(<span style="color:#a6e22e">Pixel</span>) },
-}
-
-<span style="color:#75715e">//go:noinline
-</span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">inc</span>(<span style="color:#a6e22e">s</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Pixel</span>) { <span style="color:#a6e22e">s</span>.<span style="color:#a6e22e">a</span><span style="color:#f92672">++</span> }
-
-<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">BenchmarkWithoutPool</span>(<span style="color:#a6e22e">b</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">testing</span>.<span style="color:#a6e22e">B</span>) {
-    <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">s</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Pixel</span>
-    <span style="color:#66d9ef">for</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">0</span>; <span style="color:#a6e22e">i</span> &lt; <span style="color:#a6e22e">b</span>.<span style="color:#a6e22e">N</span>; <span style="color:#a6e22e">i</span><span style="color:#f92672">++</span> {
-        <span style="color:#a6e22e">s</span> = <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">Pixel</span>{<span style="color:#a6e22e">a</span>: <span style="color:#ae81ff">1</span>}
-        <span style="color:#a6e22e">b</span>.<span style="color:#a6e22e">StopTimer</span>()
-        <span style="color:#a6e22e">inc</span>(<span style="color:#a6e22e">s</span>)
-        <span style="color:#a6e22e">b</span>.<span style="color:#a6e22e">StartTimer</span>()
-    }
-}
-
-<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">BenchmarkWithPool</span>(<span style="color:#a6e22e">b</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">testing</span>.<span style="color:#a6e22e">B</span>) {
-    <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">s</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Pixel</span>
-    <span style="color:#66d9ef">for</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">0</span>; <span style="color:#a6e22e">i</span> &lt; <span style="color:#a6e22e">b</span>.<span style="color:#a6e22e">N</span>; <span style="color:#a6e22e">i</span><span style="color:#f92672">++</span> {
-        <span style="color:#a6e22e">s</span> = <span style="color:#a6e22e">pool</span>.<span style="color:#a6e22e">Get</span>().(<span style="color:#f92672">*</span><span style="color:#a6e22e">Pixel</span>)
-        <span style="color:#a6e22e">s</span>.<span style="color:#a6e22e">a</span> = <span style="color:#ae81ff">1</span>
-        <span style="color:#a6e22e">b</span>.<span style="color:#a6e22e">StopTimer</span>()
-        <span style="color:#a6e22e">inc</span>(<span style="color:#a6e22e">s</span>)
-        <span style="color:#a6e22e">b</span>.<span style="color:#a6e22e">StartTimer</span>()
-        <span style="color:#a6e22e">pool</span>.<span style="color:#a6e22e">Put</span>(<span style="color:#a6e22e">s</span>)
-    }
-}
-</code></pre></div><p><strong>Output:</strong></p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ go test -bench<span style="color:#f92672">=</span>.
-goos: windows
-goarch: amd64
-pkg: HelloGo/basic/pool/sync
-cpu: Intel<span style="color:#f92672">(</span>R<span style="color:#f92672">)</span> Core<span style="color:#f92672">(</span>TM<span style="color:#f92672">)</span> i7-4710MQ CPU @ 2.50GHz
-BenchmarkWithoutPool-8           <span style="color:#ae81ff">4817011</span>               271.9 ns/op
-BenchmarkWithPool-8             <span style="color:#ae81ff">12893811</span>               107.9 ns/op
-PASS
-ok      HelloGo/basic/pool/sync 472.933s
-</code></pre></div><h2 id="how-syncpool-be-designed">How Sync.Pool be designed</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Pixel</span> <span style="color:#66d9ef">struct</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">a</span> <span style="color:#66d9ef">int</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">pool</span> = <span style="color:#a6e22e">sync</span>.<span style="color:#a6e22e">Pool</span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">New</span>: <span style="color:#66d9ef">func</span>() <span style="color:#66d9ef">interface</span>{} { <span style="color:#66d9ef">return</span> new(<span style="color:#a6e22e">Pixel</span>) },
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">//go:noinline
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">inc</span>(<span style="color:#a6e22e">s</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Pixel</span>) { <span style="color:#a6e22e">s</span>.<span style="color:#a6e22e">a</span><span style="color:#f92672">++</span> }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">BenchmarkWithoutPool</span>(<span style="color:#a6e22e">b</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">testing</span>.<span style="color:#a6e22e">B</span>) {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">s</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Pixel</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">0</span>; <span style="color:#a6e22e">i</span> &lt; <span style="color:#a6e22e">b</span>.<span style="color:#a6e22e">N</span>; <span style="color:#a6e22e">i</span><span style="color:#f92672">++</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">s</span> = <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">Pixel</span>{<span style="color:#a6e22e">a</span>: <span style="color:#ae81ff">1</span>}
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">b</span>.<span style="color:#a6e22e">StopTimer</span>()
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">inc</span>(<span style="color:#a6e22e">s</span>)
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">b</span>.<span style="color:#a6e22e">StartTimer</span>()
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">BenchmarkWithPool</span>(<span style="color:#a6e22e">b</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">testing</span>.<span style="color:#a6e22e">B</span>) {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">s</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Pixel</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">0</span>; <span style="color:#a6e22e">i</span> &lt; <span style="color:#a6e22e">b</span>.<span style="color:#a6e22e">N</span>; <span style="color:#a6e22e">i</span><span style="color:#f92672">++</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">s</span> = <span style="color:#a6e22e">pool</span>.<span style="color:#a6e22e">Get</span>().(<span style="color:#f92672">*</span><span style="color:#a6e22e">Pixel</span>)
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">s</span>.<span style="color:#a6e22e">a</span> = <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">b</span>.<span style="color:#a6e22e">StopTimer</span>()
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">inc</span>(<span style="color:#a6e22e">s</span>)
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">b</span>.<span style="color:#a6e22e">StartTimer</span>()
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">pool</span>.<span style="color:#a6e22e">Put</span>(<span style="color:#a6e22e">s</span>)
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p><strong>Output:</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ go test -bench<span style="color:#f92672">=</span>.
+</span></span><span style="display:flex;"><span>goos: windows
+</span></span><span style="display:flex;"><span>goarch: amd64
+</span></span><span style="display:flex;"><span>pkg: HelloGo/basic/pool/sync
+</span></span><span style="display:flex;"><span>cpu: Intel<span style="color:#f92672">(</span>R<span style="color:#f92672">)</span> Core<span style="color:#f92672">(</span>TM<span style="color:#f92672">)</span> i7-4710MQ CPU @ 2.50GHz
+</span></span><span style="display:flex;"><span>BenchmarkWithoutPool-8           <span style="color:#ae81ff">4817011</span>               271.9 ns/op
+</span></span><span style="display:flex;"><span>BenchmarkWithPool-8             <span style="color:#ae81ff">12893811</span>               107.9 ns/op
+</span></span><span style="display:flex;"><span>PASS
+</span></span><span style="display:flex;"><span>ok      HelloGo/basic/pool/sync 472.933s
+</span></span></code></pre></div><h2 id="how-syncpool-be-designed">How Sync.Pool be designed</h2>
 <p>Before exploring the internal implementation, let&rsquo;s extract some concepts.</p>
 <h3 id="1gmp-cooperation">1.GMP cooperation</h3>
 <p>We all know the GMP model of coroutine scheduling in Go(可参考专栏之前的总结笔记：<a href="https://juejin.cn/post/6844904052686323725">聊一聊操作系统线程调度与Go协程</a>), each processing core <strong>P</strong> has its own coroutine <strong>G</strong> task queue, the underlying <code>Get()</code> object acquisition function of <code>sync.Pool</code> is obtained through local private queues and shared queues.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">p</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Pool</span>) <span style="color:#a6e22e">Get</span>() <span style="color:#66d9ef">interface</span>{} {
-    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">race</span>.<span style="color:#a6e22e">Enabled</span> {
-        <span style="color:#a6e22e">race</span>.<span style="color:#a6e22e">Disable</span>()
-    }
-    <span style="color:#75715e">// Specify the currently accessed P to 
-</span><span style="color:#75715e"></span>    <span style="color:#75715e">// ensure that it is in the same object pool
-</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">l</span>, <span style="color:#a6e22e">pid</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">pin</span>()
-    <span style="color:#a6e22e">x</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">l</span>.<span style="color:#a6e22e">private</span>
-    <span style="color:#a6e22e">l</span>.<span style="color:#a6e22e">private</span> = <span style="color:#66d9ef">nil</span>
-    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">x</span> <span style="color:#f92672">==</span> <span style="color:#66d9ef">nil</span> {
-        <span style="color:#75715e">// If the current private queue is empty, try popping from the shared pool
-</span><span style="color:#75715e"></span>        <span style="color:#a6e22e">x</span>, <span style="color:#a6e22e">_</span> = <span style="color:#a6e22e">l</span>.<span style="color:#a6e22e">shared</span>.<span style="color:#a6e22e">popHead</span>()
-        <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">x</span> <span style="color:#f92672">==</span> <span style="color:#66d9ef">nil</span> {
-            <span style="color:#75715e">// If the shared pool is empty, go to other P pools to steal
-</span><span style="color:#75715e"></span>            <span style="color:#a6e22e">x</span> = <span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">getSlow</span>(<span style="color:#a6e22e">pid</span>)
-        }
-    }
-    <span style="color:#a6e22e">runtime_procUnpin</span>()
-    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">race</span>.<span style="color:#a6e22e">Enabled</span> {
-        <span style="color:#a6e22e">race</span>.<span style="color:#a6e22e">Enable</span>()
-        <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">x</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
-            <span style="color:#a6e22e">race</span>.<span style="color:#a6e22e">Acquire</span>(<span style="color:#a6e22e">poolRaceAddr</span>(<span style="color:#a6e22e">x</span>))
-        }
-    }
-    <span style="color:#75715e">// If the private space is empty, and the steal is empty, 
-</span><span style="color:#75715e"></span>    <span style="color:#75715e">// call the initialization to construct the object
-</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">x</span> <span style="color:#f92672">==</span> <span style="color:#66d9ef">nil</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">New</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
-        <span style="color:#a6e22e">x</span> = <span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">New</span>()
-    }
-    <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">x</span>
-}
-</code></pre></div><h3 id="2multilevel-cache">2.multilevel cache</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">p</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Pool</span>) <span style="color:#a6e22e">Get</span>() <span style="color:#66d9ef">interface</span>{} {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">race</span>.<span style="color:#a6e22e">Enabled</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">race</span>.<span style="color:#a6e22e">Disable</span>()
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// Specify the currently accessed P to 
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// ensure that it is in the same object pool
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#a6e22e">l</span>, <span style="color:#a6e22e">pid</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">pin</span>()
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">x</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">l</span>.<span style="color:#a6e22e">private</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">l</span>.<span style="color:#a6e22e">private</span> = <span style="color:#66d9ef">nil</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">x</span> <span style="color:#f92672">==</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// If the current private queue is empty, try popping from the shared pool
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        <span style="color:#a6e22e">x</span>, <span style="color:#a6e22e">_</span> = <span style="color:#a6e22e">l</span>.<span style="color:#a6e22e">shared</span>.<span style="color:#a6e22e">popHead</span>()
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">x</span> <span style="color:#f92672">==</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e">// If the shared pool is empty, go to other P pools to steal
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>            <span style="color:#a6e22e">x</span> = <span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">getSlow</span>(<span style="color:#a6e22e">pid</span>)
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">runtime_procUnpin</span>()
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">race</span>.<span style="color:#a6e22e">Enabled</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">race</span>.<span style="color:#a6e22e">Enable</span>()
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">x</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>            <span style="color:#a6e22e">race</span>.<span style="color:#a6e22e">Acquire</span>(<span style="color:#a6e22e">poolRaceAddr</span>(<span style="color:#a6e22e">x</span>))
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// If the private space is empty, and the steal is empty, 
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// call the initialization to construct the object
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">x</span> <span style="color:#f92672">==</span> <span style="color:#66d9ef">nil</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">New</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">x</span> = <span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">New</span>()
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">x</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h3 id="2multilevel-cache">2.multilevel cache</h3>
 <p>In the operating system components, start from CPU registers to physical disks, and from one CPU cycle to L1/2/3 cache, to main memory, and then to the file system, the magnitude of the operation time for a single access is increasing. The idea of caching was introduced very early in the computer field.</p>
 <blockquote>
 <p>As hardware architecture and technology advanced, processor performance and frequency grew much faster than memory cycle times, leading to a large gap in performance. The problem of increasing memory latency, relative to processor speed, has been dealt with by adding high speed cache memory.</p>
 </blockquote>
 <p>Let&rsquo;s take a look at the internal members of <code>sync.Pool</code>:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Pool</span> <span style="color:#66d9ef">struct</span> {
-    <span style="color:#a6e22e">noCopy</span> <span style="color:#a6e22e">noCopy</span>
-
-    <span style="color:#a6e22e">local</span>     <span style="color:#a6e22e">unsafe</span>.<span style="color:#a6e22e">Pointer</span> <span style="color:#75715e">// the object address specified by the current P
-</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">localSize</span> <span style="color:#66d9ef">uintptr</span>        <span style="color:#75715e">// size of the local array
-</span><span style="color:#75715e"></span>
-    <span style="color:#a6e22e">victim</span>     <span style="color:#a6e22e">unsafe</span>.<span style="color:#a6e22e">Pointer</span> <span style="color:#75715e">// the transition interval for the first elimination of the current P
-</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">victimSize</span> <span style="color:#66d9ef">uintptr</span>        <span style="color:#75715e">// size of victims array
-</span><span style="color:#75715e"></span>    
-    <span style="color:#a6e22e">New</span> <span style="color:#66d9ef">func</span>() <span style="color:#66d9ef">interface</span>{}
-}
-</code></pre></div><p>Through the <code>victim</code> sacrifice pool, the objects that are reclaimed for the first time are temporarily stored, so that the program can reuse as much as possible before applying for objects, and it is more &ldquo;<strong>smoothly</strong>&rdquo; to use.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">init</span>() {
-    <span style="color:#75715e">// sync.Pool starts the registered GC execution logic
-</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">runtime_registerPoolCleanup</span>(<span style="color:#a6e22e">poolCleanup</span>)
-}
-
-<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">poolCleanup</span>() {
-    <span style="color:#75715e">// When GC triggers execution, clear the old object pool of the recycle bin
-</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">for</span> <span style="color:#a6e22e">_</span>, <span style="color:#a6e22e">p</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">range</span> <span style="color:#a6e22e">oldPools</span> {
-        <span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">victim</span> = <span style="color:#66d9ef">nil</span>
-        <span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">victimSize</span> = <span style="color:#ae81ff">0</span>
-    }
-
-    <span style="color:#75715e">// temporarily store objects to be eliminated in victim
-</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">for</span> <span style="color:#a6e22e">_</span>, <span style="color:#a6e22e">p</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">range</span> <span style="color:#a6e22e">allPools</span> {
-        <span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">victim</span> = <span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">local</span>
-        <span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">victimSize</span> = <span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">localSize</span>
-        <span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">local</span> = <span style="color:#66d9ef">nil</span>
-        <span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">localSize</span> = <span style="color:#ae81ff">0</span>
-    }
-
-    <span style="color:#a6e22e">oldPools</span>, <span style="color:#a6e22e">allPools</span> = <span style="color:#a6e22e">allPools</span>, <span style="color:#66d9ef">nil</span>
-}
-</code></pre></div><p>Registering the GC processing logic at startup, you can see that the ``victim``` mechanism actually draws on the idea of generational recycling in other languages, and will temporarily store objects before cleaning up, improving the probability of reuse.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Pool</span> <span style="color:#66d9ef">struct</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">noCopy</span> <span style="color:#a6e22e">noCopy</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">local</span>     <span style="color:#a6e22e">unsafe</span>.<span style="color:#a6e22e">Pointer</span> <span style="color:#75715e">// the object address specified by the current P
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#a6e22e">localSize</span> <span style="color:#66d9ef">uintptr</span>        <span style="color:#75715e">// size of the local array
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">victim</span>     <span style="color:#a6e22e">unsafe</span>.<span style="color:#a6e22e">Pointer</span> <span style="color:#75715e">// the transition interval for the first elimination of the current P
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#a6e22e">victimSize</span> <span style="color:#66d9ef">uintptr</span>        <span style="color:#75715e">// size of victims array
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">New</span> <span style="color:#66d9ef">func</span>() <span style="color:#66d9ef">interface</span>{}
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Through the <code>victim</code> sacrifice pool, the objects that are reclaimed for the first time are temporarily stored, so that the program can reuse as much as possible before applying for objects, and it is more &ldquo;<strong>smoothly</strong>&rdquo; to use.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">init</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// sync.Pool starts the registered GC execution logic
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#a6e22e">runtime_registerPoolCleanup</span>(<span style="color:#a6e22e">poolCleanup</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">poolCleanup</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// When GC triggers execution, clear the old object pool of the recycle bin
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">for</span> <span style="color:#a6e22e">_</span>, <span style="color:#a6e22e">p</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">range</span> <span style="color:#a6e22e">oldPools</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">victim</span> = <span style="color:#66d9ef">nil</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">victimSize</span> = <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// temporarily store objects to be eliminated in victim
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">for</span> <span style="color:#a6e22e">_</span>, <span style="color:#a6e22e">p</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">range</span> <span style="color:#a6e22e">allPools</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">victim</span> = <span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">local</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">victimSize</span> = <span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">localSize</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">local</span> = <span style="color:#66d9ef">nil</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">localSize</span> = <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">oldPools</span>, <span style="color:#a6e22e">allPools</span> = <span style="color:#a6e22e">allPools</span>, <span style="color:#66d9ef">nil</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Registering the GC processing logic at startup, you can see that the ``victim``` mechanism actually draws on the idea of generational recycling in other languages, and will temporarily store objects before cleaning up, improving the probability of reuse.</p>
 <hr>
 <p>After the above dismantling, we can know that the priority is obtained in the object pools of multiple Ps, as shown in the following figure:</p>
 <p><img src="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/blog/sync-pool/en-sync-pool-get-seq.png" alt="sync-pool-get-seq.png"></p>
 <p>It can be seen that since each P is independent, ① private pool, ② sacrifice pool, and ⑤ initial creation are exclusive to the current <strong>P</strong>, and only ③ may be shared by other P, so about step ③ sharing operation requires locking.</p>
 <h3 id="3lock-free">3.Lock-free</h3>
 <p>Let&rsquo;s take a look at how <code>Sync.Pool</code> is handled step ③</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">d</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">poolDequeue</span>) <span style="color:#a6e22e">popHead</span>() (<span style="color:#66d9ef">interface</span>{}, <span style="color:#66d9ef">bool</span>) {
-    <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">slot</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">eface</span>
-    <span style="color:#66d9ef">for</span> {
-        <span style="color:#75715e">// Get the atomic variable to determine the range of the current shared queue
-</span><span style="color:#75715e"></span>        <span style="color:#a6e22e">ptrs</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">atomic</span>.<span style="color:#a6e22e">LoadUint64</span>(<span style="color:#f92672">&amp;</span><span style="color:#a6e22e">d</span>.<span style="color:#a6e22e">headTail</span>)
-        <span style="color:#a6e22e">head</span>, <span style="color:#a6e22e">tail</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">d</span>.<span style="color:#a6e22e">unpack</span>(<span style="color:#a6e22e">ptrs</span>)
-        <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">tail</span> <span style="color:#f92672">==</span> <span style="color:#a6e22e">head</span> {
-            <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>, <span style="color:#66d9ef">false</span>
-        }       
-        <span style="color:#a6e22e">head</span><span style="color:#f92672">--</span>
-        <span style="color:#a6e22e">ptrs2</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">d</span>.<span style="color:#a6e22e">pack</span>(<span style="color:#a6e22e">head</span>, <span style="color:#a6e22e">tail</span>)
-        <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">atomic</span>.<span style="color:#a6e22e">CompareAndSwapUint64</span>(<span style="color:#f92672">&amp;</span><span style="color:#a6e22e">d</span>.<span style="color:#a6e22e">headTail</span>, <span style="color:#a6e22e">ptrs</span>, <span style="color:#a6e22e">ptrs2</span>) {
-            <span style="color:#75715e">// Spinlock design based on optimistic expectations using CAS           
-</span><span style="color:#75715e"></span>            <span style="color:#a6e22e">slot</span> = <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">d</span>.<span style="color:#a6e22e">vals</span>[<span style="color:#a6e22e">head</span><span style="color:#f92672">&amp;</span>uint32(len(<span style="color:#a6e22e">d</span>.<span style="color:#a6e22e">vals</span>)<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>)]
-            <span style="color:#75715e">// Jump out after obtaining the right to execute
-</span><span style="color:#75715e"></span>            <span style="color:#66d9ef">break</span>
-        }
-    }
-    <span style="color:#75715e">// ...
-</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">val</span>, <span style="color:#66d9ef">true</span>
-}
-</code></pre></div><p>By using the optimistically expected spin lock, it is more lightweight than the read-write lock, and achieves a nearly lock-free design.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">d</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">poolDequeue</span>) <span style="color:#a6e22e">popHead</span>() (<span style="color:#66d9ef">interface</span>{}, <span style="color:#66d9ef">bool</span>) {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">slot</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">eface</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// Get the atomic variable to determine the range of the current shared queue
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        <span style="color:#a6e22e">ptrs</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">atomic</span>.<span style="color:#a6e22e">LoadUint64</span>(<span style="color:#f92672">&amp;</span><span style="color:#a6e22e">d</span>.<span style="color:#a6e22e">headTail</span>)
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">head</span>, <span style="color:#a6e22e">tail</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">d</span>.<span style="color:#a6e22e">unpack</span>(<span style="color:#a6e22e">ptrs</span>)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">tail</span> <span style="color:#f92672">==</span> <span style="color:#a6e22e">head</span> {
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>, <span style="color:#66d9ef">false</span>
+</span></span><span style="display:flex;"><span>        }       
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">head</span><span style="color:#f92672">--</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">ptrs2</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">d</span>.<span style="color:#a6e22e">pack</span>(<span style="color:#a6e22e">head</span>, <span style="color:#a6e22e">tail</span>)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">atomic</span>.<span style="color:#a6e22e">CompareAndSwapUint64</span>(<span style="color:#f92672">&amp;</span><span style="color:#a6e22e">d</span>.<span style="color:#a6e22e">headTail</span>, <span style="color:#a6e22e">ptrs</span>, <span style="color:#a6e22e">ptrs2</span>) {
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e">// Spinlock design based on optimistic expectations using CAS           
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>            <span style="color:#a6e22e">slot</span> = <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">d</span>.<span style="color:#a6e22e">vals</span>[<span style="color:#a6e22e">head</span><span style="color:#f92672">&amp;</span>uint32(len(<span style="color:#a6e22e">d</span>.<span style="color:#a6e22e">vals</span>)<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>)]
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e">// Jump out after obtaining the right to execute
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>            <span style="color:#66d9ef">break</span>
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// ...
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">val</span>, <span style="color:#66d9ef">true</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>By using the optimistically expected spin lock, it is more lightweight than the read-write lock, and achieves a nearly lock-free design.</p>
 <h3 id="4false-sharing">4.<strong>false sharing</strong></h3>
 <p>The fourth concept is about false sharing. What is false sharing? In fact, it means that when we want to update the value of a variable, when the CPU reads and loads the memory block (row loading), due to the principle of local access, it is looking for When the address space is continuous, when the variable is loaded for operation, it will cover the address space of other variables at the same time.<br>
 At this time, each P should consider whether my variable is affected by the continuous interval of other variables, <strong>Because in the same address space, there will be conflicts when there are concurrent reads and writes, as shown in the following figure:</strong></p>
@@ -521,19 +544,19 @@ At this time, each P should consider whether my variable is affected by the cont
 </ul>
 <p>Personally, I think the second method is more in line with the philosophy of <code>Go</code> concurrency：<strong>Don&rsquo;t use shared memory to communicate, use communication to share memory.</strong></p>
 <p>How does it work in <code>sync.Pool</code>?</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#75715e">// Local per-P Pool appendix.
-</span><span style="color:#75715e"></span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">poolLocalInternal</span> <span style="color:#66d9ef">struct</span> {
-    <span style="color:#a6e22e">private</span> <span style="color:#66d9ef">interface</span>{} <span style="color:#75715e">// Private P flag
-</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">shared</span>  <span style="color:#a6e22e">poolChain</span>   <span style="color:#75715e">// The queue pointed to by the local P
-</span><span style="color:#75715e"></span>}
-
-<span style="color:#66d9ef">type</span> <span style="color:#a6e22e">poolLocal</span> <span style="color:#66d9ef">struct</span> {
-    <span style="color:#a6e22e">poolLocalInternal</span>
-
-    <span style="color:#75715e">// Fill the byte array and use multiples of 128 to access the address range
-</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">pad</span> [<span style="color:#ae81ff">128</span> <span style="color:#f92672">-</span> <span style="color:#a6e22e">unsafe</span>.<span style="color:#a6e22e">Sizeof</span>(<span style="color:#a6e22e">poolLocalInternal</span>{})<span style="color:#f92672">%</span><span style="color:#ae81ff">128</span>]<span style="color:#66d9ef">byte</span>
-}
-</code></pre></div><p>It can be seen that <code>poolLocal</code> has an internal member of <code>pad</code>, of which <code>poolLocal</code> is actually the memory block pointed to by the internal local pointer of <code>sync.Pool</code>. 128 size range (a multiple of 64-bit system) to access, each time the object pool addressing is consistent with the CPU single instruction operation range, so as to avoid the &ldquo;false sharing problem&rdquo;, as shown in the figure above.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#75715e">// Local per-P Pool appendix.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">poolLocalInternal</span> <span style="color:#66d9ef">struct</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">private</span> <span style="color:#66d9ef">interface</span>{} <span style="color:#75715e">// Private P flag
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#a6e22e">shared</span>  <span style="color:#a6e22e">poolChain</span>   <span style="color:#75715e">// The queue pointed to by the local P
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">poolLocal</span> <span style="color:#66d9ef">struct</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">poolLocalInternal</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// Fill the byte array and use multiples of 128 to access the address range
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#a6e22e">pad</span> [<span style="color:#ae81ff">128</span> <span style="color:#f92672">-</span> <span style="color:#a6e22e">unsafe</span>.<span style="color:#a6e22e">Sizeof</span>(<span style="color:#a6e22e">poolLocalInternal</span>{})<span style="color:#f92672">%</span><span style="color:#ae81ff">128</span>]<span style="color:#66d9ef">byte</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>It can be seen that <code>poolLocal</code> has an internal member of <code>pad</code>, of which <code>poolLocal</code> is actually the memory block pointed to by the internal local pointer of <code>sync.Pool</code>. 128 size range (a multiple of 64-bit system) to access, each time the object pool addressing is consistent with the CPU single instruction operation range, so as to avoid the &ldquo;false sharing problem&rdquo;, as shown in the figure above.</p>
 <h2 id="summary">Summary</h2>
 <p>Above, we analyzed <code>Sync.Pool</code> from the concepts of GMP model, multi-level cache, false sharing, etc., to know its internal acquisition priority, and how it solves multiple <strong>P</strong> Conflicts, and use <strong>CAS</strong> to reduce the burden of lock operations.</p>
 <p>It can be felt that Go is silently following certain design specifications, both in terms of macro and detailed implementation.</p>
@@ -547,6 +570,8 @@ At this time, each P should consider whether my variable is affected by the cont
 <a href="https://medium.com/a-journey-with-go/go-understand-the-design-of-sync-pool-2dde3024e277">https://medium.com/a-journey-with-go/go-understand-the-design-of-sync-pool-2dde3024e277</a></li>
 </ul>
               
+
+
             </div>
           </div>
           <div id="post-footer" class="post-footer main-content-wrap">
@@ -557,149 +582,151 @@ At this time, each P should consider whether my variable is affected by the cont
                   <div class="post-footer-tags">
                     <span class="text-color-light text-small">TAGGED IN</span><br/>
                     
-  <a class="tag tag--primary tag--small" href="/en/tags/object-pool/">object pool</a>
+  <a class="tag tag--primary tag--small" href="https://pixeldin.github.io/en/tags/object-pool/">object pool</a>
 
-  <a class="tag tag--primary tag--small" href="/en/tags/false-sharing/">false sharing</a>
+  <a class="tag tag--primary tag--small" href="https://pixeldin.github.io/en/tags/false-sharing/">false sharing</a>
 
-  <a class="tag tag--primary tag--small" href="/en/tags/sync.pool/">sync.Pool</a>
+  <a class="tag tag--primary tag--small" href="https://pixeldin.github.io/en/tags/sync.pool/">sync.Pool</a>
 
-  <a class="tag tag--primary tag--small" href="/en/tags/talk-about-go/">Talk about Go</a>
+  <a class="tag tag--primary tag--small" href="https://pixeldin.github.io/en/tags/talk-about-go/">Talk about Go</a>
 
                   </div>
                 
               
             
-            <div class="post-actions-wrap">
-  
-      <nav >
-        <ul class="post-actions post-action-nav">
-          
-            <li class="post-action">
-              
-                <a class="post-action-btn btn btn--default tooltip--top" href="/en/2022/05/talk-about-etcd-part1-hierarchy-overview-with-birds-eye-view/" data-tooltip="Talk about etcd (Part1): Hierarchy Overview with bird&#39;s eye view">
-              
-                  <i class="fa fa-angle-left"></i>
-                  <span class="hide-xs hide-sm text-small icon-ml">NEXT</span>
-                </a>
-            </li>
-            <li class="post-action">
-              
-                <a class="post-action-btn btn btn--default tooltip--top" href="/en/2022/03/talk-about-go-goroutines-information-and-how-to-prevent-goroutine-leaks/" data-tooltip="Talk about Go: Goroutine&#39;s information and how to prevent goroutine leaks">
-              
-                  <span class="hide-xs hide-sm text-small icon-mr">PREVIOUS</span>
-                  <i class="fa fa-angle-right"></i>
-                </a>
-            </li>
-          
-        </ul>
-      </nav>
-    <ul class="post-actions post-action-share" >
+            
+<div class="post-actions-wrap">
+  <nav >
+    <ul class="post-actions post-action-nav">
       
-        <li class="post-action hide-lg hide-md hide-sm">
-          <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
-            <i class="fa fa-share-alt"></i>
-          </a>
+        <li class="post-action">
+          
+            <a class="post-action-btn btn btn--default tooltip--top" href="https://pixeldin.github.io/en/2022/05/talk-about-etcd-part1-hierarchy-overview-with-birds-eye-view/" data-tooltip="Talk about etcd (Part1): Hierarchy Overview with bird&#39;s eye view" aria-label="NEXT: Talk about etcd (Part1): Hierarchy Overview with bird&#39;s eye view">
+          
+              <i class="fa fa-angle-left"></i>
+              <span class="hide-xs hide-sm text-small icon-ml">NEXT</span>
+            </a>
         </li>
-        
+        <li class="post-action">
+          
+            <a class="post-action-btn btn btn--default tooltip--top" href="https://pixeldin.github.io/en/2022/03/talk-about-go-goroutines-information-and-how-to-prevent-goroutine-leaks/" data-tooltip="Talk about Go: Goroutine&#39;s information and how to prevent goroutine leaks" aria-label="PREVIOUS: Talk about Go: Goroutine&#39;s information and how to prevent goroutine leaks">
+          
+              <span class="hide-xs hide-sm text-small icon-mr">PREVIOUS</span>
+              <i class="fa fa-angle-right"></i>
+            </a>
+        </li>
       
-      
-      <li class="post-action">
-        
-          <a class="post-action-btn btn btn--default" href="#">
-        
-          <i class="fa fa-list"></i>
-        </a>
-      </li>
     </ul>
+  </nav>
+<ul class="post-actions post-action-share" >
   
+    <li class="post-action hide-lg hide-md hide-sm">
+      <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions" aria-label="Share this post">
+        <i class="fa fa-share-alt" aria-hidden="true"></i>
+      </a>
+    </li>
+    
+  
+  
+  <li class="post-action">
+    
+      <a class="post-action-btn btn btn--default" href="#top" aria-label="Back to top">
+      <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    
+    </a>
+  </li>
+</ul>
 </div>
 
+
             
-              
-            
+  
+
+
           </div>
         </article>
         <footer id="footer" class="main-content-wrap">
   <span class="copyrights">
-    &copy; 2024 <a href="https://github.com/pixeldin">pixeldin</a>. All Rights Reserved
+    &copy; 2023 <a href="https://github.com/pixeldin">pixeldin</a>. All Rights Reserved
   </span>
 </footer>
 
       </div>
-      <div id="bottom-bar" class="post-bottom-bar" data-behavior="5">
-        <div class="post-actions-wrap">
-  
-      <nav >
-        <ul class="post-actions post-action-nav">
-          
-            <li class="post-action">
-              
-                <a class="post-action-btn btn btn--default tooltip--top" href="/en/2022/05/talk-about-etcd-part1-hierarchy-overview-with-birds-eye-view/" data-tooltip="Talk about etcd (Part1): Hierarchy Overview with bird&#39;s eye view">
-              
-                  <i class="fa fa-angle-left"></i>
-                  <span class="hide-xs hide-sm text-small icon-ml">NEXT</span>
-                </a>
-            </li>
-            <li class="post-action">
-              
-                <a class="post-action-btn btn btn--default tooltip--top" href="/en/2022/03/talk-about-go-goroutines-information-and-how-to-prevent-goroutine-leaks/" data-tooltip="Talk about Go: Goroutine&#39;s information and how to prevent goroutine leaks">
-              
-                  <span class="hide-xs hide-sm text-small icon-mr">PREVIOUS</span>
-                  <i class="fa fa-angle-right"></i>
-                </a>
-            </li>
-          
-        </ul>
-      </nav>
-    <ul class="post-actions post-action-share" >
+      <div id="bottom-bar" class="post-bottom-bar" data-behavior="1">
+        
+<div class="post-actions-wrap">
+  <nav >
+    <ul class="post-actions post-action-nav">
       
-        <li class="post-action hide-lg hide-md hide-sm">
-          <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
-            <i class="fa fa-share-alt"></i>
-          </a>
+        <li class="post-action">
+          
+            <a class="post-action-btn btn btn--default tooltip--top" href="https://pixeldin.github.io/en/2022/05/talk-about-etcd-part1-hierarchy-overview-with-birds-eye-view/" data-tooltip="Talk about etcd (Part1): Hierarchy Overview with bird&#39;s eye view" aria-label="NEXT: Talk about etcd (Part1): Hierarchy Overview with bird&#39;s eye view">
+          
+              <i class="fa fa-angle-left"></i>
+              <span class="hide-xs hide-sm text-small icon-ml">NEXT</span>
+            </a>
         </li>
-        
+        <li class="post-action">
+          
+            <a class="post-action-btn btn btn--default tooltip--top" href="https://pixeldin.github.io/en/2022/03/talk-about-go-goroutines-information-and-how-to-prevent-goroutine-leaks/" data-tooltip="Talk about Go: Goroutine&#39;s information and how to prevent goroutine leaks" aria-label="PREVIOUS: Talk about Go: Goroutine&#39;s information and how to prevent goroutine leaks">
+          
+              <span class="hide-xs hide-sm text-small icon-mr">PREVIOUS</span>
+              <i class="fa fa-angle-right"></i>
+            </a>
+        </li>
       
-      
-      <li class="post-action">
-        
-          <a class="post-action-btn btn btn--default" href="#">
-        
-          <i class="fa fa-list"></i>
-        </a>
-      </li>
     </ul>
+  </nav>
+<ul class="post-actions post-action-share" >
   
+    <li class="post-action hide-lg hide-md hide-sm">
+      <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions" aria-label="Share this post">
+        <i class="fa fa-share-alt" aria-hidden="true"></i>
+      </a>
+    </li>
+    
+  
+  
+  <li class="post-action">
+    
+      <a class="post-action-btn btn btn--default" href="#top" aria-label="Back to top">
+      <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    
+    </a>
+  </li>
+</ul>
 </div>
 
+
       </div>
-      <div id="share-options-bar" class="share-options-bar" data-behavior="5">
-  <i id="btn-close-shareoptions" class="fa fa-close"></i>
-  <ul class="share-options">
-    
-  </ul>
-</div>
-<div id="share-options-mask" class="share-options-mask"></div>
+      
+
     </div>
     
     <div id="about">
   <div id="about-card">
     <div id="about-btn-close">
-      <i class="fa fa-remove"></i>
+      <i class="fa fa-times"></i>
     </div>
     
       <img id="about-card-picture" src="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/pig.jpg" alt="Author&#39;s picture" />
     
-    <h4 id="about-card-name">pixelpig</h4>
+    <h4 id="about-card-name">@Pixelpig</h4>
     
-      <div id="about-card-bio">With enthusiasm for open source and I am looking forward to be a better developer. Stay hungry, stay foolish <strong>:）</strong></div>
+      <div id="about-card-bio">Keep it simple, so as this bio <strong>:）</strong></div>
     
+    
+      <div id="about-card-job">
+        <i class="fa fa-briefcase"></i>
+        <br/>
+        Software Developer
+      </div>
     
     
       <div id="about-card-location">
-        <i class="fa fa-map-marker"></i>
+        <i class="fa fa-map-marker-alt"></i>
         <br/>
-        GuangDong - CHINA
+        GuangDong - China
       </div>
     
   </div>
@@ -714,30 +741,16 @@ At this time, each P should consider whether my variable is affected by the cont
 
 
     
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js" integrity="sha256-/BfiIkHlHoVihZdc6TFuj7MmJ0TWcWsMXkeDFwhi0zw=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.1.0/highlight.min.js" integrity="sha512-z+/WWfyD5tccCukM4VvONpEtLmbAm5LDu7eKiyMQJ9m7OfPEDL7gENyDRL3Yfe8XAuGsS2fS4xSMnl6d30kqGQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.7/js/jquery.fancybox.min.js" integrity="sha256-GEAnjcTqVP+vBp3SSc8bEDQqvWAZMiHyUSIorrWwH50=" crossorigin="anonymous"></script>
-
-
-<script src="/js/script-pcw6v3xilnxydl1vddzazdverrnn9ctynvnxgwho987mfyqkuylcb1nlt.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js" integrity="sha512-uURl+ZXMBrF4AwGaWmEetzrd+J5/8NRkWAvJx5sbPSSuOb0bZLqf+tOzniObO00BjHa/dD7gub9oCGMLPQHtQA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 
-<script lang="javascript">
-window.onload = updateMinWidth;
-window.onresize = updateMinWidth;
-document.getElementById("sidebar").addEventListener("transitionend", updateMinWidth);
-function updateMinWidth() {
-  var sidebar = document.getElementById("sidebar");
-  var main = document.getElementById("main");
-  main.style.minWidth = "";
-  var w1 = getComputedStyle(main).getPropertyValue("min-width");
-  var w2 = getComputedStyle(sidebar).getPropertyValue("width");
-  var w3 = getComputedStyle(sidebar).getPropertyValue("left");
-  main.style.minWidth = `calc(${w1} - ${w2} - ${w3})`;
-}
-</script>
+<script src="https://pixeldin.github.io/js/script-d9gfx1pdvbfdgoahypizomgoamlbumvk1ugdifqa59ynqvdh8wfsinmt5oj.min.js"></script>
+
+
 
 <script>
 $(document).ready(function() {
@@ -750,11 +763,6 @@ $(document).ready(function() {
   });
 });
 </script>
-
-
-  
-    
-  
 
 
 

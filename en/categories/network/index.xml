@@ -1,36 +1,36 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Network on pixelpig.space</title>
-    <link>/en/categories/network/</link>
-    <description>Recent content in Network on pixelpig.space</description>
+    <title>Network on pixelpig.tech</title>
+    <link>https://pixeldin.github.io/en/categories/network/</link>
+    <description>Recent content in Network on pixelpig.tech</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 04 Feb 2022 00:00:00 +0000</lastBuildDate><atom:link href="/en/categories/network/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 04 Feb 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://pixeldin.github.io/en/categories/network/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Talk about Go: Network programming about grouping and unpacking in TCP flow</title>
-      <link>/en/2022/02/talk-about-go-network-programming-about-grouping-and-unpacking-in-tcp-flow/</link>
+      <link>https://pixeldin.github.io/en/2022/02/talk-about-go-network-programming-about-grouping-and-unpacking-in-tcp-flow/</link>
       <pubDate>Fri, 04 Feb 2022 00:00:00 +0000</pubDate>
       
-      <guid>/en/2022/02/talk-about-go-network-programming-about-grouping-and-unpacking-in-tcp-flow/</guid>
+      <guid>https://pixeldin.github.io/en/2022/02/talk-about-go-network-programming-about-grouping-and-unpacking-in-tcp-flow/</guid>
       <description>&lt;p&gt;As we all know, packet body transmission is an import part of network communication, whether it is the &lt;code&gt;header&lt;/code&gt; or &lt;code&gt;body&lt;/code&gt; of HTTP packets at the application layer, or the streaming data of TCP at the transport layer.&lt;/p&gt;</description>
     </item>
     
     <item>
       <title>Talk about Go: Network programming--TCP Connection Management</title>
-      <link>/en/2021/05/talk-about-go-network-programming-tcp-connection-management/</link>
+      <link>https://pixeldin.github.io/en/2021/05/talk-about-go-network-programming--tcp-connection-management/</link>
       <pubDate>Sun, 16 May 2021 00:00:00 +0000</pubDate>
       
-      <guid>/en/2021/05/talk-about-go-network-programming-tcp-connection-management/</guid>
+      <guid>https://pixeldin.github.io/en/2021/05/talk-about-go-network-programming--tcp-connection-management/</guid>
       <description>&lt;p&gt;In the last article, we talked about how to initiate a TCP connection in Go, and listed a full-duplex demo. Today, we will talk about connection pool management further.&lt;/p&gt;</description>
     </item>
     
     <item>
       <title>Talk about Go: Network programming--TCP Communication</title>
-      <link>/en/2021/05/talk-about-go-network-programming-tcp-communication/</link>
+      <link>https://pixeldin.github.io/en/2021/05/talk-about-go-network-programming--tcp-communication/</link>
       <pubDate>Sat, 15 May 2021 00:00:00 +0000</pubDate>
       
-      <guid>/en/2021/05/talk-about-go-network-programming-tcp-communication/</guid>
+      <guid>https://pixeldin.github.io/en/2021/05/talk-about-go-network-programming--tcp-communication/</guid>
       <description>&lt;p&gt;In the seven-layer protocol of network layering, we know that TCP is below the HTTP layer. In essence, the HTTP packet body parsing is established based on the underlying TCP connection.&lt;/p&gt;</description>
     </item>
     

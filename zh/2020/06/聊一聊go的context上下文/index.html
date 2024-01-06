@@ -2,11 +2,31 @@
 <html lang="zh-cn">
   <head>
     
+    <script type="application/ld+json">
+
+{  
+  "@context":"http://schema.org",
+  "@type":"Website",
+  "@id":"https:\/\/pixeldin.github.io\/",
+  "author": {
+    "@type": "Person",
+    "name": "@Pixelpig",
+    
+    "image": "https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/pig.jpg"
+    
+  },
+  "name":"pixelpig.tech",
+  "description":"\u003cp\u003e前面在“聊一聊http框架\u003cstrong\u003ehttprouter\u003c\/strong\u003e”的时候，提到了上下文的概念\u003c\/p\u003e",
+  "url":"https:\/\/pixeldin.github.io\/zh\/2020\/06\/%E8%81%8A%E4%B8%80%E8%81%8Ago%E7%9A%84context%E4%B8%8A%E4%B8%8B%E6%96%87\/",
+  "keywords":"[]"
+}
+
+</script>
     <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="generator" content="Hugo 0.80.0 with theme Tranquilpeak 0.4.8-BETA">
-<meta name="author" content="pixelpig">
+<meta name="generator" content="Hugo 0.111.3 with theme Tranquilpeak 0.5.3-BETA">
+<meta name="author" content="@Pixelpig">
 <meta name="keywords" content="">
 <meta name="description" content="前面在“聊一聊http框架httprouter”的时候，提到了上下文的概念">
 
@@ -15,9 +35,9 @@
 <meta property="og:type" content="article">
 <meta property="og:title" content="聊一聊Go的Context上下文">
 <meta name="twitter:title" content="聊一聊Go的Context上下文">
-<meta property="og:url" content="/zh/2020/06/%E8%81%8A%E4%B8%80%E8%81%8Ago%E7%9A%84context%E4%B8%8A%E4%B8%8B%E6%96%87/">
-<meta property="twitter:url" content="/zh/2020/06/%E8%81%8A%E4%B8%80%E8%81%8Ago%E7%9A%84context%E4%B8%8A%E4%B8%8B%E6%96%87/">
-<meta property="og:site_name" content="pixelpig.space">
+<meta property="og:url" content="https://pixeldin.github.io/zh/2020/06/%E8%81%8A%E4%B8%80%E8%81%8Ago%E7%9A%84context%E4%B8%8A%E4%B8%8B%E6%96%87/">
+<meta property="twitter:url" content="https://pixeldin.github.io/zh/2020/06/%E8%81%8A%E4%B8%80%E8%81%8Ago%E7%9A%84context%E4%B8%8A%E4%B8%8B%E6%96%87/">
+<meta property="og:site_name" content="pixelpig.tech">
 <meta property="og:description" content="前面在“聊一聊http框架httprouter”的时候，提到了上下文的概念">
 <meta name="twitter:description" content="前面在“聊一聊http框架httprouter”的时候，提到了上下文的概念">
 <meta property="og:locale" content="zh">
@@ -53,12 +73,12 @@
 
 
 
-
-
-
-
   <meta property="og:image" content="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/pig.jpg">
   <meta property="twitter:image" content="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/pig.jpg">
+
+
+
+
 
 
     <title>聊一聊Go的Context上下文</title>
@@ -68,15 +88,15 @@
 
     
 
-    <link rel="canonical" href="/zh/2020/06/%E8%81%8A%E4%B8%80%E8%81%8Ago%E7%9A%84context%E4%B8%8A%E4%B8%8B%E6%96%87/">
+    <link rel="canonical" href="https://pixeldin.github.io/zh/2020/06/%E8%81%8A%E4%B8%80%E8%81%8Ago%E7%9A%84context%E4%B8%8A%E4%B8%8B%E6%96%87/">
 
     
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/jquery.fancybox.min.css" integrity="sha256-vuXZ9LGmmwtjqFX1F+EKin1ThZMub58gKULUyf0qECk=" crossorigin="anonymous" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/helpers/jquery.fancybox-thumbs.min.css" integrity="sha256-SEa4XYAHihTcEP1f5gARTB2K26Uk8PsndQYHQC1f4jU=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" integrity="sha512-H9jrZiiopUdsLpg94A333EfumgUBpO9MdbxStdeITo+KEIMaNfHNvwyjjDJb+ERPaRS6DpyRlKbvPUasNItRyw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     
     
-    <link rel="stylesheet" href="/css/style-twzjdbqhmnnacqs0pwwdzcdbt8yhv8giawvjqjmyfoqnvazl0dalmnhdkvp7.min.css" />
+    
+    <link rel="stylesheet" href="https://pixeldin.github.io/css/style-fneuerdunt9vf6vafpewt2nttopqa9hdugoae6mfs7phtuibtq6qjxkds96.min.css" />
     
     
 
@@ -88,15 +108,15 @@
 
   <body>
     <div id="blog">
-      <header id="header" data-behavior="5">
+      <header id="header" data-behavior="1">
   <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
   <div class="header-title">
-    <a class="header-title-link" href="/zh/">pixelpig.space</a>
+    <a class="header-title-link" href="https://pixeldin.github.io/zh/" aria-label="去首页">pixelpig.tech</a>
   </div>
   
     
       <a class="header-right-picture "
-         href="/#about">
+         href="https://pixeldin.github.io/#about" aria-label="打开链接: /#about">
     
     
     
@@ -108,16 +128,16 @@
   
 </header>
 
-      <nav id="sidebar" data-behavior="5">
+      <nav id="sidebar" data-behavior="1">
   <div class="sidebar-container">
     
       <div class="sidebar-profile">
-        <a href="/#about">
+        <a href="https://pixeldin.github.io/#about" aria-label="阅读有关作者的更多信息">
           <img class="sidebar-profile-picture" src="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/pig.jpg" alt="作者的图片" />
         </a>
-        <h4 class="sidebar-profile-name">pixelpig</h4>
+        <h4 class="sidebar-profile-name">@Pixelpig</h4>
         
-          <h5 class="sidebar-profile-bio">With enthusiasm for open source and I am looking forward to be a better developer. Stay hungry, stay foolish <strong>:）</strong></h5>
+          <h5 class="sidebar-profile-bio">Keep it simple, so as this bio <strong>:）</strong></h5>
         
       </div>
     
@@ -125,7 +145,7 @@
       
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="/en">
+      <a class="sidebar-button-link " href="https://pixeldin.github.io/en" title="English">
     
       <i class="sidebar-button-icon fa fa-lg fa-language"></i>
       
@@ -135,7 +155,7 @@
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="/zh/">
+      <a class="sidebar-button-link " href="https://pixeldin.github.io/zh/" title="Home">
     
       <i class="sidebar-button-icon fa fa-lg fa-home"></i>
       
@@ -145,7 +165,7 @@
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="/zh/categories">
+      <a class="sidebar-button-link " href="https://pixeldin.github.io/zh/categories" title="Categories">
     
       <i class="sidebar-button-icon fa fa-lg fa-bookmark"></i>
       
@@ -155,7 +175,7 @@
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="/zh/tags">
+      <a class="sidebar-button-link " href="https://pixeldin.github.io/zh/tags" title="Tags">
     
       <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
       
@@ -165,7 +185,7 @@
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="/zh/archives">
+      <a class="sidebar-button-link " href="https://pixeldin.github.io/zh/archives" title="Archives">
     
       <i class="sidebar-button-icon fa fa-lg fa-archive"></i>
       
@@ -175,9 +195,9 @@
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="/zh/#about">
+      <a class="sidebar-button-link " href="https://pixeldin.github.io/zh/#about" title="About">
     
-      <i class="sidebar-button-icon fa fa-lg fa-question"></i>
+      <i class="sidebar-button-icon fa fa-lg fa-question-circle"></i>
       
       <span class="sidebar-button-desc">关于我</span>
     </a>
@@ -185,22 +205,25 @@
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="https://github.com/pixeldin" target="_blank" rel="noopener">
+      <a class="sidebar-button-link " href="https://github.com/pixeldin" target="_blank" rel="noopener" title="pixeldin">
     
-      <i class="sidebar-button-icon fa fa-lg fa-github"></i>
+      <i class="sidebar-button-icon fab fa-lg fa-github-alt"></i>
       
-      <span class="sidebar-button-desc">pixeldin</span>
+      <span class="sidebar-button-desc">github</span>
     </a>
   </li>
 
 
-    </ul>
-    <ul class="sidebar-buttons">
-      
 
     </ul>
     <ul class="sidebar-buttons">
       
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+
 
     </ul>
   </div>
@@ -208,23 +231,23 @@
 
       
 
-      <div id="main" data-behavior="5"
+      <div id="main" data-behavior="1"
         class="
                hasCoverMetaIn
                ">
-        <article class="post" itemscope itemType="http://schema.org/BlogPosting">
+        <article class="post" id="top">
           
           
             <div class="post-header main-content-wrap text-left">
   
-    <h1 class="post-title" itemprop="headline">
+    <h1 class="post-title">
       聊一聊Go的Context上下文
     </h1>
   
   
   <div class="postShorten-meta post-meta">
     
-      <time itemprop="datePublished" datetime="2020-06-19T00:00:00Z">
+      <time datetime="2020-06-19T00:00:00Z">
         
   六月 19, 2020
 
@@ -235,7 +258,7 @@
   
     <span>发布在</span>
     
-      <a class="category-link" href="/zh/categories/go">Go</a>
+      <a class="category-link" href="https://pixeldin.github.io/zh/categories/go">Go</a>
     
   
 
@@ -243,7 +266,7 @@
 
 </div>
           
-          <div class="post-content markdown" itemprop="articleBody">
+          <div class="post-content markdown">
             <div class="main-content-wrap">
               <p>前面在“聊一聊http框架<strong>httprouter</strong>”的时候，提到了上下文的概念</p>
 <h3 id="前言">前言</h3>
@@ -252,57 +275,57 @@
 <h3 id="问题引入">问题引入</h3>
 <p>在列举上下文的用法之前，我们来看一个简单的示例：</p>
 <h4 id="协程泄露">协程泄露</h4>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>()  {
-	<span style="color:#75715e">//打印已有协程数量
-</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;Start with goroutines num:&#34;</span>, <span style="color:#a6e22e">runtime</span>.<span style="color:#a6e22e">NumGoroutine</span>())
-	<span style="color:#75715e">//新起子协程
-</span><span style="color:#75715e"></span>	<span style="color:#66d9ef">go</span> <span style="color:#a6e22e">Spawn</span>()
-	<span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Sleep</span>(<span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Second</span>)
-	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;Before finished, goroutines num:&#34;</span>, <span style="color:#a6e22e">runtime</span>.<span style="color:#a6e22e">NumGoroutine</span>())
-	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;Main routines exit!&#34;</span>)
-}
-
-<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">Spawn</span>()  {
-	<span style="color:#a6e22e">count</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">1</span>
-	<span style="color:#66d9ef">for</span> {
-		<span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Sleep</span>(<span style="color:#ae81ff">100</span> <span style="color:#f92672">*</span> <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Millisecond</span>)
-		<span style="color:#a6e22e">count</span><span style="color:#f92672">++</span>
-	}
-}
-</code></pre></div><p><strong>输出：</strong></p>
-<pre><code>Start with goroutines num: 1
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>()  {
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">//打印已有协程数量
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;Start with goroutines num:&#34;</span>, <span style="color:#a6e22e">runtime</span>.<span style="color:#a6e22e">NumGoroutine</span>())
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">//新起子协程
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#66d9ef">go</span> <span style="color:#a6e22e">Spawn</span>()
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Sleep</span>(<span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Second</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;Before finished, goroutines num:&#34;</span>, <span style="color:#a6e22e">runtime</span>.<span style="color:#a6e22e">NumGoroutine</span>())
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;Main routines exit!&#34;</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">Spawn</span>()  {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">count</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">for</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Sleep</span>(<span style="color:#ae81ff">100</span> <span style="color:#f92672">*</span> <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Millisecond</span>)
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">count</span><span style="color:#f92672">++</span>
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p><strong>输出：</strong></p>
+<pre tabindex="0"><code>Start with goroutines num: 1
 Before finished, goroutines num: 2
 Main routines exit!
 </code></pre><p>我们在主协程创建一个子协程，利用<code>runtime.NumGoroutine()</code>打印当前协程数量，可以知道在<strong>main协程</strong>被唤醒之后退出前的那一刻，程序中仍然存在两个协程，可能我们已经习惯了这种现象，杀掉主协程的时候，退出会附带把子协程干掉，这种让子协程“自生自灭”的做法，其实是不太优雅的。</p>
 <h3 id="解决方式">解决方式</h3>
 <h4 id="管道通知退出">管道通知退出</h4>
 <p>关于控制子协程的退出，可能有人会想到另一个做法，我们再来看另一个例子。</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>()  {
-	<span style="color:#66d9ef">defer</span> <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;Main routines exit!&#34;</span>)
-	<span style="color:#a6e22e">ExitBySignal</span>()
-	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;Start with goroutines num:&#34;</span>, <span style="color:#a6e22e">runtime</span>.<span style="color:#a6e22e">NumGoroutine</span>())
-	<span style="color:#75715e">//主动通知协程退出
-</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">sig</span> <span style="color:#f92672">&lt;-</span> <span style="color:#66d9ef">true</span>
-	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;Before finished, goroutines num:&#34;</span>, <span style="color:#a6e22e">runtime</span>.<span style="color:#a6e22e">NumGoroutine</span>())
-}
-
-<span style="color:#75715e">//利用管道通知协程退出
-</span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">ListenWithSignal</span>()  {
-	<span style="color:#a6e22e">count</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">1</span>
-	<span style="color:#66d9ef">for</span> {
-		<span style="color:#66d9ef">select</span> {
-		<span style="color:#75715e">//监听通知
-</span><span style="color:#75715e"></span>		<span style="color:#66d9ef">case</span> <span style="color:#f92672">&lt;-</span><span style="color:#a6e22e">sig</span>:
-			<span style="color:#66d9ef">return</span>
-		<span style="color:#66d9ef">default</span>:
-			<span style="color:#75715e">//正常执行
-</span><span style="color:#75715e"></span>			<span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Sleep</span>(<span style="color:#ae81ff">100</span> <span style="color:#f92672">*</span> <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Millisecond</span>)
-			<span style="color:#a6e22e">count</span><span style="color:#f92672">++</span>
-		}
-	}
-}
-</code></pre></div><p><strong>输出：</strong></p>
-<pre><code>Start with goroutines num: 2
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>()  {
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">defer</span> <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;Main routines exit!&#34;</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">ExitBySignal</span>()
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;Start with goroutines num:&#34;</span>, <span style="color:#a6e22e">runtime</span>.<span style="color:#a6e22e">NumGoroutine</span>())
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">//主动通知协程退出
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">sig</span> <span style="color:#f92672">&lt;-</span> <span style="color:#66d9ef">true</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;Before finished, goroutines num:&#34;</span>, <span style="color:#a6e22e">runtime</span>.<span style="color:#a6e22e">NumGoroutine</span>())
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">//利用管道通知协程退出
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">ListenWithSignal</span>()  {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">count</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">for</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">select</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#75715e">//监听通知
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>		<span style="color:#66d9ef">case</span> <span style="color:#f92672">&lt;-</span><span style="color:#a6e22e">sig</span>:
+</span></span><span style="display:flex;"><span>			<span style="color:#66d9ef">return</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">default</span>:
+</span></span><span style="display:flex;"><span>			<span style="color:#75715e">//正常执行
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>			<span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Sleep</span>(<span style="color:#ae81ff">100</span> <span style="color:#f92672">*</span> <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Millisecond</span>)
+</span></span><span style="display:flex;"><span>			<span style="color:#a6e22e">count</span><span style="color:#f92672">++</span>
+</span></span><span style="display:flex;"><span>		}
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p><strong>输出：</strong></p>
+<pre tabindex="0"><code>Start with goroutines num: 2
 Before finished, goroutines num: 1
 Main routines exit!
 </code></pre><p>上面这个例子可以说相对优雅一些，在main协程里面主动通知子协程退出，不过两者之间的仍然存在依赖，假如子协程A又创建了新的协程B，这个时候通知只能到达子A，新协程B是无法感知的，因此同样可能会存在协程泄露的现象。</p>
@@ -315,20 +338,20 @@ Main routines exit!
 Context&rsquo;s methods may be called by multiple goroutines simultaneously.<br>
 上下文带着截止时间、cancel信号、还有在API之间提供值读写。</p>
 </blockquote>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Context</span> <span style="color:#66d9ef">interface</span> {
-	<span style="color:#75715e">// 返回该上下文的截止时间，如果没有设置截至时间，第二个值返回false
-</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">Deadline</span>() (<span style="color:#a6e22e">deadline</span> <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Time</span>, <span style="color:#a6e22e">ok</span> <span style="color:#66d9ef">bool</span>)
-
-	<span style="color:#75715e">// 返回一个管道，上下文结束(cancel)时该方法会执行，经常结合select块监听
-</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">Done</span>() <span style="color:#f92672">&lt;-</span><span style="color:#66d9ef">chan</span> <span style="color:#66d9ef">struct</span>{}
-
-	<span style="color:#75715e">// 当Done()执行时，Err()会返回一个error解释退出原因
-</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">Err</span>() <span style="color:#66d9ef">error</span>
-
-	<span style="color:#75715e">// 上下文值存储字典
-</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">Value</span>(<span style="color:#a6e22e">key</span> <span style="color:#66d9ef">interface</span>{}) <span style="color:#66d9ef">interface</span>{}
-}
-</code></pre></div><p>其中较为常用的是<code>context.Withcancel()</code>函数，它会返回一个包装了<code>cancel()</code>函数的子上下文，当我们认为协程需要结束的时候，调用其返回值<code>cancel()</code>函数，子上下文会关闭内部封装的管道<code>Done()</code>来通知相应协程。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Context</span> <span style="color:#66d9ef">interface</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// 返回该上下文的截止时间，如果没有设置截至时间，第二个值返回false
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">Deadline</span>() (<span style="color:#a6e22e">deadline</span> <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Time</span>, <span style="color:#a6e22e">ok</span> <span style="color:#66d9ef">bool</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// 返回一个管道，上下文结束(cancel)时该方法会执行，经常结合select块监听
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">Done</span>() <span style="color:#f92672">&lt;-</span><span style="color:#66d9ef">chan</span> <span style="color:#66d9ef">struct</span>{}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// 当Done()执行时，Err()会返回一个error解释退出原因
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">Err</span>() <span style="color:#66d9ef">error</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// 上下文值存储字典
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">Value</span>(<span style="color:#a6e22e">key</span> <span style="color:#66d9ef">interface</span>{}) <span style="color:#66d9ef">interface</span>{}
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>其中较为常用的是<code>context.Withcancel()</code>函数，它会返回一个包装了<code>cancel()</code>函数的子上下文，当我们认为协程需要结束的时候，调用其返回值<code>cancel()</code>函数，子上下文会关闭内部封装的管道<code>Done()</code>来通知相应协程。</p>
 <!-- raw HTML omitted -->
 <!-- raw HTML omitted -->
 <!-- raw HTML omitted -->
@@ -338,86 +361,86 @@ Context&rsquo;s methods may be called by multiple goroutines simultaneously.<br>
 <!-- raw HTML omitted -->
 <!-- raw HTML omitted -->
 <!-- raw HTML omitted -->
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#75715e">// Canceling this context releases resources associated with it, so code should
-</span><span style="color:#75715e">// call cancel as soon as the operations running in this Context complete.
-</span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">WithCancel</span>(<span style="color:#a6e22e">parent</span> <span style="color:#a6e22e">Context</span>) (<span style="color:#a6e22e">ctx</span> <span style="color:#a6e22e">Context</span>, <span style="color:#a6e22e">cancel</span> <span style="color:#a6e22e">CancelFunc</span>) {
-    <span style="color:#75715e">//返回新的cancelCtx子上下文
-</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">c</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">newCancelCtx</span>(<span style="color:#a6e22e">parent</span>)
-    <span style="color:#75715e">//将原上下文
-</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">propagateCancel</span>(<span style="color:#a6e22e">parent</span>, <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">c</span>)
-	<span style="color:#66d9ef">return</span> <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">c</span>, <span style="color:#66d9ef">func</span>() { <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">cancel</span>(<span style="color:#66d9ef">true</span>, <span style="color:#a6e22e">Canceled</span>) }
-}
-</code></pre></div><p>我们继续引入一个协程泄漏的demo，来看下具体使用例子：<br>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#75715e">// Canceling this context releases resources associated with it, so code should
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// call cancel as soon as the operations running in this Context complete.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">WithCancel</span>(<span style="color:#a6e22e">parent</span> <span style="color:#a6e22e">Context</span>) (<span style="color:#a6e22e">ctx</span> <span style="color:#a6e22e">Context</span>, <span style="color:#a6e22e">cancel</span> <span style="color:#a6e22e">CancelFunc</span>) {
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">//返回新的cancelCtx子上下文
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#a6e22e">c</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">newCancelCtx</span>(<span style="color:#a6e22e">parent</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">//将原上下文
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">propagateCancel</span>(<span style="color:#a6e22e">parent</span>, <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">c</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">c</span>, <span style="color:#66d9ef">func</span>() { <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">cancel</span>(<span style="color:#66d9ef">true</span>, <span style="color:#a6e22e">Canceled</span>) }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>我们继续引入一个协程泄漏的demo，来看下具体使用例子：<br>
 <strong>使用示例：</strong></p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#75715e">//阻塞两个子协程，预期只有一个协程会正常退出
-</span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">LeakSomeRoutine</span>() <span style="color:#66d9ef">int</span> {
-	<span style="color:#a6e22e">ch</span> <span style="color:#f92672">:=</span> make(<span style="color:#66d9ef">chan</span> <span style="color:#66d9ef">int</span>)
-	<span style="color:#75715e">//起3个协程抢着输入到ch
-</span><span style="color:#75715e"></span>	<span style="color:#66d9ef">go</span> <span style="color:#66d9ef">func</span>() {
-		<span style="color:#a6e22e">ch</span> <span style="color:#f92672">&lt;-</span> <span style="color:#ae81ff">1</span>
-	}()
-
-	<span style="color:#66d9ef">go</span> <span style="color:#66d9ef">func</span>() {
-		<span style="color:#a6e22e">ch</span> <span style="color:#f92672">&lt;-</span> <span style="color:#ae81ff">2</span>
-	}()
-
-	<span style="color:#66d9ef">go</span> <span style="color:#66d9ef">func</span>() {
-		<span style="color:#a6e22e">ch</span> <span style="color:#f92672">&lt;-</span> <span style="color:#ae81ff">3</span>
-	}()
-	<span style="color:#75715e">//一有输入立刻返回
-</span><span style="color:#75715e"></span>	<span style="color:#66d9ef">return</span> <span style="color:#f92672">&lt;-</span><span style="color:#a6e22e">ch</span>
-}
-
-<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
-	<span style="color:#75715e">//每一层循环泄漏两个协程
-</span><span style="color:#75715e"></span>	<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">0</span>; <span style="color:#a6e22e">i</span> &lt; <span style="color:#ae81ff">4</span>; <span style="color:#a6e22e">i</span><span style="color:#f92672">++</span> {
-		<span style="color:#a6e22e">LeakSomeRoutine</span>()
-		<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;#Goroutines in roop end: %d.\n&#34;</span>, <span style="color:#a6e22e">runtime</span>.<span style="color:#a6e22e">NumGoroutine</span>())
-	}
-}
-</code></pre></div><p><strong>程序输出：</strong></p>
-<pre><code>#Goroutines in roop end: 3.
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#75715e">//阻塞两个子协程，预期只有一个协程会正常退出
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">LeakSomeRoutine</span>() <span style="color:#66d9ef">int</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">ch</span> <span style="color:#f92672">:=</span> make(<span style="color:#66d9ef">chan</span> <span style="color:#66d9ef">int</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">//起3个协程抢着输入到ch
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#66d9ef">go</span> <span style="color:#66d9ef">func</span>() {
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">ch</span> <span style="color:#f92672">&lt;-</span> <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>	}()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">go</span> <span style="color:#66d9ef">func</span>() {
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">ch</span> <span style="color:#f92672">&lt;-</span> <span style="color:#ae81ff">2</span>
+</span></span><span style="display:flex;"><span>	}()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">go</span> <span style="color:#66d9ef">func</span>() {
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">ch</span> <span style="color:#f92672">&lt;-</span> <span style="color:#ae81ff">3</span>
+</span></span><span style="display:flex;"><span>	}()
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">//一有输入立刻返回
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#66d9ef">return</span> <span style="color:#f92672">&lt;-</span><span style="color:#a6e22e">ch</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">//每一层循环泄漏两个协程
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">0</span>; <span style="color:#a6e22e">i</span> &lt; <span style="color:#ae81ff">4</span>; <span style="color:#a6e22e">i</span><span style="color:#f92672">++</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">LeakSomeRoutine</span>()
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;#Goroutines in roop end: %d.\n&#34;</span>, <span style="color:#a6e22e">runtime</span>.<span style="color:#a6e22e">NumGoroutine</span>())
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p><strong>程序输出：</strong></p>
+<pre tabindex="0"><code>#Goroutines in roop end: 3.
 #Goroutines in roop end: 5.
 #Goroutines in roop end: 7.
 #Goroutines in roop end: 9.
 </code></pre><p>可以看到，随着循环次数增加，除去main协程，每一轮都<strong>泄漏两个协程</strong>，所以程序退出之前最终有9个协程。</p>
 <p>接下来我们引入上下文的概念，来管理子协程：</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">FixLeakingByContex</span>() {
-	<span style="color:#75715e">//创建上下文用于管理子协程
-</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">ctx</span>, <span style="color:#a6e22e">cancel</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">WithCancel</span>(<span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">Background</span>())
-
-	<span style="color:#75715e">//结束前清理未结束协程
-</span><span style="color:#75715e"></span>	<span style="color:#66d9ef">defer</span> <span style="color:#a6e22e">cancel</span>()
-
-	<span style="color:#a6e22e">ch</span> <span style="color:#f92672">:=</span> make(<span style="color:#66d9ef">chan</span> <span style="color:#66d9ef">int</span>)
-	<span style="color:#66d9ef">go</span> <span style="color:#a6e22e">CancelByContext</span>(<span style="color:#a6e22e">ctx</span>, <span style="color:#a6e22e">ch</span>)
-	<span style="color:#66d9ef">go</span> <span style="color:#a6e22e">CancelByContext</span>(<span style="color:#a6e22e">ctx</span>, <span style="color:#a6e22e">ch</span>)
-	<span style="color:#66d9ef">go</span> <span style="color:#a6e22e">CancelByContext</span>(<span style="color:#a6e22e">ctx</span>, <span style="color:#a6e22e">ch</span>)
-
-	<span style="color:#75715e">// 随机触发某个子协程退出
-</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">ch</span> <span style="color:#f92672">&lt;-</span> <span style="color:#ae81ff">1</span>
-}
-
-<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">CancelByContext</span>(<span style="color:#a6e22e">ctx</span> <span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">Context</span>, <span style="color:#a6e22e">ch</span> <span style="color:#66d9ef">chan</span> (<span style="color:#66d9ef">int</span>)) <span style="color:#66d9ef">int</span> {
-	<span style="color:#66d9ef">select</span> {
-	<span style="color:#66d9ef">case</span> <span style="color:#f92672">&lt;-</span><span style="color:#a6e22e">ctx</span>.<span style="color:#a6e22e">Done</span>():
-		<span style="color:#75715e">//fmt.Println(&#34;cancel by ctx.&#34;)
-</span><span style="color:#75715e"></span>		<span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>
-	<span style="color:#66d9ef">case</span> <span style="color:#a6e22e">n</span> <span style="color:#f92672">:=</span> <span style="color:#f92672">&lt;-</span><span style="color:#a6e22e">ch</span> :
-		<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">n</span>
-	}
-}
-
-<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
-	<span style="color:#75715e">//每一层循环泄漏两个协程
-</span><span style="color:#75715e"></span>	<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">0</span>; <span style="color:#a6e22e">i</span> &lt; <span style="color:#ae81ff">4</span>; <span style="color:#a6e22e">i</span><span style="color:#f92672">++</span> {
-		<span style="color:#a6e22e">FixLeakingByContex</span>()
-		<span style="color:#75715e">//给它点时间 异步清理协程
-</span><span style="color:#75715e"></span>		<span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Sleep</span>(<span style="color:#ae81ff">100</span>)
-		<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;#Goroutines in roop end: %d.\n&#34;</span>, <span style="color:#a6e22e">runtime</span>.<span style="color:#a6e22e">NumGoroutine</span>())
-	}
-}
-</code></pre></div><p><strong>程序分析：</strong><br>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">FixLeakingByContex</span>() {
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">//创建上下文用于管理子协程
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">ctx</span>, <span style="color:#a6e22e">cancel</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">WithCancel</span>(<span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">Background</span>())
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">//结束前清理未结束协程
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#66d9ef">defer</span> <span style="color:#a6e22e">cancel</span>()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">ch</span> <span style="color:#f92672">:=</span> make(<span style="color:#66d9ef">chan</span> <span style="color:#66d9ef">int</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">go</span> <span style="color:#a6e22e">CancelByContext</span>(<span style="color:#a6e22e">ctx</span>, <span style="color:#a6e22e">ch</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">go</span> <span style="color:#a6e22e">CancelByContext</span>(<span style="color:#a6e22e">ctx</span>, <span style="color:#a6e22e">ch</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">go</span> <span style="color:#a6e22e">CancelByContext</span>(<span style="color:#a6e22e">ctx</span>, <span style="color:#a6e22e">ch</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// 随机触发某个子协程退出
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">ch</span> <span style="color:#f92672">&lt;-</span> <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">CancelByContext</span>(<span style="color:#a6e22e">ctx</span> <span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">Context</span>, <span style="color:#a6e22e">ch</span> <span style="color:#66d9ef">chan</span> (<span style="color:#66d9ef">int</span>)) <span style="color:#66d9ef">int</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">select</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">case</span> <span style="color:#f92672">&lt;-</span><span style="color:#a6e22e">ctx</span>.<span style="color:#a6e22e">Done</span>():
+</span></span><span style="display:flex;"><span>		<span style="color:#75715e">//fmt.Println(&#34;cancel by ctx.&#34;)
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>		<span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">case</span> <span style="color:#a6e22e">n</span> <span style="color:#f92672">:=</span> <span style="color:#f92672">&lt;-</span><span style="color:#a6e22e">ch</span> :
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">n</span>
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">//每一层循环泄漏两个协程
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">0</span>; <span style="color:#a6e22e">i</span> &lt; <span style="color:#ae81ff">4</span>; <span style="color:#a6e22e">i</span><span style="color:#f92672">++</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">FixLeakingByContex</span>()
+</span></span><span style="display:flex;"><span>		<span style="color:#75715e">//给它点时间 异步清理协程
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>		<span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Sleep</span>(<span style="color:#ae81ff">100</span>)
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;#Goroutines in roop end: %d.\n&#34;</span>, <span style="color:#a6e22e">runtime</span>.<span style="color:#a6e22e">NumGoroutine</span>())
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p><strong>程序分析：</strong><br>
 可以看到<code>CancelByContext</code>函数对管道进行轮询，程序只有两个分支方可return</p>
 <ul>
 <li>上下文通知结束</li>
@@ -425,7 +448,7 @@ Context&rsquo;s methods may be called by multiple goroutines simultaneously.<br>
 </ul>
 <p>我们在<code>FixLeakingByContex()</code>函数结束前defer了<code>cancel()</code>函数，因此会在程序退出前把相应的子协程<strong>clean</strong>掉，所以可以看到如下输出，每一轮都只剩下一个<strong>main</strong>协程。</p>
 <p><strong>程序输出：</strong></p>
-<pre><code>#Goroutines in roop end: 1.
+<pre tabindex="0"><code>#Goroutines in roop end: 1.
 #Goroutines in roop end: 1.
 #Goroutines in roop end: 1.
 #Goroutines in roop end: 1.
@@ -433,72 +456,72 @@ Context&rsquo;s methods may be called by multiple goroutines simultaneously.<br>
 <p>除了我们手动调用cancel函数退出之外，标准库还提供了两个限时退出的操作，<code>WithDeadline(parent Context, d time.Time)</code>以及<code>WithTimeout(parent Context, timeout time.Duration) (Context, CancelFunc)</code>函数，可以传入一个时间点或者时间段，表示经过该时间之后自动调用该上下文的<code>Done()</code>函数。</p>
 <p><strong>使用示例：</strong><br>
 我们摘取官网一个demo：</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
-	<span style="color:#75715e">// 由于传入时间为50微妙，因此在select选择块中，ctx.Done()分支会先执行
-</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">ctx</span>, <span style="color:#a6e22e">cancel</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">WithTimeout</span>(<span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">Background</span>(), <span style="color:#ae81ff">50</span><span style="color:#f92672">*</span><span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Millisecond</span>)
-	<span style="color:#66d9ef">defer</span> <span style="color:#a6e22e">cancel</span>()
-
-	<span style="color:#66d9ef">select</span> {
-	<span style="color:#66d9ef">case</span> <span style="color:#f92672">&lt;-</span><span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">After</span>(<span style="color:#ae81ff">1</span> <span style="color:#f92672">*</span> <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Second</span>):
-		<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;overslept&#34;</span>)
-	<span style="color:#66d9ef">case</span> <span style="color:#f92672">&lt;-</span><span style="color:#a6e22e">ctx</span>.<span style="color:#a6e22e">Done</span>():
-		<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">ctx</span>.<span style="color:#a6e22e">Err</span>()) <span style="color:#75715e">// prints &#34;context deadline exceeded&#34;
-</span><span style="color:#75715e"></span>	}
-}
-<span style="color:#75715e">//输出： context deadline exceeded
-</span></code></pre></div><hr>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// 由于传入时间为50微妙，因此在select选择块中，ctx.Done()分支会先执行
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">ctx</span>, <span style="color:#a6e22e">cancel</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">WithTimeout</span>(<span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">Background</span>(), <span style="color:#ae81ff">50</span><span style="color:#f92672">*</span><span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Millisecond</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">defer</span> <span style="color:#a6e22e">cancel</span>()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">select</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">case</span> <span style="color:#f92672">&lt;-</span><span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">After</span>(<span style="color:#ae81ff">1</span> <span style="color:#f92672">*</span> <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Second</span>):
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;overslept&#34;</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">case</span> <span style="color:#f92672">&lt;-</span><span style="color:#a6e22e">ctx</span>.<span style="color:#a6e22e">Done</span>():
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">ctx</span>.<span style="color:#a6e22e">Err</span>()) <span style="color:#75715e">// prints &#34;context deadline exceeded&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	}
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#75715e">//输出： context deadline exceeded
+</span></span></span></code></pre></div><hr>
 <h4 id="请求超时">请求超时</h4>
 <p>关于上下文<code>WithTimeout()</code>函数的用法，还可以判断一个<code>http</code>请求是否超时。</p>
 <p><strong>程序示例：</strong></p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">TestTimeReqWithContext</span>(<span style="color:#a6e22e">t</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">testing</span>.<span style="color:#a6e22e">T</span>) {
-	<span style="color:#75715e">//初始化http请求
-</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">request</span>, <span style="color:#a6e22e">e</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">NewRequest</span>(<span style="color:#e6db74">&#34;GET&#34;</span>, <span style="color:#e6db74">&#34;https://www.pixelpigpigpig.xyz&#34;</span>, <span style="color:#66d9ef">nil</span>)
-	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">e</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
-		<span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;Error: &#34;</span>, <span style="color:#a6e22e">e</span>)
-		<span style="color:#66d9ef">return</span>
-	}
-
-	<span style="color:#75715e">//使用Request生成子上下文, 并且设置截止时间为10毫秒
-</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">ctx</span>, <span style="color:#a6e22e">cancelFunc</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">WithTimeout</span>(<span style="color:#a6e22e">request</span>.<span style="color:#a6e22e">Context</span>(), <span style="color:#ae81ff">10</span><span style="color:#f92672">*</span><span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Millisecond</span>)
-	<span style="color:#66d9ef">defer</span> <span style="color:#a6e22e">cancelFunc</span>()
-
-	<span style="color:#75715e">//绑定超时上下文到这个请求
-</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">request</span> = <span style="color:#a6e22e">request</span>.<span style="color:#a6e22e">WithContext</span>(<span style="color:#a6e22e">ctx</span>)
-
-	<span style="color:#75715e">//time.Sleep(20 * time.Millisecond)
-</span><span style="color:#75715e"></span>
-	<span style="color:#75715e">//发起请求
-</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">response</span>, <span style="color:#a6e22e">e</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">DefaultClient</span>.<span style="color:#a6e22e">Do</span>(<span style="color:#a6e22e">request</span>)
-	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">e</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
-		<span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;Error: &#34;</span>, <span style="color:#a6e22e">e</span>)
-		<span style="color:#66d9ef">return</span>
-	}
-
-	<span style="color:#66d9ef">defer</span> <span style="color:#a6e22e">response</span>.<span style="color:#a6e22e">Body</span>.<span style="color:#a6e22e">Close</span>()
-	<span style="color:#75715e">//如果请求没问题, 打印body到控制台
-</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">io</span>.<span style="color:#a6e22e">Copy</span>(<span style="color:#a6e22e">os</span>.<span style="color:#a6e22e">Stdout</span>, <span style="color:#a6e22e">response</span>.<span style="color:#a6e22e">Body</span>)
-
-}
-</code></pre></div><p>我们给请求限时10毫秒，执行可以看到程序打印上下文已经过期了。<br>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">TestTimeReqWithContext</span>(<span style="color:#a6e22e">t</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">testing</span>.<span style="color:#a6e22e">T</span>) {
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">//初始化http请求
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">request</span>, <span style="color:#a6e22e">e</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">NewRequest</span>(<span style="color:#e6db74">&#34;GET&#34;</span>, <span style="color:#e6db74">&#34;https://www.pixelpigpigpig.xyz&#34;</span>, <span style="color:#66d9ef">nil</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">e</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;Error: &#34;</span>, <span style="color:#a6e22e">e</span>)
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">return</span>
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">//使用Request生成子上下文, 并且设置截止时间为10毫秒
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">ctx</span>, <span style="color:#a6e22e">cancelFunc</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">WithTimeout</span>(<span style="color:#a6e22e">request</span>.<span style="color:#a6e22e">Context</span>(), <span style="color:#ae81ff">10</span><span style="color:#f92672">*</span><span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Millisecond</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">defer</span> <span style="color:#a6e22e">cancelFunc</span>()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">//绑定超时上下文到这个请求
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">request</span> = <span style="color:#a6e22e">request</span>.<span style="color:#a6e22e">WithContext</span>(<span style="color:#a6e22e">ctx</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">//time.Sleep(20 * time.Millisecond)
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">//发起请求
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">response</span>, <span style="color:#a6e22e">e</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">DefaultClient</span>.<span style="color:#a6e22e">Do</span>(<span style="color:#a6e22e">request</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">e</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;Error: &#34;</span>, <span style="color:#a6e22e">e</span>)
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">return</span>
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">defer</span> <span style="color:#a6e22e">response</span>.<span style="color:#a6e22e">Body</span>.<span style="color:#a6e22e">Close</span>()
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">//如果请求没问题, 打印body到控制台
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">io</span>.<span style="color:#a6e22e">Copy</span>(<span style="color:#a6e22e">os</span>.<span style="color:#a6e22e">Stdout</span>, <span style="color:#a6e22e">response</span>.<span style="color:#a6e22e">Body</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>我们给请求限时10毫秒，执行可以看到程序打印上下文已经过期了。<br>
 <strong>输出示例：</strong></p>
-<pre><code>=== RUN   TestTimeReqWithContext
+<pre tabindex="0"><code>=== RUN   TestTimeReqWithContext
 2020/05/16 23:17:14 Error:  Get https://www.pixelpigpigpig.xyz: context deadline exceeded
 </code></pre><hr>
 <h3 id="context值读写">Context值读写</h3>
 <p>如前面所示， <code>context</code>还提供了一个读写的函数签名：</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#75715e">// 上下文值存储字典
-</span><span style="color:#75715e"></span><span style="color:#a6e22e">Value</span>(<span style="color:#a6e22e">key</span> <span style="color:#66d9ef">interface</span>{}) <span style="color:#66d9ef">interface</span>{}
-</code></pre></div><p>关于它的用法，之前在“聊一聊httpRouter”的文章中列举过，可以这样子使用，</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#75715e">// 上下文值存储字典
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#a6e22e">Value</span>(<span style="color:#a6e22e">key</span> <span style="color:#66d9ef">interface</span>{}) <span style="color:#66d9ef">interface</span>{}
+</span></span></code></pre></div><p>关于它的用法，之前在“聊一聊httpRouter”的文章中列举过，可以这样子使用，</p>
 <p><strong>示例：</strong></p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#75715e">// 获取顶级上下文
-</span><span style="color:#75715e"></span><span style="color:#a6e22e">ctx</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">Background</span>()
-<span style="color:#75715e">// 在上下文写入string值, 注意需要返回新的value上下文
-</span><span style="color:#75715e"></span><span style="color:#a6e22e">valueCtx</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">WithValue</span>(<span style="color:#a6e22e">ctx</span>, <span style="color:#e6db74">&#34;hello&#34;</span>, <span style="color:#e6db74">&#34;pixel&#34;</span>)
-<span style="color:#a6e22e">value</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">valueCtx</span>.<span style="color:#a6e22e">Value</span>(<span style="color:#e6db74">&#34;hello&#34;</span>)
-<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">value</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
-	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;Params type: %v, value: %v.\n&#34;</span>, <span style="color:#a6e22e">reflect</span>.<span style="color:#a6e22e">TypeOf</span>(<span style="color:#a6e22e">value</span>), <span style="color:#a6e22e">value</span>)
-}
-</code></pre></div><p><code>context.Background()</code>是一个非空的顶级上下文，只要程序还在它就不会取消，也没有嵌入值，经常被main函数所使用。<br>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#75715e">// 获取顶级上下文
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#a6e22e">ctx</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">Background</span>()
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// 在上下文写入string值, 注意需要返回新的value上下文
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#a6e22e">valueCtx</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">WithValue</span>(<span style="color:#a6e22e">ctx</span>, <span style="color:#e6db74">&#34;hello&#34;</span>, <span style="color:#e6db74">&#34;pixel&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">value</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">valueCtx</span>.<span style="color:#a6e22e">Value</span>(<span style="color:#e6db74">&#34;hello&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span> <span style="color:#a6e22e">value</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;Params type: %v, value: %v.\n&#34;</span>, <span style="color:#a6e22e">reflect</span>.<span style="color:#a6e22e">TypeOf</span>(<span style="color:#a6e22e">value</span>), <span style="color:#a6e22e">value</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p><code>context.Background()</code>是一个非空的顶级上下文，只要程序还在它就不会取消，也没有嵌入值，经常被main函数所使用。<br>
 关于<code>context</code>的值读取，在Go规范中有一个约定，不应使用它来封装寿命长期的参数，一般仅用于传输一个请求作用域的值，关于程序的业务参数应该暴露出来，放在函数参数列表中，以提高可读性。</p>
 <hr>
 <h3 id="context的作用域">Context的作用域</h3>
@@ -523,6 +546,8 @@ Context&rsquo;s methods may be called by multiple goroutines simultaneously.<br>
 <strong>Context should go away for Go 2</strong>(“关于Go上下文泛滥的吐槽”)<br>
 <a href="https://faiface.github.io/post/context-should-go-away-go2/">https://faiface.github.io/post/context-should-go-away-go2/</a></p>
               
+
+
             </div>
           </div>
           <div id="post-footer" class="post-footer main-content-wrap">
@@ -533,129 +558,131 @@ Context&rsquo;s methods may be called by multiple goroutines simultaneously.<br>
                   <div class="post-footer-tags">
                     <span class="text-color-light text-small">标签</span><br/>
                     
-  <a class="tag tag--primary tag--small" href="/zh/tags/gin/">Gin</a>
+  <a class="tag tag--primary tag--small" href="https://pixeldin.github.io/zh/tags/gin/">Gin</a>
 
                   </div>
                 
               
             
-            <div class="post-actions-wrap">
-  
-      <nav >
-        <ul class="post-actions post-action-nav">
-          
-            <li class="post-action">
-              
-                <a class="post-action-btn btn btn--default tooltip--top" href="/zh/2020/10/%E8%81%8A%E4%B8%80%E8%81%8A%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%BA%BF%E7%A8%8B%E8%B0%83%E5%BA%A6%E4%B8%8Ego%E5%8D%8F%E7%A8%8B/" data-tooltip="聊一聊操作系统线程调度与Go协程">
-              
-                  <i class="fa fa-angle-left"></i>
-                  <span class="hide-xs hide-sm text-small icon-ml">下一篇</span>
-                </a>
-            </li>
-            <li class="post-action">
-              
-                <a class="post-action-btn btn btn--default tooltip--top" href="/zh/2020/06/%E8%81%8A%E4%B8%80%E8%81%8Agin-web%E6%A1%86%E6%9E%B6%E4%B9%8B%E5%89%8D%E7%9C%8B%E4%B8%80%E7%9C%BChttprouter/" data-tooltip="聊一聊Gin Web框架之前，看一眼httprouter">
-              
-                  <span class="hide-xs hide-sm text-small icon-mr">上一篇</span>
-                  <i class="fa fa-angle-right"></i>
-                </a>
-            </li>
-          
-        </ul>
-      </nav>
-    <ul class="post-actions post-action-share" >
+            
+<div class="post-actions-wrap">
+  <nav >
+    <ul class="post-actions post-action-nav">
       
+        <li class="post-action">
+          
+            <a class="post-action-btn btn btn--default tooltip--top" href="https://pixeldin.github.io/zh/2020/10/%E8%81%8A%E4%B8%80%E8%81%8A%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%BA%BF%E7%A8%8B%E8%B0%83%E5%BA%A6%E4%B8%8Ego%E5%8D%8F%E7%A8%8B/" data-tooltip="聊一聊操作系统线程调度与Go协程" aria-label="后一篇: 聊一聊操作系统线程调度与Go协程">
+          
+              <i class="fa fa-angle-left"></i>
+              <span class="hide-xs hide-sm text-small icon-ml">后一篇</span>
+            </a>
+        </li>
+        <li class="post-action">
+          
+            <a class="post-action-btn btn btn--default tooltip--top" href="https://pixeldin.github.io/zh/2020/06/%E8%81%8A%E4%B8%80%E8%81%8Agin-web%E6%A1%86%E6%9E%B6%E4%B9%8B%E5%89%8D%E7%9C%8B%E4%B8%80%E7%9C%BChttprouter/" data-tooltip="聊一聊Gin Web框架之前，看一眼httprouter" aria-label="前一篇: 聊一聊Gin Web框架之前，看一眼httprouter">
+          
+              <span class="hide-xs hide-sm text-small icon-mr">前一篇</span>
+              <i class="fa fa-angle-right"></i>
+            </a>
+        </li>
       
-      <li class="post-action">
-        
-          <a class="post-action-btn btn btn--default" href="#">
-        
-          <i class="fa fa-list"></i>
-        </a>
-      </li>
     </ul>
+  </nav>
+<ul class="post-actions post-action-share" >
   
+  
+  <li class="post-action">
+    
+      <a class="post-action-btn btn btn--default" href="#top" aria-label="回到顶部">
+      <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    
+    </a>
+  </li>
+</ul>
 </div>
 
+
             
-              
-            
+  
+
+
           </div>
         </article>
         <footer id="footer" class="main-content-wrap">
   <span class="copyrights">
-    &copy; 2024 <a href="https://github.com/pixeldin">pixeldin</a>. All Rights Reserved
+    &copy; 2023 <a href="https://github.com/pixeldin">pixeldin</a>. All Rights Reserved
   </span>
 </footer>
 
       </div>
-      <div id="bottom-bar" class="post-bottom-bar" data-behavior="5">
-        <div class="post-actions-wrap">
-  
-      <nav >
-        <ul class="post-actions post-action-nav">
-          
-            <li class="post-action">
-              
-                <a class="post-action-btn btn btn--default tooltip--top" href="/zh/2020/10/%E8%81%8A%E4%B8%80%E8%81%8A%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%BA%BF%E7%A8%8B%E8%B0%83%E5%BA%A6%E4%B8%8Ego%E5%8D%8F%E7%A8%8B/" data-tooltip="聊一聊操作系统线程调度与Go协程">
-              
-                  <i class="fa fa-angle-left"></i>
-                  <span class="hide-xs hide-sm text-small icon-ml">下一篇</span>
-                </a>
-            </li>
-            <li class="post-action">
-              
-                <a class="post-action-btn btn btn--default tooltip--top" href="/zh/2020/06/%E8%81%8A%E4%B8%80%E8%81%8Agin-web%E6%A1%86%E6%9E%B6%E4%B9%8B%E5%89%8D%E7%9C%8B%E4%B8%80%E7%9C%BChttprouter/" data-tooltip="聊一聊Gin Web框架之前，看一眼httprouter">
-              
-                  <span class="hide-xs hide-sm text-small icon-mr">上一篇</span>
-                  <i class="fa fa-angle-right"></i>
-                </a>
-            </li>
-          
-        </ul>
-      </nav>
-    <ul class="post-actions post-action-share" >
-      
-      
-      <li class="post-action">
+      <div id="bottom-bar" class="post-bottom-bar" data-behavior="1">
         
-          <a class="post-action-btn btn btn--default" href="#">
-        
-          <i class="fa fa-list"></i>
-        </a>
-      </li>
+<div class="post-actions-wrap">
+  <nav >
+    <ul class="post-actions post-action-nav">
+      
+        <li class="post-action">
+          
+            <a class="post-action-btn btn btn--default tooltip--top" href="https://pixeldin.github.io/zh/2020/10/%E8%81%8A%E4%B8%80%E8%81%8A%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%BA%BF%E7%A8%8B%E8%B0%83%E5%BA%A6%E4%B8%8Ego%E5%8D%8F%E7%A8%8B/" data-tooltip="聊一聊操作系统线程调度与Go协程" aria-label="后一篇: 聊一聊操作系统线程调度与Go协程">
+          
+              <i class="fa fa-angle-left"></i>
+              <span class="hide-xs hide-sm text-small icon-ml">后一篇</span>
+            </a>
+        </li>
+        <li class="post-action">
+          
+            <a class="post-action-btn btn btn--default tooltip--top" href="https://pixeldin.github.io/zh/2020/06/%E8%81%8A%E4%B8%80%E8%81%8Agin-web%E6%A1%86%E6%9E%B6%E4%B9%8B%E5%89%8D%E7%9C%8B%E4%B8%80%E7%9C%BChttprouter/" data-tooltip="聊一聊Gin Web框架之前，看一眼httprouter" aria-label="前一篇: 聊一聊Gin Web框架之前，看一眼httprouter">
+          
+              <span class="hide-xs hide-sm text-small icon-mr">前一篇</span>
+              <i class="fa fa-angle-right"></i>
+            </a>
+        </li>
+      
     </ul>
+  </nav>
+<ul class="post-actions post-action-share" >
   
+  
+  <li class="post-action">
+    
+      <a class="post-action-btn btn btn--default" href="#top" aria-label="回到顶部">
+      <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    
+    </a>
+  </li>
+</ul>
 </div>
 
+
       </div>
-      <div id="share-options-bar" class="share-options-bar" data-behavior="5">
-  <i id="btn-close-shareoptions" class="fa fa-close"></i>
-  <ul class="share-options">
-    
-  </ul>
-</div>
-<div id="share-options-mask" class="share-options-mask"></div>
+      
+
     </div>
     
     <div id="about">
   <div id="about-card">
     <div id="about-btn-close">
-      <i class="fa fa-remove"></i>
+      <i class="fa fa-times"></i>
     </div>
     
       <img id="about-card-picture" src="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/pig.jpg" alt="作者的图片" />
     
-    <h4 id="about-card-name">pixelpig</h4>
+    <h4 id="about-card-name">@Pixelpig</h4>
     
-      <div id="about-card-bio">With enthusiasm for open source and I am looking forward to be a better developer. Stay hungry, stay foolish <strong>:）</strong></div>
+      <div id="about-card-bio">Keep it simple, so as this bio <strong>:）</strong></div>
     
+    
+      <div id="about-card-job">
+        <i class="fa fa-briefcase"></i>
+        <br/>
+        Software Developer
+      </div>
     
     
       <div id="about-card-location">
-        <i class="fa fa-map-marker"></i>
+        <i class="fa fa-map-marker-alt"></i>
         <br/>
-        GuangDong - CHINA
+        GuangDong - China
       </div>
     
   </div>
@@ -670,30 +697,16 @@ Context&rsquo;s methods may be called by multiple goroutines simultaneously.<br>
 
 
     
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js" integrity="sha256-/BfiIkHlHoVihZdc6TFuj7MmJ0TWcWsMXkeDFwhi0zw=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.1.0/highlight.min.js" integrity="sha512-z+/WWfyD5tccCukM4VvONpEtLmbAm5LDu7eKiyMQJ9m7OfPEDL7gENyDRL3Yfe8XAuGsS2fS4xSMnl6d30kqGQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.7/js/jquery.fancybox.min.js" integrity="sha256-GEAnjcTqVP+vBp3SSc8bEDQqvWAZMiHyUSIorrWwH50=" crossorigin="anonymous"></script>
-
-
-<script src="/js/script-pcw6v3xilnxydl1vddzazdverrnn9ctynvnxgwho987mfyqkuylcb1nlt.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js" integrity="sha512-uURl+ZXMBrF4AwGaWmEetzrd+J5/8NRkWAvJx5sbPSSuOb0bZLqf+tOzniObO00BjHa/dD7gub9oCGMLPQHtQA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 
-<script lang="javascript">
-window.onload = updateMinWidth;
-window.onresize = updateMinWidth;
-document.getElementById("sidebar").addEventListener("transitionend", updateMinWidth);
-function updateMinWidth() {
-  var sidebar = document.getElementById("sidebar");
-  var main = document.getElementById("main");
-  main.style.minWidth = "";
-  var w1 = getComputedStyle(main).getPropertyValue("min-width");
-  var w2 = getComputedStyle(sidebar).getPropertyValue("width");
-  var w3 = getComputedStyle(sidebar).getPropertyValue("left");
-  main.style.minWidth = `calc(${w1} - ${w2} - ${w3})`;
-}
-</script>
+<script src="https://pixeldin.github.io/js/script-d9gfx1pdvbfdgoahypizomgoamlbumvk1ugdifqa59ynqvdh8wfsinmt5oj.min.js"></script>
+
+
 
 <script>
 $(document).ready(function() {
@@ -706,11 +719,6 @@ $(document).ready(function() {
   });
 });
 </script>
-
-
-  
-    
-  
 
 
 

@@ -2,11 +2,31 @@
 <html lang="zh-cn">
   <head>
     
+    <script type="application/ld+json">
+
+{  
+  "@context":"http://schema.org",
+  "@type":"Website",
+  "@id":"https:\/\/pixeldin.github.io\/",
+  "author": {
+    "@type": "Person",
+    "name": "@Pixelpig",
+    
+    "image": "https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/pig.jpg"
+    
+  },
+  "name":"pixelpig.tech",
+  "description":"\u003cp\u003e协程在Go里面是一个常见的概念，伴随着go程序的生命周期开始至结束。今天来聊一聊Go的协程泄露。\u003c\/p\u003e",
+  "url":"https:\/\/pixeldin.github.io\/zh\/2022\/03\/%E8%81%8A%E4%B8%80%E8%81%8Ago%E7%9A%84%E5%8D%8F%E7%A8%8B%E4%BF%A1%E6%81%AF%E5%92%8C%E5%A6%82%E4%BD%95%E9%A2%84%E9%98%B2%E6%B3%84%E9%9C%B2\/",
+  "keywords":"[]"
+}
+
+</script>
     <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="generator" content="Hugo 0.80.0 with theme Tranquilpeak 0.4.8-BETA">
-<meta name="author" content="pixelpig">
+<meta name="generator" content="Hugo 0.111.3 with theme Tranquilpeak 0.5.3-BETA">
+<meta name="author" content="@Pixelpig">
 <meta name="keywords" content="">
 <meta name="description" content="协程在Go里面是一个常见的概念，伴随着go程序的生命周期开始至结束。今天来聊一聊Go的协程泄露。">
 
@@ -15,9 +35,9 @@
 <meta property="og:type" content="article">
 <meta property="og:title" content="聊一聊Go的协程信息和如何预防泄露">
 <meta name="twitter:title" content="聊一聊Go的协程信息和如何预防泄露">
-<meta property="og:url" content="/zh/2022/03/%E8%81%8A%E4%B8%80%E8%81%8Ago%E7%9A%84%E5%8D%8F%E7%A8%8B%E4%BF%A1%E6%81%AF%E5%92%8C%E5%A6%82%E4%BD%95%E9%A2%84%E9%98%B2%E6%B3%84%E9%9C%B2/">
-<meta property="twitter:url" content="/zh/2022/03/%E8%81%8A%E4%B8%80%E8%81%8Ago%E7%9A%84%E5%8D%8F%E7%A8%8B%E4%BF%A1%E6%81%AF%E5%92%8C%E5%A6%82%E4%BD%95%E9%A2%84%E9%98%B2%E6%B3%84%E9%9C%B2/">
-<meta property="og:site_name" content="pixelpig.space">
+<meta property="og:url" content="https://pixeldin.github.io/zh/2022/03/%E8%81%8A%E4%B8%80%E8%81%8Ago%E7%9A%84%E5%8D%8F%E7%A8%8B%E4%BF%A1%E6%81%AF%E5%92%8C%E5%A6%82%E4%BD%95%E9%A2%84%E9%98%B2%E6%B3%84%E9%9C%B2/">
+<meta property="twitter:url" content="https://pixeldin.github.io/zh/2022/03/%E8%81%8A%E4%B8%80%E8%81%8Ago%E7%9A%84%E5%8D%8F%E7%A8%8B%E4%BF%A1%E6%81%AF%E5%92%8C%E5%A6%82%E4%BD%95%E9%A2%84%E9%98%B2%E6%B3%84%E9%9C%B2/">
+<meta property="og:site_name" content="pixelpig.tech">
 <meta property="og:description" content="协程在Go里面是一个常见的概念，伴随着go程序的生命周期开始至结束。今天来聊一聊Go的协程泄露。">
 <meta name="twitter:description" content="协程在Go里面是一个常见的概念，伴随着go程序的生命周期开始至结束。今天来聊一聊Go的协程泄露。">
 <meta property="og:locale" content="zh">
@@ -57,15 +77,15 @@
 
 
 
-  <meta property="og:image" content="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/blog/routine.PNG">
-  <meta property="twitter:image" content="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/blog/routine.PNG">
-
-
-
-
-
   <meta property="og:image" content="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/pig.jpg">
   <meta property="twitter:image" content="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/pig.jpg">
+
+
+
+
+
+  <meta property="og:image" content="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/blog/routine.PNG">
+  <meta property="twitter:image" content="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/blog/routine.PNG">
 
 
     <title>聊一聊Go的协程信息和如何预防泄露</title>
@@ -75,15 +95,15 @@
 
     
 
-    <link rel="canonical" href="/zh/2022/03/%E8%81%8A%E4%B8%80%E8%81%8Ago%E7%9A%84%E5%8D%8F%E7%A8%8B%E4%BF%A1%E6%81%AF%E5%92%8C%E5%A6%82%E4%BD%95%E9%A2%84%E9%98%B2%E6%B3%84%E9%9C%B2/">
+    <link rel="canonical" href="https://pixeldin.github.io/zh/2022/03/%E8%81%8A%E4%B8%80%E8%81%8Ago%E7%9A%84%E5%8D%8F%E7%A8%8B%E4%BF%A1%E6%81%AF%E5%92%8C%E5%A6%82%E4%BD%95%E9%A2%84%E9%98%B2%E6%B3%84%E9%9C%B2/">
 
     
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/jquery.fancybox.min.css" integrity="sha256-vuXZ9LGmmwtjqFX1F+EKin1ThZMub58gKULUyf0qECk=" crossorigin="anonymous" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/helpers/jquery.fancybox-thumbs.min.css" integrity="sha256-SEa4XYAHihTcEP1f5gARTB2K26Uk8PsndQYHQC1f4jU=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" integrity="sha512-H9jrZiiopUdsLpg94A333EfumgUBpO9MdbxStdeITo+KEIMaNfHNvwyjjDJb+ERPaRS6DpyRlKbvPUasNItRyw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     
     
-    <link rel="stylesheet" href="/css/style-twzjdbqhmnnacqs0pwwdzcdbt8yhv8giawvjqjmyfoqnvazl0dalmnhdkvp7.min.css" />
+    
+    <link rel="stylesheet" href="https://pixeldin.github.io/css/style-fneuerdunt9vf6vafpewt2nttopqa9hdugoae6mfs7phtuibtq6qjxkds96.min.css" />
     
     
 
@@ -95,15 +115,15 @@
 
   <body>
     <div id="blog">
-      <header id="header" data-behavior="5">
+      <header id="header" data-behavior="1">
   <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
   <div class="header-title">
-    <a class="header-title-link" href="/zh/">pixelpig.space</a>
+    <a class="header-title-link" href="https://pixeldin.github.io/zh/" aria-label="去首页">pixelpig.tech</a>
   </div>
   
     
       <a class="header-right-picture "
-         href="/#about">
+         href="https://pixeldin.github.io/#about" aria-label="打开链接: /#about">
     
     
     
@@ -115,16 +135,16 @@
   
 </header>
 
-      <nav id="sidebar" data-behavior="5">
+      <nav id="sidebar" data-behavior="1">
   <div class="sidebar-container">
     
       <div class="sidebar-profile">
-        <a href="/#about">
+        <a href="https://pixeldin.github.io/#about" aria-label="阅读有关作者的更多信息">
           <img class="sidebar-profile-picture" src="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/pig.jpg" alt="作者的图片" />
         </a>
-        <h4 class="sidebar-profile-name">pixelpig</h4>
+        <h4 class="sidebar-profile-name">@Pixelpig</h4>
         
-          <h5 class="sidebar-profile-bio">With enthusiasm for open source and I am looking forward to be a better developer. Stay hungry, stay foolish <strong>:）</strong></h5>
+          <h5 class="sidebar-profile-bio">Keep it simple, so as this bio <strong>:）</strong></h5>
         
       </div>
     
@@ -132,7 +152,7 @@
       
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="/en">
+      <a class="sidebar-button-link " href="https://pixeldin.github.io/en" title="English">
     
       <i class="sidebar-button-icon fa fa-lg fa-language"></i>
       
@@ -142,7 +162,7 @@
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="/zh/">
+      <a class="sidebar-button-link " href="https://pixeldin.github.io/zh/" title="Home">
     
       <i class="sidebar-button-icon fa fa-lg fa-home"></i>
       
@@ -152,7 +172,7 @@
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="/zh/categories">
+      <a class="sidebar-button-link " href="https://pixeldin.github.io/zh/categories" title="Categories">
     
       <i class="sidebar-button-icon fa fa-lg fa-bookmark"></i>
       
@@ -162,7 +182,7 @@
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="/zh/tags">
+      <a class="sidebar-button-link " href="https://pixeldin.github.io/zh/tags" title="Tags">
     
       <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
       
@@ -172,7 +192,7 @@
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="/zh/archives">
+      <a class="sidebar-button-link " href="https://pixeldin.github.io/zh/archives" title="Archives">
     
       <i class="sidebar-button-icon fa fa-lg fa-archive"></i>
       
@@ -182,9 +202,9 @@
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="/zh/#about">
+      <a class="sidebar-button-link " href="https://pixeldin.github.io/zh/#about" title="About">
     
-      <i class="sidebar-button-icon fa fa-lg fa-question"></i>
+      <i class="sidebar-button-icon fa fa-lg fa-question-circle"></i>
       
       <span class="sidebar-button-desc">关于我</span>
     </a>
@@ -192,22 +212,25 @@
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="https://github.com/pixeldin" target="_blank" rel="noopener">
+      <a class="sidebar-button-link " href="https://github.com/pixeldin" target="_blank" rel="noopener" title="pixeldin">
     
-      <i class="sidebar-button-icon fa fa-lg fa-github"></i>
+      <i class="sidebar-button-icon fab fa-lg fa-github-alt"></i>
       
-      <span class="sidebar-button-desc">pixeldin</span>
+      <span class="sidebar-button-desc">github</span>
     </a>
   </li>
 
 
-    </ul>
-    <ul class="sidebar-buttons">
-      
 
     </ul>
     <ul class="sidebar-buttons">
       
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+
 
     </ul>
   </div>
@@ -215,23 +238,23 @@
 
       
 
-      <div id="main" data-behavior="5"
+      <div id="main" data-behavior="1"
         class="
                hasCoverMetaIn
                ">
-        <article class="post" itemscope itemType="http://schema.org/BlogPosting">
+        <article class="post" id="top">
           
           
             <div class="post-header main-content-wrap text-center">
   
-    <h1 class="post-title" itemprop="headline">
+    <h1 class="post-title">
       聊一聊Go的协程信息和如何预防泄露
     </h1>
   
   
   <div class="postShorten-meta post-meta">
     
-      <time itemprop="datePublished" datetime="2022-03-17T00:00:00Z">
+      <time datetime="2022-03-17T00:00:00Z">
         
   三月 17, 2022
 
@@ -242,9 +265,9 @@
   
     <span>发布在</span>
     
-      <a class="category-link" href="/zh/categories/go">Go</a>, 
+      <a class="category-link" href="https://pixeldin.github.io/zh/categories/go">Go</a>, 
     
-      <a class="category-link" href="/zh/categories/%e5%90%8e%e7%ab%af">后端</a>
+      <a class="category-link" href="https://pixeldin.github.io/zh/categories/%e5%90%8e%e7%ab%af">后端</a>
     
   
 
@@ -252,364 +275,364 @@
 
 </div>
           
-          <div class="post-content markdown" itemprop="articleBody">
+          <div class="post-content markdown">
             <div class="main-content-wrap">
               <p>协程在Go里面是一个常见的概念，伴随着go程序的生命周期开始至结束。今天来聊一聊Go的协程泄露。</p>
 <p><img src="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/blog/road.PNG" alt="协程通信"></p>
 <h2 id="前言">前言</h2>
 <p>协程在Go里面是一个常见的概念，伴随着go程序的生命周期开始至结束。今天来聊一聊Go的协程泄露。<br>
-关于协程的底层概念，GMP模型等，之前在前面博客已经作过分析，感兴趣可以看下之前的文章<a href="/zh/2020/10/%E8%81%8A%E4%B8%80%E8%81%8A%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%BA%BF%E7%A8%8B%E8%B0%83%E5%BA%A6%E4%B8%8Ego%E5%8D%8F%E7%A8%8B/">聊一聊操作系统线程调度与Go协程</a></p>
+关于协程的底层概念，GMP模型等，之前在前面博客已经作过分析，感兴趣可以看下之前的文章<a href="https://pixeldin.github.io/zh/2020/10/%E8%81%8A%E4%B8%80%E8%81%8A%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%BA%BF%E7%A8%8B%E8%B0%83%E5%BA%A6%E4%B8%8Ego%E5%8D%8F%E7%A8%8B/">聊一聊操作系统线程调度与Go协程</a></p>
 <h2 id="泄露案例">泄露案例</h2>
 <p>关于协程泄露很常见的原因在于，有时候我们常常会忽略问题，直到资源负载异常才引起总是。
 之前排除生产环境异常的时候，曾经遇到过go程序内存泄露的场景，内存泄漏和协程泄露有很大关系，本质上都是资源不回收导致的。这里简单还原一下现场，细节已经经过删减，大概形式如下：</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">JumpForSignal</span>() <span style="color:#66d9ef">int</span> {
-    <span style="color:#a6e22e">ch</span> <span style="color:#f92672">:=</span> make(<span style="color:#66d9ef">chan</span> <span style="color:#66d9ef">int</span>)
-    <span style="color:#66d9ef">go</span> <span style="color:#66d9ef">func</span>() {
-        <span style="color:#a6e22e">ch</span> <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">bizMtx</span>
-    }()
-
-    <span style="color:#66d9ef">go</span> <span style="color:#66d9ef">func</span>() {
-        <span style="color:#a6e22e">ch</span> <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">bizMtx</span>
-    }()
-
-    <span style="color:#66d9ef">go</span> <span style="color:#66d9ef">func</span>() {
-        <span style="color:#a6e22e">ch</span> <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">bizMtx</span>
-    }()
-    <span style="color:#75715e">//一有输入立刻返回
-</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">return</span> <span style="color:#f92672">&lt;-</span><span style="color:#a6e22e">ch</span>
-}
-
-<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
-    <span style="color:#75715e">// ...
-</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">JumpForSignal</span>()
-    <span style="color:#75715e">// ...
-</span><span style="color:#75715e"></span>}
-</code></pre></div><p>事后分析这个demo可以得知，这个函数调用会阻塞两个子协程，预期只有一个协程会正常退出。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">JumpForSignal</span>() <span style="color:#66d9ef">int</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">ch</span> <span style="color:#f92672">:=</span> make(<span style="color:#66d9ef">chan</span> <span style="color:#66d9ef">int</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">go</span> <span style="color:#66d9ef">func</span>() {
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">ch</span> <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">bizMtx</span>
+</span></span><span style="display:flex;"><span>    }()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">go</span> <span style="color:#66d9ef">func</span>() {
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">ch</span> <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">bizMtx</span>
+</span></span><span style="display:flex;"><span>    }()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">go</span> <span style="color:#66d9ef">func</span>() {
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">ch</span> <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">bizMtx</span>
+</span></span><span style="display:flex;"><span>    }()
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">//一有输入立刻返回
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">return</span> <span style="color:#f92672">&lt;-</span><span style="color:#a6e22e">ch</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// ...
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#a6e22e">JumpForSignal</span>()
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// ...
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>}
+</span></span></code></pre></div><p>事后分析这个demo可以得知，这个函数调用会阻塞两个子协程，预期只有一个协程会正常退出。</p>
 <h2 id="获取协程信息">获取协程信息</h2>
 <p>既然存在协程泄露，我们在日常工作怎么避免或者发现它呢？下面我们列举几个思路。</p>
 <h3 id="遵守准则">遵守准则</h3>
 <p>由于Go是自带GC的语言，很多时候写代码不需要关心变量的资源释放，不像C程序员变量申请之后需要在结束处释放。但是Go的<code>chan</code>在使用时候是有一些准则的，当确定chan不再使用时候，可以在输出方进行close，避免其他协程还在等待该<code>chan</code>的输出。</p>
 <h3 id="协程数量">协程数量</h3>
 <p>找到泄露的协程，第一个能够想到的是协程数量，当你的函数处理逻辑比较简单，除了主协程之外，预期协程应该都在结束前返回，可以在main函数结束处调用<code>runtime</code>包的函数：</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#75715e">// NumGoroutine returns the number of goroutines that currently exist.
-</span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">NumGoroutine</span>() <span style="color:#66d9ef">int</span> {
-    <span style="color:#66d9ef">return</span> int(<span style="color:#a6e22e">gcount</span>())
-}
-</code></pre></div><p>通过它可以返回当前协程总数量：</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">Count</span>()  {
-    <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;Number of goroutines:%d\n&#34;</span>, <span style="color:#a6e22e">runtime</span>.<span style="color:#a6e22e">NumGoroutine</span>())
-}
-
-<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
-    <span style="color:#66d9ef">defer</span> <span style="color:#a6e22e">Count</span>()
-    <span style="color:#a6e22e">Count</span>()
-    <span style="color:#a6e22e">JumpForSignal</span>()
-}
-</code></pre></div><p>输出：</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">Number of goroutines:1
-Number of goroutines:3
-</code></pre></div><h3 id="协程函数栈">协程函数栈</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#75715e">// NumGoroutine returns the number of goroutines that currently exist.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">NumGoroutine</span>() <span style="color:#66d9ef">int</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> int(<span style="color:#a6e22e">gcount</span>())
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>通过它可以返回当前协程总数量：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">Count</span>()  {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;Number of goroutines:%d\n&#34;</span>, <span style="color:#a6e22e">runtime</span>.<span style="color:#a6e22e">NumGoroutine</span>())
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">defer</span> <span style="color:#a6e22e">Count</span>()
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">Count</span>()
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">JumpForSignal</span>()
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>输出：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>Number of goroutines:1
+</span></span><span style="display:flex;"><span>Number of goroutines:3
+</span></span></code></pre></div><h3 id="协程函数栈">协程函数栈</h3>
 <p>还有一种比较常见定位协程的形式，在Go里面，可以用于分析协程函数的上下文，常见的比如go自带的pprof也是通过这种方式获取，实际案例中，条件允许的情况可以开启<strong>pprof</strong>方便分析。</p>
 <p>下面来看一个示例，我们在上面的例子加一个<code>http</code>端口监听，用于接入go自带的<strong>pprof</strong>分析工具。</p>
 <p>随后在浏览器输入：</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#a6e22e">http</span>:<span style="color:#75715e">//localhost:8899/debug/pprof/goroutine?debug=1
-</span></code></pre></div><p>可以得到整个程序的协程列表：</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">goroutine profile: total <span style="color:#ae81ff">7</span>
-<span style="color:#ae81ff">1</span> @ 0x165eb6 0x126465 0x126235 0x29341e 0x19de01
-<span style="color:#75715e">#   0x29341d    pixelgo/leak.JumpForSignal.func1+0x3d   F:/code/pixelGo/src/pix-demo/leak/leak.go:24</span>
-
-<span style="color:#ae81ff">1</span> @ 0x165eb6 0x126465 0x126235 0x29347e 0x19de01
-<span style="color:#75715e">#   0x29347d    pixelgo/leak.JumpForSignal.func2+0x3d   F:/code/pixelGo/src/pix-demo/leak/leak.go:28</span>
-
-<span style="color:#ae81ff">1</span> @ 0x165eb6 0x15bb3d 0x1975a5 0x228d05 0x229d8d 0x22c40d 0x321765 0x33437c 0x447c89 0x285239 0x285606 0x4493f3 0x450da8 0x19de01
-<span style="color:#75715e">#   0x1975a4    internal/poll.runtime_pollWait+0x64 D:/dev/go1.16/src/runtime/netpoll.go:227</span>
-<span style="color:#75715e">#   0x228d04    internal/poll.(*pollDesc).wait+0xa4 D:/dev/go1.16/src/internal/poll/fd_poll_runtime.go:87</span>
-<span style="color:#75715e">#   0x229d8c    internal/poll.execIO+0x2ac      D:/dev/go1.16/src/internal/poll/fd_windows.go:175</span>
-<span style="color:#75715e">#   0x22c40c    internal/poll.(*FD).Read+0x56c      </span>
-
-// ...
-</code></pre></div><p>结论是：当前程序一共有7个协程，可以看出分别有1个协程分配在<code>F:/code/pixelGo/src/pix-demo/leak/leak.go:24</code> 和<code>F:/code/pixelGo/src/pix-demo/leak/leak.go:28</code>，正是上文泄露的代码块。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">http</span>:<span style="color:#75715e">//localhost:8899/debug/pprof/goroutine?debug=1
+</span></span></span></code></pre></div><p>可以得到整个程序的协程列表：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>goroutine profile: total <span style="color:#ae81ff">7</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">1</span> @ 0x165eb6 0x126465 0x126235 0x29341e 0x19de01
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#   0x29341d    pixelgo/leak.JumpForSignal.func1+0x3d   F:/code/pixelGo/src/pix-demo/leak/leak.go:24</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">1</span> @ 0x165eb6 0x126465 0x126235 0x29347e 0x19de01
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#   0x29347d    pixelgo/leak.JumpForSignal.func2+0x3d   F:/code/pixelGo/src/pix-demo/leak/leak.go:28</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">1</span> @ 0x165eb6 0x15bb3d 0x1975a5 0x228d05 0x229d8d 0x22c40d 0x321765 0x33437c 0x447c89 0x285239 0x285606 0x4493f3 0x450da8 0x19de01
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#   0x1975a4    internal/poll.runtime_pollWait+0x64 D:/dev/go1.16/src/runtime/netpoll.go:227</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#   0x228d04    internal/poll.(*pollDesc).wait+0xa4 D:/dev/go1.16/src/internal/poll/fd_poll_runtime.go:87</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#   0x229d8c    internal/poll.execIO+0x2ac      D:/dev/go1.16/src/internal/poll/fd_windows.go:175</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#   0x22c40c    internal/poll.(*FD).Read+0x56c      </span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>// ...
+</span></span></code></pre></div><p>结论是：当前程序一共有7个协程，可以看出分别有1个协程分配在<code>F:/code/pixelGo/src/pix-demo/leak/leak.go:24</code> 和<code>F:/code/pixelGo/src/pix-demo/leak/leak.go:28</code>，正是上文泄露的代码块。</p>
 <p>有时候还可以多维度去分析，比如输入：</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#a6e22e">http</span>:<span style="color:#75715e">//localhost:8899/debug/pprof/goroutine?debug=2
-</span></code></pre></div><p>可以通过协程后面的标签,看到当前协程的不同状态，<strong>running/io wait/chan send</strong></p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#a6e22e">goroutine</span> <span style="color:#ae81ff">9</span> [<span style="color:#a6e22e">running</span>]:
-<span style="color:#a6e22e">runtime</span><span style="color:#f92672">/</span><span style="color:#a6e22e">pprof</span>.<span style="color:#a6e22e">writeGoroutineStacks</span>(<span style="color:#ae81ff">0x7f7d00</span>, <span style="color:#ae81ff">0xc0000aa000</span>, <span style="color:#ae81ff">0x0</span>, <span style="color:#ae81ff">0x0</span>)
-    <span style="color:#a6e22e">D</span>:<span style="color:#f92672">/</span><span style="color:#a6e22e">dev</span><span style="color:#f92672">/</span><span style="color:#a6e22e">go1</span><span style="color:#ae81ff">.16</span><span style="color:#f92672">/</span><span style="color:#a6e22e">src</span><span style="color:#f92672">/</span><span style="color:#a6e22e">runtime</span><span style="color:#f92672">/</span><span style="color:#a6e22e">pprof</span><span style="color:#f92672">/</span><span style="color:#a6e22e">pprof</span>.<span style="color:#66d9ef">go</span>:<span style="color:#ae81ff">693</span> <span style="color:#f92672">+</span><span style="color:#ae81ff">0xc5</span>
-<span style="color:#a6e22e">net</span><span style="color:#f92672">/</span><span style="color:#a6e22e">http</span><span style="color:#f92672">/</span><span style="color:#a6e22e">pprof</span>.<span style="color:#a6e22e">handler</span>.<span style="color:#a6e22e">ServeHTTP</span>(<span style="color:#ae81ff">0xc000094011</span>, <span style="color:#ae81ff">0x9</span>, <span style="color:#ae81ff">0x7fba40</span>, <span style="color:#ae81ff">0xc0000aa000</span>, <span style="color:#ae81ff">0xc000092000</span>)
-    <span style="color:#75715e">//..
-</span><span style="color:#75715e"></span>
-<span style="color:#a6e22e">goroutine</span> <span style="color:#ae81ff">1</span> [<span style="color:#a6e22e">IO</span> <span style="color:#a6e22e">wait</span>]:
-<span style="color:#a6e22e">internal</span><span style="color:#f92672">/</span><span style="color:#a6e22e">poll</span>.<span style="color:#a6e22e">runtime_pollWait</span>(<span style="color:#ae81ff">0x223debb10d8</span>, <span style="color:#ae81ff">0x72</span>, <span style="color:#ae81ff">0xc000152f48</span>)
-    <span style="color:#a6e22e">D</span>:<span style="color:#f92672">/</span><span style="color:#a6e22e">dev</span><span style="color:#f92672">/</span><span style="color:#a6e22e">go1</span><span style="color:#ae81ff">.16</span><span style="color:#f92672">/</span><span style="color:#a6e22e">src</span><span style="color:#f92672">/</span><span style="color:#a6e22e">runtime</span><span style="color:#f92672">/</span><span style="color:#a6e22e">netpoll</span>.<span style="color:#66d9ef">go</span>:<span style="color:#ae81ff">227</span> <span style="color:#f92672">+</span><span style="color:#ae81ff">0x65</span>
-<span style="color:#a6e22e">internal</span><span style="color:#f92672">/</span><span style="color:#a6e22e">poll</span>.(<span style="color:#f92672">*</span><span style="color:#a6e22e">pollDesc</span>).<span style="color:#a6e22e">wait</span>(<span style="color:#ae81ff">0xc0001530b8</span>, <span style="color:#ae81ff">0x72</span>, <span style="color:#ae81ff">0x93b400</span>, <span style="color:#ae81ff">0x0</span>, <span style="color:#ae81ff">0x0</span>)
-    <span style="color:#75715e">//...
-</span><span style="color:#75715e"></span>
-<span style="color:#a6e22e">goroutine</span> <span style="color:#ae81ff">6</span> [<span style="color:#66d9ef">chan</span> <span style="color:#a6e22e">send</span>]:
-<span style="color:#a6e22e">pixelgo</span><span style="color:#f92672">/</span><span style="color:#a6e22e">rout</span>.<span style="color:#a6e22e">JumpForSignal</span>.<span style="color:#a6e22e">func1</span>(<span style="color:#ae81ff">0xc000053800</span>)
-    <span style="color:#a6e22e">F</span>:<span style="color:#f92672">/</span><span style="color:#a6e22e">code</span><span style="color:#f92672">/</span><span style="color:#a6e22e">pixelGo</span><span style="color:#f92672">/</span><span style="color:#a6e22e">src</span><span style="color:#f92672">/</span><span style="color:#a6e22e">pix</span><span style="color:#f92672">-</span><span style="color:#a6e22e">demo</span><span style="color:#f92672">/</span><span style="color:#a6e22e">rout</span><span style="color:#f92672">/</span><span style="color:#a6e22e">leak</span>.<span style="color:#66d9ef">go</span>:<span style="color:#ae81ff">25</span> <span style="color:#f92672">+</span><span style="color:#ae81ff">0x10e</span>
-<span style="color:#a6e22e">created</span> <span style="color:#a6e22e">by</span> <span style="color:#a6e22e">pixelgo</span><span style="color:#f92672">/</span><span style="color:#a6e22e">rout</span>.<span style="color:#a6e22e">JumpForSignal</span>
-    <span style="color:#a6e22e">F</span>:<span style="color:#f92672">/</span><span style="color:#a6e22e">code</span><span style="color:#f92672">/</span><span style="color:#a6e22e">pixelGo</span><span style="color:#f92672">/</span><span style="color:#a6e22e">src</span><span style="color:#f92672">/</span><span style="color:#a6e22e">pix</span><span style="color:#f92672">-</span><span style="color:#a6e22e">demo</span><span style="color:#f92672">/</span><span style="color:#a6e22e">rout</span><span style="color:#f92672">/</span><span style="color:#a6e22e">leak</span>.<span style="color:#66d9ef">go</span>:<span style="color:#ae81ff">23</span> <span style="color:#f92672">+</span><span style="color:#ae81ff">0x71</span>
-
-<span style="color:#a6e22e">goroutine</span> <span style="color:#ae81ff">7</span> [<span style="color:#66d9ef">chan</span> <span style="color:#a6e22e">send</span>]:
-<span style="color:#a6e22e">pixelgo</span><span style="color:#f92672">/</span><span style="color:#a6e22e">rout</span>.<span style="color:#a6e22e">JumpForSignal</span>.<span style="color:#a6e22e">func2</span>(<span style="color:#ae81ff">0xc000053800</span>)
-    <span style="color:#a6e22e">F</span>:<span style="color:#f92672">/</span><span style="color:#a6e22e">code</span><span style="color:#f92672">/</span><span style="color:#a6e22e">pixelGo</span><span style="color:#f92672">/</span><span style="color:#a6e22e">src</span><span style="color:#f92672">/</span><span style="color:#a6e22e">pix</span><span style="color:#f92672">-</span><span style="color:#a6e22e">demo</span><span style="color:#f92672">/</span><span style="color:#a6e22e">rout</span><span style="color:#f92672">/</span><span style="color:#a6e22e">leak</span>.<span style="color:#66d9ef">go</span>:<span style="color:#ae81ff">30</span> <span style="color:#f92672">+</span><span style="color:#ae81ff">0x10e</span>
-<span style="color:#a6e22e">created</span> <span style="color:#a6e22e">by</span> <span style="color:#a6e22e">pixelgo</span><span style="color:#f92672">/</span><span style="color:#a6e22e">rout</span>.<span style="color:#a6e22e">JumpForSignal</span>
-    <span style="color:#a6e22e">F</span>:<span style="color:#f92672">/</span><span style="color:#a6e22e">code</span><span style="color:#f92672">/</span><span style="color:#a6e22e">pixelGo</span><span style="color:#f92672">/</span><span style="color:#a6e22e">src</span><span style="color:#f92672">/</span><span style="color:#a6e22e">pix</span><span style="color:#f92672">-</span><span style="color:#a6e22e">demo</span><span style="color:#f92672">/</span><span style="color:#a6e22e">rout</span><span style="color:#f92672">/</span><span style="color:#a6e22e">leak</span>.<span style="color:#66d9ef">go</span>:<span style="color:#ae81ff">28</span> <span style="color:#f92672">+</span><span style="color:#ae81ff">0x93</span>
-</code></pre></div><hr>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">http</span>:<span style="color:#75715e">//localhost:8899/debug/pprof/goroutine?debug=2
+</span></span></span></code></pre></div><p>可以通过协程后面的标签,看到当前协程的不同状态，<strong>running/io wait/chan send</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">goroutine</span> <span style="color:#ae81ff">9</span> [<span style="color:#a6e22e">running</span>]:
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">runtime</span><span style="color:#f92672">/</span><span style="color:#a6e22e">pprof</span>.<span style="color:#a6e22e">writeGoroutineStacks</span>(<span style="color:#ae81ff">0x7f7d00</span>, <span style="color:#ae81ff">0xc0000aa000</span>, <span style="color:#ae81ff">0x0</span>, <span style="color:#ae81ff">0x0</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">D</span>:<span style="color:#f92672">/</span><span style="color:#a6e22e">dev</span><span style="color:#f92672">/</span><span style="color:#a6e22e">go1</span><span style="color:#ae81ff">.16</span><span style="color:#f92672">/</span><span style="color:#a6e22e">src</span><span style="color:#f92672">/</span><span style="color:#a6e22e">runtime</span><span style="color:#f92672">/</span><span style="color:#a6e22e">pprof</span><span style="color:#f92672">/</span><span style="color:#a6e22e">pprof</span>.<span style="color:#66d9ef">go</span>:<span style="color:#ae81ff">693</span> <span style="color:#f92672">+</span><span style="color:#ae81ff">0xc5</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">net</span><span style="color:#f92672">/</span><span style="color:#a6e22e">http</span><span style="color:#f92672">/</span><span style="color:#a6e22e">pprof</span>.<span style="color:#a6e22e">handler</span>.<span style="color:#a6e22e">ServeHTTP</span>(<span style="color:#ae81ff">0xc000094011</span>, <span style="color:#ae81ff">0x9</span>, <span style="color:#ae81ff">0x7fba40</span>, <span style="color:#ae81ff">0xc0000aa000</span>, <span style="color:#ae81ff">0xc000092000</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">//..
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">goroutine</span> <span style="color:#ae81ff">1</span> [<span style="color:#a6e22e">IO</span> <span style="color:#a6e22e">wait</span>]:
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">internal</span><span style="color:#f92672">/</span><span style="color:#a6e22e">poll</span>.<span style="color:#a6e22e">runtime_pollWait</span>(<span style="color:#ae81ff">0x223debb10d8</span>, <span style="color:#ae81ff">0x72</span>, <span style="color:#ae81ff">0xc000152f48</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">D</span>:<span style="color:#f92672">/</span><span style="color:#a6e22e">dev</span><span style="color:#f92672">/</span><span style="color:#a6e22e">go1</span><span style="color:#ae81ff">.16</span><span style="color:#f92672">/</span><span style="color:#a6e22e">src</span><span style="color:#f92672">/</span><span style="color:#a6e22e">runtime</span><span style="color:#f92672">/</span><span style="color:#a6e22e">netpoll</span>.<span style="color:#66d9ef">go</span>:<span style="color:#ae81ff">227</span> <span style="color:#f92672">+</span><span style="color:#ae81ff">0x65</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">internal</span><span style="color:#f92672">/</span><span style="color:#a6e22e">poll</span>.(<span style="color:#f92672">*</span><span style="color:#a6e22e">pollDesc</span>).<span style="color:#a6e22e">wait</span>(<span style="color:#ae81ff">0xc0001530b8</span>, <span style="color:#ae81ff">0x72</span>, <span style="color:#ae81ff">0x93b400</span>, <span style="color:#ae81ff">0x0</span>, <span style="color:#ae81ff">0x0</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">//...
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">goroutine</span> <span style="color:#ae81ff">6</span> [<span style="color:#66d9ef">chan</span> <span style="color:#a6e22e">send</span>]:
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">pixelgo</span><span style="color:#f92672">/</span><span style="color:#a6e22e">rout</span>.<span style="color:#a6e22e">JumpForSignal</span>.<span style="color:#a6e22e">func1</span>(<span style="color:#ae81ff">0xc000053800</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">F</span>:<span style="color:#f92672">/</span><span style="color:#a6e22e">code</span><span style="color:#f92672">/</span><span style="color:#a6e22e">pixelGo</span><span style="color:#f92672">/</span><span style="color:#a6e22e">src</span><span style="color:#f92672">/</span><span style="color:#a6e22e">pix</span><span style="color:#f92672">-</span><span style="color:#a6e22e">demo</span><span style="color:#f92672">/</span><span style="color:#a6e22e">rout</span><span style="color:#f92672">/</span><span style="color:#a6e22e">leak</span>.<span style="color:#66d9ef">go</span>:<span style="color:#ae81ff">25</span> <span style="color:#f92672">+</span><span style="color:#ae81ff">0x10e</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">created</span> <span style="color:#a6e22e">by</span> <span style="color:#a6e22e">pixelgo</span><span style="color:#f92672">/</span><span style="color:#a6e22e">rout</span>.<span style="color:#a6e22e">JumpForSignal</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">F</span>:<span style="color:#f92672">/</span><span style="color:#a6e22e">code</span><span style="color:#f92672">/</span><span style="color:#a6e22e">pixelGo</span><span style="color:#f92672">/</span><span style="color:#a6e22e">src</span><span style="color:#f92672">/</span><span style="color:#a6e22e">pix</span><span style="color:#f92672">-</span><span style="color:#a6e22e">demo</span><span style="color:#f92672">/</span><span style="color:#a6e22e">rout</span><span style="color:#f92672">/</span><span style="color:#a6e22e">leak</span>.<span style="color:#66d9ef">go</span>:<span style="color:#ae81ff">23</span> <span style="color:#f92672">+</span><span style="color:#ae81ff">0x71</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">goroutine</span> <span style="color:#ae81ff">7</span> [<span style="color:#66d9ef">chan</span> <span style="color:#a6e22e">send</span>]:
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">pixelgo</span><span style="color:#f92672">/</span><span style="color:#a6e22e">rout</span>.<span style="color:#a6e22e">JumpForSignal</span>.<span style="color:#a6e22e">func2</span>(<span style="color:#ae81ff">0xc000053800</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">F</span>:<span style="color:#f92672">/</span><span style="color:#a6e22e">code</span><span style="color:#f92672">/</span><span style="color:#a6e22e">pixelGo</span><span style="color:#f92672">/</span><span style="color:#a6e22e">src</span><span style="color:#f92672">/</span><span style="color:#a6e22e">pix</span><span style="color:#f92672">-</span><span style="color:#a6e22e">demo</span><span style="color:#f92672">/</span><span style="color:#a6e22e">rout</span><span style="color:#f92672">/</span><span style="color:#a6e22e">leak</span>.<span style="color:#66d9ef">go</span>:<span style="color:#ae81ff">30</span> <span style="color:#f92672">+</span><span style="color:#ae81ff">0x10e</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">created</span> <span style="color:#a6e22e">by</span> <span style="color:#a6e22e">pixelgo</span><span style="color:#f92672">/</span><span style="color:#a6e22e">rout</span>.<span style="color:#a6e22e">JumpForSignal</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">F</span>:<span style="color:#f92672">/</span><span style="color:#a6e22e">code</span><span style="color:#f92672">/</span><span style="color:#a6e22e">pixelGo</span><span style="color:#f92672">/</span><span style="color:#a6e22e">src</span><span style="color:#f92672">/</span><span style="color:#a6e22e">pix</span><span style="color:#f92672">-</span><span style="color:#a6e22e">demo</span><span style="color:#f92672">/</span><span style="color:#a6e22e">rout</span><span style="color:#f92672">/</span><span style="color:#a6e22e">leak</span>.<span style="color:#66d9ef">go</span>:<span style="color:#ae81ff">28</span> <span style="color:#f92672">+</span><span style="color:#ae81ff">0x93</span>
+</span></span></code></pre></div><hr>
 <h3 id="协程id">协程id</h3>
 <p>接下来我们来探索协程标识：<strong>协程id</strong>，在Go中，每个运行的协程都会分配一个协程id，一个常见的方式是从函数运行栈获取，引用之前网上其他同学的写法：</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
-    <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">getGID</span>())
-}
-
-<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">getGID</span>() <span style="color:#66d9ef">uint64</span> {
-    <span style="color:#a6e22e">b</span> <span style="color:#f92672">:=</span> make([]<span style="color:#66d9ef">byte</span>, <span style="color:#ae81ff">64</span>)
-    <span style="color:#a6e22e">b</span> = <span style="color:#a6e22e">b</span>[:<span style="color:#a6e22e">runtime</span>.<span style="color:#a6e22e">Stack</span>(<span style="color:#a6e22e">b</span>, <span style="color:#66d9ef">false</span>)]
-    <span style="color:#a6e22e">b</span> = <span style="color:#a6e22e">bytes</span>.<span style="color:#a6e22e">TrimPrefix</span>(<span style="color:#a6e22e">b</span>, []byte(<span style="color:#e6db74">&#34;goroutine &#34;</span>))
-    <span style="color:#a6e22e">b</span> = <span style="color:#a6e22e">b</span>[:<span style="color:#a6e22e">bytes</span>.<span style="color:#a6e22e">IndexByte</span>(<span style="color:#a6e22e">b</span>, <span style="color:#e6db74">&#39; &#39;</span>)]
-    <span style="color:#a6e22e">n</span>, <span style="color:#a6e22e">_</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">strconv</span>.<span style="color:#a6e22e">ParseUint</span>(string(<span style="color:#a6e22e">b</span>), <span style="color:#ae81ff">10</span>, <span style="color:#ae81ff">64</span>)
-    <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">n</span>
-}
-</code></pre></div><p>我们来看看<code>runtime.stack()</code> 会返回什么呢，其中真实内容是这样的：</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#a6e22e">goroutine</span> <span style="color:#ae81ff">21</span> [<span style="color:#a6e22e">running</span>]:
-<span style="color:#a6e22e">leaktest</span>.<span style="color:#a6e22e">interestingGoroutines</span>(<span style="color:#ae81ff">0xdb9980</span>, <span style="color:#ae81ff">0xc00038e018</span>, <span style="color:#ae81ff">0x0</span>, <span style="color:#ae81ff">0x0</span>, <span style="color:#ae81ff">0x0</span>)
-    <span style="color:#a6e22e">F</span>:<span style="color:#f92672">/</span><span style="color:#a6e22e">code</span><span style="color:#f92672">/</span><span style="color:#a6e22e">pixelGo</span><span style="color:#f92672">/</span><span style="color:#a6e22e">src</span><span style="color:#f92672">/</span><span style="color:#a6e22e">leaktest</span><span style="color:#f92672">/</span><span style="color:#a6e22e">leaktest</span>.<span style="color:#66d9ef">go</span>:<span style="color:#ae81ff">81</span> <span style="color:#f92672">+</span><span style="color:#ae81ff">0xbf</span>
-<span style="color:#a6e22e">leaktest</span>.<span style="color:#a6e22e">CheckContext</span>(<span style="color:#ae81ff">0xdbe398</span>, <span style="color:#ae81ff">0xc000108040</span>, <span style="color:#ae81ff">0xdb9980</span>, <span style="color:#ae81ff">0xc00038e018</span>, <span style="color:#ae81ff">0x0</span>)
-    <span style="color:#a6e22e">F</span>:<span style="color:#f92672">/</span><span style="color:#a6e22e">code</span><span style="color:#f92672">/</span><span style="color:#a6e22e">pixelGo</span><span style="color:#f92672">/</span><span style="color:#a6e22e">src</span><span style="color:#f92672">/</span><span style="color:#a6e22e">leaktest</span><span style="color:#f92672">/</span><span style="color:#a6e22e">leaktest</span>.<span style="color:#66d9ef">go</span>:<span style="color:#ae81ff">141</span> <span style="color:#f92672">+</span><span style="color:#ae81ff">0x6e</span>
-<span style="color:#a6e22e">leaktest</span>.<span style="color:#a6e22e">CheckTimeout</span>(<span style="color:#ae81ff">0xdb9980</span>, <span style="color:#ae81ff">0xc00038e018</span>, <span style="color:#ae81ff">0x3b9aca00</span>, <span style="color:#ae81ff">0x0</span>)
-    <span style="color:#a6e22e">F</span>:<span style="color:#f92672">/</span><span style="color:#a6e22e">code</span><span style="color:#f92672">/</span><span style="color:#a6e22e">pixelGo</span><span style="color:#f92672">/</span><span style="color:#a6e22e">src</span><span style="color:#f92672">/</span><span style="color:#a6e22e">leaktest</span><span style="color:#f92672">/</span><span style="color:#a6e22e">leaktest</span>.<span style="color:#66d9ef">go</span>:<span style="color:#ae81ff">127</span> <span style="color:#f92672">+</span><span style="color:#ae81ff">0xe5</span>
-<span style="color:#a6e22e">leaktest</span>.<span style="color:#a6e22e">TestCheck</span>.<span style="color:#a6e22e">func8</span>(<span style="color:#ae81ff">0xc000384780</span>)
-    <span style="color:#a6e22e">F</span>:<span style="color:#f92672">/</span><span style="color:#a6e22e">code</span><span style="color:#f92672">/</span><span style="color:#a6e22e">pixelGo</span><span style="color:#f92672">/</span><span style="color:#a6e22e">src</span><span style="color:#f92672">/</span><span style="color:#a6e22e">leaktest</span><span style="color:#f92672">/</span><span style="color:#a6e22e">leaktest_test</span>.<span style="color:#66d9ef">go</span>:<span style="color:#ae81ff">122</span> <span style="color:#f92672">+</span><span style="color:#ae81ff">0xaf</span>
-<span style="color:#a6e22e">testing</span>.<span style="color:#a6e22e">tRunner</span>(<span style="color:#ae81ff">0xc000384780</span>, <span style="color:#ae81ff">0xc000100050</span>)
-    <span style="color:#a6e22e">D</span>:<span style="color:#f92672">/</span><span style="color:#a6e22e">dev</span><span style="color:#f92672">/</span><span style="color:#a6e22e">go1</span><span style="color:#ae81ff">.16</span><span style="color:#f92672">/</span><span style="color:#a6e22e">src</span><span style="color:#f92672">/</span><span style="color:#a6e22e">testing</span><span style="color:#f92672">/</span><span style="color:#a6e22e">testing</span>.<span style="color:#66d9ef">go</span>:<span style="color:#ae81ff">1193</span> <span style="color:#f92672">+</span><span style="color:#ae81ff">0x1a3</span>
-<span style="color:#a6e22e">created</span> <span style="color:#a6e22e">by</span> <span style="color:#a6e22e">testing</span>.(<span style="color:#f92672">*</span><span style="color:#a6e22e">T</span>).<span style="color:#a6e22e">Run</span>
-    <span style="color:#a6e22e">D</span>:<span style="color:#f92672">/</span><span style="color:#a6e22e">dev</span><span style="color:#f92672">/</span><span style="color:#a6e22e">go1</span><span style="color:#ae81ff">.16</span><span style="color:#f92672">/</span><span style="color:#a6e22e">src</span><span style="color:#f92672">/</span><span style="color:#a6e22e">testing</span><span style="color:#f92672">/</span><span style="color:#a6e22e">testing</span>.<span style="color:#66d9ef">go</span>:<span style="color:#ae81ff">1238</span> <span style="color:#f92672">+</span><span style="color:#ae81ff">0x63c</span>
-
-<span style="color:#a6e22e">goroutine</span> <span style="color:#ae81ff">1</span> [<span style="color:#66d9ef">chan</span> <span style="color:#a6e22e">receive</span>]:
-<span style="color:#a6e22e">testing</span>.(<span style="color:#f92672">*</span><span style="color:#a6e22e">T</span>).<span style="color:#a6e22e">Run</span>(<span style="color:#ae81ff">0xc000037080</span>, <span style="color:#ae81ff">0xd8486a</span>, <span style="color:#ae81ff">0x9</span>, <span style="color:#ae81ff">0xd9ebc8</span>, <span style="color:#ae81ff">0x304bd824304bd800</span>)
-    <span style="color:#a6e22e">D</span>:<span style="color:#f92672">/</span><span style="color:#a6e22e">dev</span><span style="color:#f92672">/</span><span style="color:#a6e22e">go1</span><span style="color:#ae81ff">.16</span><span style="color:#f92672">/</span><span style="color:#a6e22e">src</span><span style="color:#f92672">/</span><span style="color:#a6e22e">testing</span><span style="color:#f92672">/</span><span style="color:#a6e22e">testing</span>.<span style="color:#66d9ef">go</span>:<span style="color:#ae81ff">1239</span> <span style="color:#f92672">+</span><span style="color:#ae81ff">0x66a</span>
-<span style="color:#a6e22e">testing</span>.<span style="color:#a6e22e">runTests</span>.<span style="color:#a6e22e">func1</span>(<span style="color:#ae81ff">0xc000036f00</span>)
-    <span style="color:#a6e22e">D</span>:<span style="color:#f92672">/</span><span style="color:#a6e22e">dev</span><span style="color:#f92672">/</span><span style="color:#a6e22e">go1</span><span style="color:#ae81ff">.16</span><span style="color:#f92672">/</span><span style="color:#a6e22e">src</span><span style="color:#f92672">/</span><span style="color:#a6e22e">testing</span><span style="color:#f92672">/</span><span style="color:#a6e22e">testing</span>.<span style="color:#66d9ef">go</span>:<span style="color:#ae81ff">1511</span> <span style="color:#f92672">+</span><span style="color:#ae81ff">0xbd</span>
-<span style="color:#a6e22e">testing</span>.<span style="color:#a6e22e">tRunner</span>(<span style="color:#ae81ff">0xc000036f00</span>, <span style="color:#ae81ff">0xc00008fc00</span>)
-    <span style="color:#a6e22e">D</span>:<span style="color:#f92672">/</span><span style="color:#a6e22e">dev</span><span style="color:#f92672">/</span><span style="color:#a6e22e">go1</span><span style="color:#ae81ff">.16</span><span style="color:#f92672">/</span><span style="color:#a6e22e">src</span><span style="color:#f92672">/</span><span style="color:#a6e22e">testing</span><span style="color:#f92672">/</span><span style="color:#a6e22e">testing</span>.<span style="color:#66d9ef">go</span>:<span style="color:#ae81ff">1193</span> <span style="color:#f92672">+</span><span style="color:#ae81ff">0x1a3</span>
-<span style="color:#a6e22e">testing</span>.<span style="color:#a6e22e">runTests</span>(<span style="color:#ae81ff">0xc0000040d8</span>, <span style="color:#ae81ff">0xf40460</span>, <span style="color:#ae81ff">0x5</span>, <span style="color:#ae81ff">0x5</span>, <span style="color:#ae81ff">0x0</span>, <span style="color:#ae81ff">0x0</span>, <span style="color:#ae81ff">0x0</span>, <span style="color:#ae81ff">0x21cbf1c0100</span>)
-    <span style="color:#a6e22e">D</span>:<span style="color:#f92672">/</span><span style="color:#a6e22e">dev</span><span style="color:#f92672">/</span><span style="color:#a6e22e">go1</span><span style="color:#ae81ff">.16</span><span style="color:#f92672">/</span><span style="color:#a6e22e">src</span><span style="color:#f92672">/</span><span style="color:#a6e22e">testing</span><span style="color:#f92672">/</span><span style="color:#a6e22e">testing</span>.<span style="color:#66d9ef">go</span>:<span style="color:#ae81ff">1509</span> <span style="color:#f92672">+</span><span style="color:#ae81ff">0x448</span>
-<span style="color:#a6e22e">testing</span>.(<span style="color:#f92672">*</span><span style="color:#a6e22e">M</span>).<span style="color:#a6e22e">Run</span>(<span style="color:#ae81ff">0xc0000c0000</span>, <span style="color:#ae81ff">0x0</span>)
-    <span style="color:#a6e22e">D</span>:<span style="color:#f92672">/</span><span style="color:#a6e22e">dev</span><span style="color:#f92672">/</span><span style="color:#a6e22e">go1</span><span style="color:#ae81ff">.16</span><span style="color:#f92672">/</span><span style="color:#a6e22e">src</span><span style="color:#f92672">/</span><span style="color:#a6e22e">testing</span><span style="color:#f92672">/</span><span style="color:#a6e22e">testing</span>.<span style="color:#66d9ef">go</span>:<span style="color:#ae81ff">1417</span> <span style="color:#f92672">+</span><span style="color:#ae81ff">0x514</span>
-<span style="color:#a6e22e">main</span>.<span style="color:#a6e22e">main</span>()
-    <span style="color:#a6e22e">_testmain</span>.<span style="color:#66d9ef">go</span>:<span style="color:#ae81ff">51</span> <span style="color:#f92672">+</span><span style="color:#ae81ff">0xc8</span>
-</code></pre></div><p>可以发现这个栈和我们运行panic抛出的信息非常类似，需要注意的是，++通过这种方式获取协程id并不是一个高效的方式。++<br>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">getGID</span>())
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">getGID</span>() <span style="color:#66d9ef">uint64</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">b</span> <span style="color:#f92672">:=</span> make([]<span style="color:#66d9ef">byte</span>, <span style="color:#ae81ff">64</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">b</span> = <span style="color:#a6e22e">b</span>[:<span style="color:#a6e22e">runtime</span>.<span style="color:#a6e22e">Stack</span>(<span style="color:#a6e22e">b</span>, <span style="color:#66d9ef">false</span>)]
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">b</span> = <span style="color:#a6e22e">bytes</span>.<span style="color:#a6e22e">TrimPrefix</span>(<span style="color:#a6e22e">b</span>, []byte(<span style="color:#e6db74">&#34;goroutine &#34;</span>))
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">b</span> = <span style="color:#a6e22e">b</span>[:<span style="color:#a6e22e">bytes</span>.<span style="color:#a6e22e">IndexByte</span>(<span style="color:#a6e22e">b</span>, <span style="color:#e6db74">&#39; &#39;</span>)]
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">n</span>, <span style="color:#a6e22e">_</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">strconv</span>.<span style="color:#a6e22e">ParseUint</span>(string(<span style="color:#a6e22e">b</span>), <span style="color:#ae81ff">10</span>, <span style="color:#ae81ff">64</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">n</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>我们来看看<code>runtime.stack()</code> 会返回什么呢，其中真实内容是这样的：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">goroutine</span> <span style="color:#ae81ff">21</span> [<span style="color:#a6e22e">running</span>]:
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">leaktest</span>.<span style="color:#a6e22e">interestingGoroutines</span>(<span style="color:#ae81ff">0xdb9980</span>, <span style="color:#ae81ff">0xc00038e018</span>, <span style="color:#ae81ff">0x0</span>, <span style="color:#ae81ff">0x0</span>, <span style="color:#ae81ff">0x0</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">F</span>:<span style="color:#f92672">/</span><span style="color:#a6e22e">code</span><span style="color:#f92672">/</span><span style="color:#a6e22e">pixelGo</span><span style="color:#f92672">/</span><span style="color:#a6e22e">src</span><span style="color:#f92672">/</span><span style="color:#a6e22e">leaktest</span><span style="color:#f92672">/</span><span style="color:#a6e22e">leaktest</span>.<span style="color:#66d9ef">go</span>:<span style="color:#ae81ff">81</span> <span style="color:#f92672">+</span><span style="color:#ae81ff">0xbf</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">leaktest</span>.<span style="color:#a6e22e">CheckContext</span>(<span style="color:#ae81ff">0xdbe398</span>, <span style="color:#ae81ff">0xc000108040</span>, <span style="color:#ae81ff">0xdb9980</span>, <span style="color:#ae81ff">0xc00038e018</span>, <span style="color:#ae81ff">0x0</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">F</span>:<span style="color:#f92672">/</span><span style="color:#a6e22e">code</span><span style="color:#f92672">/</span><span style="color:#a6e22e">pixelGo</span><span style="color:#f92672">/</span><span style="color:#a6e22e">src</span><span style="color:#f92672">/</span><span style="color:#a6e22e">leaktest</span><span style="color:#f92672">/</span><span style="color:#a6e22e">leaktest</span>.<span style="color:#66d9ef">go</span>:<span style="color:#ae81ff">141</span> <span style="color:#f92672">+</span><span style="color:#ae81ff">0x6e</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">leaktest</span>.<span style="color:#a6e22e">CheckTimeout</span>(<span style="color:#ae81ff">0xdb9980</span>, <span style="color:#ae81ff">0xc00038e018</span>, <span style="color:#ae81ff">0x3b9aca00</span>, <span style="color:#ae81ff">0x0</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">F</span>:<span style="color:#f92672">/</span><span style="color:#a6e22e">code</span><span style="color:#f92672">/</span><span style="color:#a6e22e">pixelGo</span><span style="color:#f92672">/</span><span style="color:#a6e22e">src</span><span style="color:#f92672">/</span><span style="color:#a6e22e">leaktest</span><span style="color:#f92672">/</span><span style="color:#a6e22e">leaktest</span>.<span style="color:#66d9ef">go</span>:<span style="color:#ae81ff">127</span> <span style="color:#f92672">+</span><span style="color:#ae81ff">0xe5</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">leaktest</span>.<span style="color:#a6e22e">TestCheck</span>.<span style="color:#a6e22e">func8</span>(<span style="color:#ae81ff">0xc000384780</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">F</span>:<span style="color:#f92672">/</span><span style="color:#a6e22e">code</span><span style="color:#f92672">/</span><span style="color:#a6e22e">pixelGo</span><span style="color:#f92672">/</span><span style="color:#a6e22e">src</span><span style="color:#f92672">/</span><span style="color:#a6e22e">leaktest</span><span style="color:#f92672">/</span><span style="color:#a6e22e">leaktest_test</span>.<span style="color:#66d9ef">go</span>:<span style="color:#ae81ff">122</span> <span style="color:#f92672">+</span><span style="color:#ae81ff">0xaf</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">testing</span>.<span style="color:#a6e22e">tRunner</span>(<span style="color:#ae81ff">0xc000384780</span>, <span style="color:#ae81ff">0xc000100050</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">D</span>:<span style="color:#f92672">/</span><span style="color:#a6e22e">dev</span><span style="color:#f92672">/</span><span style="color:#a6e22e">go1</span><span style="color:#ae81ff">.16</span><span style="color:#f92672">/</span><span style="color:#a6e22e">src</span><span style="color:#f92672">/</span><span style="color:#a6e22e">testing</span><span style="color:#f92672">/</span><span style="color:#a6e22e">testing</span>.<span style="color:#66d9ef">go</span>:<span style="color:#ae81ff">1193</span> <span style="color:#f92672">+</span><span style="color:#ae81ff">0x1a3</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">created</span> <span style="color:#a6e22e">by</span> <span style="color:#a6e22e">testing</span>.(<span style="color:#f92672">*</span><span style="color:#a6e22e">T</span>).<span style="color:#a6e22e">Run</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">D</span>:<span style="color:#f92672">/</span><span style="color:#a6e22e">dev</span><span style="color:#f92672">/</span><span style="color:#a6e22e">go1</span><span style="color:#ae81ff">.16</span><span style="color:#f92672">/</span><span style="color:#a6e22e">src</span><span style="color:#f92672">/</span><span style="color:#a6e22e">testing</span><span style="color:#f92672">/</span><span style="color:#a6e22e">testing</span>.<span style="color:#66d9ef">go</span>:<span style="color:#ae81ff">1238</span> <span style="color:#f92672">+</span><span style="color:#ae81ff">0x63c</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">goroutine</span> <span style="color:#ae81ff">1</span> [<span style="color:#66d9ef">chan</span> <span style="color:#a6e22e">receive</span>]:
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">testing</span>.(<span style="color:#f92672">*</span><span style="color:#a6e22e">T</span>).<span style="color:#a6e22e">Run</span>(<span style="color:#ae81ff">0xc000037080</span>, <span style="color:#ae81ff">0xd8486a</span>, <span style="color:#ae81ff">0x9</span>, <span style="color:#ae81ff">0xd9ebc8</span>, <span style="color:#ae81ff">0x304bd824304bd800</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">D</span>:<span style="color:#f92672">/</span><span style="color:#a6e22e">dev</span><span style="color:#f92672">/</span><span style="color:#a6e22e">go1</span><span style="color:#ae81ff">.16</span><span style="color:#f92672">/</span><span style="color:#a6e22e">src</span><span style="color:#f92672">/</span><span style="color:#a6e22e">testing</span><span style="color:#f92672">/</span><span style="color:#a6e22e">testing</span>.<span style="color:#66d9ef">go</span>:<span style="color:#ae81ff">1239</span> <span style="color:#f92672">+</span><span style="color:#ae81ff">0x66a</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">testing</span>.<span style="color:#a6e22e">runTests</span>.<span style="color:#a6e22e">func1</span>(<span style="color:#ae81ff">0xc000036f00</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">D</span>:<span style="color:#f92672">/</span><span style="color:#a6e22e">dev</span><span style="color:#f92672">/</span><span style="color:#a6e22e">go1</span><span style="color:#ae81ff">.16</span><span style="color:#f92672">/</span><span style="color:#a6e22e">src</span><span style="color:#f92672">/</span><span style="color:#a6e22e">testing</span><span style="color:#f92672">/</span><span style="color:#a6e22e">testing</span>.<span style="color:#66d9ef">go</span>:<span style="color:#ae81ff">1511</span> <span style="color:#f92672">+</span><span style="color:#ae81ff">0xbd</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">testing</span>.<span style="color:#a6e22e">tRunner</span>(<span style="color:#ae81ff">0xc000036f00</span>, <span style="color:#ae81ff">0xc00008fc00</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">D</span>:<span style="color:#f92672">/</span><span style="color:#a6e22e">dev</span><span style="color:#f92672">/</span><span style="color:#a6e22e">go1</span><span style="color:#ae81ff">.16</span><span style="color:#f92672">/</span><span style="color:#a6e22e">src</span><span style="color:#f92672">/</span><span style="color:#a6e22e">testing</span><span style="color:#f92672">/</span><span style="color:#a6e22e">testing</span>.<span style="color:#66d9ef">go</span>:<span style="color:#ae81ff">1193</span> <span style="color:#f92672">+</span><span style="color:#ae81ff">0x1a3</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">testing</span>.<span style="color:#a6e22e">runTests</span>(<span style="color:#ae81ff">0xc0000040d8</span>, <span style="color:#ae81ff">0xf40460</span>, <span style="color:#ae81ff">0x5</span>, <span style="color:#ae81ff">0x5</span>, <span style="color:#ae81ff">0x0</span>, <span style="color:#ae81ff">0x0</span>, <span style="color:#ae81ff">0x0</span>, <span style="color:#ae81ff">0x21cbf1c0100</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">D</span>:<span style="color:#f92672">/</span><span style="color:#a6e22e">dev</span><span style="color:#f92672">/</span><span style="color:#a6e22e">go1</span><span style="color:#ae81ff">.16</span><span style="color:#f92672">/</span><span style="color:#a6e22e">src</span><span style="color:#f92672">/</span><span style="color:#a6e22e">testing</span><span style="color:#f92672">/</span><span style="color:#a6e22e">testing</span>.<span style="color:#66d9ef">go</span>:<span style="color:#ae81ff">1509</span> <span style="color:#f92672">+</span><span style="color:#ae81ff">0x448</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">testing</span>.(<span style="color:#f92672">*</span><span style="color:#a6e22e">M</span>).<span style="color:#a6e22e">Run</span>(<span style="color:#ae81ff">0xc0000c0000</span>, <span style="color:#ae81ff">0x0</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">D</span>:<span style="color:#f92672">/</span><span style="color:#a6e22e">dev</span><span style="color:#f92672">/</span><span style="color:#a6e22e">go1</span><span style="color:#ae81ff">.16</span><span style="color:#f92672">/</span><span style="color:#a6e22e">src</span><span style="color:#f92672">/</span><span style="color:#a6e22e">testing</span><span style="color:#f92672">/</span><span style="color:#a6e22e">testing</span>.<span style="color:#66d9ef">go</span>:<span style="color:#ae81ff">1417</span> <span style="color:#f92672">+</span><span style="color:#ae81ff">0x514</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">main</span>.<span style="color:#a6e22e">main</span>()
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">_testmain</span>.<span style="color:#66d9ef">go</span>:<span style="color:#ae81ff">51</span> <span style="color:#f92672">+</span><span style="color:#ae81ff">0xc8</span>
+</span></span></code></pre></div><p>可以发现这个栈和我们运行panic抛出的信息非常类似，需要注意的是，++通过这种方式获取协程id并不是一个高效的方式。++<br>
 实际生产使用过程并不提倡，值得一提的是，为了方便我们更好的定位问题上下文，有时候日志框架又需要我们打印出当前协程id。</p>
 <p>比如这是一个生产案例日志输出：</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#75715e">// gid-1号协程用于初始化资源
-</span><span style="color:#75715e"></span>[<span style="color:#ae81ff">0224</span><span style="color:#f92672">/</span><span style="color:#ae81ff">162532.310</span>:<span style="color:#a6e22e">INFO</span>:<span style="color:#a6e22e">gid</span><span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>:<span style="color:#a6e22e">yx_trace</span>.<span style="color:#66d9ef">go</span>:<span style="color:#ae81ff">66</span>] <span style="color:#a6e22e">cfg</span>:<span style="color:#f92672">&amp;</span>{ <span style="color:#66d9ef">false</span> <span style="color:#66d9ef">false</span> [] <span style="color:#ae81ff">0xc000295140</span> <span style="color:#ae81ff">0xc0001d4e00</span> &lt;<span style="color:#66d9ef">nil</span>&gt; &lt;<span style="color:#66d9ef">nil</span>&gt; &lt;<span style="color:#66d9ef">nil</span>&gt;}
-[<span style="color:#ae81ff">0224</span><span style="color:#f92672">/</span><span style="color:#ae81ff">162532.320</span>:<span style="color:#a6e22e">INFO</span>:<span style="color:#a6e22e">gid</span><span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>:<span style="color:#a6e22e">main</span>.<span style="color:#66d9ef">go</span>:<span style="color:#ae81ff">50</span>] <span style="color:#a6e22e">GameRoom</span> <span style="color:#a6e22e">Startup</span><span style="color:#f92672">-</span>&gt;
-[<span style="color:#ae81ff">0224</span><span style="color:#f92672">/</span><span style="color:#ae81ff">162532.320</span>:<span style="color:#a6e22e">INFO</span>:<span style="color:#a6e22e">gid</span><span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>:<span style="color:#a6e22e">config_manager</span>.<span style="color:#66d9ef">go</span>:<span style="color:#ae81ff">107</span>] <span style="color:#a6e22e">configManager</span> <span style="color:#a6e22e">SetHttpListenAddr</span>:<span style="color:#ae81ff">8080</span>
-[<span style="color:#ae81ff">0224</span><span style="color:#f92672">/</span><span style="color:#ae81ff">162532.320</span>:<span style="color:#a6e22e">INFO</span>:<span style="color:#a6e22e">gid</span><span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>:<span style="color:#a6e22e">room_manager</span>.<span style="color:#66d9ef">go</span>:<span style="color:#ae81ff">57</span>] <span style="color:#a6e22e">roomManager</span> <span style="color:#a6e22e">Startup</span>
-[<span style="color:#ae81ff">0224</span><span style="color:#f92672">/</span><span style="color:#ae81ff">162532.323</span>:<span style="color:#a6e22e">INFO</span>:<span style="color:#a6e22e">gid</span><span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>:<span style="color:#a6e22e">room_manager</span>.<span style="color:#66d9ef">go</span>:<span style="color:#ae81ff">72</span>] <span style="color:#a6e22e">roomManager</span> <span style="color:#a6e22e">initPrx</span>.
-[<span style="color:#ae81ff">0224</span><span style="color:#f92672">/</span><span style="color:#ae81ff">162532.330</span>:<span style="color:#a6e22e">INFO</span>:<span style="color:#a6e22e">gid</span><span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>:<span style="color:#a6e22e">bootstrap</span>.<span style="color:#66d9ef">go</span>:<span style="color:#ae81ff">153</span>] <span style="color:#a6e22e">GameRoom</span> <span style="color:#a6e22e">START</span> <span style="color:#a6e22e">ok</span>.
-<span style="color:#75715e">// gid-60号协程分配用于启动HTTP Server
-</span><span style="color:#75715e"></span>[<span style="color:#ae81ff">0224</span><span style="color:#f92672">/</span><span style="color:#ae81ff">162533.277</span>:<span style="color:#a6e22e">INFO</span>:<span style="color:#a6e22e">gid</span><span style="color:#f92672">-</span><span style="color:#ae81ff">60</span>:<span style="color:#a6e22e">expose</span>.<span style="color:#66d9ef">go</span>:<span style="color:#ae81ff">36</span>] <span style="color:#a6e22e">Start</span> <span style="color:#66d9ef">for</span> <span style="color:#a6e22e">HTTP</span> <span style="color:#a6e22e">server</span><span style="color:#f92672">...</span>
-[<span style="color:#ae81ff">0224</span><span style="color:#f92672">/</span><span style="color:#ae81ff">162533.277</span>:<span style="color:#a6e22e">INFO</span>:<span style="color:#a6e22e">gid</span><span style="color:#f92672">-</span><span style="color:#ae81ff">60</span>:<span style="color:#a6e22e">expose</span>.<span style="color:#66d9ef">go</span>:<span style="color:#ae81ff">39</span>] <span style="color:#a6e22e">register</span> <span style="color:#66d9ef">for</span> <span style="color:#a6e22e">debug</span> <span style="color:#a6e22e">server</span><span style="color:#f92672">...</span>
-</code></pre></div><p>往往日志框架是力求对业务性能影响最低的，既然有性能顾虑，那么它是怎么获取协程id的呢？只能曲线救国了。<br>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#75715e">// gid-1号协程用于初始化资源
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>[<span style="color:#ae81ff">0224</span><span style="color:#f92672">/</span><span style="color:#ae81ff">162532.310</span>:<span style="color:#a6e22e">INFO</span>:<span style="color:#a6e22e">gid</span><span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>:<span style="color:#a6e22e">yx_trace</span>.<span style="color:#66d9ef">go</span>:<span style="color:#ae81ff">66</span>] <span style="color:#a6e22e">cfg</span>:<span style="color:#f92672">&amp;</span>{ <span style="color:#66d9ef">false</span> <span style="color:#66d9ef">false</span> [] <span style="color:#ae81ff">0xc000295140</span> <span style="color:#ae81ff">0xc0001d4e00</span> &lt;<span style="color:#66d9ef">nil</span>&gt; &lt;<span style="color:#66d9ef">nil</span>&gt; &lt;<span style="color:#66d9ef">nil</span>&gt;}
+</span></span><span style="display:flex;"><span>[<span style="color:#ae81ff">0224</span><span style="color:#f92672">/</span><span style="color:#ae81ff">162532.320</span>:<span style="color:#a6e22e">INFO</span>:<span style="color:#a6e22e">gid</span><span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>:<span style="color:#a6e22e">main</span>.<span style="color:#66d9ef">go</span>:<span style="color:#ae81ff">50</span>] <span style="color:#a6e22e">GameRoom</span> <span style="color:#a6e22e">Startup</span><span style="color:#f92672">-</span>&gt;
+</span></span><span style="display:flex;"><span>[<span style="color:#ae81ff">0224</span><span style="color:#f92672">/</span><span style="color:#ae81ff">162532.320</span>:<span style="color:#a6e22e">INFO</span>:<span style="color:#a6e22e">gid</span><span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>:<span style="color:#a6e22e">config_manager</span>.<span style="color:#66d9ef">go</span>:<span style="color:#ae81ff">107</span>] <span style="color:#a6e22e">configManager</span> <span style="color:#a6e22e">SetHttpListenAddr</span>:<span style="color:#ae81ff">8080</span>
+</span></span><span style="display:flex;"><span>[<span style="color:#ae81ff">0224</span><span style="color:#f92672">/</span><span style="color:#ae81ff">162532.320</span>:<span style="color:#a6e22e">INFO</span>:<span style="color:#a6e22e">gid</span><span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>:<span style="color:#a6e22e">room_manager</span>.<span style="color:#66d9ef">go</span>:<span style="color:#ae81ff">57</span>] <span style="color:#a6e22e">roomManager</span> <span style="color:#a6e22e">Startup</span>
+</span></span><span style="display:flex;"><span>[<span style="color:#ae81ff">0224</span><span style="color:#f92672">/</span><span style="color:#ae81ff">162532.323</span>:<span style="color:#a6e22e">INFO</span>:<span style="color:#a6e22e">gid</span><span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>:<span style="color:#a6e22e">room_manager</span>.<span style="color:#66d9ef">go</span>:<span style="color:#ae81ff">72</span>] <span style="color:#a6e22e">roomManager</span> <span style="color:#a6e22e">initPrx</span>.
+</span></span><span style="display:flex;"><span>[<span style="color:#ae81ff">0224</span><span style="color:#f92672">/</span><span style="color:#ae81ff">162532.330</span>:<span style="color:#a6e22e">INFO</span>:<span style="color:#a6e22e">gid</span><span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>:<span style="color:#a6e22e">bootstrap</span>.<span style="color:#66d9ef">go</span>:<span style="color:#ae81ff">153</span>] <span style="color:#a6e22e">GameRoom</span> <span style="color:#a6e22e">START</span> <span style="color:#a6e22e">ok</span>.
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// gid-60号协程分配用于启动HTTP Server
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>[<span style="color:#ae81ff">0224</span><span style="color:#f92672">/</span><span style="color:#ae81ff">162533.277</span>:<span style="color:#a6e22e">INFO</span>:<span style="color:#a6e22e">gid</span><span style="color:#f92672">-</span><span style="color:#ae81ff">60</span>:<span style="color:#a6e22e">expose</span>.<span style="color:#66d9ef">go</span>:<span style="color:#ae81ff">36</span>] <span style="color:#a6e22e">Start</span> <span style="color:#66d9ef">for</span> <span style="color:#a6e22e">HTTP</span> <span style="color:#a6e22e">server</span><span style="color:#f92672">...</span>
+</span></span><span style="display:flex;"><span>[<span style="color:#ae81ff">0224</span><span style="color:#f92672">/</span><span style="color:#ae81ff">162533.277</span>:<span style="color:#a6e22e">INFO</span>:<span style="color:#a6e22e">gid</span><span style="color:#f92672">-</span><span style="color:#ae81ff">60</span>:<span style="color:#a6e22e">expose</span>.<span style="color:#66d9ef">go</span>:<span style="color:#ae81ff">39</span>] <span style="color:#a6e22e">register</span> <span style="color:#66d9ef">for</span> <span style="color:#a6e22e">debug</span> <span style="color:#a6e22e">server</span><span style="color:#f92672">...</span>
+</span></span></code></pre></div><p>往往日志框架是力求对业务性能影响最低的，既然有性能顾虑，那么它是怎么获取协程id的呢？只能曲线救国了。<br>
 还有一个解法，其实在Go中，每个协程绑定的系统线程结构中，有一个g指针，拿到g指针的信息之后，根据g指针结构的偏移量(注意不同go版本可能不同)，指定获取id。</p>
 <h3 id="汇编获取">汇编获取</h3>
 <p>通过协程绑定的g指针，这里参考<a href="https://chai2010.cn/advanced-go-programming-book/ch3-asm/ch3-08-goroutine-id.html">《Go高级编程》的做法</a></p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#75715e">// 记录各个版本的偏移量
-</span><span style="color:#75715e"></span><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">offsetDictMap</span> = <span style="color:#66d9ef">map</span>[<span style="color:#66d9ef">string</span>]<span style="color:#66d9ef">int64</span>{
-    <span style="color:#e6db74">&#34;go1.12&#34;</span>:    <span style="color:#ae81ff">152</span>,
-    <span style="color:#e6db74">&#34;go1.12.1&#34;</span>:  <span style="color:#ae81ff">152</span>,
-    <span style="color:#e6db74">&#34;go1.12.2&#34;</span>:  <span style="color:#ae81ff">152</span>,
-    <span style="color:#e6db74">&#34;go1.12.3&#34;</span>:  <span style="color:#ae81ff">152</span>,
-    <span style="color:#e6db74">&#34;go1.12.4&#34;</span>:  <span style="color:#ae81ff">152</span>,
-    <span style="color:#e6db74">&#34;go1.12.5&#34;</span>:  <span style="color:#ae81ff">152</span>,
-    <span style="color:#e6db74">&#34;go1.12.6&#34;</span>:  <span style="color:#ae81ff">152</span>,
-    <span style="color:#e6db74">&#34;go1.12.7&#34;</span>:  <span style="color:#ae81ff">152</span>,
-    <span style="color:#e6db74">&#34;go1.13&#34;</span>:    <span style="color:#ae81ff">152</span>,
-    <span style="color:#e6db74">&#34;go1.14&#34;</span>:    <span style="color:#ae81ff">152</span>,
-    <span style="color:#e6db74">&#34;go1.16.12&#34;</span>:    <span style="color:#ae81ff">152</span>,
-}
-
-<span style="color:#75715e">// offset for go1.12
-</span><span style="color:#75715e"></span><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">goid_offset</span> <span style="color:#66d9ef">uintptr</span> = <span style="color:#ae81ff">152</span>
-<span style="color:#75715e">//go:nosplit
-</span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">getG</span>() <span style="color:#66d9ef">interface</span>{}
-
-<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">GoId</span>() <span style="color:#66d9ef">int64</span>
-
-<span style="color:#75715e">// 部分汇编代码
-</span><span style="color:#75715e">// func getGptr() unsafe.Pointer
-</span><span style="color:#75715e"></span><span style="color:#a6e22e">TEXT</span> <span style="color:#960050;background-color:#1e0010">·</span><span style="color:#a6e22e">getGptr</span>(<span style="color:#a6e22e">SB</span>), <span style="color:#a6e22e">NOSPLIT</span>, <span style="color:#960050;background-color:#1e0010">$</span><span style="color:#ae81ff">0</span><span style="color:#f92672">-</span><span style="color:#ae81ff">8</span>
-    <span style="color:#a6e22e">MOVQ</span> (<span style="color:#a6e22e">TLS</span>), <span style="color:#a6e22e">BX</span>
-    <span style="color:#a6e22e">MOVQ</span> <span style="color:#a6e22e">BX</span>, <span style="color:#a6e22e">ret</span><span style="color:#f92672">+</span><span style="color:#ae81ff">0</span>(<span style="color:#a6e22e">FP</span>)
-    <span style="color:#a6e22e">RET</span>
-
-<span style="color:#a6e22e">TEXT</span> <span style="color:#960050;background-color:#1e0010">·</span><span style="color:#a6e22e">GoId</span>(<span style="color:#a6e22e">SB</span>),<span style="color:#a6e22e">NOSPLIT</span>,<span style="color:#960050;background-color:#1e0010">$</span><span style="color:#ae81ff">0</span><span style="color:#f92672">-</span><span style="color:#ae81ff">8</span>
-    <span style="color:#a6e22e">NO_LOCAL_POINTERS</span>
-    <span style="color:#a6e22e">MOVQ</span> <span style="color:#960050;background-color:#1e0010">·</span><span style="color:#a6e22e">goid_offset</span>(<span style="color:#a6e22e">SB</span>),<span style="color:#a6e22e">AX</span>
-    <span style="color:#75715e">// get runtime.g
-</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">MOVQ</span> (<span style="color:#a6e22e">TLS</span>),<span style="color:#a6e22e">BX</span>
-    <span style="color:#a6e22e">ADDQ</span> <span style="color:#a6e22e">BX</span>,<span style="color:#a6e22e">AX</span>
-    <span style="color:#a6e22e">MOVQ</span> (<span style="color:#a6e22e">AX</span>),<span style="color:#a6e22e">BX</span>
-    <span style="color:#a6e22e">MOVQ</span> <span style="color:#a6e22e">BX</span>,<span style="color:#a6e22e">ret</span><span style="color:#f92672">+</span><span style="color:#ae81ff">0</span>(<span style="color:#a6e22e">FP</span>)
-    <span style="color:#a6e22e">RET</span>
-</code></pre></div><p>这里点到为止，大概思路是这样。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#75715e">// 记录各个版本的偏移量
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">offsetDictMap</span> = <span style="color:#66d9ef">map</span>[<span style="color:#66d9ef">string</span>]<span style="color:#66d9ef">int64</span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;go1.12&#34;</span>:    <span style="color:#ae81ff">152</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;go1.12.1&#34;</span>:  <span style="color:#ae81ff">152</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;go1.12.2&#34;</span>:  <span style="color:#ae81ff">152</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;go1.12.3&#34;</span>:  <span style="color:#ae81ff">152</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;go1.12.4&#34;</span>:  <span style="color:#ae81ff">152</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;go1.12.5&#34;</span>:  <span style="color:#ae81ff">152</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;go1.12.6&#34;</span>:  <span style="color:#ae81ff">152</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;go1.12.7&#34;</span>:  <span style="color:#ae81ff">152</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;go1.13&#34;</span>:    <span style="color:#ae81ff">152</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;go1.14&#34;</span>:    <span style="color:#ae81ff">152</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;go1.16.12&#34;</span>:    <span style="color:#ae81ff">152</span>,
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// offset for go1.12
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">goid_offset</span> <span style="color:#66d9ef">uintptr</span> = <span style="color:#ae81ff">152</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">//go:nosplit
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">getG</span>() <span style="color:#66d9ef">interface</span>{}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">GoId</span>() <span style="color:#66d9ef">int64</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// 部分汇编代码
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// func getGptr() unsafe.Pointer
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#a6e22e">TEXT</span> <span style="color:#960050;background-color:#1e0010">·</span><span style="color:#a6e22e">getGptr</span>(<span style="color:#a6e22e">SB</span>), <span style="color:#a6e22e">NOSPLIT</span>, <span style="color:#960050;background-color:#1e0010">$</span><span style="color:#ae81ff">0</span><span style="color:#f92672">-</span><span style="color:#ae81ff">8</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">MOVQ</span> (<span style="color:#a6e22e">TLS</span>), <span style="color:#a6e22e">BX</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">MOVQ</span> <span style="color:#a6e22e">BX</span>, <span style="color:#a6e22e">ret</span><span style="color:#f92672">+</span><span style="color:#ae81ff">0</span>(<span style="color:#a6e22e">FP</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">RET</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">TEXT</span> <span style="color:#960050;background-color:#1e0010">·</span><span style="color:#a6e22e">GoId</span>(<span style="color:#a6e22e">SB</span>),<span style="color:#a6e22e">NOSPLIT</span>,<span style="color:#960050;background-color:#1e0010">$</span><span style="color:#ae81ff">0</span><span style="color:#f92672">-</span><span style="color:#ae81ff">8</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">NO_LOCAL_POINTERS</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">MOVQ</span> <span style="color:#960050;background-color:#1e0010">·</span><span style="color:#a6e22e">goid_offset</span>(<span style="color:#a6e22e">SB</span>),<span style="color:#a6e22e">AX</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// get runtime.g
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#a6e22e">MOVQ</span> (<span style="color:#a6e22e">TLS</span>),<span style="color:#a6e22e">BX</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">ADDQ</span> <span style="color:#a6e22e">BX</span>,<span style="color:#a6e22e">AX</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">MOVQ</span> (<span style="color:#a6e22e">AX</span>),<span style="color:#a6e22e">BX</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">MOVQ</span> <span style="color:#a6e22e">BX</span>,<span style="color:#a6e22e">ret</span><span style="color:#f92672">+</span><span style="color:#ae81ff">0</span>(<span style="color:#a6e22e">FP</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">RET</span>
+</span></span></code></pre></div><p>这里点到为止，大概思路是这样。</p>
 <h3 id="性能比较">性能比较：</h3>
 <p>我们来简单测试下两种获取go协程id方式性能差距：</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#75715e">// BenchmarkGRtId-8     1000000000           0.0005081 ns/op
-</span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">BenchmarkGRtId</span>(<span style="color:#a6e22e">b</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">testing</span>.<span style="color:#a6e22e">B</span>) {
-    <span style="color:#66d9ef">for</span> <span style="color:#a6e22e">n</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">0</span>; <span style="color:#a6e22e">n</span> &lt; <span style="color:#ae81ff">1000000000</span>; <span style="color:#a6e22e">n</span><span style="color:#f92672">++</span> {
-        <span style="color:#75715e">// runtime获取协程id
-</span><span style="color:#75715e"></span>        <span style="color:#a6e22e">getGID</span>()
-    }
-}
-
-<span style="color:#75715e">// BenchmarkGoId-8      1000000000           0.05731 ns/op
-</span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">BenchmarkGoId</span>(<span style="color:#a6e22e">b</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">testing</span>.<span style="color:#a6e22e">B</span>) {
-    <span style="color:#66d9ef">for</span> <span style="color:#a6e22e">n</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">0</span>; <span style="color:#a6e22e">n</span> &lt; <span style="color:#ae81ff">1000000000</span>; <span style="color:#a6e22e">n</span><span style="color:#f92672">++</span> {
-        <span style="color:#75715e">// 汇编方式获取
-</span><span style="color:#75715e"></span>        <span style="color:#a6e22e">GoId</span>()
-    }
-}
-</code></pre></div><p>可以看到通过汇编方式获取协程id的方式性能更优，相差几个数量级。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#75715e">// BenchmarkGRtId-8     1000000000           0.0005081 ns/op
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">BenchmarkGRtId</span>(<span style="color:#a6e22e">b</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">testing</span>.<span style="color:#a6e22e">B</span>) {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> <span style="color:#a6e22e">n</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">0</span>; <span style="color:#a6e22e">n</span> &lt; <span style="color:#ae81ff">1000000000</span>; <span style="color:#a6e22e">n</span><span style="color:#f92672">++</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// runtime获取协程id
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        <span style="color:#a6e22e">getGID</span>()
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// BenchmarkGoId-8      1000000000           0.05731 ns/op
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">BenchmarkGoId</span>(<span style="color:#a6e22e">b</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">testing</span>.<span style="color:#a6e22e">B</span>) {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> <span style="color:#a6e22e">n</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">0</span>; <span style="color:#a6e22e">n</span> &lt; <span style="color:#ae81ff">1000000000</span>; <span style="color:#a6e22e">n</span><span style="color:#f92672">++</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// 汇编方式获取
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        <span style="color:#a6e22e">GoId</span>()
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>可以看到通过汇编方式获取协程id的方式性能更优，相差几个数量级。</p>
 <hr>
 <h2 id="限制协程">限制协程</h2>
 <p>上面列举了几个定位协程信息的方法，那么在协程泄露之前有没有其他方式对程序的go协程进行管控呢，有个做法是使用强大的channel坐下限制。</p>
 <h3 id="抛砖引玉">抛砖引玉</h3>
 <p>这里先提供一个简单的思路，即再包装一层<code>channel</code>进行保护，</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#75715e">// 限制数量
-</span><span style="color:#75715e"></span><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">LIMIT_G_NUM</span> = make(<span style="color:#66d9ef">chan</span> <span style="color:#66d9ef">struct</span>{}, <span style="color:#ae81ff">100</span>)
-
-<span style="color:#75715e">// 需要自定义的处理逻辑
-</span><span style="color:#75715e"></span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">HandleFun</span> <span style="color:#66d9ef">func</span>()
-
-<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">AsyncGoForHandle</span>(<span style="color:#a6e22e">fn</span> <span style="color:#a6e22e">HandleFun</span>)  {
-    <span style="color:#75715e">// 计数加一
-</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">LIMIT_G_NUM</span> <span style="color:#f92672">&lt;-</span> <span style="color:#66d9ef">struct</span>{}{}
-    <span style="color:#66d9ef">go</span> <span style="color:#66d9ef">func</span>() {
-        <span style="color:#66d9ef">defer</span> <span style="color:#66d9ef">func</span>() {
-            <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> recover(); <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
-                <span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Fatalf</span>(<span style="color:#e6db74">&#34;AsyncGoForHandle recover from err: %v&#34;</span>, <span style="color:#a6e22e">err</span>)
-            }
-            <span style="color:#75715e">// 回收计数
-</span><span style="color:#75715e"></span>            <span style="color:#f92672">&lt;-</span><span style="color:#a6e22e">LIMIT_G_NUM</span>
-        }()
-
-        <span style="color:#75715e">// 处理逻辑
-</span><span style="color:#75715e"></span>        <span style="color:#a6e22e">fn</span>()
-    }()
-}
-</code></pre></div><p>上面的思路比较简单，相信大家能看懂，每次需要异步创建协程只要调用<code>AsyncGoForHandle()</code>函数即可，不足之处可能是处理逻辑<code>HandleFun()</code>不够通用，需要自己定义具体实现。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#75715e">// 限制数量
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">LIMIT_G_NUM</span> = make(<span style="color:#66d9ef">chan</span> <span style="color:#66d9ef">struct</span>{}, <span style="color:#ae81ff">100</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// 需要自定义的处理逻辑
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">HandleFun</span> <span style="color:#66d9ef">func</span>()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">AsyncGoForHandle</span>(<span style="color:#a6e22e">fn</span> <span style="color:#a6e22e">HandleFun</span>)  {
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 计数加一
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#a6e22e">LIMIT_G_NUM</span> <span style="color:#f92672">&lt;-</span> <span style="color:#66d9ef">struct</span>{}{}
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">go</span> <span style="color:#66d9ef">func</span>() {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">defer</span> <span style="color:#66d9ef">func</span>() {
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> recover(); <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>                <span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Fatalf</span>(<span style="color:#e6db74">&#34;AsyncGoForHandle recover from err: %v&#34;</span>, <span style="color:#a6e22e">err</span>)
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e">// 回收计数
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>            <span style="color:#f92672">&lt;-</span><span style="color:#a6e22e">LIMIT_G_NUM</span>
+</span></span><span style="display:flex;"><span>        }()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// 处理逻辑
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        <span style="color:#a6e22e">fn</span>()
+</span></span><span style="display:flex;"><span>    }()
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>上面的思路比较简单，相信大家能看懂，每次需要异步创建协程只要调用<code>AsyncGoForHandle()</code>函数即可，不足之处可能是处理逻辑<code>HandleFun()</code>不够通用，需要自己定义具体实现。</p>
 <p>还有一种方式，就是引入<strong>协程池</strong>的概念，这里的池子和数据库连接池有点像，即一开始就预创建好，业务层只要负责提交数据，业界已经有不少成熟的封装。</p>
 <h3 id="成熟方案tunny">成熟方案：tunny</h3>
 <p>之前看到社区有一个封装得比较完善的协程池<strong>tunny</strong>，代码行数不多，我们来试着拆解分析一下代码，项目地址：https://github.com/Jeffail/tunny</p>
 <ol>
 <li>定义处理逻辑接口：</li>
 </ol>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Worker</span> <span style="color:#66d9ef">interface</span> {
-    <span style="color:#75715e">// 自定义逻辑实现，开发者只需要关心入参和出参
-</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">Process</span>(<span style="color:#66d9ef">interface</span>{}) <span style="color:#66d9ef">interface</span>{}
-}
-</code></pre></div><ol start="2">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Worker</span> <span style="color:#66d9ef">interface</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 自定义逻辑实现，开发者只需要关心入参和出参
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#a6e22e">Process</span>(<span style="color:#66d9ef">interface</span>{}) <span style="color:#66d9ef">interface</span>{}
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><ol start="2">
 <li>包装worker的输入源workRequest</li>
 </ol>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">workerWrapper</span> <span style="color:#66d9ef">struct</span> {
-    <span style="color:#75715e">// 注入内部实现逻辑
-</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">worker</span>        <span style="color:#a6e22e">Worker</span>
-    <span style="color:#a6e22e">interruptChan</span> <span style="color:#66d9ef">chan</span> <span style="color:#66d9ef">struct</span>{}
-
-    <span style="color:#75715e">// 请求来源workRequest
-</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">reqChan</span> <span style="color:#66d9ef">chan</span><span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">workRequest</span>
-
-    <span style="color:#75715e">// ...
-</span><span style="color:#75715e"></span>}
-</code></pre></div><ol start="3">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">workerWrapper</span> <span style="color:#66d9ef">struct</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 注入内部实现逻辑
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#a6e22e">worker</span>        <span style="color:#a6e22e">Worker</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">interruptChan</span> <span style="color:#66d9ef">chan</span> <span style="color:#66d9ef">struct</span>{}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 请求来源workRequest
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#a6e22e">reqChan</span> <span style="color:#66d9ef">chan</span><span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">workRequest</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// ...
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>}
+</span></span></code></pre></div><ol start="3">
 <li>输入源结构</li>
 </ol>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">workRequest</span> <span style="color:#66d9ef">struct</span> {
-    <span style="color:#75715e">// 输入
-</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">jobChan</span> <span style="color:#66d9ef">chan</span><span style="color:#f92672">&lt;-</span> <span style="color:#66d9ef">interface</span>{}
-
-    <span style="color:#75715e">// 处理结果，即worker.Process()的返回值
-</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">retChan</span> <span style="color:#f92672">&lt;-</span><span style="color:#66d9ef">chan</span> <span style="color:#66d9ef">interface</span>{}
-
-    <span style="color:#75715e">// ...
-</span><span style="color:#75715e"></span>}
-</code></pre></div><ol start="4">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">workRequest</span> <span style="color:#66d9ef">struct</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 输入
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#a6e22e">jobChan</span> <span style="color:#66d9ef">chan</span><span style="color:#f92672">&lt;-</span> <span style="color:#66d9ef">interface</span>{}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 处理结果，即worker.Process()的返回值
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#a6e22e">retChan</span> <span style="color:#f92672">&lt;-</span><span style="color:#66d9ef">chan</span> <span style="color:#66d9ef">interface</span>{}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// ...
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>}
+</span></span></code></pre></div><ol start="4">
 <li>编写实现类：<br>
 我们知道Go的接口遵循鸭子模型： 只要它表现得像个鸭子，它就是鸭子</li>
 </ol>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#75715e">// Worker实现类
-</span><span style="color:#75715e"></span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">closureWorker</span> <span style="color:#66d9ef">struct</span> {
-    <span style="color:#a6e22e">processor</span> <span style="color:#66d9ef">func</span>(<span style="color:#66d9ef">interface</span>{}) <span style="color:#66d9ef">interface</span>{}
-}
-
-<span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">w</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">closureWorker</span>) <span style="color:#a6e22e">Process</span>(<span style="color:#a6e22e">payload</span> <span style="color:#66d9ef">interface</span>{}) <span style="color:#66d9ef">interface</span>{} {
-    <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">w</span>.<span style="color:#a6e22e">processor</span>(<span style="color:#a6e22e">payload</span>)
-}
-</code></pre></div><ol start="5">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#75715e">// Worker实现类
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">closureWorker</span> <span style="color:#66d9ef">struct</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">processor</span> <span style="color:#66d9ef">func</span>(<span style="color:#66d9ef">interface</span>{}) <span style="color:#66d9ef">interface</span>{}
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">w</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">closureWorker</span>) <span style="color:#a6e22e">Process</span>(<span style="color:#a6e22e">payload</span> <span style="color:#66d9ef">interface</span>{}) <span style="color:#66d9ef">interface</span>{} {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">w</span>.<span style="color:#a6e22e">processor</span>(<span style="color:#a6e22e">payload</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><ol start="5">
 <li>定义工作池结构</li>
 </ol>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Pool</span> <span style="color:#66d9ef">struct</span> {
-    <span style="color:#a6e22e">queuedJobs</span> <span style="color:#66d9ef">int64</span>
-
-    <span style="color:#75715e">// 成员函数，用于鸭子实体
-</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">ctor</span>    <span style="color:#66d9ef">func</span>() <span style="color:#a6e22e">Worker</span>
-    <span style="color:#a6e22e">workers</span> []<span style="color:#f92672">*</span><span style="color:#a6e22e">workerWrapper</span>
-    <span style="color:#a6e22e">reqChan</span> <span style="color:#66d9ef">chan</span> <span style="color:#a6e22e">workRequest</span>
-
-    <span style="color:#a6e22e">workerMut</span> <span style="color:#a6e22e">sync</span>.<span style="color:#a6e22e">Mutex</span>
-}
-
-<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">NewFunc</span>(<span style="color:#a6e22e">n</span> <span style="color:#66d9ef">int</span>, <span style="color:#a6e22e">f</span> <span style="color:#66d9ef">func</span>(<span style="color:#66d9ef">interface</span>{}) <span style="color:#66d9ef">interface</span>{}) <span style="color:#f92672">*</span><span style="color:#a6e22e">Pool</span> {
-    <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">New</span>(<span style="color:#a6e22e">n</span>, <span style="color:#66d9ef">func</span>() <span style="color:#a6e22e">Worker</span> {
-        <span style="color:#66d9ef">return</span> <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">closureWorker</span>{
-            <span style="color:#75715e">// 传入真正的实现模块
-</span><span style="color:#75715e"></span>            <span style="color:#a6e22e">processor</span>: <span style="color:#a6e22e">f</span>,
-        }
-    })
-}
-
-<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">New</span>(<span style="color:#a6e22e">n</span> <span style="color:#66d9ef">int</span>, <span style="color:#a6e22e">ctor</span> <span style="color:#66d9ef">func</span>() <span style="color:#a6e22e">Worker</span>) <span style="color:#f92672">*</span><span style="color:#a6e22e">Pool</span> {
-    <span style="color:#a6e22e">p</span> <span style="color:#f92672">:=</span> <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">Pool</span>{
-        <span style="color:#a6e22e">ctor</span>:    <span style="color:#a6e22e">ctor</span>,
-        <span style="color:#a6e22e">reqChan</span>: make(<span style="color:#66d9ef">chan</span> <span style="color:#a6e22e">workRequest</span>),
-    }
-    <span style="color:#75715e">// 批量创建协程，监听处理来自reqChan的任务
-</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">SetSize</span>(<span style="color:#a6e22e">n</span>)
-
-    <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">p</span>
-}
-</code></pre></div><p>相关实体结构如下，配合源码阅读就比较清晰了。
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Pool</span> <span style="color:#66d9ef">struct</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">queuedJobs</span> <span style="color:#66d9ef">int64</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 成员函数，用于鸭子实体
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#a6e22e">ctor</span>    <span style="color:#66d9ef">func</span>() <span style="color:#a6e22e">Worker</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">workers</span> []<span style="color:#f92672">*</span><span style="color:#a6e22e">workerWrapper</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">reqChan</span> <span style="color:#66d9ef">chan</span> <span style="color:#a6e22e">workRequest</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">workerMut</span> <span style="color:#a6e22e">sync</span>.<span style="color:#a6e22e">Mutex</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">NewFunc</span>(<span style="color:#a6e22e">n</span> <span style="color:#66d9ef">int</span>, <span style="color:#a6e22e">f</span> <span style="color:#66d9ef">func</span>(<span style="color:#66d9ef">interface</span>{}) <span style="color:#66d9ef">interface</span>{}) <span style="color:#f92672">*</span><span style="color:#a6e22e">Pool</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">New</span>(<span style="color:#a6e22e">n</span>, <span style="color:#66d9ef">func</span>() <span style="color:#a6e22e">Worker</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">closureWorker</span>{
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e">// 传入真正的实现模块
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>            <span style="color:#a6e22e">processor</span>: <span style="color:#a6e22e">f</span>,
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    })
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">New</span>(<span style="color:#a6e22e">n</span> <span style="color:#66d9ef">int</span>, <span style="color:#a6e22e">ctor</span> <span style="color:#66d9ef">func</span>() <span style="color:#a6e22e">Worker</span>) <span style="color:#f92672">*</span><span style="color:#a6e22e">Pool</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">p</span> <span style="color:#f92672">:=</span> <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">Pool</span>{
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">ctor</span>:    <span style="color:#a6e22e">ctor</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">reqChan</span>: make(<span style="color:#66d9ef">chan</span> <span style="color:#a6e22e">workRequest</span>),
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 批量创建协程，监听处理来自reqChan的任务
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">SetSize</span>(<span style="color:#a6e22e">n</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">p</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>相关实体结构如下，配合源码阅读就比较清晰了。
 <img src="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/blog/routinePool.png" alt="实体模块"></p>
 <p>这个框架相当于把协程预先创建好做了池化，随后业务层只需要源源不断把&quot;加工数据&quot;输入到<code>workRequest</code>这个chan即可，也就是<code>process()</code>函数，<code>process()</code>模块会把数据输入到内部<code>channel</code>进行处理，池中的<code>worker</code>会进行加工。<br>
 这种工厂模式还是值得借鉴的，Go也有很多框架使用了这种写法。</p>
 <p>引用原项目README.md的用法示例：</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#a6e22e">numCPUs</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">runtime</span>.<span style="color:#a6e22e">NumCPU</span>()
-
-<span style="color:#a6e22e">pool</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">tunny</span>.<span style="color:#a6e22e">NewFunc</span>(<span style="color:#a6e22e">numCPUs</span>, <span style="color:#66d9ef">func</span>(<span style="color:#a6e22e">payload</span> <span style="color:#66d9ef">interface</span>{}) <span style="color:#66d9ef">interface</span>{} {
-    <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">result</span> []<span style="color:#66d9ef">byte</span>
-    <span style="color:#75715e">// 关心业务层的输入、输出即可
-</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">result</span> = <span style="color:#a6e22e">wrapSomething</span>()
-    <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">result</span>
-})
-<span style="color:#66d9ef">defer</span> <span style="color:#a6e22e">pool</span>.<span style="color:#a6e22e">Close</span>()
-
-<span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">HandleFunc</span>(<span style="color:#e6db74">&#34;/work&#34;</span>, <span style="color:#66d9ef">func</span>(<span style="color:#a6e22e">w</span> <span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">ResponseWriter</span>, <span style="color:#a6e22e">r</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">Request</span>) {
-    <span style="color:#a6e22e">input</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">ioutil</span>.<span style="color:#a6e22e">ReadAll</span>(<span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">Body</span>)
-    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
-        <span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">Error</span>(<span style="color:#a6e22e">w</span>, <span style="color:#e6db74">&#34;Internal error&#34;</span>, <span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">StatusInternalServerError</span>)
-    }
-    <span style="color:#66d9ef">defer</span> <span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">Body</span>.<span style="color:#a6e22e">Close</span>()
-
-    <span style="color:#75715e">// 提交任务给Process
-</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">result</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">pool</span>.<span style="color:#a6e22e">Process</span>(<span style="color:#a6e22e">input</span>)
-
-    <span style="color:#a6e22e">w</span>.<span style="color:#a6e22e">Write</span>(<span style="color:#a6e22e">result</span>.([]<span style="color:#66d9ef">byte</span>))
-})
-
-<span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">ListenAndServe</span>(<span style="color:#e6db74">&#34;:8080&#34;</span>, <span style="color:#66d9ef">nil</span>)
-</code></pre></div><h2 id="总结">总结</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">numCPUs</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">runtime</span>.<span style="color:#a6e22e">NumCPU</span>()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">pool</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">tunny</span>.<span style="color:#a6e22e">NewFunc</span>(<span style="color:#a6e22e">numCPUs</span>, <span style="color:#66d9ef">func</span>(<span style="color:#a6e22e">payload</span> <span style="color:#66d9ef">interface</span>{}) <span style="color:#66d9ef">interface</span>{} {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">result</span> []<span style="color:#66d9ef">byte</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 关心业务层的输入、输出即可
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#a6e22e">result</span> = <span style="color:#a6e22e">wrapSomething</span>()
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">result</span>
+</span></span><span style="display:flex;"><span>})
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">defer</span> <span style="color:#a6e22e">pool</span>.<span style="color:#a6e22e">Close</span>()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">HandleFunc</span>(<span style="color:#e6db74">&#34;/work&#34;</span>, <span style="color:#66d9ef">func</span>(<span style="color:#a6e22e">w</span> <span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">ResponseWriter</span>, <span style="color:#a6e22e">r</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">Request</span>) {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">input</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">ioutil</span>.<span style="color:#a6e22e">ReadAll</span>(<span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">Body</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">Error</span>(<span style="color:#a6e22e">w</span>, <span style="color:#e6db74">&#34;Internal error&#34;</span>, <span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">StatusInternalServerError</span>)
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">defer</span> <span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">Body</span>.<span style="color:#a6e22e">Close</span>()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 提交任务给Process
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#a6e22e">result</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">pool</span>.<span style="color:#a6e22e">Process</span>(<span style="color:#a6e22e">input</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">w</span>.<span style="color:#a6e22e">Write</span>(<span style="color:#a6e22e">result</span>.([]<span style="color:#66d9ef">byte</span>))
+</span></span><span style="display:flex;"><span>})
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">ListenAndServe</span>(<span style="color:#e6db74">&#34;:8080&#34;</span>, <span style="color:#66d9ef">nil</span>)
+</span></span></code></pre></div><h2 id="总结">总结</h2>
 <ul>
 <li>Go协程有几个内置信息，协程id、协程栈、协程状态(running/io wait/chan send)，通过这些信息可以帮助我们一定程度的避免或者定位问题</li>
 <li>Go里面创建协程只需要一个Go关键字，但是要合理回收却很关键，必要时可以用协程池做限制</li>
@@ -629,6 +652,8 @@ Number of goroutines:3
 <li><a href="https://github.com/Jeffail/tunny">https://github.com/Jeffail/tunny</a></li>
 </ul>
               
+
+
             </div>
           </div>
           <div id="post-footer" class="post-footer main-content-wrap">
@@ -639,145 +664,147 @@ Number of goroutines:3
                   <div class="post-footer-tags">
                     <span class="text-color-light text-small">标签</span><br/>
                     
-  <a class="tag tag--primary tag--small" href="/zh/tags/%E5%8D%8F%E7%A8%8B/">协程</a>
+  <a class="tag tag--primary tag--small" href="https://pixeldin.github.io/zh/tags/%E5%8D%8F%E7%A8%8B/">协程</a>
 
-  <a class="tag tag--primary tag--small" href="/zh/tags/debug/">debug</a>
+  <a class="tag tag--primary tag--small" href="https://pixeldin.github.io/zh/tags/debug/">debug</a>
 
                   </div>
                 
               
             
-            <div class="post-actions-wrap">
-  
-      <nav >
-        <ul class="post-actions post-action-nav">
-          
-            <li class="post-action">
-              
-                <a class="post-action-btn btn btn--default tooltip--top" href="/zh/2022/04/%E8%81%8A%E4%B8%80%E8%81%8Ago%E7%9A%84%E5%8E%9F%E7%94%9F%E9%AB%98%E6%80%A7%E8%83%BD%E5%AF%B9%E8%B1%A1%E5%A4%8D%E7%94%A8%E6%B1%A0sync.pool/" data-tooltip="聊一聊Go的原生高性能对象复用池sync.Pool">
-              
-                  <i class="fa fa-angle-left"></i>
-                  <span class="hide-xs hide-sm text-small icon-ml">下一篇</span>
-                </a>
-            </li>
-            <li class="post-action">
-              
-                <a class="post-action-btn btn btn--default tooltip--top" href="/zh/2022/02/%E8%81%8A%E4%B8%80%E8%81%8Ago%E5%AE%9E%E7%8E%B0%E7%9A%84%E6%8E%A5%E5%8F%A3%E7%86%94%E6%96%AD%E5%99%A8-circuit-breaker/" data-tooltip="聊一聊Go实现的接口熔断器: Circuit Breaker">
-              
-                  <span class="hide-xs hide-sm text-small icon-mr">上一篇</span>
-                  <i class="fa fa-angle-right"></i>
-                </a>
-            </li>
-          
-        </ul>
-      </nav>
-    <ul class="post-actions post-action-share" >
+            
+<div class="post-actions-wrap">
+  <nav >
+    <ul class="post-actions post-action-nav">
       
-        <li class="post-action hide-lg hide-md hide-sm">
-          <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
-            <i class="fa fa-share-alt"></i>
-          </a>
+        <li class="post-action">
+          
+            <a class="post-action-btn btn btn--default tooltip--top" href="https://pixeldin.github.io/zh/2022/04/%E8%81%8A%E4%B8%80%E8%81%8Ago%E7%9A%84%E5%8E%9F%E7%94%9F%E9%AB%98%E6%80%A7%E8%83%BD%E5%AF%B9%E8%B1%A1%E5%A4%8D%E7%94%A8%E6%B1%A0sync.pool/" data-tooltip="聊一聊Go的原生高性能对象复用池sync.Pool" aria-label="后一篇: 聊一聊Go的原生高性能对象复用池sync.Pool">
+          
+              <i class="fa fa-angle-left"></i>
+              <span class="hide-xs hide-sm text-small icon-ml">后一篇</span>
+            </a>
         </li>
-        
+        <li class="post-action">
+          
+            <a class="post-action-btn btn btn--default tooltip--top" href="https://pixeldin.github.io/zh/2022/02/%E8%81%8A%E4%B8%80%E8%81%8Ago%E5%AE%9E%E7%8E%B0%E7%9A%84%E6%8E%A5%E5%8F%A3%E7%86%94%E6%96%AD%E5%99%A8-circuit-breaker/" data-tooltip="聊一聊Go实现的接口熔断器: Circuit Breaker" aria-label="前一篇: 聊一聊Go实现的接口熔断器: Circuit Breaker">
+          
+              <span class="hide-xs hide-sm text-small icon-mr">前一篇</span>
+              <i class="fa fa-angle-right"></i>
+            </a>
+        </li>
       
-      
-      <li class="post-action">
-        
-          <a class="post-action-btn btn btn--default" href="#">
-        
-          <i class="fa fa-list"></i>
-        </a>
-      </li>
     </ul>
+  </nav>
+<ul class="post-actions post-action-share" >
   
+    <li class="post-action hide-lg hide-md hide-sm">
+      <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions" aria-label="分享这个帖子">
+        <i class="fa fa-share-alt" aria-hidden="true"></i>
+      </a>
+    </li>
+    
+  
+  
+  <li class="post-action">
+    
+      <a class="post-action-btn btn btn--default" href="#top" aria-label="回到顶部">
+      <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    
+    </a>
+  </li>
+</ul>
 </div>
 
+
             
-              
-            
+  
+
+
           </div>
         </article>
         <footer id="footer" class="main-content-wrap">
   <span class="copyrights">
-    &copy; 2024 <a href="https://github.com/pixeldin">pixeldin</a>. All Rights Reserved
+    &copy; 2023 <a href="https://github.com/pixeldin">pixeldin</a>. All Rights Reserved
   </span>
 </footer>
 
       </div>
-      <div id="bottom-bar" class="post-bottom-bar" data-behavior="5">
-        <div class="post-actions-wrap">
-  
-      <nav >
-        <ul class="post-actions post-action-nav">
-          
-            <li class="post-action">
-              
-                <a class="post-action-btn btn btn--default tooltip--top" href="/zh/2022/04/%E8%81%8A%E4%B8%80%E8%81%8Ago%E7%9A%84%E5%8E%9F%E7%94%9F%E9%AB%98%E6%80%A7%E8%83%BD%E5%AF%B9%E8%B1%A1%E5%A4%8D%E7%94%A8%E6%B1%A0sync.pool/" data-tooltip="聊一聊Go的原生高性能对象复用池sync.Pool">
-              
-                  <i class="fa fa-angle-left"></i>
-                  <span class="hide-xs hide-sm text-small icon-ml">下一篇</span>
-                </a>
-            </li>
-            <li class="post-action">
-              
-                <a class="post-action-btn btn btn--default tooltip--top" href="/zh/2022/02/%E8%81%8A%E4%B8%80%E8%81%8Ago%E5%AE%9E%E7%8E%B0%E7%9A%84%E6%8E%A5%E5%8F%A3%E7%86%94%E6%96%AD%E5%99%A8-circuit-breaker/" data-tooltip="聊一聊Go实现的接口熔断器: Circuit Breaker">
-              
-                  <span class="hide-xs hide-sm text-small icon-mr">上一篇</span>
-                  <i class="fa fa-angle-right"></i>
-                </a>
-            </li>
-          
-        </ul>
-      </nav>
-    <ul class="post-actions post-action-share" >
+      <div id="bottom-bar" class="post-bottom-bar" data-behavior="1">
+        
+<div class="post-actions-wrap">
+  <nav >
+    <ul class="post-actions post-action-nav">
       
-        <li class="post-action hide-lg hide-md hide-sm">
-          <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
-            <i class="fa fa-share-alt"></i>
-          </a>
+        <li class="post-action">
+          
+            <a class="post-action-btn btn btn--default tooltip--top" href="https://pixeldin.github.io/zh/2022/04/%E8%81%8A%E4%B8%80%E8%81%8Ago%E7%9A%84%E5%8E%9F%E7%94%9F%E9%AB%98%E6%80%A7%E8%83%BD%E5%AF%B9%E8%B1%A1%E5%A4%8D%E7%94%A8%E6%B1%A0sync.pool/" data-tooltip="聊一聊Go的原生高性能对象复用池sync.Pool" aria-label="后一篇: 聊一聊Go的原生高性能对象复用池sync.Pool">
+          
+              <i class="fa fa-angle-left"></i>
+              <span class="hide-xs hide-sm text-small icon-ml">后一篇</span>
+            </a>
         </li>
-        
+        <li class="post-action">
+          
+            <a class="post-action-btn btn btn--default tooltip--top" href="https://pixeldin.github.io/zh/2022/02/%E8%81%8A%E4%B8%80%E8%81%8Ago%E5%AE%9E%E7%8E%B0%E7%9A%84%E6%8E%A5%E5%8F%A3%E7%86%94%E6%96%AD%E5%99%A8-circuit-breaker/" data-tooltip="聊一聊Go实现的接口熔断器: Circuit Breaker" aria-label="前一篇: 聊一聊Go实现的接口熔断器: Circuit Breaker">
+          
+              <span class="hide-xs hide-sm text-small icon-mr">前一篇</span>
+              <i class="fa fa-angle-right"></i>
+            </a>
+        </li>
       
-      
-      <li class="post-action">
-        
-          <a class="post-action-btn btn btn--default" href="#">
-        
-          <i class="fa fa-list"></i>
-        </a>
-      </li>
     </ul>
+  </nav>
+<ul class="post-actions post-action-share" >
   
+    <li class="post-action hide-lg hide-md hide-sm">
+      <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions" aria-label="分享这个帖子">
+        <i class="fa fa-share-alt" aria-hidden="true"></i>
+      </a>
+    </li>
+    
+  
+  
+  <li class="post-action">
+    
+      <a class="post-action-btn btn btn--default" href="#top" aria-label="回到顶部">
+      <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    
+    </a>
+  </li>
+</ul>
 </div>
 
+
       </div>
-      <div id="share-options-bar" class="share-options-bar" data-behavior="5">
-  <i id="btn-close-shareoptions" class="fa fa-close"></i>
-  <ul class="share-options">
-    
-  </ul>
-</div>
-<div id="share-options-mask" class="share-options-mask"></div>
+      
+
     </div>
     
     <div id="about">
   <div id="about-card">
     <div id="about-btn-close">
-      <i class="fa fa-remove"></i>
+      <i class="fa fa-times"></i>
     </div>
     
       <img id="about-card-picture" src="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/pig.jpg" alt="作者的图片" />
     
-    <h4 id="about-card-name">pixelpig</h4>
+    <h4 id="about-card-name">@Pixelpig</h4>
     
-      <div id="about-card-bio">With enthusiasm for open source and I am looking forward to be a better developer. Stay hungry, stay foolish <strong>:）</strong></div>
+      <div id="about-card-bio">Keep it simple, so as this bio <strong>:）</strong></div>
     
+    
+      <div id="about-card-job">
+        <i class="fa fa-briefcase"></i>
+        <br/>
+        Software Developer
+      </div>
     
     
       <div id="about-card-location">
-        <i class="fa fa-map-marker"></i>
+        <i class="fa fa-map-marker-alt"></i>
         <br/>
-        GuangDong - CHINA
+        GuangDong - China
       </div>
     
   </div>
@@ -792,30 +819,16 @@ Number of goroutines:3
 
 
     
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js" integrity="sha256-/BfiIkHlHoVihZdc6TFuj7MmJ0TWcWsMXkeDFwhi0zw=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.1.0/highlight.min.js" integrity="sha512-z+/WWfyD5tccCukM4VvONpEtLmbAm5LDu7eKiyMQJ9m7OfPEDL7gENyDRL3Yfe8XAuGsS2fS4xSMnl6d30kqGQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.7/js/jquery.fancybox.min.js" integrity="sha256-GEAnjcTqVP+vBp3SSc8bEDQqvWAZMiHyUSIorrWwH50=" crossorigin="anonymous"></script>
-
-
-<script src="/js/script-pcw6v3xilnxydl1vddzazdverrnn9ctynvnxgwho987mfyqkuylcb1nlt.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js" integrity="sha512-uURl+ZXMBrF4AwGaWmEetzrd+J5/8NRkWAvJx5sbPSSuOb0bZLqf+tOzniObO00BjHa/dD7gub9oCGMLPQHtQA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 
-<script lang="javascript">
-window.onload = updateMinWidth;
-window.onresize = updateMinWidth;
-document.getElementById("sidebar").addEventListener("transitionend", updateMinWidth);
-function updateMinWidth() {
-  var sidebar = document.getElementById("sidebar");
-  var main = document.getElementById("main");
-  main.style.minWidth = "";
-  var w1 = getComputedStyle(main).getPropertyValue("min-width");
-  var w2 = getComputedStyle(sidebar).getPropertyValue("width");
-  var w3 = getComputedStyle(sidebar).getPropertyValue("left");
-  main.style.minWidth = `calc(${w1} - ${w2} - ${w3})`;
-}
-</script>
+<script src="https://pixeldin.github.io/js/script-d9gfx1pdvbfdgoahypizomgoamlbumvk1ugdifqa59ynqvdh8wfsinmt5oj.min.js"></script>
+
+
 
 <script>
 $(document).ready(function() {
@@ -828,11 +841,6 @@ $(document).ready(function() {
   });
 });
 </script>
-
-
-  
-    
-  
 
 
 

@@ -2,11 +2,31 @@
 <html lang="en-us">
   <head>
     
+    <script type="application/ld+json">
+
+{  
+  "@context":"http://schema.org",
+  "@type":"Website",
+  "@id":"https:\/\/pixeldin.github.io\/",
+  "author": {
+    "@type": "Person",
+    "name": "@Pixelpig",
+    
+    "image": "https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/pig.jpg"
+    
+  },
+  "name":"pixelpig.tech",
+  "description":"\u003cp\u003eAs mentioned earlier, etcd implements each module through layers. This time we will enter the network part.\nToday, let’s talk about the communication way of etcd inside the server and client role.\u003c\/p\u003e",
+  "url":"https:\/\/pixeldin.github.io\/en\/2022\/06\/talk-about-etcd-part3-the-communication-protocol-between-client-and-server\/",
+  "keywords":"[]"
+}
+
+</script>
     <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="generator" content="Hugo 0.80.0 with theme Tranquilpeak 0.4.8-BETA">
-<meta name="author" content="pixelpig">
+<meta name="generator" content="Hugo 0.111.3 with theme Tranquilpeak 0.5.3-BETA">
+<meta name="author" content="@Pixelpig">
 <meta name="keywords" content="">
 <meta name="description" content="As mentioned earlier, etcd implements each module through layers. This time we will enter the network part.
 Today, let’s talk about the communication way of etcd inside the server and client role.">
@@ -17,9 +37,9 @@ Today, let’s talk about the communication way of etcd inside the server and cl
 <meta property="og:type" content="article">
 <meta property="og:title" content="Talk about etcd (Part3): the Communication Protocol between Client and Server">
 <meta name="twitter:title" content="Talk about etcd (Part3): the Communication Protocol between Client and Server">
-<meta property="og:url" content="/en/2022/06/talk-about-etcd-part3-the-communication-protocol-between-client-and-server/">
-<meta property="twitter:url" content="/en/2022/06/talk-about-etcd-part3-the-communication-protocol-between-client-and-server/">
-<meta property="og:site_name" content="pixelpig.space">
+<meta property="og:url" content="https://pixeldin.github.io/en/2022/06/talk-about-etcd-part3-the-communication-protocol-between-client-and-server/">
+<meta property="twitter:url" content="https://pixeldin.github.io/en/2022/06/talk-about-etcd-part3-the-communication-protocol-between-client-and-server/">
+<meta property="og:site_name" content="pixelpig.tech">
 <meta property="og:description" content="As mentioned earlier, etcd implements each module through layers. This time we will enter the network part.
 Today, let’s talk about the communication way of etcd inside the server and client role.">
 <meta name="twitter:description" content="As mentioned earlier, etcd implements each module through layers. This time we will enter the network part.
@@ -63,12 +83,12 @@ Today, let’s talk about the communication way of etcd inside the server and cl
 
 
 
-
-
-
-
   <meta property="og:image" content="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/pig.jpg">
   <meta property="twitter:image" content="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/pig.jpg">
+
+
+
+
 
 
     <title>Talk about etcd (Part3): the Communication Protocol between Client and Server</title>
@@ -78,15 +98,15 @@ Today, let’s talk about the communication way of etcd inside the server and cl
 
     
 
-    <link rel="canonical" href="/en/2022/06/talk-about-etcd-part3-the-communication-protocol-between-client-and-server/">
+    <link rel="canonical" href="https://pixeldin.github.io/en/2022/06/talk-about-etcd-part3-the-communication-protocol-between-client-and-server/">
 
     
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/jquery.fancybox.min.css" integrity="sha256-vuXZ9LGmmwtjqFX1F+EKin1ThZMub58gKULUyf0qECk=" crossorigin="anonymous" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/helpers/jquery.fancybox-thumbs.min.css" integrity="sha256-SEa4XYAHihTcEP1f5gARTB2K26Uk8PsndQYHQC1f4jU=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" integrity="sha512-H9jrZiiopUdsLpg94A333EfumgUBpO9MdbxStdeITo+KEIMaNfHNvwyjjDJb+ERPaRS6DpyRlKbvPUasNItRyw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     
     
-    <link rel="stylesheet" href="/css/style-twzjdbqhmnnacqs0pwwdzcdbt8yhv8giawvjqjmyfoqnvazl0dalmnhdkvp7.min.css" />
+    
+    <link rel="stylesheet" href="https://pixeldin.github.io/css/style-fneuerdunt9vf6vafpewt2nttopqa9hdugoae6mfs7phtuibtq6qjxkds96.min.css" />
     
     
 
@@ -98,15 +118,15 @@ Today, let’s talk about the communication way of etcd inside the server and cl
 
   <body>
     <div id="blog">
-      <header id="header" data-behavior="5">
+      <header id="header" data-behavior="1">
   <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
   <div class="header-title">
-    <a class="header-title-link" href="/en/">pixelpig.space</a>
+    <a class="header-title-link" href="https://pixeldin.github.io/en/" aria-label="Go to homepage">pixelpig.tech</a>
   </div>
   
     
       <a class="header-right-picture "
-         href="/#about">
+         href="https://pixeldin.github.io/#about" aria-label="Open the link: /#about">
     
     
     
@@ -118,16 +138,16 @@ Today, let’s talk about the communication way of etcd inside the server and cl
   
 </header>
 
-      <nav id="sidebar" data-behavior="5">
+      <nav id="sidebar" data-behavior="1">
   <div class="sidebar-container">
     
       <div class="sidebar-profile">
-        <a href="/#about">
+        <a href="https://pixeldin.github.io/#about" aria-label="Read more about the author">
           <img class="sidebar-profile-picture" src="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/pig.jpg" alt="Author&#39;s picture" />
         </a>
-        <h4 class="sidebar-profile-name">pixelpig</h4>
+        <h4 class="sidebar-profile-name">@Pixelpig</h4>
         
-          <h5 class="sidebar-profile-bio">With enthusiasm for open source and I am looking forward to be a better developer. Stay hungry, stay foolish <strong>:）</strong></h5>
+          <h5 class="sidebar-profile-bio">Keep it simple, so as this bio <strong>:）</strong></h5>
         
       </div>
     
@@ -135,7 +155,7 @@ Today, let’s talk about the communication way of etcd inside the server and cl
       
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="/zh">
+      <a class="sidebar-button-link " href="https://pixeldin.github.io/zh" title="简体中文">
     
       <i class="sidebar-button-icon fa fa-lg fa-language"></i>
       
@@ -145,7 +165,7 @@ Today, let’s talk about the communication way of etcd inside the server and cl
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="/en/">
+      <a class="sidebar-button-link " href="https://pixeldin.github.io/en/" title="Home">
     
       <i class="sidebar-button-icon fa fa-lg fa-home"></i>
       
@@ -155,7 +175,7 @@ Today, let’s talk about the communication way of etcd inside the server and cl
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="/en/categories">
+      <a class="sidebar-button-link " href="https://pixeldin.github.io/en/categories" title="Categories">
     
       <i class="sidebar-button-icon fa fa-lg fa-bookmark"></i>
       
@@ -165,7 +185,7 @@ Today, let’s talk about the communication way of etcd inside the server and cl
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="/en/tags">
+      <a class="sidebar-button-link " href="https://pixeldin.github.io/en/tags" title="Tags">
     
       <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
       
@@ -175,7 +195,7 @@ Today, let’s talk about the communication way of etcd inside the server and cl
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="/en/archives">
+      <a class="sidebar-button-link " href="https://pixeldin.github.io/en/archives" title="Archives">
     
       <i class="sidebar-button-icon fa fa-lg fa-archive"></i>
       
@@ -185,7 +205,7 @@ Today, let’s talk about the communication way of etcd inside the server and cl
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="/en/#about">
+      <a class="sidebar-button-link " href="https://pixeldin.github.io/en/#about" title="About me">
     
       <i class="sidebar-button-icon fa fa-lg fa-question"></i>
       
@@ -195,32 +215,35 @@ Today, let’s talk about the communication way of etcd inside the server and cl
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="https://twitter.com/pixelpigpigpig/" target="_blank" rel="noopener">
+      <a class="sidebar-button-link " href="https://twitter.com/pixelpigpigpig/" target="_blank" rel="noopener" title="Twitter">
     
-      <i class="sidebar-button-icon fa fa-lg fa-twitter"></i>
+      <i class="sidebar-button-icon fab fa-lg fa-twitter"></i>
       
-      <span class="sidebar-button-desc">Twitter</span>
+      <span class="sidebar-button-desc">twitter</span>
     </a>
   </li>
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="https://github.com/pixeldin" target="_blank" rel="noopener">
+      <a class="sidebar-button-link " href="https://github.com/pixeldin" target="_blank" rel="noopener" title="pixeldin">
     
-      <i class="sidebar-button-icon fa fa-lg fa-github"></i>
+      <i class="sidebar-button-icon fab fa-lg fa-github-alt"></i>
       
       <span class="sidebar-button-desc">pixeldin</span>
     </a>
   </li>
 
 
-    </ul>
-    <ul class="sidebar-buttons">
-      
 
     </ul>
     <ul class="sidebar-buttons">
       
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+
 
     </ul>
   </div>
@@ -228,23 +251,23 @@ Today, let’s talk about the communication way of etcd inside the server and cl
 
       
 
-      <div id="main" data-behavior="5"
+      <div id="main" data-behavior="1"
         class="
                hasCoverMetaIn
                ">
-        <article class="post" itemscope itemType="http://schema.org/BlogPosting">
+        <article class="post" id="top">
           
           
             <div class="post-header main-content-wrap text-center">
   
-    <h1 class="post-title" itemprop="headline">
+    <h1 class="post-title">
       Talk about etcd (Part3): the Communication Protocol between Client and Server
     </h1>
   
   
   <div class="postShorten-meta post-meta">
     
-      <time itemprop="datePublished" datetime="2022-06-23T00:00:00Z">
+      <time datetime="2022-06-23T00:00:00Z">
         
   June 23, 2022
 
@@ -255,9 +278,9 @@ Today, let’s talk about the communication way of etcd inside the server and cl
   
     <span>in</span>
     
-      <a class="category-link" href="/en/categories/go">Go</a>, 
+      <a class="category-link" href="https://pixeldin.github.io/en/categories/go">Go</a>, 
     
-      <a class="category-link" href="/en/categories/backend">backend</a>
+      <a class="category-link" href="https://pixeldin.github.io/en/categories/backend">backend</a>
     
   
 
@@ -265,7 +288,7 @@ Today, let’s talk about the communication way of etcd inside the server and cl
 
 </div>
           
-          <div class="post-content markdown" itemprop="articleBody">
+          <div class="post-content markdown">
             <div class="main-content-wrap">
               <p>As mentioned earlier, etcd implements each module through layers. This time we will enter the network part.
 Today, let’s talk about the communication way of etcd inside the server and client role.</p>
@@ -297,105 +320,105 @@ Because services often need to perceive changes in node configuration or monitor
 In the communication module, etcd also adopts a layered strategy, in which the network modules of external cross-machine nodes are concentrated in the package of <code>api.rafthttp</code>, and the node status update and underlying storage are distributed in <code>etcd .raft</code> package.</p>
 <h3 id="v2-protocol-conversion">v2 Protocol Conversion</h3>
 <p>This is a transition logic for etcd v2 requests to transition to the underlying <code>etcdserver</code>:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#75715e">// parseKeyRequest converts the received http.Request about keysPrefix to
-</span><span style="color:#75715e">// convert as etcdserverpb request
-</span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">parseKeyRequest</span>(<span style="color:#a6e22e">r</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">Request</span>, <span style="color:#a6e22e">clock</span> <span style="color:#a6e22e">clockwork</span>.<span style="color:#a6e22e">Clock</span>) (<span style="color:#a6e22e">etcdserverpb</span>.<span style="color:#a6e22e">Request</span>, <span style="color:#66d9ef">bool</span>, <span style="color:#66d9ef">error</span>) {
-	<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">noValueOnSuccess</span> <span style="color:#66d9ef">bool</span>
-	<span style="color:#a6e22e">emptyReq</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">etcdserverpb</span>.<span style="color:#a6e22e">Request</span>{}
-
-	<span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">ParseForm</span>()
-	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
-		<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">emptyReq</span>, <span style="color:#66d9ef">false</span>, <span style="color:#a6e22e">v2error</span>.<span style="color:#a6e22e">NewRequestError</span>(
-			<span style="color:#a6e22e">v2error</span>.<span style="color:#a6e22e">EcodeInvalidForm</span>,
-			<span style="color:#a6e22e">err</span>.<span style="color:#a6e22e">Error</span>(),
-		)
-	}
-
-	<span style="color:#75715e">// ...
-</span><span style="color:#75715e"></span>	<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">pIdx</span>, <span style="color:#a6e22e">wIdx</span> <span style="color:#66d9ef">uint64</span>
-	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">pIdx</span>, <span style="color:#a6e22e">err</span> = <span style="color:#a6e22e">getUint64</span>(<span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">Form</span>, <span style="color:#e6db74">&#34;prevIndex&#34;</span>); <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
-		<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">emptyReq</span>, <span style="color:#66d9ef">false</span>, <span style="color:#a6e22e">v2error</span>.<span style="color:#a6e22e">NewRequestError</span>(
-			<span style="color:#a6e22e">v2error</span>.<span style="color:#a6e22e">EcodeIndexNaN</span>,
-			<span style="color:#e6db74">`invalid value for &#34;prevIndex&#34;`</span>,
-		)
-	}
-	<span style="color:#75715e">// ...
-</span><span style="color:#75715e"></span>	
-	<span style="color:#75715e">// Convert to etcdserverpb.Request proto request structure
-</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">rr</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">etcdserverpb</span>.<span style="color:#a6e22e">Request</span>{
-		<span style="color:#a6e22e">Method</span>:    <span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">Method</span>,
-		<span style="color:#a6e22e">Path</span>:      <span style="color:#a6e22e">p</span>,
-		<span style="color:#a6e22e">Val</span>:       <span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">FormValue</span>(<span style="color:#e6db74">&#34;value&#34;</span>),
-		<span style="color:#a6e22e">Dir</span>:       <span style="color:#a6e22e">dir</span>,
-		<span style="color:#a6e22e">PrevValue</span>: <span style="color:#a6e22e">pV</span>,
-		<span style="color:#a6e22e">PrevIndex</span>: <span style="color:#a6e22e">pIdx</span>,
-		<span style="color:#a6e22e">PrevExist</span>: <span style="color:#a6e22e">pe</span>,
-		<span style="color:#a6e22e">Wait</span>:      <span style="color:#a6e22e">wait</span>,
-		<span style="color:#a6e22e">Since</span>:     <span style="color:#a6e22e">wIdx</span>,
-		<span style="color:#a6e22e">Recursive</span>: <span style="color:#a6e22e">rec</span>,
-		<span style="color:#a6e22e">Sorted</span>:    <span style="color:#a6e22e">sort</span>,
-		<span style="color:#a6e22e">Quorum</span>:    <span style="color:#a6e22e">quorum</span>,
-		<span style="color:#a6e22e">Stream</span>:    <span style="color:#a6e22e">stream</span>,
-	}
-	<span style="color:#75715e">// ...
-</span><span style="color:#75715e"></span>	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">rr</span>, <span style="color:#a6e22e">noValueOnSuccess</span>, <span style="color:#66d9ef">nil</span>
-}
-</code></pre></div><p>It is worth mentioning that etcd has officially used the v3 mode of communication by default after the v3.4 version, so we will focus on analyzing the v3 version of the code and describe it separately from the client and the server.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#75715e">// parseKeyRequest converts the received http.Request about keysPrefix to
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// convert as etcdserverpb request
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">parseKeyRequest</span>(<span style="color:#a6e22e">r</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">Request</span>, <span style="color:#a6e22e">clock</span> <span style="color:#a6e22e">clockwork</span>.<span style="color:#a6e22e">Clock</span>) (<span style="color:#a6e22e">etcdserverpb</span>.<span style="color:#a6e22e">Request</span>, <span style="color:#66d9ef">bool</span>, <span style="color:#66d9ef">error</span>) {
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">noValueOnSuccess</span> <span style="color:#66d9ef">bool</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">emptyReq</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">etcdserverpb</span>.<span style="color:#a6e22e">Request</span>{}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">ParseForm</span>()
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">emptyReq</span>, <span style="color:#66d9ef">false</span>, <span style="color:#a6e22e">v2error</span>.<span style="color:#a6e22e">NewRequestError</span>(
+</span></span><span style="display:flex;"><span>			<span style="color:#a6e22e">v2error</span>.<span style="color:#a6e22e">EcodeInvalidForm</span>,
+</span></span><span style="display:flex;"><span>			<span style="color:#a6e22e">err</span>.<span style="color:#a6e22e">Error</span>(),
+</span></span><span style="display:flex;"><span>		)
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// ...
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">pIdx</span>, <span style="color:#a6e22e">wIdx</span> <span style="color:#66d9ef">uint64</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">pIdx</span>, <span style="color:#a6e22e">err</span> = <span style="color:#a6e22e">getUint64</span>(<span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">Form</span>, <span style="color:#e6db74">&#34;prevIndex&#34;</span>); <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">emptyReq</span>, <span style="color:#66d9ef">false</span>, <span style="color:#a6e22e">v2error</span>.<span style="color:#a6e22e">NewRequestError</span>(
+</span></span><span style="display:flex;"><span>			<span style="color:#a6e22e">v2error</span>.<span style="color:#a6e22e">EcodeIndexNaN</span>,
+</span></span><span style="display:flex;"><span>			<span style="color:#e6db74">`invalid value for &#34;prevIndex&#34;`</span>,
+</span></span><span style="display:flex;"><span>		)
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// ...
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// Convert to etcdserverpb.Request proto request structure
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#a6e22e">rr</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">etcdserverpb</span>.<span style="color:#a6e22e">Request</span>{
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">Method</span>:    <span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">Method</span>,
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">Path</span>:      <span style="color:#a6e22e">p</span>,
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">Val</span>:       <span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">FormValue</span>(<span style="color:#e6db74">&#34;value&#34;</span>),
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">Dir</span>:       <span style="color:#a6e22e">dir</span>,
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">PrevValue</span>: <span style="color:#a6e22e">pV</span>,
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">PrevIndex</span>: <span style="color:#a6e22e">pIdx</span>,
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">PrevExist</span>: <span style="color:#a6e22e">pe</span>,
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">Wait</span>:      <span style="color:#a6e22e">wait</span>,
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">Since</span>:     <span style="color:#a6e22e">wIdx</span>,
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">Recursive</span>: <span style="color:#a6e22e">rec</span>,
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">Sorted</span>:    <span style="color:#a6e22e">sort</span>,
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">Quorum</span>:    <span style="color:#a6e22e">quorum</span>,
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">Stream</span>:    <span style="color:#a6e22e">stream</span>,
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// ...
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">rr</span>, <span style="color:#a6e22e">noValueOnSuccess</span>, <span style="color:#66d9ef">nil</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>It is worth mentioning that etcd has officially used the v3 mode of communication by default after the v3.4 version, so we will focus on analyzing the v3 version of the code and describe it separately from the client and the server.</p>
 <h3 id="client-side">Client Side</h3>
 <p>The v3 client encapsulates a grpc connection for internal communication of the rpc service</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#75715e">// Client provides and manages an etcd v3 client session.
-</span><span style="color:#75715e"></span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Client</span> <span style="color:#66d9ef">struct</span> {
-	<span style="color:#a6e22e">Cluster</span>
-	<span style="color:#a6e22e">KV</span>
-	<span style="color:#a6e22e">Lease</span>
-	<span style="color:#a6e22e">Watcher</span>
-	<span style="color:#75715e">// rpc Connection
-</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">conn</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">grpc</span>.<span style="color:#a6e22e">ClientConn</span>
-	<span style="color:#a6e22e">cfg</span>           <span style="color:#a6e22e">Config</span>
-	<span style="color:#75715e">//...
-</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">lg</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">zap</span>.<span style="color:#a6e22e">Logger</span>
-}
-</code></pre></div><h4 id="proto-design">proto design</h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#75715e">// Client provides and manages an etcd v3 client session.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Client</span> <span style="color:#66d9ef">struct</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">Cluster</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">KV</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">Lease</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">Watcher</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// rpc Connection
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">conn</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">grpc</span>.<span style="color:#a6e22e">ClientConn</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">cfg</span>           <span style="color:#a6e22e">Config</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">//...
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">lg</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">zap</span>.<span style="color:#a6e22e">Logger</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h4 id="proto-design">proto design</h4>
 <p>In the pkg of <code>etcdserver</code>, we can see some communication .proto files</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go">..<span style="color:#f92672">/</span>..<span style="color:#f92672">/</span><span style="color:#a6e22e">etcd</span><span style="color:#f92672">/</span><span style="color:#a6e22e">etcdserver</span><span style="color:#f92672">/</span><span style="color:#a6e22e">etcdserverpb</span> ((<span style="color:#a6e22e">v3</span><span style="color:#ae81ff">.4.0</span>))
-<span style="color:#960050;background-color:#1e0010">$</span> <span style="color:#a6e22e">ls</span> <span style="color:#f92672">-</span><span style="color:#a6e22e">l</span> <span style="color:#f92672">*</span>.<span style="color:#a6e22e">proto</span>
-<span style="color:#f92672">-</span><span style="color:#a6e22e">rw</span><span style="color:#f92672">-</span><span style="color:#a6e22e">r</span><span style="color:#f92672">--</span><span style="color:#a6e22e">r</span><span style="color:#f92672">--</span> <span style="color:#ae81ff">1</span> <span style="color:#a6e22e">Pixel_Pig</span> <span style="color:#ae81ff">197121</span>  <span style="color:#ae81ff">1515</span> <span style="color:#a6e22e">Oct</span>  <span style="color:#ae81ff">8</span> <span style="color:#ae81ff">10</span>:<span style="color:#ae81ff">57</span> <span style="color:#a6e22e">etcdserver</span>.<span style="color:#a6e22e">proto</span>
-<span style="color:#f92672">-</span><span style="color:#a6e22e">rw</span><span style="color:#f92672">-</span><span style="color:#a6e22e">r</span><span style="color:#f92672">--</span><span style="color:#a6e22e">r</span><span style="color:#f92672">--</span> <span style="color:#ae81ff">1</span> <span style="color:#a6e22e">Pixel_Pig</span> <span style="color:#ae81ff">197121</span>  <span style="color:#ae81ff">2364</span> <span style="color:#a6e22e">Oct</span>  <span style="color:#ae81ff">8</span> <span style="color:#ae81ff">10</span>:<span style="color:#ae81ff">57</span> <span style="color:#a6e22e">raft_internal</span>.<span style="color:#a6e22e">proto</span>
-<span style="color:#f92672">-</span><span style="color:#a6e22e">rw</span><span style="color:#f92672">-</span><span style="color:#a6e22e">r</span><span style="color:#f92672">--</span><span style="color:#a6e22e">r</span><span style="color:#f92672">--</span> <span style="color:#ae81ff">1</span> <span style="color:#a6e22e">Pixel_Pig</span> <span style="color:#ae81ff">197121</span> <span style="color:#ae81ff">35627</span> <span style="color:#a6e22e">Oct</span>  <span style="color:#ae81ff">8</span> <span style="color:#ae81ff">10</span>:<span style="color:#ae81ff">57</span> <span style="color:#a6e22e">rpc</span>.<span style="color:#a6e22e">proto</span>
-</code></pre></div><p>which defines the services that etcd mainly provides external function modules
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>..<span style="color:#f92672">/</span>..<span style="color:#f92672">/</span><span style="color:#a6e22e">etcd</span><span style="color:#f92672">/</span><span style="color:#a6e22e">etcdserver</span><span style="color:#f92672">/</span><span style="color:#a6e22e">etcdserverpb</span> ((<span style="color:#a6e22e">v3</span><span style="color:#ae81ff">.4.0</span>))
+</span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">$</span> <span style="color:#a6e22e">ls</span> <span style="color:#f92672">-</span><span style="color:#a6e22e">l</span> <span style="color:#f92672">*</span>.<span style="color:#a6e22e">proto</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">-</span><span style="color:#a6e22e">rw</span><span style="color:#f92672">-</span><span style="color:#a6e22e">r</span><span style="color:#f92672">--</span><span style="color:#a6e22e">r</span><span style="color:#f92672">--</span> <span style="color:#ae81ff">1</span> <span style="color:#a6e22e">Pixel_Pig</span> <span style="color:#ae81ff">197121</span>  <span style="color:#ae81ff">1515</span> <span style="color:#a6e22e">Oct</span>  <span style="color:#ae81ff">8</span> <span style="color:#ae81ff">10</span>:<span style="color:#ae81ff">57</span> <span style="color:#a6e22e">etcdserver</span>.<span style="color:#a6e22e">proto</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">-</span><span style="color:#a6e22e">rw</span><span style="color:#f92672">-</span><span style="color:#a6e22e">r</span><span style="color:#f92672">--</span><span style="color:#a6e22e">r</span><span style="color:#f92672">--</span> <span style="color:#ae81ff">1</span> <span style="color:#a6e22e">Pixel_Pig</span> <span style="color:#ae81ff">197121</span>  <span style="color:#ae81ff">2364</span> <span style="color:#a6e22e">Oct</span>  <span style="color:#ae81ff">8</span> <span style="color:#ae81ff">10</span>:<span style="color:#ae81ff">57</span> <span style="color:#a6e22e">raft_internal</span>.<span style="color:#a6e22e">proto</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">-</span><span style="color:#a6e22e">rw</span><span style="color:#f92672">-</span><span style="color:#a6e22e">r</span><span style="color:#f92672">--</span><span style="color:#a6e22e">r</span><span style="color:#f92672">--</span> <span style="color:#ae81ff">1</span> <span style="color:#a6e22e">Pixel_Pig</span> <span style="color:#ae81ff">197121</span> <span style="color:#ae81ff">35627</span> <span style="color:#a6e22e">Oct</span>  <span style="color:#ae81ff">8</span> <span style="color:#ae81ff">10</span>:<span style="color:#ae81ff">57</span> <span style="color:#a6e22e">rpc</span>.<span style="color:#a6e22e">proto</span>
+</span></span></code></pre></div><p>which defines the services that etcd mainly provides external function modules
 <img src="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/blog/etcd/raft/etcd-proto-svr.png" alt="etcd内部rpc服务"></p>
 <h4 id="request-struct">Request struct</h4>
 <p>This is the request body of etcd node rpc communication. The above v2 client version converts HttpRequest into <code>etcdserverpb.Request</code> is exactly from the etcdserver.proto file
 <img src="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/blog/etcd/raft/etcd-proto-request.png" alt="etcd-proto-request"></p>
 <h4 id="kv-client">KV Client</h4>
 <p>The client request will be called through the implementation of the <code>KV</code> interface <code>kVClient</code>, and the remote end is <code>KVServer</code></p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">c</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">kVClient</span>) <span style="color:#a6e22e">Range</span>(<span style="color:#a6e22e">ctx</span> <span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">Context</span>, <span style="color:#a6e22e">in</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">RangeRequest</span>, <span style="color:#a6e22e">opts</span> <span style="color:#f92672">...</span><span style="color:#a6e22e">grpc</span>.<span style="color:#a6e22e">CallOption</span>) (<span style="color:#f92672">*</span><span style="color:#a6e22e">RangeResponse</span>, <span style="color:#66d9ef">error</span>) {
-	<span style="color:#a6e22e">out</span> <span style="color:#f92672">:=</span> new(<span style="color:#a6e22e">RangeResponse</span>)
-	<span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">grpc</span>.<span style="color:#a6e22e">Invoke</span>(<span style="color:#a6e22e">ctx</span>, <span style="color:#e6db74">&#34;/etcdserverpb.KV/Range&#34;</span>, <span style="color:#a6e22e">in</span>, <span style="color:#a6e22e">out</span>, <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">cc</span>, <span style="color:#a6e22e">opts</span><span style="color:#f92672">...</span>)
-	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
-		<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>, <span style="color:#a6e22e">err</span>
-	}
-	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">out</span>, <span style="color:#66d9ef">nil</span>
-}
-
-<span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">c</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">kVClient</span>) <span style="color:#a6e22e">Put</span>(<span style="color:#a6e22e">ctx</span> <span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">Context</span>, <span style="color:#a6e22e">in</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">PutRequest</span>, <span style="color:#a6e22e">opts</span> <span style="color:#f92672">...</span><span style="color:#a6e22e">grpc</span>.<span style="color:#a6e22e">CallOption</span>) (<span style="color:#f92672">*</span><span style="color:#a6e22e">PutResponse</span>, <span style="color:#66d9ef">error</span>) {
-	<span style="color:#a6e22e">out</span> <span style="color:#f92672">:=</span> new(<span style="color:#a6e22e">PutResponse</span>)
-	<span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">grpc</span>.<span style="color:#a6e22e">Invoke</span>(<span style="color:#a6e22e">ctx</span>, <span style="color:#e6db74">&#34;/etcdserverpb.KV/Put&#34;</span>, <span style="color:#a6e22e">in</span>, <span style="color:#a6e22e">out</span>, <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">cc</span>, <span style="color:#a6e22e">opts</span><span style="color:#f92672">...</span>)
-	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
-		<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>, <span style="color:#a6e22e">err</span>
-	}
-	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">out</span>, <span style="color:#66d9ef">nil</span>
-}
-
-<span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">c</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">kVClient</span>) <span style="color:#a6e22e">DeleteRange</span>(<span style="color:#a6e22e">ctx</span> <span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">Context</span>, <span style="color:#a6e22e">in</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">DeleteRangeRequest</span>, <span style="color:#a6e22e">opts</span> <span style="color:#f92672">...</span><span style="color:#a6e22e">grpc</span>.<span style="color:#a6e22e">CallOption</span>) (<span style="color:#f92672">*</span><span style="color:#a6e22e">DeleteRangeResponse</span>, <span style="color:#66d9ef">error</span>) {
-	<span style="color:#a6e22e">out</span> <span style="color:#f92672">:=</span> new(<span style="color:#a6e22e">DeleteRangeResponse</span>)
-	<span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">grpc</span>.<span style="color:#a6e22e">Invoke</span>(<span style="color:#a6e22e">ctx</span>, <span style="color:#e6db74">&#34;/etcdserverpb.KV/DeleteRange&#34;</span>, <span style="color:#a6e22e">in</span>, <span style="color:#a6e22e">out</span>, <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">cc</span>, <span style="color:#a6e22e">opts</span><span style="color:#f92672">...</span>)
-	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
-		<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>, <span style="color:#a6e22e">err</span>
-	}
-	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">out</span>, <span style="color:#66d9ef">nil</span>
-}
-</code></pre></div><h3 id="server-side">Server Side</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">c</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">kVClient</span>) <span style="color:#a6e22e">Range</span>(<span style="color:#a6e22e">ctx</span> <span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">Context</span>, <span style="color:#a6e22e">in</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">RangeRequest</span>, <span style="color:#a6e22e">opts</span> <span style="color:#f92672">...</span><span style="color:#a6e22e">grpc</span>.<span style="color:#a6e22e">CallOption</span>) (<span style="color:#f92672">*</span><span style="color:#a6e22e">RangeResponse</span>, <span style="color:#66d9ef">error</span>) {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">out</span> <span style="color:#f92672">:=</span> new(<span style="color:#a6e22e">RangeResponse</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">grpc</span>.<span style="color:#a6e22e">Invoke</span>(<span style="color:#a6e22e">ctx</span>, <span style="color:#e6db74">&#34;/etcdserverpb.KV/Range&#34;</span>, <span style="color:#a6e22e">in</span>, <span style="color:#a6e22e">out</span>, <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">cc</span>, <span style="color:#a6e22e">opts</span><span style="color:#f92672">...</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>, <span style="color:#a6e22e">err</span>
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">out</span>, <span style="color:#66d9ef">nil</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">c</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">kVClient</span>) <span style="color:#a6e22e">Put</span>(<span style="color:#a6e22e">ctx</span> <span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">Context</span>, <span style="color:#a6e22e">in</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">PutRequest</span>, <span style="color:#a6e22e">opts</span> <span style="color:#f92672">...</span><span style="color:#a6e22e">grpc</span>.<span style="color:#a6e22e">CallOption</span>) (<span style="color:#f92672">*</span><span style="color:#a6e22e">PutResponse</span>, <span style="color:#66d9ef">error</span>) {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">out</span> <span style="color:#f92672">:=</span> new(<span style="color:#a6e22e">PutResponse</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">grpc</span>.<span style="color:#a6e22e">Invoke</span>(<span style="color:#a6e22e">ctx</span>, <span style="color:#e6db74">&#34;/etcdserverpb.KV/Put&#34;</span>, <span style="color:#a6e22e">in</span>, <span style="color:#a6e22e">out</span>, <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">cc</span>, <span style="color:#a6e22e">opts</span><span style="color:#f92672">...</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>, <span style="color:#a6e22e">err</span>
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">out</span>, <span style="color:#66d9ef">nil</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">c</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">kVClient</span>) <span style="color:#a6e22e">DeleteRange</span>(<span style="color:#a6e22e">ctx</span> <span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">Context</span>, <span style="color:#a6e22e">in</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">DeleteRangeRequest</span>, <span style="color:#a6e22e">opts</span> <span style="color:#f92672">...</span><span style="color:#a6e22e">grpc</span>.<span style="color:#a6e22e">CallOption</span>) (<span style="color:#f92672">*</span><span style="color:#a6e22e">DeleteRangeResponse</span>, <span style="color:#66d9ef">error</span>) {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">out</span> <span style="color:#f92672">:=</span> new(<span style="color:#a6e22e">DeleteRangeResponse</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">grpc</span>.<span style="color:#a6e22e">Invoke</span>(<span style="color:#a6e22e">ctx</span>, <span style="color:#e6db74">&#34;/etcdserverpb.KV/DeleteRange&#34;</span>, <span style="color:#a6e22e">in</span>, <span style="color:#a6e22e">out</span>, <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">cc</span>, <span style="color:#a6e22e">opts</span><span style="color:#f92672">...</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>, <span style="color:#a6e22e">err</span>
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">out</span>, <span style="color:#66d9ef">nil</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h3 id="server-side">Server Side</h3>
 <p>The components on the server side are more complex. Before sorting out the internal control communication, it is necessary to understand the role of each component.<br>
 The problem solved by the server is:</p>
 <ul>
@@ -405,25 +428,25 @@ The problem solved by the server is:</p>
 </ul>
 <h4 id="server-interceptor">Server Interceptor</h4>
 <p>We mentioned a <code>KVServer</code> in the previous client component. In fact, etcd also wraps a layer of interceptor for it, which is <code>quotaKVServer</code></p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">quotaKVServer</span> <span style="color:#66d9ef">struct</span> {
-	<span style="color:#a6e22e">pb</span>.<span style="color:#a6e22e">KVServer</span>
-	<span style="color:#75715e">// Accessibility
-</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">qa</span> <span style="color:#a6e22e">quotaAlarmer</span>
-}
-<span style="color:#66d9ef">type</span> <span style="color:#a6e22e">quotaAlarmer</span> <span style="color:#66d9ef">struct</span> {
-	<span style="color:#a6e22e">q</span>  <span style="color:#a6e22e">etcdserver</span>.<span style="color:#a6e22e">Quota</span>
-	<span style="color:#a6e22e">a</span>  <span style="color:#a6e22e">Alarmer</span>
-	<span style="color:#a6e22e">id</span> <span style="color:#a6e22e">types</span>.<span style="color:#a6e22e">ID</span>
-}
-<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">NewQuotaKVServer</span>(<span style="color:#a6e22e">s</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">etcdserver</span>.<span style="color:#a6e22e">EtcdServer</span>) <span style="color:#a6e22e">pb</span>.<span style="color:#a6e22e">KVServer</span> {
-	<span style="color:#66d9ef">return</span> <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quotaKVServer</span>{
-		<span style="color:#a6e22e">NewKVServer</span>(<span style="color:#a6e22e">s</span>),
-		<span style="color:#a6e22e">quotaAlarmer</span>{<span style="color:#a6e22e">etcdserver</span>.<span style="color:#a6e22e">NewBackendQuota</span>(<span style="color:#a6e22e">s</span>, <span style="color:#e6db74">&#34;kv&#34;</span>), <span style="color:#a6e22e">s</span>, <span style="color:#a6e22e">s</span>.<span style="color:#a6e22e">ID</span>()},
-	}
-}
-</code></pre></div><p>The role of this interceptor is to perform space detection on client requests, calculate the key-vaule resource consumption space for each request, and the server will count the remaining space as an alarm. If it exceeds, an error will be thrown:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#a6e22e">ErrGRPCNoSpace</span>       = <span style="color:#a6e22e">status</span>.<span style="color:#a6e22e">New</span>(<span style="color:#a6e22e">codes</span>.<span style="color:#a6e22e">ResourceExhausted</span>, <span style="color:#e6db74">&#34;etcdserver: mvcc: database space exceeded&#34;</span>).<span style="color:#a6e22e">Err</span>()
-</code></pre></div><p>If this happens to the cluster, the official documentation also gives suggestions:<br>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">quotaKVServer</span> <span style="color:#66d9ef">struct</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">pb</span>.<span style="color:#a6e22e">KVServer</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// Accessibility
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">qa</span> <span style="color:#a6e22e">quotaAlarmer</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">quotaAlarmer</span> <span style="color:#66d9ef">struct</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">q</span>  <span style="color:#a6e22e">etcdserver</span>.<span style="color:#a6e22e">Quota</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">a</span>  <span style="color:#a6e22e">Alarmer</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">id</span> <span style="color:#a6e22e">types</span>.<span style="color:#a6e22e">ID</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">NewQuotaKVServer</span>(<span style="color:#a6e22e">s</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">etcdserver</span>.<span style="color:#a6e22e">EtcdServer</span>) <span style="color:#a6e22e">pb</span>.<span style="color:#a6e22e">KVServer</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quotaKVServer</span>{
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">NewKVServer</span>(<span style="color:#a6e22e">s</span>),
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">quotaAlarmer</span>{<span style="color:#a6e22e">etcdserver</span>.<span style="color:#a6e22e">NewBackendQuota</span>(<span style="color:#a6e22e">s</span>, <span style="color:#e6db74">&#34;kv&#34;</span>), <span style="color:#a6e22e">s</span>, <span style="color:#a6e22e">s</span>.<span style="color:#a6e22e">ID</span>()},
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>The role of this interceptor is to perform space detection on client requests, calculate the key-vaule resource consumption space for each request, and the server will count the remaining space as an alarm. If it exceeds, an error will be thrown:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">ErrGRPCNoSpace</span>       = <span style="color:#a6e22e">status</span>.<span style="color:#a6e22e">New</span>(<span style="color:#a6e22e">codes</span>.<span style="color:#a6e22e">ResourceExhausted</span>, <span style="color:#e6db74">&#34;etcdserver: mvcc: database space exceeded&#34;</span>).<span style="color:#a6e22e">Err</span>()
+</span></span></code></pre></div><p>If this happens to the cluster, the official documentation also gives suggestions:<br>
 <a href="https://etcd.io/docs/v3.4/faq/#what-does-mvcc-database-space-exceeded-mean-and-how-do-i-fix-it">fix mvcc: database space exceeded</a></p>
 <ul>
 <li>Historical version compression</li>
@@ -437,59 +460,59 @@ The problem solved by the server is:</p>
 <p><code>etcdserver</code> In addition to exposing the API to the client, the logic for monitoring the communication of internal members is also registered at startup time. Next, let&rsquo;s look at the internal logic of the server.</p>
 <h4 id="communication-component-peer">Communication Component: peer</h4>
 <p>The etcd cluster uses peer as a single-point structure for cross-network communication. Several core member functions are as follows, which internally encapsulate network requests between nodes, such as submitting snapshots to other nodes:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Peer</span> <span style="color:#66d9ef">interface</span> {
-    <span style="color:#a6e22e">send</span>(<span style="color:#a6e22e">m</span> <span style="color:#a6e22e">raftpb</span>.<span style="color:#a6e22e">Message</span>)
-    <span style="color:#a6e22e">sendSnap</span>(<span style="color:#a6e22e">m</span> <span style="color:#a6e22e">snap</span>.<span style="color:#a6e22e">Message</span>)
-    <span style="color:#a6e22e">update</span>(<span style="color:#a6e22e">urls</span> <span style="color:#a6e22e">types</span>.<span style="color:#a6e22e">URLs</span>)
-}
-</code></pre></div><h4 id="transporter-interface">Transporter Interface</h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Peer</span> <span style="color:#66d9ef">interface</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">send</span>(<span style="color:#a6e22e">m</span> <span style="color:#a6e22e">raftpb</span>.<span style="color:#a6e22e">Message</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">sendSnap</span>(<span style="color:#a6e22e">m</span> <span style="color:#a6e22e">snap</span>.<span style="color:#a6e22e">Message</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">update</span>(<span style="color:#a6e22e">urls</span> <span style="color:#a6e22e">types</span>.<span style="color:#a6e22e">URLs</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h4 id="transporter-interface">Transporter Interface</h4>
 <p>The etcd cluster needs to maintain a <code>peer</code> node list. The method of etcd is to choose to extract one layer up, and use <code>Transport</code> to maintain the <code>peer</code> list, through <code>Transport</code> implements the <code>Transporter</code> interface to manage the <code>peer</code> members, and the <code>Transporter</code> interface mainly updates and maintains the <code>peer</code> members.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Transporter</span> <span style="color:#66d9ef">interface</span> {
-    <span style="color:#75715e">// ...
-</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">AddRemote</span>(<span style="color:#a6e22e">id</span> <span style="color:#a6e22e">types</span>.<span style="color:#a6e22e">ID</span>, <span style="color:#a6e22e">urls</span> []<span style="color:#66d9ef">string</span>)
-	<span style="color:#a6e22e">AddPeer</span>(<span style="color:#a6e22e">id</span> <span style="color:#a6e22e">types</span>.<span style="color:#a6e22e">ID</span>, <span style="color:#a6e22e">urls</span> []<span style="color:#66d9ef">string</span>)
-	<span style="color:#a6e22e">RemovePeer</span>(<span style="color:#a6e22e">id</span> <span style="color:#a6e22e">types</span>.<span style="color:#a6e22e">ID</span>)
-	<span style="color:#a6e22e">RemoveAllPeers</span>()
-	<span style="color:#a6e22e">UpdatePeer</span>(<span style="color:#a6e22e">id</span> <span style="color:#a6e22e">types</span>.<span style="color:#a6e22e">ID</span>, <span style="color:#a6e22e">urls</span> []<span style="color:#66d9ef">string</span>)
-	<span style="color:#75715e">// ...
-</span><span style="color:#75715e"></span>}
-</code></pre></div><p><code>Transporter</code> implement by <code>Transport</code></p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Transport</span> <span style="color:#66d9ef">struct</span> {
-	<span style="color:#75715e">//...
-</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">ID</span>          <span style="color:#a6e22e">types</span>.<span style="color:#a6e22e">ID</span>   <span style="color:#75715e">// local member ID
-</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">URLs</span>        <span style="color:#a6e22e">types</span>.<span style="color:#a6e22e">URLs</span> <span style="color:#75715e">// local peer URLs
-</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">ClusterID</span>   <span style="color:#a6e22e">types</span>.<span style="color:#a6e22e">ID</span>   <span style="color:#75715e">// raft cluster ID for request validation
-</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">Raft</span>        <span style="color:#a6e22e">Raft</span>       <span style="color:#75715e">// raft state machine, to which the Transport forwards received messages and reports status
-</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">Snapshotter</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">snap</span>.<span style="color:#a6e22e">Snapshotter</span>
-	<span style="color:#75715e">// ...
-</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">streamRt</span>   <span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">RoundTripper</span> <span style="color:#75715e">// transmit small, frequent messages
-</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">pipelineRt</span> <span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">RoundTripper</span> <span style="color:#75715e">// transmits large data with low frequency
-</span><span style="color:#75715e"></span>
-	<span style="color:#a6e22e">mu</span>      <span style="color:#a6e22e">sync</span>.<span style="color:#a6e22e">RWMutex</span>         <span style="color:#75715e">// protect the remote and peer map
-</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">remotes</span> <span style="color:#66d9ef">map</span>[<span style="color:#a6e22e">types</span>.<span style="color:#a6e22e">ID</span>]<span style="color:#f92672">*</span><span style="color:#a6e22e">remote</span> <span style="color:#75715e">// remotes map that helps newly joined member to catch up
-</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">peers</span>   <span style="color:#66d9ef">map</span>[<span style="color:#a6e22e">types</span>.<span style="color:#a6e22e">ID</span>]<span style="color:#a6e22e">Peer</span>    <span style="color:#75715e">// peers map
-</span><span style="color:#75715e"></span>
-	<span style="color:#75715e">// Heartbeat detection
-</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">pipelineProber</span> <span style="color:#a6e22e">probing</span>.<span style="color:#a6e22e">Prober</span>
-	<span style="color:#a6e22e">streamProber</span>   <span style="color:#a6e22e">probing</span>.<span style="color:#a6e22e">Prober</span>
-}
-</code></pre></div><p>The overall main structural relationship is as follows: <br>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Transporter</span> <span style="color:#66d9ef">interface</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// ...
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">AddRemote</span>(<span style="color:#a6e22e">id</span> <span style="color:#a6e22e">types</span>.<span style="color:#a6e22e">ID</span>, <span style="color:#a6e22e">urls</span> []<span style="color:#66d9ef">string</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">AddPeer</span>(<span style="color:#a6e22e">id</span> <span style="color:#a6e22e">types</span>.<span style="color:#a6e22e">ID</span>, <span style="color:#a6e22e">urls</span> []<span style="color:#66d9ef">string</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">RemovePeer</span>(<span style="color:#a6e22e">id</span> <span style="color:#a6e22e">types</span>.<span style="color:#a6e22e">ID</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">RemoveAllPeers</span>()
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">UpdatePeer</span>(<span style="color:#a6e22e">id</span> <span style="color:#a6e22e">types</span>.<span style="color:#a6e22e">ID</span>, <span style="color:#a6e22e">urls</span> []<span style="color:#66d9ef">string</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// ...
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>}
+</span></span></code></pre></div><p><code>Transporter</code> implement by <code>Transport</code></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Transport</span> <span style="color:#66d9ef">struct</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">//...
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">ID</span>          <span style="color:#a6e22e">types</span>.<span style="color:#a6e22e">ID</span>   <span style="color:#75715e">// local member ID
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">URLs</span>        <span style="color:#a6e22e">types</span>.<span style="color:#a6e22e">URLs</span> <span style="color:#75715e">// local peer URLs
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">ClusterID</span>   <span style="color:#a6e22e">types</span>.<span style="color:#a6e22e">ID</span>   <span style="color:#75715e">// raft cluster ID for request validation
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">Raft</span>        <span style="color:#a6e22e">Raft</span>       <span style="color:#75715e">// raft state machine, to which the Transport forwards received messages and reports status
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">Snapshotter</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">snap</span>.<span style="color:#a6e22e">Snapshotter</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// ...
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">streamRt</span>   <span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">RoundTripper</span> <span style="color:#75715e">// transmit small, frequent messages
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">pipelineRt</span> <span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">RoundTripper</span> <span style="color:#75715e">// transmits large data with low frequency
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">mu</span>      <span style="color:#a6e22e">sync</span>.<span style="color:#a6e22e">RWMutex</span>         <span style="color:#75715e">// protect the remote and peer map
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">remotes</span> <span style="color:#66d9ef">map</span>[<span style="color:#a6e22e">types</span>.<span style="color:#a6e22e">ID</span>]<span style="color:#f92672">*</span><span style="color:#a6e22e">remote</span> <span style="color:#75715e">// remotes map that helps newly joined member to catch up
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">peers</span>   <span style="color:#66d9ef">map</span>[<span style="color:#a6e22e">types</span>.<span style="color:#a6e22e">ID</span>]<span style="color:#a6e22e">Peer</span>    <span style="color:#75715e">// peers map
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// Heartbeat detection
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">pipelineProber</span> <span style="color:#a6e22e">probing</span>.<span style="color:#a6e22e">Prober</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">streamProber</span>   <span style="color:#a6e22e">probing</span>.<span style="color:#a6e22e">Prober</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>The overall main structural relationship is as follows: <br>
 <img src="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/blog/etcd/raft/etcd-interface-struct.png" alt="etcd-interface-relation">
 It can be seen that each <code>peer</code> structure has a <code>raftNode</code> node embedded in it, and the underlying log structure and file directory are connected through <code>raftNode</code>, such as <code>MemoryStorage</code>, <code>wal</code>, etc. The problem solved by the storage layer is to query and update the multi-version data of the log tree by returning the corresponding log subscript and combining with raft.<br>
 About the underlying storage will be expanded in the next part of this series :)</p>
 <p>Here we mainly analyze <code>transport</code>, <code>transport</code> is registered in the <code>Handler()</code> function,</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">t</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Transport</span>) <span style="color:#a6e22e">Handler</span>() <span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">Handler</span> {
-	<span style="color:#a6e22e">pipelineHandler</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">newPipelineHandler</span>(<span style="color:#a6e22e">t</span>, <span style="color:#a6e22e">t</span>.<span style="color:#a6e22e">Raft</span>, <span style="color:#a6e22e">t</span>.<span style="color:#a6e22e">ClusterID</span>)
-	<span style="color:#a6e22e">streamHandler</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">newStreamHandler</span>(<span style="color:#a6e22e">t</span>, <span style="color:#a6e22e">t</span>, <span style="color:#a6e22e">t</span>.<span style="color:#a6e22e">Raft</span>, <span style="color:#a6e22e">t</span>.<span style="color:#a6e22e">ID</span>, <span style="color:#a6e22e">t</span>.<span style="color:#a6e22e">ClusterID</span>)
-	<span style="color:#a6e22e">snapHandler</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">newSnapshotHandler</span>(<span style="color:#a6e22e">t</span>, <span style="color:#a6e22e">t</span>.<span style="color:#a6e22e">Raft</span>, <span style="color:#a6e22e">t</span>.<span style="color:#a6e22e">Snapshotter</span>, <span style="color:#a6e22e">t</span>.<span style="color:#a6e22e">ClusterID</span>)
-	<span style="color:#a6e22e">mux</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">NewServeMux</span>()
-	<span style="color:#a6e22e">mux</span>.<span style="color:#a6e22e">Handle</span>(<span style="color:#a6e22e">RaftPrefix</span>, <span style="color:#a6e22e">pipelineHandler</span>)
-	<span style="color:#a6e22e">mux</span>.<span style="color:#a6e22e">Handle</span>(<span style="color:#a6e22e">RaftStreamPrefix</span><span style="color:#f92672">+</span><span style="color:#e6db74">&#34;/&#34;</span>, <span style="color:#a6e22e">streamHandler</span>)
-	<span style="color:#a6e22e">mux</span>.<span style="color:#a6e22e">Handle</span>(<span style="color:#a6e22e">RaftSnapshotPrefix</span>, <span style="color:#a6e22e">snapHandler</span>)
-	<span style="color:#a6e22e">mux</span>.<span style="color:#a6e22e">Handle</span>(<span style="color:#a6e22e">ProbingPrefix</span>, <span style="color:#a6e22e">probing</span>.<span style="color:#a6e22e">NewHandler</span>())
-	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">mux</span>
-}
-</code></pre></div><p>Among them, several core functions are monitored</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">t</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Transport</span>) <span style="color:#a6e22e">Handler</span>() <span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">Handler</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">pipelineHandler</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">newPipelineHandler</span>(<span style="color:#a6e22e">t</span>, <span style="color:#a6e22e">t</span>.<span style="color:#a6e22e">Raft</span>, <span style="color:#a6e22e">t</span>.<span style="color:#a6e22e">ClusterID</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">streamHandler</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">newStreamHandler</span>(<span style="color:#a6e22e">t</span>, <span style="color:#a6e22e">t</span>, <span style="color:#a6e22e">t</span>.<span style="color:#a6e22e">Raft</span>, <span style="color:#a6e22e">t</span>.<span style="color:#a6e22e">ID</span>, <span style="color:#a6e22e">t</span>.<span style="color:#a6e22e">ClusterID</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">snapHandler</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">newSnapshotHandler</span>(<span style="color:#a6e22e">t</span>, <span style="color:#a6e22e">t</span>.<span style="color:#a6e22e">Raft</span>, <span style="color:#a6e22e">t</span>.<span style="color:#a6e22e">Snapshotter</span>, <span style="color:#a6e22e">t</span>.<span style="color:#a6e22e">ClusterID</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">mux</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">NewServeMux</span>()
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">mux</span>.<span style="color:#a6e22e">Handle</span>(<span style="color:#a6e22e">RaftPrefix</span>, <span style="color:#a6e22e">pipelineHandler</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">mux</span>.<span style="color:#a6e22e">Handle</span>(<span style="color:#a6e22e">RaftStreamPrefix</span><span style="color:#f92672">+</span><span style="color:#e6db74">&#34;/&#34;</span>, <span style="color:#a6e22e">streamHandler</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">mux</span>.<span style="color:#a6e22e">Handle</span>(<span style="color:#a6e22e">RaftSnapshotPrefix</span>, <span style="color:#a6e22e">snapHandler</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">mux</span>.<span style="color:#a6e22e">Handle</span>(<span style="color:#a6e22e">ProbingPrefix</span>, <span style="color:#a6e22e">probing</span>.<span style="color:#a6e22e">NewHandler</span>())
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">mux</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Among them, several core functions are monitored</p>
 <table>
 <thead>
 <tr>
@@ -513,89 +536,89 @@ About the underlying storage will be expanded in the next part of this series :)
 </tbody>
 </table>
 <p>Part of the pipelineHandler processing logic is as follows:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">h</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">pipelineHandler</span>) <span style="color:#a6e22e">ServeHTTP</span>(<span style="color:#a6e22e">w</span> <span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">ResponseWriter</span>, <span style="color:#a6e22e">r</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">Request</span>) {
-	<span style="color:#75715e">//...
-</span><span style="color:#75715e"></span>	
-	<span style="color:#75715e">// update to upsteam node
-</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">addRemoteFromRequest</span>(<span style="color:#a6e22e">h</span>.<span style="color:#a6e22e">tr</span>, <span style="color:#a6e22e">r</span>)
-	<span style="color:#a6e22e">limitedr</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">pioutil</span>.<span style="color:#a6e22e">NewLimitedBufferReader</span>(<span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">Body</span>, <span style="color:#a6e22e">connReadLimitByte</span>)
-	<span style="color:#a6e22e">b</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">ioutil</span>.<span style="color:#a6e22e">ReadAll</span>(<span style="color:#a6e22e">limitedr</span>)
-	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
-		<span style="color:#75715e">//...
-</span><span style="color:#75715e"></span>	}
-
-    <span style="color:#75715e">// parse the message
-</span><span style="color:#75715e"></span>	<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">m</span> <span style="color:#a6e22e">raftpb</span>.<span style="color:#a6e22e">Message</span>
-	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">m</span>.<span style="color:#a6e22e">Unmarshal</span>(<span style="color:#a6e22e">b</span>); <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
-		<span style="color:#75715e">// ...
-</span><span style="color:#75715e"></span>		<span style="color:#66d9ef">return</span>
-	}
-
-	<span style="color:#a6e22e">receivedBytes</span>.<span style="color:#a6e22e">WithLabelValues</span>(<span style="color:#a6e22e">types</span>.<span style="color:#a6e22e">ID</span>(<span style="color:#a6e22e">m</span>.<span style="color:#a6e22e">From</span>).<span style="color:#a6e22e">String</span>()).<span style="color:#a6e22e">Add</span>(float64(len(<span style="color:#a6e22e">b</span>)))
-    <span style="color:#75715e">// forward to node inside for handling: node.step()
-</span><span style="color:#75715e"></span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">h</span>.<span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">Process</span>(<span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">TODO</span>(), <span style="color:#a6e22e">m</span>); <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
-		<span style="color:#66d9ef">switch</span> <span style="color:#a6e22e">v</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">err</span>.(<span style="color:#66d9ef">type</span>) {
-		<span style="color:#66d9ef">case</span> <span style="color:#a6e22e">writerToResponse</span>:
-			<span style="color:#a6e22e">v</span>.<span style="color:#a6e22e">WriteTo</span>(<span style="color:#a6e22e">w</span>)
-		<span style="color:#66d9ef">default</span>:
-			<span style="color:#75715e">// ...
-</span><span style="color:#75715e"></span>		}
-		<span style="color:#66d9ef">return</span>
-	}
-    <span style="color:#75715e">// ...
-</span><span style="color:#75715e"></span>}
-</code></pre></div><h4 id="heartbeat-feedback">Heartbeat Feedback</h4>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#75715e">// server side
-</span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">h</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">httpHealth</span>) <span style="color:#a6e22e">ServeHTTP</span>(<span style="color:#a6e22e">w</span> <span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">ResponseWriter</span>, <span style="color:#a6e22e">r</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">Request</span>) {
-    <span style="color:#75715e">// return health
-</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">health</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">Health</span>{<span style="color:#a6e22e">OK</span>: <span style="color:#66d9ef">true</span>, <span style="color:#a6e22e">Now</span>: <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Now</span>()}
-	<span style="color:#a6e22e">e</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">json</span>.<span style="color:#a6e22e">NewEncoder</span>(<span style="color:#a6e22e">w</span>)
-	<span style="color:#a6e22e">e</span>.<span style="color:#a6e22e">Encode</span>(<span style="color:#a6e22e">health</span>)
-}
-</code></pre></div><p>Remember the <code>Transport</code> interface mentioned above, it is used to maintain raft member changes, and the <code>AddPeer()</code> and <code>UpdatePeer()</code> sub-functions will create a new protocol.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">h</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">pipelineHandler</span>) <span style="color:#a6e22e">ServeHTTP</span>(<span style="color:#a6e22e">w</span> <span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">ResponseWriter</span>, <span style="color:#a6e22e">r</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">Request</span>) {
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">//...
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// update to upsteam node
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">addRemoteFromRequest</span>(<span style="color:#a6e22e">h</span>.<span style="color:#a6e22e">tr</span>, <span style="color:#a6e22e">r</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">limitedr</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">pioutil</span>.<span style="color:#a6e22e">NewLimitedBufferReader</span>(<span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">Body</span>, <span style="color:#a6e22e">connReadLimitByte</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">b</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">ioutil</span>.<span style="color:#a6e22e">ReadAll</span>(<span style="color:#a6e22e">limitedr</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#75715e">//...
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// parse the message
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">m</span> <span style="color:#a6e22e">raftpb</span>.<span style="color:#a6e22e">Message</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">m</span>.<span style="color:#a6e22e">Unmarshal</span>(<span style="color:#a6e22e">b</span>); <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#75715e">// ...
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>		<span style="color:#66d9ef">return</span>
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">receivedBytes</span>.<span style="color:#a6e22e">WithLabelValues</span>(<span style="color:#a6e22e">types</span>.<span style="color:#a6e22e">ID</span>(<span style="color:#a6e22e">m</span>.<span style="color:#a6e22e">From</span>).<span style="color:#a6e22e">String</span>()).<span style="color:#a6e22e">Add</span>(float64(len(<span style="color:#a6e22e">b</span>)))
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// forward to node inside for handling: node.step()
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">h</span>.<span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">Process</span>(<span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">TODO</span>(), <span style="color:#a6e22e">m</span>); <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">switch</span> <span style="color:#a6e22e">v</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">err</span>.(<span style="color:#66d9ef">type</span>) {
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">case</span> <span style="color:#a6e22e">writerToResponse</span>:
+</span></span><span style="display:flex;"><span>			<span style="color:#a6e22e">v</span>.<span style="color:#a6e22e">WriteTo</span>(<span style="color:#a6e22e">w</span>)
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">default</span>:
+</span></span><span style="display:flex;"><span>			<span style="color:#75715e">// ...
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>		}
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">return</span>
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// ...
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>}
+</span></span></code></pre></div><h4 id="heartbeat-feedback">Heartbeat Feedback</h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#75715e">// server side
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">h</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">httpHealth</span>) <span style="color:#a6e22e">ServeHTTP</span>(<span style="color:#a6e22e">w</span> <span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">ResponseWriter</span>, <span style="color:#a6e22e">r</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">Request</span>) {
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// return health
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">health</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">Health</span>{<span style="color:#a6e22e">OK</span>: <span style="color:#66d9ef">true</span>, <span style="color:#a6e22e">Now</span>: <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Now</span>()}
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">e</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">json</span>.<span style="color:#a6e22e">NewEncoder</span>(<span style="color:#a6e22e">w</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">e</span>.<span style="color:#a6e22e">Encode</span>(<span style="color:#a6e22e">health</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Remember the <code>Transport</code> interface mentioned above, it is used to maintain raft member changes, and the <code>AddPeer()</code> and <code>UpdatePeer()</code> sub-functions will create a new protocol.</p>
 <p>The process performs periodic heartbeat detection on the cluster list:
 <img src="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/blog/etcd/raft/etcd-prober-check.png" alt="prober-check"></p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">p</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">prober</span>) <span style="color:#a6e22e">AddHTTP</span>(<span style="color:#a6e22e">id</span> <span style="color:#66d9ef">string</span>, <span style="color:#a6e22e">probingInterval</span> <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Duration</span>, <span style="color:#a6e22e">endpoints</span> []<span style="color:#66d9ef">string</span>) <span style="color:#66d9ef">error</span> {
-	<span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">mu</span>.<span style="color:#a6e22e">Lock</span>()
-	<span style="color:#66d9ef">defer</span> <span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">mu</span>.<span style="color:#a6e22e">Unlock</span>()
-	<span style="color:#75715e">// ...
-</span><span style="color:#75715e"></span>	<span style="color:#66d9ef">go</span> <span style="color:#66d9ef">func</span>() {
-		<span style="color:#a6e22e">pinned</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">0</span>
-		<span style="color:#66d9ef">for</span> {
-			<span style="color:#66d9ef">select</span> {
-			<span style="color:#66d9ef">case</span> <span style="color:#f92672">&lt;-</span><span style="color:#a6e22e">ticker</span>.<span style="color:#a6e22e">C</span>:
-				<span style="color:#a6e22e">start</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Now</span>()
-				<span style="color:#a6e22e">req</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">NewRequest</span>(<span style="color:#e6db74">&#34;GET&#34;</span>, <span style="color:#a6e22e">endpoints</span>[<span style="color:#a6e22e">pinned</span>], <span style="color:#66d9ef">nil</span>)
-				<span style="color:#75715e">// ...
-</span><span style="color:#75715e"></span>				<span style="color:#a6e22e">resp</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">tr</span>.<span style="color:#a6e22e">RoundTrip</span>(<span style="color:#a6e22e">req</span>)
-				<span style="color:#75715e">// ...
-</span><span style="color:#75715e"></span>				<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
-					<span style="color:#a6e22e">s</span>.<span style="color:#a6e22e">recordFailure</span>(<span style="color:#a6e22e">err</span>)
-					<span style="color:#a6e22e">pinned</span> = (<span style="color:#a6e22e">pinned</span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>) <span style="color:#f92672">%</span> len(<span style="color:#a6e22e">endpoints</span>)
-					<span style="color:#66d9ef">continue</span>
-				}
-
-				<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">hh</span> <span style="color:#a6e22e">Health</span>
-				<span style="color:#a6e22e">d</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">json</span>.<span style="color:#a6e22e">NewDecoder</span>(<span style="color:#a6e22e">resp</span>.<span style="color:#a6e22e">Body</span>)
-				<span style="color:#a6e22e">err</span> = <span style="color:#a6e22e">d</span>.<span style="color:#a6e22e">Decode</span>(<span style="color:#f92672">&amp;</span><span style="color:#a6e22e">hh</span>)
-				<span style="color:#a6e22e">resp</span>.<span style="color:#a6e22e">Body</span>.<span style="color:#a6e22e">Close</span>()
-				<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> <span style="color:#f92672">||</span> !<span style="color:#a6e22e">hh</span>.<span style="color:#a6e22e">OK</span> {
-					<span style="color:#a6e22e">s</span>.<span style="color:#a6e22e">recordFailure</span>(<span style="color:#a6e22e">err</span>)
-					<span style="color:#a6e22e">pinned</span> = (<span style="color:#a6e22e">pinned</span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>) <span style="color:#f92672">%</span> len(<span style="color:#a6e22e">endpoints</span>)
-					<span style="color:#66d9ef">continue</span>
-				}
-
-				<span style="color:#a6e22e">s</span>.<span style="color:#a6e22e">record</span>(<span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Since</span>(<span style="color:#a6e22e">start</span>), <span style="color:#a6e22e">hh</span>.<span style="color:#a6e22e">Now</span>)
-			<span style="color:#66d9ef">case</span> <span style="color:#f92672">&lt;-</span><span style="color:#a6e22e">s</span>.<span style="color:#a6e22e">stopC</span>:
-				<span style="color:#a6e22e">ticker</span>.<span style="color:#a6e22e">Stop</span>()
-				<span style="color:#66d9ef">return</span>
-			}
-		}
-	}()
-
-	<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>
-}
-</code></pre></div><h2 id="summary">Summary</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">p</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">prober</span>) <span style="color:#a6e22e">AddHTTP</span>(<span style="color:#a6e22e">id</span> <span style="color:#66d9ef">string</span>, <span style="color:#a6e22e">probingInterval</span> <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Duration</span>, <span style="color:#a6e22e">endpoints</span> []<span style="color:#66d9ef">string</span>) <span style="color:#66d9ef">error</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">mu</span>.<span style="color:#a6e22e">Lock</span>()
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">defer</span> <span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">mu</span>.<span style="color:#a6e22e">Unlock</span>()
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// ...
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#66d9ef">go</span> <span style="color:#66d9ef">func</span>() {
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">pinned</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">for</span> {
+</span></span><span style="display:flex;"><span>			<span style="color:#66d9ef">select</span> {
+</span></span><span style="display:flex;"><span>			<span style="color:#66d9ef">case</span> <span style="color:#f92672">&lt;-</span><span style="color:#a6e22e">ticker</span>.<span style="color:#a6e22e">C</span>:
+</span></span><span style="display:flex;"><span>				<span style="color:#a6e22e">start</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Now</span>()
+</span></span><span style="display:flex;"><span>				<span style="color:#a6e22e">req</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">NewRequest</span>(<span style="color:#e6db74">&#34;GET&#34;</span>, <span style="color:#a6e22e">endpoints</span>[<span style="color:#a6e22e">pinned</span>], <span style="color:#66d9ef">nil</span>)
+</span></span><span style="display:flex;"><span>				<span style="color:#75715e">// ...
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>				<span style="color:#a6e22e">resp</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">tr</span>.<span style="color:#a6e22e">RoundTrip</span>(<span style="color:#a6e22e">req</span>)
+</span></span><span style="display:flex;"><span>				<span style="color:#75715e">// ...
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>				<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>					<span style="color:#a6e22e">s</span>.<span style="color:#a6e22e">recordFailure</span>(<span style="color:#a6e22e">err</span>)
+</span></span><span style="display:flex;"><span>					<span style="color:#a6e22e">pinned</span> = (<span style="color:#a6e22e">pinned</span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>) <span style="color:#f92672">%</span> len(<span style="color:#a6e22e">endpoints</span>)
+</span></span><span style="display:flex;"><span>					<span style="color:#66d9ef">continue</span>
+</span></span><span style="display:flex;"><span>				}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>				<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">hh</span> <span style="color:#a6e22e">Health</span>
+</span></span><span style="display:flex;"><span>				<span style="color:#a6e22e">d</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">json</span>.<span style="color:#a6e22e">NewDecoder</span>(<span style="color:#a6e22e">resp</span>.<span style="color:#a6e22e">Body</span>)
+</span></span><span style="display:flex;"><span>				<span style="color:#a6e22e">err</span> = <span style="color:#a6e22e">d</span>.<span style="color:#a6e22e">Decode</span>(<span style="color:#f92672">&amp;</span><span style="color:#a6e22e">hh</span>)
+</span></span><span style="display:flex;"><span>				<span style="color:#a6e22e">resp</span>.<span style="color:#a6e22e">Body</span>.<span style="color:#a6e22e">Close</span>()
+</span></span><span style="display:flex;"><span>				<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> <span style="color:#f92672">||</span> !<span style="color:#a6e22e">hh</span>.<span style="color:#a6e22e">OK</span> {
+</span></span><span style="display:flex;"><span>					<span style="color:#a6e22e">s</span>.<span style="color:#a6e22e">recordFailure</span>(<span style="color:#a6e22e">err</span>)
+</span></span><span style="display:flex;"><span>					<span style="color:#a6e22e">pinned</span> = (<span style="color:#a6e22e">pinned</span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>) <span style="color:#f92672">%</span> len(<span style="color:#a6e22e">endpoints</span>)
+</span></span><span style="display:flex;"><span>					<span style="color:#66d9ef">continue</span>
+</span></span><span style="display:flex;"><span>				}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>				<span style="color:#a6e22e">s</span>.<span style="color:#a6e22e">record</span>(<span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Since</span>(<span style="color:#a6e22e">start</span>), <span style="color:#a6e22e">hh</span>.<span style="color:#a6e22e">Now</span>)
+</span></span><span style="display:flex;"><span>			<span style="color:#66d9ef">case</span> <span style="color:#f92672">&lt;-</span><span style="color:#a6e22e">s</span>.<span style="color:#a6e22e">stopC</span>:
+</span></span><span style="display:flex;"><span>				<span style="color:#a6e22e">ticker</span>.<span style="color:#a6e22e">Stop</span>()
+</span></span><span style="display:flex;"><span>				<span style="color:#66d9ef">return</span>
+</span></span><span style="display:flex;"><span>			}
+</span></span><span style="display:flex;"><span>		}
+</span></span><span style="display:flex;"><span>	}()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h2 id="summary">Summary</h2>
 <p>The above is etcd&rsquo;s implementation of the functions of each module. etcd implements the implementation module layer by layer from the network layer - raft state - log storage layer through layered architecture design.<br>
 If you are interested, you can choose to cut in from a certain level of code follow the drawing above. The next article will talk about the underlying storage of etcd:)</p>
 <h2 id="reference-link">Reference link</h2>
@@ -607,6 +630,8 @@ If you are interested, you can choose to cut in from a certain level of code fol
 <li>云原生分布式存储基石etcd深入解析 - 华为云</li>
 </ul>
               
+
+
             </div>
           </div>
           <div id="post-footer" class="post-footer main-content-wrap">
@@ -617,147 +642,149 @@ If you are interested, you can choose to cut in from a certain level of code fol
                   <div class="post-footer-tags">
                     <span class="text-color-light text-small">TAGGED IN</span><br/>
                     
-  <a class="tag tag--primary tag--small" href="/en/tags/raft/">raft</a>
+  <a class="tag tag--primary tag--small" href="https://pixeldin.github.io/en/tags/raft/">raft</a>
 
-  <a class="tag tag--primary tag--small" href="/en/tags/etcd/">etcd</a>
+  <a class="tag tag--primary tag--small" href="https://pixeldin.github.io/en/tags/etcd/">etcd</a>
 
-  <a class="tag tag--primary tag--small" href="/en/tags/distributed-systems/">distributed systems</a>
+  <a class="tag tag--primary tag--small" href="https://pixeldin.github.io/en/tags/distributed-systems/">distributed systems</a>
 
                   </div>
                 
               
             
-            <div class="post-actions-wrap">
-  
-      <nav >
-        <ul class="post-actions post-action-nav">
-          
-            <li class="post-action">
-              
-                <a class="post-action-btn btn btn--disabled">
-              
-                  <i class="fa fa-angle-left"></i>
-                  <span class="hide-xs hide-sm text-small icon-ml">NEXT</span>
-                </a>
-            </li>
-            <li class="post-action">
-              
-                <a class="post-action-btn btn btn--default tooltip--top" href="/en/2022/06/talk-about-etcd-part2-the-raft-consistency-protocol/" data-tooltip="Talk about etcd (Part2): the raft consistency protocol">
-              
-                  <span class="hide-xs hide-sm text-small icon-mr">PREVIOUS</span>
-                  <i class="fa fa-angle-right"></i>
-                </a>
-            </li>
-          
-        </ul>
-      </nav>
-    <ul class="post-actions post-action-share" >
+            
+<div class="post-actions-wrap">
+  <nav >
+    <ul class="post-actions post-action-nav">
       
-        <li class="post-action hide-lg hide-md hide-sm">
-          <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
-            <i class="fa fa-share-alt"></i>
-          </a>
+        <li class="post-action">
+          
+            <a class="post-action-btn btn btn--default tooltip--top" href="https://pixeldin.github.io/en/2023/02/talk-about-typescripts-interface/" data-tooltip="Talk about TypeScript&#39;s interface" aria-label="NEXT: Talk about TypeScript&#39;s interface">
+          
+              <i class="fa fa-angle-left"></i>
+              <span class="hide-xs hide-sm text-small icon-ml">NEXT</span>
+            </a>
         </li>
-        
+        <li class="post-action">
+          
+            <a class="post-action-btn btn btn--default tooltip--top" href="https://pixeldin.github.io/en/2022/06/talk-about-etcd-part2-the-raft-consistency-protocol/" data-tooltip="Talk about etcd (Part2): the raft consistency protocol" aria-label="PREVIOUS: Talk about etcd (Part2): the raft consistency protocol">
+          
+              <span class="hide-xs hide-sm text-small icon-mr">PREVIOUS</span>
+              <i class="fa fa-angle-right"></i>
+            </a>
+        </li>
       
-      
-      <li class="post-action">
-        
-          <a class="post-action-btn btn btn--default" href="#">
-        
-          <i class="fa fa-list"></i>
-        </a>
-      </li>
     </ul>
+  </nav>
+<ul class="post-actions post-action-share" >
   
+    <li class="post-action hide-lg hide-md hide-sm">
+      <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions" aria-label="Share this post">
+        <i class="fa fa-share-alt" aria-hidden="true"></i>
+      </a>
+    </li>
+    
+  
+  
+  <li class="post-action">
+    
+      <a class="post-action-btn btn btn--default" href="#top" aria-label="Back to top">
+      <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    
+    </a>
+  </li>
+</ul>
 </div>
 
+
             
-              
-            
+  
+
+
           </div>
         </article>
         <footer id="footer" class="main-content-wrap">
   <span class="copyrights">
-    &copy; 2024 <a href="https://github.com/pixeldin">pixeldin</a>. All Rights Reserved
+    &copy; 2023 <a href="https://github.com/pixeldin">pixeldin</a>. All Rights Reserved
   </span>
 </footer>
 
       </div>
-      <div id="bottom-bar" class="post-bottom-bar" data-behavior="5">
-        <div class="post-actions-wrap">
-  
-      <nav >
-        <ul class="post-actions post-action-nav">
-          
-            <li class="post-action">
-              
-                <a class="post-action-btn btn btn--disabled">
-              
-                  <i class="fa fa-angle-left"></i>
-                  <span class="hide-xs hide-sm text-small icon-ml">NEXT</span>
-                </a>
-            </li>
-            <li class="post-action">
-              
-                <a class="post-action-btn btn btn--default tooltip--top" href="/en/2022/06/talk-about-etcd-part2-the-raft-consistency-protocol/" data-tooltip="Talk about etcd (Part2): the raft consistency protocol">
-              
-                  <span class="hide-xs hide-sm text-small icon-mr">PREVIOUS</span>
-                  <i class="fa fa-angle-right"></i>
-                </a>
-            </li>
-          
-        </ul>
-      </nav>
-    <ul class="post-actions post-action-share" >
+      <div id="bottom-bar" class="post-bottom-bar" data-behavior="1">
+        
+<div class="post-actions-wrap">
+  <nav >
+    <ul class="post-actions post-action-nav">
       
-        <li class="post-action hide-lg hide-md hide-sm">
-          <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
-            <i class="fa fa-share-alt"></i>
-          </a>
+        <li class="post-action">
+          
+            <a class="post-action-btn btn btn--default tooltip--top" href="https://pixeldin.github.io/en/2023/02/talk-about-typescripts-interface/" data-tooltip="Talk about TypeScript&#39;s interface" aria-label="NEXT: Talk about TypeScript&#39;s interface">
+          
+              <i class="fa fa-angle-left"></i>
+              <span class="hide-xs hide-sm text-small icon-ml">NEXT</span>
+            </a>
         </li>
-        
+        <li class="post-action">
+          
+            <a class="post-action-btn btn btn--default tooltip--top" href="https://pixeldin.github.io/en/2022/06/talk-about-etcd-part2-the-raft-consistency-protocol/" data-tooltip="Talk about etcd (Part2): the raft consistency protocol" aria-label="PREVIOUS: Talk about etcd (Part2): the raft consistency protocol">
+          
+              <span class="hide-xs hide-sm text-small icon-mr">PREVIOUS</span>
+              <i class="fa fa-angle-right"></i>
+            </a>
+        </li>
       
-      
-      <li class="post-action">
-        
-          <a class="post-action-btn btn btn--default" href="#">
-        
-          <i class="fa fa-list"></i>
-        </a>
-      </li>
     </ul>
+  </nav>
+<ul class="post-actions post-action-share" >
   
+    <li class="post-action hide-lg hide-md hide-sm">
+      <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions" aria-label="Share this post">
+        <i class="fa fa-share-alt" aria-hidden="true"></i>
+      </a>
+    </li>
+    
+  
+  
+  <li class="post-action">
+    
+      <a class="post-action-btn btn btn--default" href="#top" aria-label="Back to top">
+      <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    
+    </a>
+  </li>
+</ul>
 </div>
 
+
       </div>
-      <div id="share-options-bar" class="share-options-bar" data-behavior="5">
-  <i id="btn-close-shareoptions" class="fa fa-close"></i>
-  <ul class="share-options">
-    
-  </ul>
-</div>
-<div id="share-options-mask" class="share-options-mask"></div>
+      
+
     </div>
     
     <div id="about">
   <div id="about-card">
     <div id="about-btn-close">
-      <i class="fa fa-remove"></i>
+      <i class="fa fa-times"></i>
     </div>
     
       <img id="about-card-picture" src="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/pig.jpg" alt="Author&#39;s picture" />
     
-    <h4 id="about-card-name">pixelpig</h4>
+    <h4 id="about-card-name">@Pixelpig</h4>
     
-      <div id="about-card-bio">With enthusiasm for open source and I am looking forward to be a better developer. Stay hungry, stay foolish <strong>:）</strong></div>
+      <div id="about-card-bio">Keep it simple, so as this bio <strong>:）</strong></div>
     
+    
+      <div id="about-card-job">
+        <i class="fa fa-briefcase"></i>
+        <br/>
+        Software Developer
+      </div>
     
     
       <div id="about-card-location">
-        <i class="fa fa-map-marker"></i>
+        <i class="fa fa-map-marker-alt"></i>
         <br/>
-        GuangDong - CHINA
+        GuangDong - China
       </div>
     
   </div>
@@ -772,30 +799,16 @@ If you are interested, you can choose to cut in from a certain level of code fol
 
 
     
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js" integrity="sha256-/BfiIkHlHoVihZdc6TFuj7MmJ0TWcWsMXkeDFwhi0zw=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.1.0/highlight.min.js" integrity="sha512-z+/WWfyD5tccCukM4VvONpEtLmbAm5LDu7eKiyMQJ9m7OfPEDL7gENyDRL3Yfe8XAuGsS2fS4xSMnl6d30kqGQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.7/js/jquery.fancybox.min.js" integrity="sha256-GEAnjcTqVP+vBp3SSc8bEDQqvWAZMiHyUSIorrWwH50=" crossorigin="anonymous"></script>
-
-
-<script src="/js/script-pcw6v3xilnxydl1vddzazdverrnn9ctynvnxgwho987mfyqkuylcb1nlt.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js" integrity="sha512-uURl+ZXMBrF4AwGaWmEetzrd+J5/8NRkWAvJx5sbPSSuOb0bZLqf+tOzniObO00BjHa/dD7gub9oCGMLPQHtQA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 
-<script lang="javascript">
-window.onload = updateMinWidth;
-window.onresize = updateMinWidth;
-document.getElementById("sidebar").addEventListener("transitionend", updateMinWidth);
-function updateMinWidth() {
-  var sidebar = document.getElementById("sidebar");
-  var main = document.getElementById("main");
-  main.style.minWidth = "";
-  var w1 = getComputedStyle(main).getPropertyValue("min-width");
-  var w2 = getComputedStyle(sidebar).getPropertyValue("width");
-  var w3 = getComputedStyle(sidebar).getPropertyValue("left");
-  main.style.minWidth = `calc(${w1} - ${w2} - ${w3})`;
-}
-</script>
+<script src="https://pixeldin.github.io/js/script-d9gfx1pdvbfdgoahypizomgoamlbumvk1ugdifqa59ynqvdh8wfsinmt5oj.min.js"></script>
+
+
 
 <script>
 $(document).ready(function() {
@@ -808,11 +821,6 @@ $(document).ready(function() {
   });
 });
 </script>
-
-
-  
-    
-  
 
 
 
