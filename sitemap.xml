@@ -2,16 +2,16 @@
 <sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <sitemap>
-    <loc>https://pixeldin.github.io/en/sitemap.xml</loc>
+    <loc>en/sitemap.xml</loc>
     
-      <lastmod>2023-05-01T00:00:00+00:00</lastmod>
+      <lastmod>2022-06-23T00:00:00+00:00</lastmod>
     
   </sitemap>
   
   <sitemap>
-    <loc>https://pixeldin.github.io/zh/sitemap.xml</loc>
+    <loc>zh/sitemap.xml</loc>
     
-      <lastmod>2023-04-14T00:00:00+00:00</lastmod>
+      <lastmod>2023-01-20T00:00:00+00:00</lastmod>
     
   </sitemap>
   

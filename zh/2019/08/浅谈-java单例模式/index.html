@@ -2,31 +2,11 @@
 <html lang="zh-cn">
   <head>
     
-    <script type="application/ld+json">
-
-{  
-  "@context":"http://schema.org",
-  "@type":"Website",
-  "@id":"https:\/\/pixeldin.github.io\/",
-  "author": {
-    "@type": "Person",
-    "name": "@Pixelpig",
-    
-    "image": "https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/pig.jpg"
-    
-  },
-  "name":"pixelpig.tech",
-  "description":"\u003cp\u003e相信在设计模式中有一个经常提到的概念：\u003cstrong\u003e单例模式\u003c\/strong\u003e，为什么它经常出现在面试话题中，因为它的应用场景十分广泛。\u003c\/p\u003e",
-  "url":"https:\/\/pixeldin.github.io\/zh\/2019\/08\/%E6%B5%85%E8%B0%88-java%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F\/",
-  "keywords":"[]"
-}
-
-</script>
     <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="generator" content="Hugo 0.111.3 with theme Tranquilpeak 0.5.3-BETA">
-<meta name="author" content="@Pixelpig">
+<meta name="generator" content="Hugo 0.80.0 with theme Tranquilpeak 0.4.8-BETA">
+<meta name="author" content="pixelpig">
 <meta name="keywords" content="">
 <meta name="description" content="相信在设计模式中有一个经常提到的概念：单例模式，为什么它经常出现在面试话题中，因为它的应用场景十分广泛。">
 
@@ -35,9 +15,9 @@
 <meta property="og:type" content="article">
 <meta property="og:title" content="浅谈 Java单例模式">
 <meta name="twitter:title" content="浅谈 Java单例模式">
-<meta property="og:url" content="https://pixeldin.github.io/zh/2019/08/%E6%B5%85%E8%B0%88-java%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/">
-<meta property="twitter:url" content="https://pixeldin.github.io/zh/2019/08/%E6%B5%85%E8%B0%88-java%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/">
-<meta property="og:site_name" content="pixelpig.tech">
+<meta property="og:url" content="/zh/2019/08/%E6%B5%85%E8%B0%88-java%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/">
+<meta property="twitter:url" content="/zh/2019/08/%E6%B5%85%E8%B0%88-java%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/">
+<meta property="og:site_name" content="pixelpig.space">
 <meta property="og:description" content="相信在设计模式中有一个经常提到的概念：单例模式，为什么它经常出现在面试话题中，因为它的应用场景十分广泛。">
 <meta name="twitter:description" content="相信在设计模式中有一个经常提到的概念：单例模式，为什么它经常出现在面试话题中，因为它的应用场景十分广泛。">
 <meta property="og:locale" content="zh">
@@ -75,12 +55,12 @@
 
 
 
+
+
+
+
   <meta property="og:image" content="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/pig.jpg">
   <meta property="twitter:image" content="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/pig.jpg">
-
-
-
-
 
 
     <title>浅谈 Java单例模式</title>
@@ -90,15 +70,15 @@
 
     
 
-    <link rel="canonical" href="https://pixeldin.github.io/zh/2019/08/%E6%B5%85%E8%B0%88-java%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/">
+    <link rel="canonical" href="/zh/2019/08/%E6%B5%85%E8%B0%88-java%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/">
 
     
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" integrity="sha512-H9jrZiiopUdsLpg94A333EfumgUBpO9MdbxStdeITo+KEIMaNfHNvwyjjDJb+ERPaRS6DpyRlKbvPUasNItRyw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/jquery.fancybox.min.css" integrity="sha256-vuXZ9LGmmwtjqFX1F+EKin1ThZMub58gKULUyf0qECk=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/helpers/jquery.fancybox-thumbs.min.css" integrity="sha256-SEa4XYAHihTcEP1f5gARTB2K26Uk8PsndQYHQC1f4jU=" crossorigin="anonymous" />
     
     
-    
-    <link rel="stylesheet" href="https://pixeldin.github.io/css/style-fneuerdunt9vf6vafpewt2nttopqa9hdugoae6mfs7phtuibtq6qjxkds96.min.css" />
+    <link rel="stylesheet" href="/css/style-twzjdbqhmnnacqs0pwwdzcdbt8yhv8giawvjqjmyfoqnvazl0dalmnhdkvp7.min.css" />
     
     
 
@@ -110,15 +90,15 @@
 
   <body>
     <div id="blog">
-      <header id="header" data-behavior="1">
+      <header id="header" data-behavior="5">
   <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
   <div class="header-title">
-    <a class="header-title-link" href="https://pixeldin.github.io/zh/" aria-label="去首页">pixelpig.tech</a>
+    <a class="header-title-link" href="/zh/">pixelpig.space</a>
   </div>
   
     
       <a class="header-right-picture "
-         href="https://pixeldin.github.io/#about" aria-label="打开链接: /#about">
+         href="/#about">
     
     
     
@@ -130,16 +110,16 @@
   
 </header>
 
-      <nav id="sidebar" data-behavior="1">
+      <nav id="sidebar" data-behavior="5">
   <div class="sidebar-container">
     
       <div class="sidebar-profile">
-        <a href="https://pixeldin.github.io/#about" aria-label="阅读有关作者的更多信息">
+        <a href="/#about">
           <img class="sidebar-profile-picture" src="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/pig.jpg" alt="作者的图片" />
         </a>
-        <h4 class="sidebar-profile-name">@Pixelpig</h4>
+        <h4 class="sidebar-profile-name">pixelpig</h4>
         
-          <h5 class="sidebar-profile-bio">Keep it simple, so as this bio <strong>:）</strong></h5>
+          <h5 class="sidebar-profile-bio">With enthusiasm for open source and I am looking forward to be a better developer. Stay hungry, stay foolish <strong>:）</strong></h5>
         
       </div>
     
@@ -147,7 +127,7 @@
       
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="https://pixeldin.github.io/en" title="English">
+      <a class="sidebar-button-link " href="/en">
     
       <i class="sidebar-button-icon fa fa-lg fa-language"></i>
       
@@ -157,7 +137,7 @@
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="https://pixeldin.github.io/zh/" title="Home">
+      <a class="sidebar-button-link " href="/zh/">
     
       <i class="sidebar-button-icon fa fa-lg fa-home"></i>
       
@@ -167,7 +147,7 @@
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="https://pixeldin.github.io/zh/categories" title="Categories">
+      <a class="sidebar-button-link " href="/zh/categories">
     
       <i class="sidebar-button-icon fa fa-lg fa-bookmark"></i>
       
@@ -177,7 +157,7 @@
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="https://pixeldin.github.io/zh/tags" title="Tags">
+      <a class="sidebar-button-link " href="/zh/tags">
     
       <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
       
@@ -187,7 +167,7 @@
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="https://pixeldin.github.io/zh/archives" title="Archives">
+      <a class="sidebar-button-link " href="/zh/archives">
     
       <i class="sidebar-button-icon fa fa-lg fa-archive"></i>
       
@@ -197,9 +177,9 @@
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="https://pixeldin.github.io/zh/#about" title="About">
+      <a class="sidebar-button-link " href="/zh/#about">
     
-      <i class="sidebar-button-icon fa fa-lg fa-question-circle"></i>
+      <i class="sidebar-button-icon fa fa-lg fa-question"></i>
       
       <span class="sidebar-button-desc">关于我</span>
     </a>
@@ -207,25 +187,22 @@
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="https://github.com/pixeldin" target="_blank" rel="noopener" title="pixeldin">
+      <a class="sidebar-button-link " href="https://github.com/pixeldin" target="_blank" rel="noopener">
     
-      <i class="sidebar-button-icon fab fa-lg fa-github-alt"></i>
+      <i class="sidebar-button-icon fa fa-lg fa-github"></i>
       
-      <span class="sidebar-button-desc">github</span>
+      <span class="sidebar-button-desc">pixeldin</span>
     </a>
   </li>
 
 
-
     </ul>
     <ul class="sidebar-buttons">
       
 
-
     </ul>
     <ul class="sidebar-buttons">
       
-
 
     </ul>
   </div>
@@ -233,23 +210,23 @@
 
       
 
-      <div id="main" data-behavior="1"
+      <div id="main" data-behavior="5"
         class="
                hasCoverMetaIn
                ">
-        <article class="post" id="top">
+        <article class="post" itemscope itemType="http://schema.org/BlogPosting">
           
           
             <div class="post-header main-content-wrap text-left">
   
-    <h1 class="post-title">
+    <h1 class="post-title" itemprop="headline">
       浅谈 Java单例模式
     </h1>
   
   
   <div class="postShorten-meta post-meta">
     
-      <time datetime="2019-08-11T00:00:00Z">
+      <time itemprop="datePublished" datetime="2019-08-11T00:00:00Z">
         
   八月 11, 2019
 
@@ -260,9 +237,9 @@
   
     <span>发布在</span>
     
-      <a class="category-link" href="https://pixeldin.github.io/zh/categories/java">Java</a>, 
+      <a class="category-link" href="/zh/categories/java">Java</a>, 
     
-      <a class="category-link" href="https://pixeldin.github.io/zh/categories/%e8%ae%be%e8%ae%a1%e6%a8%a1%e5%bc%8f">设计模式</a>
+      <a class="category-link" href="/zh/categories/%e8%ae%be%e8%ae%a1%e6%a8%a1%e5%bc%8f">设计模式</a>
     
   
 
@@ -270,7 +247,7 @@
 
 </div>
           
-          <div class="post-content markdown">
+          <div class="post-content markdown" itemprop="articleBody">
             <div class="main-content-wrap">
               <p>相信在设计模式中有一个经常提到的概念：<strong>单例模式</strong>，为什么它经常出现在面试话题中，因为它的应用场景十分广泛。</p>
 <h4 id="使用场景">使用场景：</h4>
@@ -287,7 +264,7 @@
 <hr>
 <h3 id="创建单例模式的几种方式以及比较">创建单例模式的几种方式以及比较</h3>
 <h4 id="1-饿汉模式">1. 饿汉模式</h4>
-<pre tabindex="0"><code>/*
+<pre><code>/*
  1. 饿汉模式：
  2. 优点：线程安全
  3. 缺陷：性能低/加载类就初始化单例/不适合需要外部传入参数配置的单例模式
@@ -304,7 +281,7 @@ public class SingletonHungry {
 		
 		SingletonHungry s1 = SingletonHungry.getInstance();
 		SingletonHungry s2 = SingletonHungry.getInstance();
-		System.out.print(&#34;饿汉模式实例对比:&#34;);
+		System.out.print(&quot;饿汉模式实例对比:&quot;);
 		//true
 		System.out.println(s1.getInstance()==s2.getInstance());
 	}	
@@ -313,7 +290,7 @@ public class SingletonHungry {
 </code></pre><p>由于饿汉模式在类内部创建实例，所以它是线程安全，正式它在类内部就静态加载，所以它不能从外部传入参数配置。
 具体来看看懒汉模式.</p>
 <h4 id="2--懒汉模式">2.  懒汉模式</h4>
-<pre tabindex="0"><code>package com.dd.code.singleton;
+<pre><code>package com.dd.code.singleton;
 
 /*
  * 懒汉模式
@@ -345,18 +322,19 @@ public class SingletonLazy {
 
 	
 	public static void main(String[] args) {
-		SingletonLazy.setConf(&#34;配置文件优先&#34;);
+		SingletonLazy.setConf(&quot;配置文件优先&quot;);
 		SingletonLazy s1 = SingletonLazy.getInstance();
 		SingletonLazy s2 = SingletonLazy.getInstance();
-		System.out.print(&#34;懒汉模式实例对比:&#34;);
+		System.out.print(&quot;懒汉模式实例对比:&quot;);
 		//true
 		System.out.println(s1.getInstance()==s2.getInstance());
 	}
 	
 }
+
 </code></pre><p>对比饿汉模式，懒汉模式可以传入必要配置再手动实例化，但是由于手动实例化，则需要考虑线程安全问题。</p>
 <h4 id="3-线程安全懒汉模式">3. 线程安全懒汉模式</h4>
-<pre tabindex="0"><code>/*
+<pre><code>/*
  *  线程安全懒汉加载
  *  优点：线程安全/可以外部传配置
  *  缺陷：代价较高，创建单例只需要第一次保证线程安全就好，不需要每次都同步
@@ -376,15 +354,16 @@ public class SingletonThreadSafe {
 	public static void main(String[] args) {
 		SingletonThreadSafe s1 = new SingletonThreadSafe();
 		SingletonThreadSafe s2 = new SingletonThreadSafe();
-		System.out.print(&#34;线程安全懒汉加载实例对比:&#34;);
+		System.out.print(&quot;线程安全懒汉加载实例对比:&quot;);
 		//true
 		System.out.println(s1.getInstance()==s2.getInstance());
 	}
 }
+
 </code></pre><p>加了同步关键字synchronized保证了线程安全，但是它的性能就降低了，而且其实<strong>创建单例只需要第一次保证线程安全就好，不需要每次都同步。</strong></p>
 <p>所以引入了新的优化，好像很厉害的<!-- raw HTML omitted -->双重锁检测模式<!-- raw HTML omitted --></p>
 <h4 id="4-双重锁检测单例">4. 双重锁检测单例</h4>
-<pre tabindex="0"><code>
+<pre><code>
 /*
  * 双重锁单例模式（较复杂）
  * 优点：可传入配置/对比SingletonThreadSafe性能优化，只有在实例为空（第一次实现同步）
@@ -420,7 +399,7 @@ public class SingletonDoubleCheck {
 		SingletonDoubleCheck s1,s2;
 		s1 = SingletonDoubleCheck.getInstance();
 		s2 = SingletonDoubleCheck.getInstance();
-		System.out.print(&#34;双重锁单例加载实例对比:&#34;);
+		System.out.print(&quot;双重锁单例加载实例对比:&quot;);
 		//true
 		System.out.println(s1==s2);
 	}
@@ -431,7 +410,7 @@ public class SingletonDoubleCheck {
 <hr>
 <p>这种方式有点烧脑，官方推荐还有另一种创建方式，静态内部类模式，<strong>比较推荐使用的一种</strong>。</p>
 <h4 id="5-静态内部类">5. 静态内部类</h4>
-<pre tabindex="0"><code>/*
+<pre><code>/*
  * 静态内部类 
  */
 public class SingletonNested {
@@ -448,7 +427,7 @@ public class SingletonNested {
 		SingletonNested s1, s2;
 		s1 = SingletonNested.getInstance();
 		s2 = SingletonNested.getInstance();
-		System.out.print(&#34;静态内部类实例对比:&#34;);
+		System.out.print(&quot;静态内部类实例对比:&quot;);
 		//true
 		System.out.println(s1==s2);
 	}
@@ -470,8 +449,6 @@ public class SingletonNested {
 </li>
 </ul>
               
-
-
             </div>
           </div>
           <div id="post-footer" class="post-footer main-content-wrap">
@@ -482,131 +459,129 @@ public class SingletonNested {
                   <div class="post-footer-tags">
                     <span class="text-color-light text-small">标签</span><br/>
                     
-  <a class="tag tag--primary tag--small" href="https://pixeldin.github.io/zh/tags/%E5%90%8E%E7%AB%AF/">后端</a>
+  <a class="tag tag--primary tag--small" href="/zh/tags/%E5%90%8E%E7%AB%AF/">后端</a>
 
                   </div>
                 
               
             
-            
-<div class="post-actions-wrap">
-  <nav >
-    <ul class="post-actions post-action-nav">
+            <div class="post-actions-wrap">
+  
+      <nav >
+        <ul class="post-actions post-action-nav">
+          
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="/zh/2020/02/%E8%81%8A%E4%B8%80%E8%81%8Ago%E7%BC%96%E5%86%99%E7%9A%84%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%B7%A5%E5%85%B7%E7%B1%BB/" data-tooltip="聊一聊Go编写的命令行工具类">
+              
+                  <i class="fa fa-angle-left"></i>
+                  <span class="hide-xs hide-sm text-small icon-ml">下一篇</span>
+                </a>
+            </li>
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="/zh/2019/07/%E7%AE%80%E8%BF%B0-java%E7%BA%BF%E7%A8%8B%E6%B1%A0%E4%BB%A5%E5%8F%8A%E4%BD%BF%E7%94%A8/" data-tooltip="简述 Java线程池以及使用">
+              
+                  <span class="hide-xs hide-sm text-small icon-mr">上一篇</span>
+                  <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+          
+        </ul>
+      </nav>
+    <ul class="post-actions post-action-share" >
       
-        <li class="post-action">
-          
-            <a class="post-action-btn btn btn--default tooltip--top" href="https://pixeldin.github.io/zh/2020/02/%E8%81%8A%E4%B8%80%E8%81%8Ago%E7%BC%96%E5%86%99%E7%9A%84%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%B7%A5%E5%85%B7%E7%B1%BB/" data-tooltip="聊一聊Go编写的命令行工具类" aria-label="后一篇: 聊一聊Go编写的命令行工具类">
-          
-              <i class="fa fa-angle-left"></i>
-              <span class="hide-xs hide-sm text-small icon-ml">后一篇</span>
-            </a>
-        </li>
-        <li class="post-action">
-          
-            <a class="post-action-btn btn btn--default tooltip--top" href="https://pixeldin.github.io/zh/2019/07/%E7%AE%80%E8%BF%B0-java%E7%BA%BF%E7%A8%8B%E6%B1%A0%E4%BB%A5%E5%8F%8A%E4%BD%BF%E7%94%A8/" data-tooltip="简述 Java线程池以及使用" aria-label="前一篇: 简述 Java线程池以及使用">
-          
-              <span class="hide-xs hide-sm text-small icon-mr">前一篇</span>
-              <i class="fa fa-angle-right"></i>
-            </a>
-        </li>
       
+      <li class="post-action">
+        
+          <a class="post-action-btn btn btn--default" href="#">
+        
+          <i class="fa fa-list"></i>
+        </a>
+      </li>
     </ul>
-  </nav>
-<ul class="post-actions post-action-share" >
   
-  
-  <li class="post-action">
-    
-      <a class="post-action-btn btn btn--default" href="#top" aria-label="回到顶部">
-      <i class="fa fa-arrow-up" aria-hidden="true"></i>
-    
-    </a>
-  </li>
-</ul>
 </div>
 
-
             
-  
-
-
+              
+            
           </div>
         </article>
         <footer id="footer" class="main-content-wrap">
   <span class="copyrights">
-    &copy; 2023 <a href="https://github.com/pixeldin">pixeldin</a>. All Rights Reserved
+    &copy; 2024 <a href="https://github.com/pixeldin">pixeldin</a>. All Rights Reserved
   </span>
 </footer>
 
       </div>
-      <div id="bottom-bar" class="post-bottom-bar" data-behavior="1">
+      <div id="bottom-bar" class="post-bottom-bar" data-behavior="5">
+        <div class="post-actions-wrap">
+  
+      <nav >
+        <ul class="post-actions post-action-nav">
+          
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="/zh/2020/02/%E8%81%8A%E4%B8%80%E8%81%8Ago%E7%BC%96%E5%86%99%E7%9A%84%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%B7%A5%E5%85%B7%E7%B1%BB/" data-tooltip="聊一聊Go编写的命令行工具类">
+              
+                  <i class="fa fa-angle-left"></i>
+                  <span class="hide-xs hide-sm text-small icon-ml">下一篇</span>
+                </a>
+            </li>
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="/zh/2019/07/%E7%AE%80%E8%BF%B0-java%E7%BA%BF%E7%A8%8B%E6%B1%A0%E4%BB%A5%E5%8F%8A%E4%BD%BF%E7%94%A8/" data-tooltip="简述 Java线程池以及使用">
+              
+                  <span class="hide-xs hide-sm text-small icon-mr">上一篇</span>
+                  <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+          
+        </ul>
+      </nav>
+    <ul class="post-actions post-action-share" >
+      
+      
+      <li class="post-action">
         
-<div class="post-actions-wrap">
-  <nav >
-    <ul class="post-actions post-action-nav">
-      
-        <li class="post-action">
-          
-            <a class="post-action-btn btn btn--default tooltip--top" href="https://pixeldin.github.io/zh/2020/02/%E8%81%8A%E4%B8%80%E8%81%8Ago%E7%BC%96%E5%86%99%E7%9A%84%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%B7%A5%E5%85%B7%E7%B1%BB/" data-tooltip="聊一聊Go编写的命令行工具类" aria-label="后一篇: 聊一聊Go编写的命令行工具类">
-          
-              <i class="fa fa-angle-left"></i>
-              <span class="hide-xs hide-sm text-small icon-ml">后一篇</span>
-            </a>
-        </li>
-        <li class="post-action">
-          
-            <a class="post-action-btn btn btn--default tooltip--top" href="https://pixeldin.github.io/zh/2019/07/%E7%AE%80%E8%BF%B0-java%E7%BA%BF%E7%A8%8B%E6%B1%A0%E4%BB%A5%E5%8F%8A%E4%BD%BF%E7%94%A8/" data-tooltip="简述 Java线程池以及使用" aria-label="前一篇: 简述 Java线程池以及使用">
-          
-              <span class="hide-xs hide-sm text-small icon-mr">前一篇</span>
-              <i class="fa fa-angle-right"></i>
-            </a>
-        </li>
-      
+          <a class="post-action-btn btn btn--default" href="#">
+        
+          <i class="fa fa-list"></i>
+        </a>
+      </li>
     </ul>
-  </nav>
-<ul class="post-actions post-action-share" >
   
-  
-  <li class="post-action">
-    
-      <a class="post-action-btn btn btn--default" href="#top" aria-label="回到顶部">
-      <i class="fa fa-arrow-up" aria-hidden="true"></i>
-    
-    </a>
-  </li>
-</ul>
 </div>
 
-
       </div>
-      
-
+      <div id="share-options-bar" class="share-options-bar" data-behavior="5">
+  <i id="btn-close-shareoptions" class="fa fa-close"></i>
+  <ul class="share-options">
+    
+  </ul>
+</div>
+<div id="share-options-mask" class="share-options-mask"></div>
     </div>
     
     <div id="about">
   <div id="about-card">
     <div id="about-btn-close">
-      <i class="fa fa-times"></i>
+      <i class="fa fa-remove"></i>
     </div>
     
       <img id="about-card-picture" src="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/pig.jpg" alt="作者的图片" />
     
-    <h4 id="about-card-name">@Pixelpig</h4>
+    <h4 id="about-card-name">pixelpig</h4>
     
-      <div id="about-card-bio">Keep it simple, so as this bio <strong>:）</strong></div>
+      <div id="about-card-bio">With enthusiasm for open source and I am looking forward to be a better developer. Stay hungry, stay foolish <strong>:）</strong></div>
     
-    
-      <div id="about-card-job">
-        <i class="fa fa-briefcase"></i>
-        <br/>
-        Software Developer
-      </div>
     
     
       <div id="about-card-location">
-        <i class="fa fa-map-marker-alt"></i>
+        <i class="fa fa-map-marker"></i>
         <br/>
-        GuangDong - China
+        GuangDong - CHINA
       </div>
     
   </div>
@@ -621,16 +596,30 @@ public class SingletonNested {
 
 
     
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.1.0/highlight.min.js" integrity="sha512-z+/WWfyD5tccCukM4VvONpEtLmbAm5LDu7eKiyMQJ9m7OfPEDL7gENyDRL3Yfe8XAuGsS2fS4xSMnl6d30kqGQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js" integrity="sha256-/BfiIkHlHoVihZdc6TFuj7MmJ0TWcWsMXkeDFwhi0zw=" crossorigin="anonymous"></script>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js" integrity="sha512-uURl+ZXMBrF4AwGaWmEetzrd+J5/8NRkWAvJx5sbPSSuOb0bZLqf+tOzniObO00BjHa/dD7gub9oCGMLPQHtQA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
-
-<script src="https://pixeldin.github.io/js/script-d9gfx1pdvbfdgoahypizomgoamlbumvk1ugdifqa59ynqvdh8wfsinmt5oj.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.7/js/jquery.fancybox.min.js" integrity="sha256-GEAnjcTqVP+vBp3SSc8bEDQqvWAZMiHyUSIorrWwH50=" crossorigin="anonymous"></script>
 
 
+<script src="/js/script-pcw6v3xilnxydl1vddzazdverrnn9ctynvnxgwho987mfyqkuylcb1nlt.min.js"></script>
+
+
+<script lang="javascript">
+window.onload = updateMinWidth;
+window.onresize = updateMinWidth;
+document.getElementById("sidebar").addEventListener("transitionend", updateMinWidth);
+function updateMinWidth() {
+  var sidebar = document.getElementById("sidebar");
+  var main = document.getElementById("main");
+  main.style.minWidth = "";
+  var w1 = getComputedStyle(main).getPropertyValue("min-width");
+  var w2 = getComputedStyle(sidebar).getPropertyValue("width");
+  var w3 = getComputedStyle(sidebar).getPropertyValue("left");
+  main.style.minWidth = `calc(${w1} - ${w2} - ${w3})`;
+}
+</script>
 
 <script>
 $(document).ready(function() {
@@ -643,6 +632,11 @@ $(document).ready(function() {
   });
 });
 </script>
+
+
+  
+    
+  
 
 
 

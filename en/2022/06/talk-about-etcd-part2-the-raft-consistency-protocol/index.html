@@ -2,31 +2,11 @@
 <html lang="en-us">
   <head>
     
-    <script type="application/ld+json">
-
-{  
-  "@context":"http://schema.org",
-  "@type":"Website",
-  "@id":"https:\/\/pixeldin.github.io\/",
-  "author": {
-    "@type": "Person",
-    "name": "@Pixelpig",
-    
-    "image": "https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/pig.jpg"
-    
-  },
-  "name":"pixelpig.tech",
-  "description":"\u003cp\u003eThe purpose of the consensus algorithm is to maintain a consensus conclusion when there is an abnormality in the machine cluster to ensure the provision of services to the outside world.\u003c\/p\u003e\n\u003cp\u003eToday, let’s talk about the consensus mechanism of etcd, the raft protocol.\u003c\/p\u003e",
-  "url":"https:\/\/pixeldin.github.io\/en\/2022\/06\/talk-about-etcd-part2-the-raft-consistency-protocol\/",
-  "keywords":"[]"
-}
-
-</script>
     <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="generator" content="Hugo 0.111.3 with theme Tranquilpeak 0.5.3-BETA">
-<meta name="author" content="@Pixelpig">
+<meta name="generator" content="Hugo 0.80.0 with theme Tranquilpeak 0.4.8-BETA">
+<meta name="author" content="pixelpig">
 <meta name="keywords" content="">
 <meta name="description" content="The purpose of the consensus algorithm is to maintain a consensus conclusion when there is an abnormality in the machine cluster to ensure the provision of services to the outside world.
 Today, let’s talk about the consensus mechanism of etcd, the raft protocol.">
@@ -37,9 +17,9 @@ Today, let’s talk about the consensus mechanism of etcd, the raft protocol.">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Talk about etcd (Part2): the raft consistency protocol">
 <meta name="twitter:title" content="Talk about etcd (Part2): the raft consistency protocol">
-<meta property="og:url" content="https://pixeldin.github.io/en/2022/06/talk-about-etcd-part2-the-raft-consistency-protocol/">
-<meta property="twitter:url" content="https://pixeldin.github.io/en/2022/06/talk-about-etcd-part2-the-raft-consistency-protocol/">
-<meta property="og:site_name" content="pixelpig.tech">
+<meta property="og:url" content="/en/2022/06/talk-about-etcd-part2-the-raft-consistency-protocol/">
+<meta property="twitter:url" content="/en/2022/06/talk-about-etcd-part2-the-raft-consistency-protocol/">
+<meta property="og:site_name" content="pixelpig.space">
 <meta property="og:description" content="The purpose of the consensus algorithm is to maintain a consensus conclusion when there is an abnormality in the machine cluster to ensure the provision of services to the outside world.
 Today, let’s talk about the consensus mechanism of etcd, the raft protocol.">
 <meta name="twitter:description" content="The purpose of the consensus algorithm is to maintain a consensus conclusion when there is an abnormality in the machine cluster to ensure the provision of services to the outside world.
@@ -83,12 +63,12 @@ Today, let’s talk about the consensus mechanism of etcd, the raft protocol.">
 
 
 
+
+
+
+
   <meta property="og:image" content="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/pig.jpg">
   <meta property="twitter:image" content="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/pig.jpg">
-
-
-
-
 
 
     <title>Talk about etcd (Part2): the raft consistency protocol</title>
@@ -98,15 +78,15 @@ Today, let’s talk about the consensus mechanism of etcd, the raft protocol.">
 
     
 
-    <link rel="canonical" href="https://pixeldin.github.io/en/2022/06/talk-about-etcd-part2-the-raft-consistency-protocol/">
+    <link rel="canonical" href="/en/2022/06/talk-about-etcd-part2-the-raft-consistency-protocol/">
 
     
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" integrity="sha512-H9jrZiiopUdsLpg94A333EfumgUBpO9MdbxStdeITo+KEIMaNfHNvwyjjDJb+ERPaRS6DpyRlKbvPUasNItRyw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/jquery.fancybox.min.css" integrity="sha256-vuXZ9LGmmwtjqFX1F+EKin1ThZMub58gKULUyf0qECk=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/helpers/jquery.fancybox-thumbs.min.css" integrity="sha256-SEa4XYAHihTcEP1f5gARTB2K26Uk8PsndQYHQC1f4jU=" crossorigin="anonymous" />
     
     
-    
-    <link rel="stylesheet" href="https://pixeldin.github.io/css/style-fneuerdunt9vf6vafpewt2nttopqa9hdugoae6mfs7phtuibtq6qjxkds96.min.css" />
+    <link rel="stylesheet" href="/css/style-twzjdbqhmnnacqs0pwwdzcdbt8yhv8giawvjqjmyfoqnvazl0dalmnhdkvp7.min.css" />
     
     
 
@@ -118,15 +98,15 @@ Today, let’s talk about the consensus mechanism of etcd, the raft protocol.">
 
   <body>
     <div id="blog">
-      <header id="header" data-behavior="1">
+      <header id="header" data-behavior="5">
   <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
   <div class="header-title">
-    <a class="header-title-link" href="https://pixeldin.github.io/en/" aria-label="Go to homepage">pixelpig.tech</a>
+    <a class="header-title-link" href="/en/">pixelpig.space</a>
   </div>
   
     
       <a class="header-right-picture "
-         href="https://pixeldin.github.io/#about" aria-label="Open the link: /#about">
+         href="/#about">
     
     
     
@@ -138,16 +118,16 @@ Today, let’s talk about the consensus mechanism of etcd, the raft protocol.">
   
 </header>
 
-      <nav id="sidebar" data-behavior="1">
+      <nav id="sidebar" data-behavior="5">
   <div class="sidebar-container">
     
       <div class="sidebar-profile">
-        <a href="https://pixeldin.github.io/#about" aria-label="Read more about the author">
+        <a href="/#about">
           <img class="sidebar-profile-picture" src="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/pig.jpg" alt="Author&#39;s picture" />
         </a>
-        <h4 class="sidebar-profile-name">@Pixelpig</h4>
+        <h4 class="sidebar-profile-name">pixelpig</h4>
         
-          <h5 class="sidebar-profile-bio">Keep it simple, so as this bio <strong>:）</strong></h5>
+          <h5 class="sidebar-profile-bio">With enthusiasm for open source and I am looking forward to be a better developer. Stay hungry, stay foolish <strong>:）</strong></h5>
         
       </div>
     
@@ -155,7 +135,7 @@ Today, let’s talk about the consensus mechanism of etcd, the raft protocol.">
       
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="https://pixeldin.github.io/zh" title="简体中文">
+      <a class="sidebar-button-link " href="/zh">
     
       <i class="sidebar-button-icon fa fa-lg fa-language"></i>
       
@@ -165,7 +145,7 @@ Today, let’s talk about the consensus mechanism of etcd, the raft protocol.">
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="https://pixeldin.github.io/en/" title="Home">
+      <a class="sidebar-button-link " href="/en/">
     
       <i class="sidebar-button-icon fa fa-lg fa-home"></i>
       
@@ -175,7 +155,7 @@ Today, let’s talk about the consensus mechanism of etcd, the raft protocol.">
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="https://pixeldin.github.io/en/categories" title="Categories">
+      <a class="sidebar-button-link " href="/en/categories">
     
       <i class="sidebar-button-icon fa fa-lg fa-bookmark"></i>
       
@@ -185,7 +165,7 @@ Today, let’s talk about the consensus mechanism of etcd, the raft protocol.">
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="https://pixeldin.github.io/en/tags" title="Tags">
+      <a class="sidebar-button-link " href="/en/tags">
     
       <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
       
@@ -195,7 +175,7 @@ Today, let’s talk about the consensus mechanism of etcd, the raft protocol.">
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="https://pixeldin.github.io/en/archives" title="Archives">
+      <a class="sidebar-button-link " href="/en/archives">
     
       <i class="sidebar-button-icon fa fa-lg fa-archive"></i>
       
@@ -205,7 +185,7 @@ Today, let’s talk about the consensus mechanism of etcd, the raft protocol.">
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="https://pixeldin.github.io/en/#about" title="About me">
+      <a class="sidebar-button-link " href="/en/#about">
     
       <i class="sidebar-button-icon fa fa-lg fa-question"></i>
       
@@ -215,35 +195,32 @@ Today, let’s talk about the consensus mechanism of etcd, the raft protocol.">
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="https://twitter.com/pixelpigpigpig/" target="_blank" rel="noopener" title="Twitter">
+      <a class="sidebar-button-link " href="https://twitter.com/pixelpigpigpig/" target="_blank" rel="noopener">
     
-      <i class="sidebar-button-icon fab fa-lg fa-twitter"></i>
+      <i class="sidebar-button-icon fa fa-lg fa-twitter"></i>
       
-      <span class="sidebar-button-desc">twitter</span>
+      <span class="sidebar-button-desc">Twitter</span>
     </a>
   </li>
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="https://github.com/pixeldin" target="_blank" rel="noopener" title="pixeldin">
+      <a class="sidebar-button-link " href="https://github.com/pixeldin" target="_blank" rel="noopener">
     
-      <i class="sidebar-button-icon fab fa-lg fa-github-alt"></i>
+      <i class="sidebar-button-icon fa fa-lg fa-github"></i>
       
       <span class="sidebar-button-desc">pixeldin</span>
     </a>
   </li>
 
 
-
     </ul>
     <ul class="sidebar-buttons">
       
 
-
     </ul>
     <ul class="sidebar-buttons">
       
-
 
     </ul>
   </div>
@@ -251,23 +228,23 @@ Today, let’s talk about the consensus mechanism of etcd, the raft protocol.">
 
       
 
-      <div id="main" data-behavior="1"
+      <div id="main" data-behavior="5"
         class="
                hasCoverMetaIn
                ">
-        <article class="post" id="top">
+        <article class="post" itemscope itemType="http://schema.org/BlogPosting">
           
           
             <div class="post-header main-content-wrap text-center">
   
-    <h1 class="post-title">
+    <h1 class="post-title" itemprop="headline">
       Talk about etcd (Part2): the raft consistency protocol
     </h1>
   
   
   <div class="postShorten-meta post-meta">
     
-      <time datetime="2022-06-03T00:00:00Z">
+      <time itemprop="datePublished" datetime="2022-06-03T00:00:00Z">
         
   June 3, 2022
 
@@ -278,9 +255,9 @@ Today, let’s talk about the consensus mechanism of etcd, the raft protocol.">
   
     <span>in</span>
     
-      <a class="category-link" href="https://pixeldin.github.io/en/categories/go">Go</a>, 
+      <a class="category-link" href="/en/categories/go">Go</a>, 
     
-      <a class="category-link" href="https://pixeldin.github.io/en/categories/backend">backend</a>
+      <a class="category-link" href="/en/categories/backend">backend</a>
     
   
 
@@ -288,7 +265,7 @@ Today, let’s talk about the consensus mechanism of etcd, the raft protocol.">
 
 </div>
           
-          <div class="post-content markdown">
+          <div class="post-content markdown" itemprop="articleBody">
             <div class="main-content-wrap">
               <p>The purpose of the consensus algorithm is to maintain a consensus conclusion when there is an abnormality in the machine cluster to ensure the provision of services to the outside world.</p>
 <p>Today, let’s talk about the consensus mechanism of etcd, the raft protocol.</p>
@@ -321,91 +298,91 @@ Leader and Follower interact through <code>MatchIndex</code> and <code>NextIndex
 <img src="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/blog/etcd/raft/etcd-logIndex.png" alt="log-Index"></p>
 <p><strong>Through <code>MatchIndex</code>, the leader node can know the records that the current cluster has been recognized by most nodes, and can notify other followers to submit a block by broadcasting Msg.</strong></p>
 <p>The structure of the synchronization request body is as follows:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Entry</span> <span style="color:#66d9ef">struct</span> {
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">Term</span>  <span style="color:#66d9ef">uint64</span>    <span style="color:#e6db74">`protobuf:&#34;varint,2,opt,name=Term&#34; json:&#34;Term&#34;`</span>         
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">Index</span> <span style="color:#66d9ef">uint64</span>    <span style="color:#e6db74">`protobuf:&#34;varint,3,opt,name=Index&#34; json:&#34;Index&#34;`</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">Type</span>  <span style="color:#a6e22e">EntryType</span> <span style="color:#e6db74">`protobuf:&#34;varint,1,opt,name=Type,enum=raftpb.EntryType&#34; json:&#34;Type&#34;`</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">Data</span>  []<span style="color:#66d9ef">byte</span>    <span style="color:#e6db74">`protobuf:&#34;bytes,4,opt,name=Data&#34; json:&#34;Data,omitempty&#34;`</span>
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span><span style="color:#75715e">// AppendEntries RPC request: Attempt to sync record to node
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">r</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">raft</span>) <span style="color:#a6e22e">appendEntry</span>(<span style="color:#a6e22e">es</span> <span style="color:#f92672">...</span><span style="color:#a6e22e">pb</span>.<span style="color:#a6e22e">Entry</span>) (<span style="color:#a6e22e">accepted</span> <span style="color:#66d9ef">bool</span>) {
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">li</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">raftLog</span>.<span style="color:#a6e22e">lastIndex</span>()
-</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">range</span> <span style="color:#a6e22e">es</span> {
-</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">es</span>[<span style="color:#a6e22e">i</span>].<span style="color:#a6e22e">Term</span> = <span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">Term</span>
-</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">es</span>[<span style="color:#a6e22e">i</span>].<span style="color:#a6e22e">Index</span> = <span style="color:#a6e22e">li</span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">+</span> uint64(<span style="color:#a6e22e">i</span>)
-</span></span><span style="display:flex;"><span>	}
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// Track the size of this uncommitted proposal.
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#66d9ef">if</span> !<span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">increaseUncommittedSize</span>(<span style="color:#a6e22e">es</span>) {
-</span></span><span style="display:flex;"><span>	    <span style="color:#75715e">// The current log does not catch up with the Leader
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>		<span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">logger</span>.<span style="color:#a6e22e">Debugf</span>(
-</span></span><span style="display:flex;"><span>			<span style="color:#e6db74">&#34;%x appending new entries to log would exceed uncommitted entry size limit; dropping proposal&#34;</span>,
-</span></span><span style="display:flex;"><span>			<span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">id</span>,
-</span></span><span style="display:flex;"><span>		)
-</span></span><span style="display:flex;"><span>		<span style="color:#75715e">// Reject the new record of the leader, need to wait for catching up by majority
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>		<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">false</span>
-</span></span><span style="display:flex;"><span>	}
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// use latest &#34;last&#34; index after truncate/append
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">li</span> = <span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">raftLog</span>.append(<span style="color:#a6e22e">es</span><span style="color:#f92672">...</span>)
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">prs</span>.<span style="color:#a6e22e">Progress</span>[<span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">id</span>].<span style="color:#a6e22e">MaybeUpdate</span>(<span style="color:#a6e22e">li</span>)
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// Regardless of maybeCommit&#39;s return, our caller will call bcastAppend.
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">maybeCommit</span>()
-</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">true</span>
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><h3 id="log-compression">Log Compression</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Entry</span> <span style="color:#66d9ef">struct</span> {
+	<span style="color:#a6e22e">Term</span>  <span style="color:#66d9ef">uint64</span>    <span style="color:#e6db74">`protobuf:&#34;varint,2,opt,name=Term&#34; json:&#34;Term&#34;`</span>         
+	<span style="color:#a6e22e">Index</span> <span style="color:#66d9ef">uint64</span>    <span style="color:#e6db74">`protobuf:&#34;varint,3,opt,name=Index&#34; json:&#34;Index&#34;`</span>
+	<span style="color:#a6e22e">Type</span>  <span style="color:#a6e22e">EntryType</span> <span style="color:#e6db74">`protobuf:&#34;varint,1,opt,name=Type,enum=raftpb.EntryType&#34; json:&#34;Type&#34;`</span>
+	<span style="color:#a6e22e">Data</span>  []<span style="color:#66d9ef">byte</span>    <span style="color:#e6db74">`protobuf:&#34;bytes,4,opt,name=Data&#34; json:&#34;Data,omitempty&#34;`</span>
+}
+<span style="color:#75715e">// AppendEntries RPC request: Attempt to sync record to node
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">r</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">raft</span>) <span style="color:#a6e22e">appendEntry</span>(<span style="color:#a6e22e">es</span> <span style="color:#f92672">...</span><span style="color:#a6e22e">pb</span>.<span style="color:#a6e22e">Entry</span>) (<span style="color:#a6e22e">accepted</span> <span style="color:#66d9ef">bool</span>) {
+	<span style="color:#a6e22e">li</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">raftLog</span>.<span style="color:#a6e22e">lastIndex</span>()
+	<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">range</span> <span style="color:#a6e22e">es</span> {
+		<span style="color:#a6e22e">es</span>[<span style="color:#a6e22e">i</span>].<span style="color:#a6e22e">Term</span> = <span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">Term</span>
+		<span style="color:#a6e22e">es</span>[<span style="color:#a6e22e">i</span>].<span style="color:#a6e22e">Index</span> = <span style="color:#a6e22e">li</span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">+</span> uint64(<span style="color:#a6e22e">i</span>)
+	}
+	<span style="color:#75715e">// Track the size of this uncommitted proposal.
+</span><span style="color:#75715e"></span>	<span style="color:#66d9ef">if</span> !<span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">increaseUncommittedSize</span>(<span style="color:#a6e22e">es</span>) {
+	    <span style="color:#75715e">// The current log does not catch up with the Leader
+</span><span style="color:#75715e"></span>		<span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">logger</span>.<span style="color:#a6e22e">Debugf</span>(
+			<span style="color:#e6db74">&#34;%x appending new entries to log would exceed uncommitted entry size limit; dropping proposal&#34;</span>,
+			<span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">id</span>,
+		)
+		<span style="color:#75715e">// Reject the new record of the leader, need to wait for catching up by majority
+</span><span style="color:#75715e"></span>		<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">false</span>
+	}
+	<span style="color:#75715e">// use latest &#34;last&#34; index after truncate/append
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">li</span> = <span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">raftLog</span>.append(<span style="color:#a6e22e">es</span><span style="color:#f92672">...</span>)
+	<span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">prs</span>.<span style="color:#a6e22e">Progress</span>[<span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">id</span>].<span style="color:#a6e22e">MaybeUpdate</span>(<span style="color:#a6e22e">li</span>)
+	<span style="color:#75715e">// Regardless of maybeCommit&#39;s return, our caller will call bcastAppend.
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">maybeCommit</span>()
+	<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">true</span>
+}
+</code></pre></div><h3 id="log-compression">Log Compression</h3>
 <p>Due to the incremental addition of the operation update log, the raft node will periodically archive and compress the log version after reaching an agreement, which is somewhat similar to the AOF and Snapshot backup strategies of Redis. One compression can free up space, reduce storage space and avoid a large number of operation logs. Replaying is also convenient for nodes that lag behind too many logs to quickly catch up with the leader.</p>
 <p>Among them, raft startup will have an associated member <code>storage</code> to store the log data collection, and the specific related operations are implemented in the <code>raft.Storage</code> interface of etcd. The core members are as follows:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">bootstrappedRaft</span> <span style="color:#66d9ef">struct</span> {
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">lg</span>        <span style="color:#f92672">*</span><span style="color:#a6e22e">zap</span>.<span style="color:#a6e22e">Logger</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">heartbeat</span> <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Duration</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">peers</span>   []<span style="color:#a6e22e">raft</span>.<span style="color:#a6e22e">Peer</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">config</span>  <span style="color:#f92672">*</span><span style="color:#a6e22e">raft</span>.<span style="color:#a6e22e">Config</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// raft server associative storage implementation
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">storage</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">raft</span>.<span style="color:#a6e22e">MemoryStorage</span>
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">//...
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">//Storage implement
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">MemoryStorage</span> <span style="color:#66d9ef">struct</span> {
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">sync</span>.<span style="color:#a6e22e">Mutex</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">hardState</span> <span style="color:#a6e22e">pb</span>.<span style="color:#a6e22e">HardState</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">snapshot</span>  <span style="color:#a6e22e">pb</span>.<span style="color:#a6e22e">Snapshot</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// ents stores the current node operation set, each Entry represents the log additional attributes
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">ents</span> []<span style="color:#a6e22e">pb</span>.<span style="color:#a6e22e">Entry</span>
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">//Entry Additional properties
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Entry</span> <span style="color:#66d9ef">struct</span> {
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">Term</span>  <span style="color:#66d9ef">uint64</span>    <span style="color:#e6db74">`protobuf:&#34;varint,2,opt,name=Term&#34; json:&#34;Term&#34;`</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">Index</span> <span style="color:#66d9ef">uint64</span>    <span style="color:#e6db74">`protobuf:&#34;varint,3,opt,name=Index&#34; json:&#34;Index&#34;`</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">Type</span>  <span style="color:#a6e22e">EntryType</span> <span style="color:#e6db74">`protobuf:&#34;varint,1,opt,name=Type,enum=raftpb.EntryType&#34; json:&#34;Type&#34;`</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">Data</span>  []<span style="color:#66d9ef">byte</span>    <span style="color:#e6db74">`protobuf:&#34;bytes,4,opt,name=Data&#34; json:&#34;Data,omitempty&#34;`</span>
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>raft will periodically create snapshots to compress the log, which is equivalent to saving the snapshot to a local file, and then execute the <code>Compact()</code> function to rotate the <code>ents</code> field, and retain a new round of subscripts .</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#75715e">// Compact discards all log entries prior to compactIndex.
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// It is the application&#39;s responsibility to not attempt to compact an index
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// greater than raftLog.applied.
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">ms</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">MemoryStorage</span>) <span style="color:#a6e22e">Compact</span>(<span style="color:#a6e22e">compactIndex</span> <span style="color:#66d9ef">uint64</span>) <span style="color:#66d9ef">error</span> {
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">ms</span>.<span style="color:#a6e22e">Lock</span>()
-</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">defer</span> <span style="color:#a6e22e">ms</span>.<span style="color:#a6e22e">Unlock</span>()
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">offset</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">ms</span>.<span style="color:#a6e22e">ents</span>[<span style="color:#ae81ff">0</span>].<span style="color:#a6e22e">Index</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">compactIndex</span> <span style="color:#f92672">&lt;=</span> <span style="color:#a6e22e">offset</span> {
-</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">ErrCompacted</span>
-</span></span><span style="display:flex;"><span>	}
-</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">compactIndex</span> &gt; <span style="color:#a6e22e">ms</span>.<span style="color:#a6e22e">lastIndex</span>() {
-</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">getLogger</span>().<span style="color:#a6e22e">Panicf</span>(<span style="color:#e6db74">&#34;compact %d is out of bound lastindex(%d)&#34;</span>, <span style="color:#a6e22e">compactIndex</span>, <span style="color:#a6e22e">ms</span>.<span style="color:#a6e22e">lastIndex</span>())
-</span></span><span style="display:flex;"><span>	}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">i</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">compactIndex</span> <span style="color:#f92672">-</span> <span style="color:#a6e22e">offset</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">ents</span> <span style="color:#f92672">:=</span> make([]<span style="color:#a6e22e">pb</span>.<span style="color:#a6e22e">Entry</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">1</span><span style="color:#f92672">+</span>uint64(len(<span style="color:#a6e22e">ms</span>.<span style="color:#a6e22e">ents</span>))<span style="color:#f92672">-</span><span style="color:#a6e22e">i</span>)
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">ents</span>[<span style="color:#ae81ff">0</span>].<span style="color:#a6e22e">Index</span> = <span style="color:#a6e22e">ms</span>.<span style="color:#a6e22e">ents</span>[<span style="color:#a6e22e">i</span>].<span style="color:#a6e22e">Index</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">ents</span>[<span style="color:#ae81ff">0</span>].<span style="color:#a6e22e">Term</span> = <span style="color:#a6e22e">ms</span>.<span style="color:#a6e22e">ents</span>[<span style="color:#a6e22e">i</span>].<span style="color:#a6e22e">Term</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">ents</span> = append(<span style="color:#a6e22e">ents</span>, <span style="color:#a6e22e">ms</span>.<span style="color:#a6e22e">ents</span>[<span style="color:#a6e22e">i</span><span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>:]<span style="color:#f92672">...</span>)
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">ms</span>.<span style="color:#a6e22e">ents</span> = <span style="color:#a6e22e">ents</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>In fact, before committing <code>MemoryStorage</code>, the node will also write to the local disk for persistence. Once the fault occurs, the data can be reconstructed. This process is called the WAL write-ahead log.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">bootstrappedRaft</span> <span style="color:#66d9ef">struct</span> {
+	<span style="color:#a6e22e">lg</span>        <span style="color:#f92672">*</span><span style="color:#a6e22e">zap</span>.<span style="color:#a6e22e">Logger</span>
+	<span style="color:#a6e22e">heartbeat</span> <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Duration</span>
+
+	<span style="color:#a6e22e">peers</span>   []<span style="color:#a6e22e">raft</span>.<span style="color:#a6e22e">Peer</span>
+	<span style="color:#a6e22e">config</span>  <span style="color:#f92672">*</span><span style="color:#a6e22e">raft</span>.<span style="color:#a6e22e">Config</span>
+	<span style="color:#75715e">// raft server associative storage implementation
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">storage</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">raft</span>.<span style="color:#a6e22e">MemoryStorage</span>
+}
+
+<span style="color:#75715e">//...
+</span><span style="color:#75715e"></span>
+<span style="color:#75715e">//Storage implement
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">MemoryStorage</span> <span style="color:#66d9ef">struct</span> {
+	<span style="color:#a6e22e">sync</span>.<span style="color:#a6e22e">Mutex</span>
+	<span style="color:#a6e22e">hardState</span> <span style="color:#a6e22e">pb</span>.<span style="color:#a6e22e">HardState</span>
+	<span style="color:#a6e22e">snapshot</span>  <span style="color:#a6e22e">pb</span>.<span style="color:#a6e22e">Snapshot</span>
+	<span style="color:#75715e">// ents stores the current node operation set, each Entry represents the log additional attributes
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">ents</span> []<span style="color:#a6e22e">pb</span>.<span style="color:#a6e22e">Entry</span>
+}
+
+<span style="color:#75715e">//Entry Additional properties
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Entry</span> <span style="color:#66d9ef">struct</span> {
+	<span style="color:#a6e22e">Term</span>  <span style="color:#66d9ef">uint64</span>    <span style="color:#e6db74">`protobuf:&#34;varint,2,opt,name=Term&#34; json:&#34;Term&#34;`</span>
+	<span style="color:#a6e22e">Index</span> <span style="color:#66d9ef">uint64</span>    <span style="color:#e6db74">`protobuf:&#34;varint,3,opt,name=Index&#34; json:&#34;Index&#34;`</span>
+	<span style="color:#a6e22e">Type</span>  <span style="color:#a6e22e">EntryType</span> <span style="color:#e6db74">`protobuf:&#34;varint,1,opt,name=Type,enum=raftpb.EntryType&#34; json:&#34;Type&#34;`</span>
+	<span style="color:#a6e22e">Data</span>  []<span style="color:#66d9ef">byte</span>    <span style="color:#e6db74">`protobuf:&#34;bytes,4,opt,name=Data&#34; json:&#34;Data,omitempty&#34;`</span>
+}
+</code></pre></div><p>raft will periodically create snapshots to compress the log, which is equivalent to saving the snapshot to a local file, and then execute the <code>Compact()</code> function to rotate the <code>ents</code> field, and retain a new round of subscripts .</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#75715e">// Compact discards all log entries prior to compactIndex.
+</span><span style="color:#75715e">// It is the application&#39;s responsibility to not attempt to compact an index
+</span><span style="color:#75715e">// greater than raftLog.applied.
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">ms</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">MemoryStorage</span>) <span style="color:#a6e22e">Compact</span>(<span style="color:#a6e22e">compactIndex</span> <span style="color:#66d9ef">uint64</span>) <span style="color:#66d9ef">error</span> {
+	<span style="color:#a6e22e">ms</span>.<span style="color:#a6e22e">Lock</span>()
+	<span style="color:#66d9ef">defer</span> <span style="color:#a6e22e">ms</span>.<span style="color:#a6e22e">Unlock</span>()
+	<span style="color:#a6e22e">offset</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">ms</span>.<span style="color:#a6e22e">ents</span>[<span style="color:#ae81ff">0</span>].<span style="color:#a6e22e">Index</span>
+	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">compactIndex</span> <span style="color:#f92672">&lt;=</span> <span style="color:#a6e22e">offset</span> {
+		<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">ErrCompacted</span>
+	}
+	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">compactIndex</span> &gt; <span style="color:#a6e22e">ms</span>.<span style="color:#a6e22e">lastIndex</span>() {
+		<span style="color:#a6e22e">getLogger</span>().<span style="color:#a6e22e">Panicf</span>(<span style="color:#e6db74">&#34;compact %d is out of bound lastindex(%d)&#34;</span>, <span style="color:#a6e22e">compactIndex</span>, <span style="color:#a6e22e">ms</span>.<span style="color:#a6e22e">lastIndex</span>())
+	}
+
+	<span style="color:#a6e22e">i</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">compactIndex</span> <span style="color:#f92672">-</span> <span style="color:#a6e22e">offset</span>
+	<span style="color:#a6e22e">ents</span> <span style="color:#f92672">:=</span> make([]<span style="color:#a6e22e">pb</span>.<span style="color:#a6e22e">Entry</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">1</span><span style="color:#f92672">+</span>uint64(len(<span style="color:#a6e22e">ms</span>.<span style="color:#a6e22e">ents</span>))<span style="color:#f92672">-</span><span style="color:#a6e22e">i</span>)
+	<span style="color:#a6e22e">ents</span>[<span style="color:#ae81ff">0</span>].<span style="color:#a6e22e">Index</span> = <span style="color:#a6e22e">ms</span>.<span style="color:#a6e22e">ents</span>[<span style="color:#a6e22e">i</span>].<span style="color:#a6e22e">Index</span>
+	<span style="color:#a6e22e">ents</span>[<span style="color:#ae81ff">0</span>].<span style="color:#a6e22e">Term</span> = <span style="color:#a6e22e">ms</span>.<span style="color:#a6e22e">ents</span>[<span style="color:#a6e22e">i</span>].<span style="color:#a6e22e">Term</span>
+	<span style="color:#a6e22e">ents</span> = append(<span style="color:#a6e22e">ents</span>, <span style="color:#a6e22e">ms</span>.<span style="color:#a6e22e">ents</span>[<span style="color:#a6e22e">i</span><span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>:]<span style="color:#f92672">...</span>)
+	<span style="color:#a6e22e">ms</span>.<span style="color:#a6e22e">ents</span> = <span style="color:#a6e22e">ents</span>
+	<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>
+}
+</code></pre></div><p>In fact, before committing <code>MemoryStorage</code>, the node will also write to the local disk for persistence. Once the fault occurs, the data can be reconstructed. This process is called the WAL write-ahead log.</p>
 <p>More details on log storage will be discussed in <em>etcd storage analysis</em> of this series.</p>
 <h3 id="network-partition-handling">Network Partition Handling</h3>
 <p>We know that network node failures can actually happen. Here we divide it into two cases to analyze how to ensure consistency. Suppose there is a scenario as follow:<br>
@@ -426,91 +403,91 @@ The leader failure situation can be subdivided again. After the data log reaches
 </li>
 </ul>
 <p>In addition, for split-brain scenarios, etcd also provides a switch for the Leader to check the votes itself.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#75715e">// CheckQuorum specifies if the leader should check quorum activity. Leader
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// steps down when quorum is not active for an electionTimeout.
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#a6e22e">CheckQuorum</span> <span style="color:#66d9ef">bool</span>    
-</span></span></code></pre></div><p><strong>Every once in a while, the leader obtains heartbeats from other nodes and records the number of connections. If the number of heartbeat connections is less than half, the leader will automatically drop to a follower</strong>.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#75715e">// tickHeartbeat is run by leaders to send a MsgBeat after r.heartbeatTimeout.
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">r</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">raft</span>) <span style="color:#a6e22e">tickHeartbeat</span>() {
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// ...
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// self checking
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">checkQuorum</span> {
-</span></span><span style="display:flex;"><span>    	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">Step</span>(<span style="color:#a6e22e">pb</span>.<span style="color:#a6e22e">Message</span>{<span style="color:#a6e22e">From</span>: <span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">id</span>, <span style="color:#a6e22e">Type</span>: <span style="color:#a6e22e">pb</span>.<span style="color:#a6e22e">MsgCheckQuorum</span>}); <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
-</span></span><span style="display:flex;"><span>    		<span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">logger</span>.<span style="color:#a6e22e">Debugf</span>(<span style="color:#e6db74">&#34;error occurred during checking sending heartbeat: %v&#34;</span>, <span style="color:#a6e22e">err</span>)
-</span></span><span style="display:flex;"><span>    	}
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">//...
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>}
-</span></span><span style="display:flex;"><span><span style="color:#75715e">// Leader msg handle
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">stepLeader</span>(<span style="color:#a6e22e">r</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">raft</span>, <span style="color:#a6e22e">m</span> <span style="color:#a6e22e">pb</span>.<span style="color:#a6e22e">Message</span>) <span style="color:#66d9ef">error</span> {
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// These message types do not require any progress for m.From.
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#66d9ef">switch</span> <span style="color:#a6e22e">m</span>.<span style="color:#a6e22e">Type</span> {
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// ...
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#66d9ef">case</span> <span style="color:#a6e22e">pb</span>.<span style="color:#a6e22e">MsgCheckQuorum</span>:
-</span></span><span style="display:flex;"><span>		<span style="color:#75715e">// ...
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>		<span style="color:#75715e">// Check if the leader has a majority vote
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>		<span style="color:#66d9ef">if</span> !<span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">prs</span>.<span style="color:#a6e22e">QuorumActive</span>() {
-</span></span><span style="display:flex;"><span>			<span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">logger</span>.<span style="color:#a6e22e">Warningf</span>(<span style="color:#e6db74">&#34;%x stepped down to follower since quorum is not active&#34;</span>, <span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">id</span>)
-</span></span><span style="display:flex;"><span>			<span style="color:#75715e">// reduced to Follower
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>			<span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">becomeFollower</span>(<span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">Term</span>, <span style="color:#a6e22e">None</span>)
-</span></span><span style="display:flex;"><span>		}
-</span></span><span style="display:flex;"><span>	    <span style="color:#75715e">// ...
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    }
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// ...
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>}
-</span></span></code></pre></div><h3 id="linearizable-read">Linearizable Read</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#75715e">// CheckQuorum specifies if the leader should check quorum activity. Leader
+</span><span style="color:#75715e">// steps down when quorum is not active for an electionTimeout.
+</span><span style="color:#75715e"></span><span style="color:#a6e22e">CheckQuorum</span> <span style="color:#66d9ef">bool</span>    
+</code></pre></div><p><strong>Every once in a while, the leader obtains heartbeats from other nodes and records the number of connections. If the number of heartbeat connections is less than half, the leader will automatically drop to a follower</strong>.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#75715e">// tickHeartbeat is run by leaders to send a MsgBeat after r.heartbeatTimeout.
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">r</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">raft</span>) <span style="color:#a6e22e">tickHeartbeat</span>() {
+    <span style="color:#75715e">// ...
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">// self checking
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">checkQuorum</span> {
+    	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">Step</span>(<span style="color:#a6e22e">pb</span>.<span style="color:#a6e22e">Message</span>{<span style="color:#a6e22e">From</span>: <span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">id</span>, <span style="color:#a6e22e">Type</span>: <span style="color:#a6e22e">pb</span>.<span style="color:#a6e22e">MsgCheckQuorum</span>}); <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+    		<span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">logger</span>.<span style="color:#a6e22e">Debugf</span>(<span style="color:#e6db74">&#34;error occurred during checking sending heartbeat: %v&#34;</span>, <span style="color:#a6e22e">err</span>)
+    	}
+    }
+    <span style="color:#75715e">//...
+</span><span style="color:#75715e"></span>}
+<span style="color:#75715e">// Leader msg handle
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">stepLeader</span>(<span style="color:#a6e22e">r</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">raft</span>, <span style="color:#a6e22e">m</span> <span style="color:#a6e22e">pb</span>.<span style="color:#a6e22e">Message</span>) <span style="color:#66d9ef">error</span> {
+	<span style="color:#75715e">// These message types do not require any progress for m.From.
+</span><span style="color:#75715e"></span>	<span style="color:#66d9ef">switch</span> <span style="color:#a6e22e">m</span>.<span style="color:#a6e22e">Type</span> {
+	<span style="color:#75715e">// ...
+</span><span style="color:#75715e"></span>	<span style="color:#66d9ef">case</span> <span style="color:#a6e22e">pb</span>.<span style="color:#a6e22e">MsgCheckQuorum</span>:
+		<span style="color:#75715e">// ...
+</span><span style="color:#75715e"></span>		<span style="color:#75715e">// Check if the leader has a majority vote
+</span><span style="color:#75715e"></span>		<span style="color:#66d9ef">if</span> !<span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">prs</span>.<span style="color:#a6e22e">QuorumActive</span>() {
+			<span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">logger</span>.<span style="color:#a6e22e">Warningf</span>(<span style="color:#e6db74">&#34;%x stepped down to follower since quorum is not active&#34;</span>, <span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">id</span>)
+			<span style="color:#75715e">// reduced to Follower
+</span><span style="color:#75715e"></span>			<span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">becomeFollower</span>(<span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">Term</span>, <span style="color:#a6e22e">None</span>)
+		}
+	    <span style="color:#75715e">// ...
+</span><span style="color:#75715e"></span>    }
+    <span style="color:#75715e">// ...
+</span><span style="color:#75715e"></span>}
+</code></pre></div><h3 id="linearizable-read">Linearizable Read</h3>
 <p>In the above network partition failure scenario, we know that there may be dual leaders for a period of time, that is, the data version may have dirty data. In fact, there is a maximum commit index <code>CommitIndex</code> on the etcd data set, which represents the current subscript recognized by most nodes, and <code>ReadIndex</code> represents the latest index that can be obtained by the current node (maybe not yet recognized by most).<br>
 Through these two records, etcd provides the option of whether to enable linear reading (Serializable bool type), which is used to block read requests.</p>
 <p>When strong consistency is required, linear reading is enabled, and the request will <strong>wait until The Follower version <code>ReadIndex</code> catches up with the consistent subscript <code>CommitIndex</code> and returns the data</strong>. At this time, the read records can be guaranteed to be consistent in the cluster.</p>
 <p>The relevant source code is as follows:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">RangeRequest</span> <span style="color:#66d9ef">struct</span> {
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// key is the first key for the range. If range_end is not given, the request only looks up key.
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">Key</span> []<span style="color:#66d9ef">byte</span> <span style="color:#e6db74">`protobuf:&#34;bytes,1,opt,name=key,proto3&#34; json:&#34;key,omitempty&#34;`</span>
-</span></span><span style="display:flex;"><span>	
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// ...
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#75715e">// serializable sets the range request to use serializable member-local reads.
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#75715e">// Range requests are linearizable by default; linearizable requests have higher
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#75715e">// latency and lower throughput than serializable requests but reflect the current
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#75715e">// consensus of the cluster. For better performance, in exchange for possible stale reads,
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#75715e">// a serializable range request is served locally without needing to reach consensus
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#75715e">// with other nodes in the cluster.
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">Serializable</span> <span style="color:#66d9ef">bool</span>
-</span></span><span style="display:flex;"><span>	
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// ...
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">s</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">EtcdServer</span>) <span style="color:#a6e22e">Range</span>(<span style="color:#a6e22e">ctx</span> <span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">Context</span>, <span style="color:#a6e22e">r</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">pb</span>.<span style="color:#a6e22e">RangeRequest</span>) (<span style="color:#f92672">*</span><span style="color:#a6e22e">pb</span>.<span style="color:#a6e22e">RangeResponse</span>, <span style="color:#66d9ef">error</span>) {
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">trace</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">traceutil</span>.<span style="color:#a6e22e">New</span>(<span style="color:#e6db74">&#34;range&#34;</span>,
-</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">s</span>.<span style="color:#a6e22e">Logger</span>(),
-</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">traceutil</span>.<span style="color:#a6e22e">Field</span>{<span style="color:#a6e22e">Key</span>: <span style="color:#e6db74">&#34;range_begin&#34;</span>, <span style="color:#a6e22e">Value</span>: string(<span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">Key</span>)},
-</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">traceutil</span>.<span style="color:#a6e22e">Field</span>{<span style="color:#a6e22e">Key</span>: <span style="color:#e6db74">&#34;range_end&#34;</span>, <span style="color:#a6e22e">Value</span>: string(<span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">RangeEnd</span>)},
-</span></span><span style="display:flex;"><span>	)
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">ctx</span> = <span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">WithValue</span>(<span style="color:#a6e22e">ctx</span>, <span style="color:#a6e22e">traceutil</span>.<span style="color:#a6e22e">TraceKey</span>, <span style="color:#a6e22e">trace</span>)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">resp</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">pb</span>.<span style="color:#a6e22e">RangeResponse</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">err</span> <span style="color:#66d9ef">error</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e">//...
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
-</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> !<span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">Serializable</span> {
-</span></span><span style="display:flex;"><span>		<span style="color:#75715e">// blocking waiting
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>		<span style="color:#a6e22e">err</span> = <span style="color:#a6e22e">s</span>.<span style="color:#a6e22e">linearizableReadNotify</span>(<span style="color:#a6e22e">ctx</span>)
-</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">trace</span>.<span style="color:#a6e22e">Step</span>(<span style="color:#e6db74">&#34;agreement among raft nodes before linearized reading&#34;</span>)
-</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
-</span></span><span style="display:flex;"><span>			<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>, <span style="color:#a6e22e">err</span>
-</span></span><span style="display:flex;"><span>		}
-</span></span><span style="display:flex;"><span>	}
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">chk</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">func</span>(<span style="color:#a6e22e">ai</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">auth</span>.<span style="color:#a6e22e">AuthInfo</span>) <span style="color:#66d9ef">error</span> {
-</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">s</span>.<span style="color:#a6e22e">authStore</span>.<span style="color:#a6e22e">IsRangePermitted</span>(<span style="color:#a6e22e">ai</span>, <span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">Key</span>, <span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">RangeEnd</span>)
-</span></span><span style="display:flex;"><span>	}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">get</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">func</span>() { <span style="color:#a6e22e">resp</span>, <span style="color:#a6e22e">err</span> = <span style="color:#a6e22e">txn</span>.<span style="color:#a6e22e">Range</span>(<span style="color:#a6e22e">ctx</span>, <span style="color:#a6e22e">s</span>.<span style="color:#a6e22e">Logger</span>(), <span style="color:#a6e22e">s</span>.<span style="color:#a6e22e">KV</span>(), <span style="color:#66d9ef">nil</span>, <span style="color:#a6e22e">r</span>) }
-</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">serr</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">s</span>.<span style="color:#a6e22e">doSerialize</span>(<span style="color:#a6e22e">ctx</span>, <span style="color:#a6e22e">chk</span>, <span style="color:#a6e22e">get</span>); <span style="color:#a6e22e">serr</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
-</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">err</span> = <span style="color:#a6e22e">serr</span>
-</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>, <span style="color:#a6e22e">err</span>
-</span></span><span style="display:flex;"><span>	}
-</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">resp</span>, <span style="color:#a6e22e">err</span>
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><h2 id="summary">Summary</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">RangeRequest</span> <span style="color:#66d9ef">struct</span> {
+	<span style="color:#75715e">// key is the first key for the range. If range_end is not given, the request only looks up key.
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">Key</span> []<span style="color:#66d9ef">byte</span> <span style="color:#e6db74">`protobuf:&#34;bytes,1,opt,name=key,proto3&#34; json:&#34;key,omitempty&#34;`</span>
+	
+	<span style="color:#75715e">// ...
+</span><span style="color:#75715e"></span>	<span style="color:#75715e">// serializable sets the range request to use serializable member-local reads.
+</span><span style="color:#75715e"></span>	<span style="color:#75715e">// Range requests are linearizable by default; linearizable requests have higher
+</span><span style="color:#75715e"></span>	<span style="color:#75715e">// latency and lower throughput than serializable requests but reflect the current
+</span><span style="color:#75715e"></span>	<span style="color:#75715e">// consensus of the cluster. For better performance, in exchange for possible stale reads,
+</span><span style="color:#75715e"></span>	<span style="color:#75715e">// a serializable range request is served locally without needing to reach consensus
+</span><span style="color:#75715e"></span>	<span style="color:#75715e">// with other nodes in the cluster.
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">Serializable</span> <span style="color:#66d9ef">bool</span>
+	
+	<span style="color:#75715e">// ...
+</span><span style="color:#75715e"></span>}
+
+<span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">s</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">EtcdServer</span>) <span style="color:#a6e22e">Range</span>(<span style="color:#a6e22e">ctx</span> <span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">Context</span>, <span style="color:#a6e22e">r</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">pb</span>.<span style="color:#a6e22e">RangeRequest</span>) (<span style="color:#f92672">*</span><span style="color:#a6e22e">pb</span>.<span style="color:#a6e22e">RangeResponse</span>, <span style="color:#66d9ef">error</span>) {
+	<span style="color:#a6e22e">trace</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">traceutil</span>.<span style="color:#a6e22e">New</span>(<span style="color:#e6db74">&#34;range&#34;</span>,
+		<span style="color:#a6e22e">s</span>.<span style="color:#a6e22e">Logger</span>(),
+		<span style="color:#a6e22e">traceutil</span>.<span style="color:#a6e22e">Field</span>{<span style="color:#a6e22e">Key</span>: <span style="color:#e6db74">&#34;range_begin&#34;</span>, <span style="color:#a6e22e">Value</span>: string(<span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">Key</span>)},
+		<span style="color:#a6e22e">traceutil</span>.<span style="color:#a6e22e">Field</span>{<span style="color:#a6e22e">Key</span>: <span style="color:#e6db74">&#34;range_end&#34;</span>, <span style="color:#a6e22e">Value</span>: string(<span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">RangeEnd</span>)},
+	)
+	<span style="color:#a6e22e">ctx</span> = <span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">WithValue</span>(<span style="color:#a6e22e">ctx</span>, <span style="color:#a6e22e">traceutil</span>.<span style="color:#a6e22e">TraceKey</span>, <span style="color:#a6e22e">trace</span>)
+
+	<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">resp</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">pb</span>.<span style="color:#a6e22e">RangeResponse</span>
+	<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">err</span> <span style="color:#66d9ef">error</span>
+	<span style="color:#75715e">//...
+</span><span style="color:#75715e"></span>
+	<span style="color:#66d9ef">if</span> !<span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">Serializable</span> {
+		<span style="color:#75715e">// blocking waiting
+</span><span style="color:#75715e"></span>		<span style="color:#a6e22e">err</span> = <span style="color:#a6e22e">s</span>.<span style="color:#a6e22e">linearizableReadNotify</span>(<span style="color:#a6e22e">ctx</span>)
+		<span style="color:#a6e22e">trace</span>.<span style="color:#a6e22e">Step</span>(<span style="color:#e6db74">&#34;agreement among raft nodes before linearized reading&#34;</span>)
+		<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+			<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>, <span style="color:#a6e22e">err</span>
+		}
+	}
+	<span style="color:#a6e22e">chk</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">func</span>(<span style="color:#a6e22e">ai</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">auth</span>.<span style="color:#a6e22e">AuthInfo</span>) <span style="color:#66d9ef">error</span> {
+		<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">s</span>.<span style="color:#a6e22e">authStore</span>.<span style="color:#a6e22e">IsRangePermitted</span>(<span style="color:#a6e22e">ai</span>, <span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">Key</span>, <span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">RangeEnd</span>)
+	}
+
+	<span style="color:#a6e22e">get</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">func</span>() { <span style="color:#a6e22e">resp</span>, <span style="color:#a6e22e">err</span> = <span style="color:#a6e22e">txn</span>.<span style="color:#a6e22e">Range</span>(<span style="color:#a6e22e">ctx</span>, <span style="color:#a6e22e">s</span>.<span style="color:#a6e22e">Logger</span>(), <span style="color:#a6e22e">s</span>.<span style="color:#a6e22e">KV</span>(), <span style="color:#66d9ef">nil</span>, <span style="color:#a6e22e">r</span>) }
+	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">serr</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">s</span>.<span style="color:#a6e22e">doSerialize</span>(<span style="color:#a6e22e">ctx</span>, <span style="color:#a6e22e">chk</span>, <span style="color:#a6e22e">get</span>); <span style="color:#a6e22e">serr</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+		<span style="color:#a6e22e">err</span> = <span style="color:#a6e22e">serr</span>
+		<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>, <span style="color:#a6e22e">err</span>
+	}
+	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">resp</span>, <span style="color:#a6e22e">err</span>
+}
+</code></pre></div><h2 id="summary">Summary</h2>
 <p>This is some understanding of etcd&rsquo;s internal consensus mechanism in the past few days, mainly involving concepts such as election state transfer and log compression. The next chapter in this series will talk about how etcd nodes communicate.</p>
 <h2 id="reference-link">Reference link</h2>
 <ul>
@@ -520,8 +497,6 @@ Through these two records, etcd provides the option of whether to enable linear 
 <li>云原生分布式存储基石etcd深入解析 - 华为云</li>
 </ul>
               
-
-
             </div>
           </div>
           <div id="post-footer" class="post-footer main-content-wrap">
@@ -532,149 +507,147 @@ Through these two records, etcd provides the option of whether to enable linear 
                   <div class="post-footer-tags">
                     <span class="text-color-light text-small">TAGGED IN</span><br/>
                     
-  <a class="tag tag--primary tag--small" href="https://pixeldin.github.io/en/tags/raft/">raft</a>
+  <a class="tag tag--primary tag--small" href="/en/tags/raft/">raft</a>
 
-  <a class="tag tag--primary tag--small" href="https://pixeldin.github.io/en/tags/etcd/">etcd</a>
+  <a class="tag tag--primary tag--small" href="/en/tags/etcd/">etcd</a>
 
-  <a class="tag tag--primary tag--small" href="https://pixeldin.github.io/en/tags/distributed-systems/">distributed systems</a>
+  <a class="tag tag--primary tag--small" href="/en/tags/distributed-systems/">distributed systems</a>
 
                   </div>
                 
               
             
-            
-<div class="post-actions-wrap">
-  <nav >
-    <ul class="post-actions post-action-nav">
+            <div class="post-actions-wrap">
+  
+      <nav >
+        <ul class="post-actions post-action-nav">
+          
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="/en/2022/06/talk-about-etcd-part3-the-communication-protocol-between-client-and-server/" data-tooltip="Talk about etcd (Part3): the Communication Protocol between Client and Server">
+              
+                  <i class="fa fa-angle-left"></i>
+                  <span class="hide-xs hide-sm text-small icon-ml">NEXT</span>
+                </a>
+            </li>
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="/en/2022/05/talk-about-etcd-part1-hierarchy-overview-with-birds-eye-view/" data-tooltip="Talk about etcd (Part1): Hierarchy Overview with bird&#39;s eye view">
+              
+                  <span class="hide-xs hide-sm text-small icon-mr">PREVIOUS</span>
+                  <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+          
+        </ul>
+      </nav>
+    <ul class="post-actions post-action-share" >
       
-        <li class="post-action">
-          
-            <a class="post-action-btn btn btn--default tooltip--top" href="https://pixeldin.github.io/en/2022/06/talk-about-etcd-part3-the-communication-protocol-between-client-and-server/" data-tooltip="Talk about etcd (Part3): the Communication Protocol between Client and Server" aria-label="NEXT: Talk about etcd (Part3): the Communication Protocol between Client and Server">
-          
-              <i class="fa fa-angle-left"></i>
-              <span class="hide-xs hide-sm text-small icon-ml">NEXT</span>
-            </a>
+        <li class="post-action hide-lg hide-md hide-sm">
+          <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
+            <i class="fa fa-share-alt"></i>
+          </a>
         </li>
-        <li class="post-action">
-          
-            <a class="post-action-btn btn btn--default tooltip--top" href="https://pixeldin.github.io/en/2022/05/talk-about-etcd-part1-hierarchy-overview-with-birds-eye-view/" data-tooltip="Talk about etcd (Part1): Hierarchy Overview with bird&#39;s eye view" aria-label="PREVIOUS: Talk about etcd (Part1): Hierarchy Overview with bird&#39;s eye view">
-          
-              <span class="hide-xs hide-sm text-small icon-mr">PREVIOUS</span>
-              <i class="fa fa-angle-right"></i>
-            </a>
-        </li>
+        
       
+      
+      <li class="post-action">
+        
+          <a class="post-action-btn btn btn--default" href="#">
+        
+          <i class="fa fa-list"></i>
+        </a>
+      </li>
     </ul>
-  </nav>
-<ul class="post-actions post-action-share" >
   
-    <li class="post-action hide-lg hide-md hide-sm">
-      <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions" aria-label="Share this post">
-        <i class="fa fa-share-alt" aria-hidden="true"></i>
-      </a>
-    </li>
-    
-  
-  
-  <li class="post-action">
-    
-      <a class="post-action-btn btn btn--default" href="#top" aria-label="Back to top">
-      <i class="fa fa-arrow-up" aria-hidden="true"></i>
-    
-    </a>
-  </li>
-</ul>
 </div>
 
-
             
-  
-
-
+              
+            
           </div>
         </article>
         <footer id="footer" class="main-content-wrap">
   <span class="copyrights">
-    &copy; 2023 <a href="https://github.com/pixeldin">pixeldin</a>. All Rights Reserved
+    &copy; 2024 <a href="https://github.com/pixeldin">pixeldin</a>. All Rights Reserved
   </span>
 </footer>
 
       </div>
-      <div id="bottom-bar" class="post-bottom-bar" data-behavior="1">
+      <div id="bottom-bar" class="post-bottom-bar" data-behavior="5">
+        <div class="post-actions-wrap">
+  
+      <nav >
+        <ul class="post-actions post-action-nav">
+          
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="/en/2022/06/talk-about-etcd-part3-the-communication-protocol-between-client-and-server/" data-tooltip="Talk about etcd (Part3): the Communication Protocol between Client and Server">
+              
+                  <i class="fa fa-angle-left"></i>
+                  <span class="hide-xs hide-sm text-small icon-ml">NEXT</span>
+                </a>
+            </li>
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="/en/2022/05/talk-about-etcd-part1-hierarchy-overview-with-birds-eye-view/" data-tooltip="Talk about etcd (Part1): Hierarchy Overview with bird&#39;s eye view">
+              
+                  <span class="hide-xs hide-sm text-small icon-mr">PREVIOUS</span>
+                  <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+          
+        </ul>
+      </nav>
+    <ul class="post-actions post-action-share" >
+      
+        <li class="post-action hide-lg hide-md hide-sm">
+          <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
+            <i class="fa fa-share-alt"></i>
+          </a>
+        </li>
         
-<div class="post-actions-wrap">
-  <nav >
-    <ul class="post-actions post-action-nav">
       
-        <li class="post-action">
-          
-            <a class="post-action-btn btn btn--default tooltip--top" href="https://pixeldin.github.io/en/2022/06/talk-about-etcd-part3-the-communication-protocol-between-client-and-server/" data-tooltip="Talk about etcd (Part3): the Communication Protocol between Client and Server" aria-label="NEXT: Talk about etcd (Part3): the Communication Protocol between Client and Server">
-          
-              <i class="fa fa-angle-left"></i>
-              <span class="hide-xs hide-sm text-small icon-ml">NEXT</span>
-            </a>
-        </li>
-        <li class="post-action">
-          
-            <a class="post-action-btn btn btn--default tooltip--top" href="https://pixeldin.github.io/en/2022/05/talk-about-etcd-part1-hierarchy-overview-with-birds-eye-view/" data-tooltip="Talk about etcd (Part1): Hierarchy Overview with bird&#39;s eye view" aria-label="PREVIOUS: Talk about etcd (Part1): Hierarchy Overview with bird&#39;s eye view">
-          
-              <span class="hide-xs hide-sm text-small icon-mr">PREVIOUS</span>
-              <i class="fa fa-angle-right"></i>
-            </a>
-        </li>
       
+      <li class="post-action">
+        
+          <a class="post-action-btn btn btn--default" href="#">
+        
+          <i class="fa fa-list"></i>
+        </a>
+      </li>
     </ul>
-  </nav>
-<ul class="post-actions post-action-share" >
   
-    <li class="post-action hide-lg hide-md hide-sm">
-      <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions" aria-label="Share this post">
-        <i class="fa fa-share-alt" aria-hidden="true"></i>
-      </a>
-    </li>
-    
-  
-  
-  <li class="post-action">
-    
-      <a class="post-action-btn btn btn--default" href="#top" aria-label="Back to top">
-      <i class="fa fa-arrow-up" aria-hidden="true"></i>
-    
-    </a>
-  </li>
-</ul>
 </div>
 
-
       </div>
-      
-
+      <div id="share-options-bar" class="share-options-bar" data-behavior="5">
+  <i id="btn-close-shareoptions" class="fa fa-close"></i>
+  <ul class="share-options">
+    
+  </ul>
+</div>
+<div id="share-options-mask" class="share-options-mask"></div>
     </div>
     
     <div id="about">
   <div id="about-card">
     <div id="about-btn-close">
-      <i class="fa fa-times"></i>
+      <i class="fa fa-remove"></i>
     </div>
     
       <img id="about-card-picture" src="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/pig.jpg" alt="Author&#39;s picture" />
     
-    <h4 id="about-card-name">@Pixelpig</h4>
+    <h4 id="about-card-name">pixelpig</h4>
     
-      <div id="about-card-bio">Keep it simple, so as this bio <strong>:）</strong></div>
+      <div id="about-card-bio">With enthusiasm for open source and I am looking forward to be a better developer. Stay hungry, stay foolish <strong>:）</strong></div>
     
-    
-      <div id="about-card-job">
-        <i class="fa fa-briefcase"></i>
-        <br/>
-        Software Developer
-      </div>
     
     
       <div id="about-card-location">
-        <i class="fa fa-map-marker-alt"></i>
+        <i class="fa fa-map-marker"></i>
         <br/>
-        GuangDong - China
+        GuangDong - CHINA
       </div>
     
   </div>
@@ -689,16 +662,30 @@ Through these two records, etcd provides the option of whether to enable linear 
 
 
     
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.1.0/highlight.min.js" integrity="sha512-z+/WWfyD5tccCukM4VvONpEtLmbAm5LDu7eKiyMQJ9m7OfPEDL7gENyDRL3Yfe8XAuGsS2fS4xSMnl6d30kqGQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js" integrity="sha256-/BfiIkHlHoVihZdc6TFuj7MmJ0TWcWsMXkeDFwhi0zw=" crossorigin="anonymous"></script>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js" integrity="sha512-uURl+ZXMBrF4AwGaWmEetzrd+J5/8NRkWAvJx5sbPSSuOb0bZLqf+tOzniObO00BjHa/dD7gub9oCGMLPQHtQA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
-
-<script src="https://pixeldin.github.io/js/script-d9gfx1pdvbfdgoahypizomgoamlbumvk1ugdifqa59ynqvdh8wfsinmt5oj.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.7/js/jquery.fancybox.min.js" integrity="sha256-GEAnjcTqVP+vBp3SSc8bEDQqvWAZMiHyUSIorrWwH50=" crossorigin="anonymous"></script>
 
 
+<script src="/js/script-pcw6v3xilnxydl1vddzazdverrnn9ctynvnxgwho987mfyqkuylcb1nlt.min.js"></script>
+
+
+<script lang="javascript">
+window.onload = updateMinWidth;
+window.onresize = updateMinWidth;
+document.getElementById("sidebar").addEventListener("transitionend", updateMinWidth);
+function updateMinWidth() {
+  var sidebar = document.getElementById("sidebar");
+  var main = document.getElementById("main");
+  main.style.minWidth = "";
+  var w1 = getComputedStyle(main).getPropertyValue("min-width");
+  var w2 = getComputedStyle(sidebar).getPropertyValue("width");
+  var w3 = getComputedStyle(sidebar).getPropertyValue("left");
+  main.style.minWidth = `calc(${w1} - ${w2} - ${w3})`;
+}
+</script>
 
 <script>
 $(document).ready(function() {
@@ -711,6 +698,11 @@ $(document).ready(function() {
   });
 });
 </script>
+
+
+  
+    
+  
 
 
 

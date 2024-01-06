@@ -2,31 +2,11 @@
 <html lang="zh-cn">
   <head>
     
-    <script type="application/ld+json">
-
-{  
-  "@context":"http://schema.org",
-  "@type":"Website",
-  "@id":"https:\/\/pixeldin.github.io\/",
-  "author": {
-    "@type": "Person",
-    "name": "@Pixelpig",
-    
-    "image": "https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/pig.jpg"
-    
-  },
-  "name":"pixelpig.tech",
-  "description":"\u003cp\u003e在微服务链路中，熔断是指在短时间内接口出现\u003cstrong\u003e多次异常\/超时\u003c\/strong\u003e(\u003cstrong\u003e错误率过高\u003c\/strong\u003e)，通过对接口\u003cstrong\u003e快速失败\u003c\/strong\u003e，避免上游反复重试以至于下游被压垮的一种保护策略。\u003c\/p\u003e",
-  "url":"https:\/\/pixeldin.github.io\/zh\/2022\/02\/%E8%81%8A%E4%B8%80%E8%81%8Ago%E5%AE%9E%E7%8E%B0%E7%9A%84%E6%8E%A5%E5%8F%A3%E7%86%94%E6%96%AD%E5%99%A8-circuit-breaker\/",
-  "keywords":"[]"
-}
-
-</script>
     <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="generator" content="Hugo 0.111.3 with theme Tranquilpeak 0.5.3-BETA">
-<meta name="author" content="@Pixelpig">
+<meta name="generator" content="Hugo 0.80.0 with theme Tranquilpeak 0.4.8-BETA">
+<meta name="author" content="pixelpig">
 <meta name="keywords" content="">
 <meta name="description" content="在微服务链路中，熔断是指在短时间内接口出现多次异常/超时(错误率过高)，通过对接口快速失败，避免上游反复重试以至于下游被压垮的一种保护策略。">
 
@@ -35,9 +15,9 @@
 <meta property="og:type" content="article">
 <meta property="og:title" content="聊一聊Go实现的接口熔断器: Circuit Breaker">
 <meta name="twitter:title" content="聊一聊Go实现的接口熔断器: Circuit Breaker">
-<meta property="og:url" content="https://pixeldin.github.io/zh/2022/02/%E8%81%8A%E4%B8%80%E8%81%8Ago%E5%AE%9E%E7%8E%B0%E7%9A%84%E6%8E%A5%E5%8F%A3%E7%86%94%E6%96%AD%E5%99%A8-circuit-breaker/">
-<meta property="twitter:url" content="https://pixeldin.github.io/zh/2022/02/%E8%81%8A%E4%B8%80%E8%81%8Ago%E5%AE%9E%E7%8E%B0%E7%9A%84%E6%8E%A5%E5%8F%A3%E7%86%94%E6%96%AD%E5%99%A8-circuit-breaker/">
-<meta property="og:site_name" content="pixelpig.tech">
+<meta property="og:url" content="/zh/2022/02/%E8%81%8A%E4%B8%80%E8%81%8Ago%E5%AE%9E%E7%8E%B0%E7%9A%84%E6%8E%A5%E5%8F%A3%E7%86%94%E6%96%AD%E5%99%A8-circuit-breaker/">
+<meta property="twitter:url" content="/zh/2022/02/%E8%81%8A%E4%B8%80%E8%81%8Ago%E5%AE%9E%E7%8E%B0%E7%9A%84%E6%8E%A5%E5%8F%A3%E7%86%94%E6%96%AD%E5%99%A8-circuit-breaker/">
+<meta property="og:site_name" content="pixelpig.space">
 <meta property="og:description" content="在微服务链路中，熔断是指在短时间内接口出现多次异常/超时(错误率过高)，通过对接口快速失败，避免上游反复重试以至于下游被压垮的一种保护策略。">
 <meta name="twitter:description" content="在微服务链路中，熔断是指在短时间内接口出现多次异常/超时(错误率过高)，通过对接口快速失败，避免上游反复重试以至于下游被压垮的一种保护策略。">
 <meta property="og:locale" content="zh">
@@ -79,15 +59,15 @@
 
 
 
-  <meta property="og:image" content="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/pig.jpg">
-  <meta property="twitter:image" content="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/pig.jpg">
-
-
-
-
-
   <meta property="og:image" content="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/blog/cbk/cbk_front.png">
   <meta property="twitter:image" content="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/blog/cbk/cbk_front.png">
+
+
+
+
+
+  <meta property="og:image" content="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/pig.jpg">
+  <meta property="twitter:image" content="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/pig.jpg">
 
 
     <title>聊一聊Go实现的接口熔断器: Circuit Breaker</title>
@@ -97,15 +77,15 @@
 
     
 
-    <link rel="canonical" href="https://pixeldin.github.io/zh/2022/02/%E8%81%8A%E4%B8%80%E8%81%8Ago%E5%AE%9E%E7%8E%B0%E7%9A%84%E6%8E%A5%E5%8F%A3%E7%86%94%E6%96%AD%E5%99%A8-circuit-breaker/">
+    <link rel="canonical" href="/zh/2022/02/%E8%81%8A%E4%B8%80%E8%81%8Ago%E5%AE%9E%E7%8E%B0%E7%9A%84%E6%8E%A5%E5%8F%A3%E7%86%94%E6%96%AD%E5%99%A8-circuit-breaker/">
 
     
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" integrity="sha512-H9jrZiiopUdsLpg94A333EfumgUBpO9MdbxStdeITo+KEIMaNfHNvwyjjDJb+ERPaRS6DpyRlKbvPUasNItRyw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/jquery.fancybox.min.css" integrity="sha256-vuXZ9LGmmwtjqFX1F+EKin1ThZMub58gKULUyf0qECk=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/helpers/jquery.fancybox-thumbs.min.css" integrity="sha256-SEa4XYAHihTcEP1f5gARTB2K26Uk8PsndQYHQC1f4jU=" crossorigin="anonymous" />
     
     
-    
-    <link rel="stylesheet" href="https://pixeldin.github.io/css/style-fneuerdunt9vf6vafpewt2nttopqa9hdugoae6mfs7phtuibtq6qjxkds96.min.css" />
+    <link rel="stylesheet" href="/css/style-twzjdbqhmnnacqs0pwwdzcdbt8yhv8giawvjqjmyfoqnvazl0dalmnhdkvp7.min.css" />
     
     
 
@@ -117,15 +97,15 @@
 
   <body>
     <div id="blog">
-      <header id="header" data-behavior="1">
+      <header id="header" data-behavior="5">
   <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
   <div class="header-title">
-    <a class="header-title-link" href="https://pixeldin.github.io/zh/" aria-label="去首页">pixelpig.tech</a>
+    <a class="header-title-link" href="/zh/">pixelpig.space</a>
   </div>
   
     
       <a class="header-right-picture "
-         href="https://pixeldin.github.io/#about" aria-label="打开链接: /#about">
+         href="/#about">
     
     
     
@@ -137,16 +117,16 @@
   
 </header>
 
-      <nav id="sidebar" data-behavior="1">
+      <nav id="sidebar" data-behavior="5">
   <div class="sidebar-container">
     
       <div class="sidebar-profile">
-        <a href="https://pixeldin.github.io/#about" aria-label="阅读有关作者的更多信息">
+        <a href="/#about">
           <img class="sidebar-profile-picture" src="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/pig.jpg" alt="作者的图片" />
         </a>
-        <h4 class="sidebar-profile-name">@Pixelpig</h4>
+        <h4 class="sidebar-profile-name">pixelpig</h4>
         
-          <h5 class="sidebar-profile-bio">Keep it simple, so as this bio <strong>:）</strong></h5>
+          <h5 class="sidebar-profile-bio">With enthusiasm for open source and I am looking forward to be a better developer. Stay hungry, stay foolish <strong>:）</strong></h5>
         
       </div>
     
@@ -154,7 +134,7 @@
       
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="https://pixeldin.github.io/en" title="English">
+      <a class="sidebar-button-link " href="/en">
     
       <i class="sidebar-button-icon fa fa-lg fa-language"></i>
       
@@ -164,7 +144,7 @@
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="https://pixeldin.github.io/zh/" title="Home">
+      <a class="sidebar-button-link " href="/zh/">
     
       <i class="sidebar-button-icon fa fa-lg fa-home"></i>
       
@@ -174,7 +154,7 @@
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="https://pixeldin.github.io/zh/categories" title="Categories">
+      <a class="sidebar-button-link " href="/zh/categories">
     
       <i class="sidebar-button-icon fa fa-lg fa-bookmark"></i>
       
@@ -184,7 +164,7 @@
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="https://pixeldin.github.io/zh/tags" title="Tags">
+      <a class="sidebar-button-link " href="/zh/tags">
     
       <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
       
@@ -194,7 +174,7 @@
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="https://pixeldin.github.io/zh/archives" title="Archives">
+      <a class="sidebar-button-link " href="/zh/archives">
     
       <i class="sidebar-button-icon fa fa-lg fa-archive"></i>
       
@@ -204,9 +184,9 @@
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="https://pixeldin.github.io/zh/#about" title="About">
+      <a class="sidebar-button-link " href="/zh/#about">
     
-      <i class="sidebar-button-icon fa fa-lg fa-question-circle"></i>
+      <i class="sidebar-button-icon fa fa-lg fa-question"></i>
       
       <span class="sidebar-button-desc">关于我</span>
     </a>
@@ -214,25 +194,22 @@
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="https://github.com/pixeldin" target="_blank" rel="noopener" title="pixeldin">
+      <a class="sidebar-button-link " href="https://github.com/pixeldin" target="_blank" rel="noopener">
     
-      <i class="sidebar-button-icon fab fa-lg fa-github-alt"></i>
+      <i class="sidebar-button-icon fa fa-lg fa-github"></i>
       
-      <span class="sidebar-button-desc">github</span>
+      <span class="sidebar-button-desc">pixeldin</span>
     </a>
   </li>
 
 
-
     </ul>
     <ul class="sidebar-buttons">
       
 
-
     </ul>
     <ul class="sidebar-buttons">
       
-
 
     </ul>
   </div>
@@ -240,23 +217,23 @@
 
       
 
-      <div id="main" data-behavior="1"
+      <div id="main" data-behavior="5"
         class="
                hasCoverMetaIn
                ">
-        <article class="post" id="top">
+        <article class="post" itemscope itemType="http://schema.org/BlogPosting">
           
           
             <div class="post-header main-content-wrap text-center">
   
-    <h1 class="post-title">
+    <h1 class="post-title" itemprop="headline">
       聊一聊Go实现的接口熔断器: Circuit Breaker
     </h1>
   
   
   <div class="postShorten-meta post-meta">
     
-      <time datetime="2022-02-25T00:00:00Z">
+      <time itemprop="datePublished" datetime="2022-02-25T00:00:00Z">
         
   二月 25, 2022
 
@@ -267,9 +244,9 @@
   
     <span>发布在</span>
     
-      <a class="category-link" href="https://pixeldin.github.io/zh/categories/go">Go</a>, 
+      <a class="category-link" href="/zh/categories/go">Go</a>, 
     
-      <a class="category-link" href="https://pixeldin.github.io/zh/categories/%e7%bd%91%e5%85%b3%e4%b8%ad%e9%97%b4%e4%bb%b6">网关中间件</a>
+      <a class="category-link" href="/zh/categories/%e7%bd%91%e5%85%b3%e4%b8%ad%e9%97%b4%e4%bb%b6">网关中间件</a>
     
   
 
@@ -277,7 +254,7 @@
 
 </div>
           
-          <div class="post-content markdown">
+          <div class="post-content markdown" itemprop="articleBody">
             <div class="main-content-wrap">
               <p>在微服务链路中，熔断是指在短时间内接口出现<strong>多次异常/超时</strong>(<strong>错误率过高</strong>)，通过对接口<strong>快速失败</strong>，避免上游反复重试以至于下游被压垮的一种保护策略。</p>
 <p><img src="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/blog/cbk/cbk_front.png" alt="熔断器"></p>
@@ -309,129 +286,129 @@
 <p>了解了其核心功能之后，接下来看下代码实现部分。</p>
 <h3 id="接口定义">接口定义</h3>
 <p>基于熔断器的特性，先定义熔断器接口<code>CircuitBreaker</code>，其中key指熔断器采集的API，可以是链路上面的请求标识，用于区分不同请求。</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">CircuitBreaker</span> <span style="color:#66d9ef">interface</span> {
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 当前key(api接口)是否可访问
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#a6e22e">CanAccess</span>(<span style="color:#a6e22e">key</span> <span style="color:#66d9ef">string</span>) <span style="color:#66d9ef">bool</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 标记访问, 并且如果当前key失败率到达阈值, 则开启熔断
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#a6e22e">Failed</span>(<span style="color:#a6e22e">key</span> <span style="color:#66d9ef">string</span>)
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 标记访问, 并且如果当前key已熔断, 则恢复
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#a6e22e">Succeed</span>(<span style="color:#a6e22e">key</span> <span style="color:#66d9ef">string</span>)
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 返回当前key的熔断状态
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#a6e22e">IsBreak</span>(<span style="color:#a6e22e">key</span> <span style="color:#66d9ef">string</span>) <span style="color:#66d9ef">bool</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 返回所有key(api接口)当前状态, 用于查询汇报
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#a6e22e">Status</span>() <span style="color:#66d9ef">interface</span>{}
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><h3 id="接口实现">接口实现</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">CircuitBreaker</span> <span style="color:#66d9ef">interface</span> {
+    <span style="color:#75715e">// 当前key(api接口)是否可访问
+</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">CanAccess</span>(<span style="color:#a6e22e">key</span> <span style="color:#66d9ef">string</span>) <span style="color:#66d9ef">bool</span>
+    <span style="color:#75715e">// 标记访问, 并且如果当前key失败率到达阈值, 则开启熔断
+</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">Failed</span>(<span style="color:#a6e22e">key</span> <span style="color:#66d9ef">string</span>)
+    <span style="color:#75715e">// 标记访问, 并且如果当前key已熔断, 则恢复
+</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">Succeed</span>(<span style="color:#a6e22e">key</span> <span style="color:#66d9ef">string</span>)
+    <span style="color:#75715e">// 返回当前key的熔断状态
+</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">IsBreak</span>(<span style="color:#a6e22e">key</span> <span style="color:#66d9ef">string</span>) <span style="color:#66d9ef">bool</span>
+    <span style="color:#75715e">// 返回所有key(api接口)当前状态, 用于查询汇报
+</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">Status</span>() <span style="color:#66d9ef">interface</span>{}
+}
+</code></pre></div><h3 id="接口实现">接口实现</h3>
 <p>基于上面约定的几个函数特性，创建<code>CircuitBreakerImp</code>作为实现体</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#75715e">// 熔断器实现体
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">CircuitBreakerImp</span> <span style="color:#66d9ef">struct</span> {
-</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">lock</span>            <span style="color:#a6e22e">sync</span>.<span style="color:#a6e22e">RWMutex</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">apiMap</span>          <span style="color:#66d9ef">map</span>[<span style="color:#66d9ef">string</span>]<span style="color:#f92672">*</span><span style="color:#a6e22e">apiSnapShop</span> <span style="color:#75715e">// api全局map，key为API标志
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#a6e22e">minCheck</span>        <span style="color:#66d9ef">int64</span>                   <span style="color:#75715e">// 接口熔断开启下限次数
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#a6e22e">cbkErrRate</span>      <span style="color:#66d9ef">float64</span>                 <span style="color:#75715e">// 接口熔断开启比值
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#a6e22e">recoverInterval</span> <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Duration</span>           <span style="color:#75715e">// 熔断恢复区间
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#a6e22e">roundInterval</span>   <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Duration</span>           <span style="color:#75715e">// 计数重置区间
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>}
-</span></span></code></pre></div><p>熔断器实现体的<code>apiMap</code>主要存放的是采集API的列表，用于表示当前阶段所收集各个API的总体快照，</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">apiSnapShop</span> <span style="color:#66d9ef">struct</span> {
-</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">isPaused</span>   <span style="color:#66d9ef">bool</span>  <span style="color:#75715e">// api是否熔断
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#a6e22e">errCount</span>   <span style="color:#66d9ef">int64</span> <span style="color:#75715e">// api在周期内失败次数
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#a6e22e">totalCount</span> <span style="color:#66d9ef">int64</span> <span style="color:#75715e">// api在周期内总次数
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
-</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">accessLast</span> <span style="color:#66d9ef">int64</span> <span style="color:#75715e">// api最近一次访问时间
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#a6e22e">roundLast</span>  <span style="color:#66d9ef">int64</span> <span style="color:#75715e">// 熔断器周期时间
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>}
-</span></span></code></pre></div><hr>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#75715e">// 熔断器实现体
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">CircuitBreakerImp</span> <span style="color:#66d9ef">struct</span> {
+    <span style="color:#a6e22e">lock</span>            <span style="color:#a6e22e">sync</span>.<span style="color:#a6e22e">RWMutex</span>
+    <span style="color:#a6e22e">apiMap</span>          <span style="color:#66d9ef">map</span>[<span style="color:#66d9ef">string</span>]<span style="color:#f92672">*</span><span style="color:#a6e22e">apiSnapShop</span> <span style="color:#75715e">// api全局map，key为API标志
+</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">minCheck</span>        <span style="color:#66d9ef">int64</span>                   <span style="color:#75715e">// 接口熔断开启下限次数
+</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">cbkErrRate</span>      <span style="color:#66d9ef">float64</span>                 <span style="color:#75715e">// 接口熔断开启比值
+</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">recoverInterval</span> <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Duration</span>           <span style="color:#75715e">// 熔断恢复区间
+</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">roundInterval</span>   <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Duration</span>           <span style="color:#75715e">// 计数重置区间
+</span><span style="color:#75715e"></span>}
+</code></pre></div><p>熔断器实现体的<code>apiMap</code>主要存放的是采集API的列表，用于表示当前阶段所收集各个API的总体快照，</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">apiSnapShop</span> <span style="color:#66d9ef">struct</span> {
+    <span style="color:#a6e22e">isPaused</span>   <span style="color:#66d9ef">bool</span>  <span style="color:#75715e">// api是否熔断
+</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">errCount</span>   <span style="color:#66d9ef">int64</span> <span style="color:#75715e">// api在周期内失败次数
+</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">totalCount</span> <span style="color:#66d9ef">int64</span> <span style="color:#75715e">// api在周期内总次数
+</span><span style="color:#75715e"></span>
+    <span style="color:#a6e22e">accessLast</span> <span style="color:#66d9ef">int64</span> <span style="color:#75715e">// api最近一次访问时间
+</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">roundLast</span>  <span style="color:#66d9ef">int64</span> <span style="color:#75715e">// 熔断器周期时间
+</span><span style="color:#75715e"></span>}
+</code></pre></div><hr>
 <p><strong>熔断状况获取</strong>，基于每个失败过的请求，会将其请求快照存储在当前<code>CircuitBreakerImp</code>实例的apiMap中，所以<code>IsBreak()</code>接口的实现相对简单，直接返回其状态即可：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">c</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">CircuitBreakerImp</span>) <span style="color:#a6e22e">IsBreak</span>(<span style="color:#a6e22e">key</span> <span style="color:#66d9ef">string</span>) <span style="color:#66d9ef">bool</span> {
-</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">lock</span>.<span style="color:#a6e22e">RLock</span>()
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">defer</span> <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">lock</span>.<span style="color:#a6e22e">RUnlock</span>()
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 查找当前key(API)是否达到熔断
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">api</span>, <span style="color:#a6e22e">ok</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">apiMap</span>[<span style="color:#a6e22e">key</span>]; <span style="color:#a6e22e">ok</span> {
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">api</span>.<span style="color:#a6e22e">isPaused</span>
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">false</span>
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><hr>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">c</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">CircuitBreakerImp</span>) <span style="color:#a6e22e">IsBreak</span>(<span style="color:#a6e22e">key</span> <span style="color:#66d9ef">string</span>) <span style="color:#66d9ef">bool</span> {
+    <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">lock</span>.<span style="color:#a6e22e">RLock</span>()
+    <span style="color:#66d9ef">defer</span> <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">lock</span>.<span style="color:#a6e22e">RUnlock</span>()
+
+    <span style="color:#75715e">// 查找当前key(API)是否达到熔断
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">api</span>, <span style="color:#a6e22e">ok</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">apiMap</span>[<span style="color:#a6e22e">key</span>]; <span style="color:#a6e22e">ok</span> {
+        <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">api</span>.<span style="color:#a6e22e">isPaused</span>
+    }
+    <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">false</span>
+}
+</code></pre></div><hr>
 <p><strong>访问更新</strong>，每次网关接收请求时候，会在请求发起处和请求返回处上报接口访问次数、返回成功与否的信息给熔断器，如上面的AOP图片所示，因此实现<code>accessed()</code>函数用于在每次请求API进行上报。<br>
 此外，前面提及到熔断器有个<strong>重置周期</strong>，即经过多少时间接口再次访问会重置其快照计数，因此在每次<code>access</code>处，需要多加一个判断，用于重置API计数。</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#75715e">// accessed 记录访问
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">c</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">CircuitBreakerImp</span>) <span style="color:#a6e22e">accessed</span>(<span style="color:#a6e22e">api</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">apiSnapShop</span>) {
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">/*
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">        判断是否大于周期时间
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">        - 是: 重置计数
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">        - 否: 更新计数
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">    */</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">now</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Now</span>().<span style="color:#a6e22e">UnixNano</span>()
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">util</span>.<span style="color:#a6e22e">Abs64</span>(<span style="color:#a6e22e">now</span><span style="color:#f92672">-</span><span style="color:#a6e22e">api</span>.<span style="color:#a6e22e">roundLast</span>) &gt; int64(<span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">roundInterval</span>) {
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">api</span>.<span style="color:#a6e22e">roundLast</span> <span style="color:#f92672">!=</span> <span style="color:#ae81ff">0</span> {
-</span></span><span style="display:flex;"><span>            <span style="color:#75715e">// 首次不打log
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>            <span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Warnf</span>(<span style="color:#e6db74">&#34;# Trigger 熔断器窗口关闭，重置API计数!&#34;</span>)
-</span></span><span style="display:flex;"><span>        }
-</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">api</span>.<span style="color:#a6e22e">errCount</span> = <span style="color:#ae81ff">0</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">api</span>.<span style="color:#a6e22e">totalCount</span> = <span style="color:#ae81ff">0</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">api</span>.<span style="color:#a6e22e">roundLast</span> = <span style="color:#a6e22e">now</span>
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">api</span>.<span style="color:#a6e22e">totalCount</span><span style="color:#f92672">++</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">api</span>.<span style="color:#a6e22e">accessLast</span> = <span style="color:#a6e22e">now</span>
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><hr>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#75715e">// accessed 记录访问
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">c</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">CircuitBreakerImp</span>) <span style="color:#a6e22e">accessed</span>(<span style="color:#a6e22e">api</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">apiSnapShop</span>) {
+    <span style="color:#75715e">/*
+</span><span style="color:#75715e">        判断是否大于周期时间
+</span><span style="color:#75715e">        - 是: 重置计数
+</span><span style="color:#75715e">        - 否: 更新计数
+</span><span style="color:#75715e">    */</span>
+    <span style="color:#a6e22e">now</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Now</span>().<span style="color:#a6e22e">UnixNano</span>()
+    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">util</span>.<span style="color:#a6e22e">Abs64</span>(<span style="color:#a6e22e">now</span><span style="color:#f92672">-</span><span style="color:#a6e22e">api</span>.<span style="color:#a6e22e">roundLast</span>) &gt; int64(<span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">roundInterval</span>) {
+        <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">api</span>.<span style="color:#a6e22e">roundLast</span> <span style="color:#f92672">!=</span> <span style="color:#ae81ff">0</span> {
+            <span style="color:#75715e">// 首次不打log
+</span><span style="color:#75715e"></span>            <span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Warnf</span>(<span style="color:#e6db74">&#34;# Trigger 熔断器窗口关闭，重置API计数!&#34;</span>)
+        }
+        <span style="color:#a6e22e">api</span>.<span style="color:#a6e22e">errCount</span> = <span style="color:#ae81ff">0</span>
+        <span style="color:#a6e22e">api</span>.<span style="color:#a6e22e">totalCount</span> = <span style="color:#ae81ff">0</span>
+        <span style="color:#a6e22e">api</span>.<span style="color:#a6e22e">roundLast</span> = <span style="color:#a6e22e">now</span>
+    }
+    <span style="color:#a6e22e">api</span>.<span style="color:#a6e22e">totalCount</span><span style="color:#f92672">++</span>
+    <span style="color:#a6e22e">api</span>.<span style="color:#a6e22e">accessLast</span> = <span style="color:#a6e22e">now</span>
+}
+</code></pre></div><hr>
 <p><strong>上报成功访问</strong>，在网关接收到返回成功的响应码之后，会记录其成功，另外有个细节，就是为什么上面的<code>accessed()</code>函数不需要添加互斥锁，其实是需要的，只不过在<code>accessed()</code>函数的上一层调用处加上，即后续<code>Successd()</code>和<code>Failed()</code>函数体中。<br>
 先来看下<code>Successd()</code>的实现，<strong>如果当前api记录在熔断器中(曾经失败过)，则成功之后关闭熔断给予请求</strong>，即使api再次失败，也会根据请求错误率重新分配熔断状态。</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#75715e">/*
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">    Succeed 记录成功
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">    只更新api列表已有的,
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">    记录访问, 并判断是否熔断:
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">    - 是, 取消熔断状态
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">*/</span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">c</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">CircuitBreakerImp</span>) <span style="color:#a6e22e">Succeed</span>(<span style="color:#a6e22e">key</span> <span style="color:#66d9ef">string</span>) {
-</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">lock</span>.<span style="color:#a6e22e">Lock</span>()
-</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">lock</span>.<span style="color:#a6e22e">Unlock</span>()
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">api</span>, <span style="color:#a6e22e">ok</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">apiMap</span>[<span style="color:#a6e22e">key</span>]; <span style="color:#a6e22e">ok</span> {
-</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">accessed</span>(<span style="color:#a6e22e">api</span>)
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">api</span>.<span style="color:#a6e22e">isPaused</span> {
-</span></span><span style="display:flex;"><span>            <span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Warnf</span>(<span style="color:#e6db74">&#34;# Trigger API: %v 请求成功，关闭熔断状态.&#34;</span>, <span style="color:#a6e22e">key</span>)
-</span></span><span style="display:flex;"><span>            <span style="color:#a6e22e">api</span>.<span style="color:#a6e22e">isPaused</span> = <span style="color:#66d9ef">false</span>
-</span></span><span style="display:flex;"><span>        }
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><hr>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#75715e">/*
+</span><span style="color:#75715e">    Succeed 记录成功
+</span><span style="color:#75715e">    只更新api列表已有的,
+</span><span style="color:#75715e">    记录访问, 并判断是否熔断:
+</span><span style="color:#75715e">    - 是, 取消熔断状态
+</span><span style="color:#75715e">*/</span>
+<span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">c</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">CircuitBreakerImp</span>) <span style="color:#a6e22e">Succeed</span>(<span style="color:#a6e22e">key</span> <span style="color:#66d9ef">string</span>) {
+    <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">lock</span>.<span style="color:#a6e22e">Lock</span>()
+    <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">lock</span>.<span style="color:#a6e22e">Unlock</span>()
+
+    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">api</span>, <span style="color:#a6e22e">ok</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">apiMap</span>[<span style="color:#a6e22e">key</span>]; <span style="color:#a6e22e">ok</span> {
+        <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">accessed</span>(<span style="color:#a6e22e">api</span>)
+        <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">api</span>.<span style="color:#a6e22e">isPaused</span> {
+            <span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Warnf</span>(<span style="color:#e6db74">&#34;# Trigger API: %v 请求成功，关闭熔断状态.&#34;</span>, <span style="color:#a6e22e">key</span>)
+            <span style="color:#a6e22e">api</span>.<span style="color:#a6e22e">isPaused</span> = <span style="color:#66d9ef">false</span>
+        }
+    }
+}
+</code></pre></div><hr>
 <p><strong>上报失败访问</strong>，统计失败的逻辑也相对简单，对于首次失败的接口将其加入健康检测map，对于已经记录的接口，需要判断其错误率进行及时更新，此外触发熔断的前提是请求量还要达到一定的阈值。</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#75715e">/*
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">    Failed 记录失败访问
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">    api列表查找,
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">        - 已有:
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">            - 记录访问/错误次数
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">            - 是否失败占比到达阈值? 是, 则标记置为熔断
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">        - 未找到:
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">            更新至api列表: 记录访问/错误次数
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">*/</span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">c</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">CircuitBreakerImp</span>) <span style="color:#a6e22e">Failed</span>(<span style="color:#a6e22e">key</span> <span style="color:#66d9ef">string</span>) {
-</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">lock</span>.<span style="color:#a6e22e">Lock</span>()
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">defer</span> <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">lock</span>.<span style="color:#a6e22e">Unlock</span>()
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">api</span>, <span style="color:#a6e22e">ok</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">apiMap</span>[<span style="color:#a6e22e">key</span>]; <span style="color:#a6e22e">ok</span> {
-</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">accessed</span>(<span style="color:#a6e22e">api</span>)
-</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">api</span>.<span style="color:#a6e22e">errCount</span><span style="color:#f92672">++</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">errRate</span> <span style="color:#f92672">:=</span> float64(<span style="color:#a6e22e">api</span>.<span style="color:#a6e22e">errCount</span>) <span style="color:#f92672">/</span> float64(<span style="color:#a6e22e">api</span>.<span style="color:#a6e22e">totalCount</span>)
-</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// 请求数量达到阈值 &amp;&amp; 错误率高于熔断界限
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">api</span>.<span style="color:#a6e22e">totalCount</span> &gt; <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">minCheck</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#a6e22e">errRate</span> &gt; <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">cbkErrRate</span> {
-</span></span><span style="display:flex;"><span>            <span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Warnf</span>(<span style="color:#e6db74">&#34;# Trigger 达到错误率, 开启熔断！: %v, total: %v, &#34;</span><span style="color:#f92672">+</span>
-</span></span><span style="display:flex;"><span>                <span style="color:#e6db74">&#34;errRate: %.3f.&#34;</span>, <span style="color:#a6e22e">key</span>, <span style="color:#a6e22e">api</span>.<span style="color:#a6e22e">totalCount</span>, <span style="color:#a6e22e">errRate</span>)
-</span></span><span style="display:flex;"><span>            <span style="color:#a6e22e">api</span>.<span style="color:#a6e22e">isPaused</span> = <span style="color:#66d9ef">true</span>
-</span></span><span style="display:flex;"><span>        }
-</span></span><span style="display:flex;"><span>    } <span style="color:#66d9ef">else</span> {
-</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">api</span> <span style="color:#f92672">:=</span> <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">apiSnapShop</span>{}
-</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">accessed</span>(<span style="color:#a6e22e">api</span>)
-</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">api</span>.<span style="color:#a6e22e">errCount</span><span style="color:#f92672">++</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// 写入全局map
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">apiMap</span>[<span style="color:#a6e22e">key</span>] = <span style="color:#a6e22e">api</span>
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><hr>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#75715e">/*
+</span><span style="color:#75715e">    Failed 记录失败访问
+</span><span style="color:#75715e">    api列表查找,
+</span><span style="color:#75715e">        - 已有:
+</span><span style="color:#75715e">            - 记录访问/错误次数
+</span><span style="color:#75715e">            - 是否失败占比到达阈值? 是, 则标记置为熔断
+</span><span style="color:#75715e">        - 未找到:
+</span><span style="color:#75715e">            更新至api列表: 记录访问/错误次数
+</span><span style="color:#75715e">*/</span>
+<span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">c</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">CircuitBreakerImp</span>) <span style="color:#a6e22e">Failed</span>(<span style="color:#a6e22e">key</span> <span style="color:#66d9ef">string</span>) {
+    <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">lock</span>.<span style="color:#a6e22e">Lock</span>()
+    <span style="color:#66d9ef">defer</span> <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">lock</span>.<span style="color:#a6e22e">Unlock</span>()
+
+    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">api</span>, <span style="color:#a6e22e">ok</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">apiMap</span>[<span style="color:#a6e22e">key</span>]; <span style="color:#a6e22e">ok</span> {
+        <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">accessed</span>(<span style="color:#a6e22e">api</span>)
+        <span style="color:#a6e22e">api</span>.<span style="color:#a6e22e">errCount</span><span style="color:#f92672">++</span>
+
+        <span style="color:#a6e22e">errRate</span> <span style="color:#f92672">:=</span> float64(<span style="color:#a6e22e">api</span>.<span style="color:#a6e22e">errCount</span>) <span style="color:#f92672">/</span> float64(<span style="color:#a6e22e">api</span>.<span style="color:#a6e22e">totalCount</span>)
+        <span style="color:#75715e">// 请求数量达到阈值 &amp;&amp; 错误率高于熔断界限
+</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">api</span>.<span style="color:#a6e22e">totalCount</span> &gt; <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">minCheck</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#a6e22e">errRate</span> &gt; <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">cbkErrRate</span> {
+            <span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Warnf</span>(<span style="color:#e6db74">&#34;# Trigger 达到错误率, 开启熔断！: %v, total: %v, &#34;</span><span style="color:#f92672">+</span>
+                <span style="color:#e6db74">&#34;errRate: %.3f.&#34;</span>, <span style="color:#a6e22e">key</span>, <span style="color:#a6e22e">api</span>.<span style="color:#a6e22e">totalCount</span>, <span style="color:#a6e22e">errRate</span>)
+            <span style="color:#a6e22e">api</span>.<span style="color:#a6e22e">isPaused</span> = <span style="color:#66d9ef">true</span>
+        }
+    } <span style="color:#66d9ef">else</span> {
+        <span style="color:#a6e22e">api</span> <span style="color:#f92672">:=</span> <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">apiSnapShop</span>{}
+        <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">accessed</span>(<span style="color:#a6e22e">api</span>)
+        <span style="color:#a6e22e">api</span>.<span style="color:#a6e22e">errCount</span><span style="color:#f92672">++</span>
+        <span style="color:#75715e">// 写入全局map
+</span><span style="color:#75715e"></span>        <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">apiMap</span>[<span style="color:#a6e22e">key</span>] = <span style="color:#a6e22e">api</span>
+    }
+}
+</code></pre></div><hr>
 <p><strong>访问权限查询</strong>，基于上面实现的函数熔断器的核心功能就具备了，之后还需要为网关层提供一个获取当前接口的熔断状况，下面是为调用方提供的<strong>访问查询</strong>。</p>
 <p>这里有个疑问，上面不是已经实现了<code>IsBreak()</code>函数吗，为何还需要<code>CanAccess()</code>函数?<br>
 那是因为，<code>IsBreak()</code>返回仅仅是接口的熔断状态，但是别忘了熔断阶段里面有一个“半关闭状态”，即如果熔断时间度过恢复期(冷静期)，则可以放开访问权限，所以这部分逻辑是放在<code>CanAccess()</code>里面处理的，来看下代码。<br>
@@ -439,104 +416,104 @@
 <blockquote>
 <p>在熔断周期内，度过恢复期(冷静期)，则可以放开访问，或者调用了<code>Successd()</code>熔断状态变为临时恢复，否则保持熔断状态，接口会被限制，快速失败的核心代码就在这里。</p>
 </blockquote>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#75715e">/*
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> CanAccess 判断api是否可访问
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> debug:
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> func (c *CircuitBreakerImp) CanAccess(key string, reqType int) bool {
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">*/</span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">c</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">CircuitBreakerImp</span>) <span style="color:#a6e22e">CanAccess</span>(<span style="color:#a6e22e">key</span> <span style="color:#66d9ef">string</span>) <span style="color:#66d9ef">bool</span> {
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">/*
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">        判断当前api的isPaused状态
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">        - 未熔断, 返回true
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">        - 已熔断, 当前时间与恢复期比较
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">            - 大于恢复期, 返回true
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">            - 小于恢复期, 返回false
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">    */</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">lock</span>.<span style="color:#a6e22e">RLock</span>()
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">defer</span> <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">lock</span>.<span style="color:#a6e22e">RUnlock</span>()
-</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Debugf</span>(<span style="color:#e6db74">&#34;# Cbk check accessable for api id-%v key&#34;</span>, <span style="color:#a6e22e">reqType</span>)
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 从api全局map查找
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">api</span>, <span style="color:#a6e22e">ok</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">apiMap</span>[<span style="color:#a6e22e">key</span>]; <span style="color:#a6e22e">ok</span> {
-</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Debugf</span>(<span style="color:#e6db74">&#34;# Cbk detail for api id-%v key, total: %v, &#34;</span><span style="color:#f92672">+</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#34;errCount: %v, paused: %v&#34;</span>, <span style="color:#a6e22e">reqType</span>, <span style="color:#a6e22e">api</span>.<span style="color:#a6e22e">totalCount</span>,
-</span></span><span style="display:flex;"><span>            <span style="color:#a6e22e">api</span>.<span style="color:#a6e22e">errCount</span>, <span style="color:#a6e22e">api</span>.<span style="color:#a6e22e">isPaused</span>)
-</span></span><span style="display:flex;"><span>            
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">api</span>.<span style="color:#a6e22e">isPaused</span> {
-</span></span><span style="display:flex;"><span>            <span style="color:#75715e">// 判断是否进入恢复期
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>            <span style="color:#a6e22e">latency</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">util</span>.<span style="color:#a6e22e">Abs64</span>(<span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Now</span>().<span style="color:#a6e22e">UnixNano</span>() <span style="color:#f92672">-</span> <span style="color:#a6e22e">api</span>.<span style="color:#a6e22e">accessLast</span>)
-</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">latency</span> &lt; int64(<span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">recoverInterval</span>) {
-</span></span><span style="display:flex;"><span>                <span style="color:#75715e">// 在恢复期之内, 快速失败，保持熔断
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>                <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">false</span>
-</span></span><span style="display:flex;"><span>            }
-</span></span><span style="display:flex;"><span>            <span style="color:#75715e">// 度过恢复期
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>            <span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Warnf</span>(<span style="color:#e6db74">&#34;# Trigger: 熔断器度过恢复期: %v, key: %v!&#34;</span>, <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">recoverInterval</span>, <span style="color:#a6e22e">key</span>)
-</span></span><span style="display:flex;"><span>        }
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 给予临时恢复
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">true</span>
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><h2 id="单元测试">单元测试</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#75715e">/*
+</span><span style="color:#75715e"> CanAccess 判断api是否可访问
+</span><span style="color:#75715e"> debug:
+</span><span style="color:#75715e"> func (c *CircuitBreakerImp) CanAccess(key string, reqType int) bool {
+</span><span style="color:#75715e">*/</span>
+<span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">c</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">CircuitBreakerImp</span>) <span style="color:#a6e22e">CanAccess</span>(<span style="color:#a6e22e">key</span> <span style="color:#66d9ef">string</span>) <span style="color:#66d9ef">bool</span> {
+    <span style="color:#75715e">/*
+</span><span style="color:#75715e">        判断当前api的isPaused状态
+</span><span style="color:#75715e">        - 未熔断, 返回true
+</span><span style="color:#75715e">        - 已熔断, 当前时间与恢复期比较
+</span><span style="color:#75715e">            - 大于恢复期, 返回true
+</span><span style="color:#75715e">            - 小于恢复期, 返回false
+</span><span style="color:#75715e">    */</span>
+    <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">lock</span>.<span style="color:#a6e22e">RLock</span>()
+    <span style="color:#66d9ef">defer</span> <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">lock</span>.<span style="color:#a6e22e">RUnlock</span>()
+    <span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Debugf</span>(<span style="color:#e6db74">&#34;# Cbk check accessable for api id-%v key&#34;</span>, <span style="color:#a6e22e">reqType</span>)
+    <span style="color:#75715e">// 从api全局map查找
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">api</span>, <span style="color:#a6e22e">ok</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">apiMap</span>[<span style="color:#a6e22e">key</span>]; <span style="color:#a6e22e">ok</span> {
+        <span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Debugf</span>(<span style="color:#e6db74">&#34;# Cbk detail for api id-%v key, total: %v, &#34;</span><span style="color:#f92672">+</span>
+            <span style="color:#e6db74">&#34;errCount: %v, paused: %v&#34;</span>, <span style="color:#a6e22e">reqType</span>, <span style="color:#a6e22e">api</span>.<span style="color:#a6e22e">totalCount</span>,
+            <span style="color:#a6e22e">api</span>.<span style="color:#a6e22e">errCount</span>, <span style="color:#a6e22e">api</span>.<span style="color:#a6e22e">isPaused</span>)
+            
+        <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">api</span>.<span style="color:#a6e22e">isPaused</span> {
+            <span style="color:#75715e">// 判断是否进入恢复期
+</span><span style="color:#75715e"></span>            <span style="color:#a6e22e">latency</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">util</span>.<span style="color:#a6e22e">Abs64</span>(<span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Now</span>().<span style="color:#a6e22e">UnixNano</span>() <span style="color:#f92672">-</span> <span style="color:#a6e22e">api</span>.<span style="color:#a6e22e">accessLast</span>)
+            <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">latency</span> &lt; int64(<span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">recoverInterval</span>) {
+                <span style="color:#75715e">// 在恢复期之内, 快速失败，保持熔断
+</span><span style="color:#75715e"></span>                <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">false</span>
+            }
+            <span style="color:#75715e">// 度过恢复期
+</span><span style="color:#75715e"></span>            <span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Warnf</span>(<span style="color:#e6db74">&#34;# Trigger: 熔断器度过恢复期: %v, key: %v!&#34;</span>, <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">recoverInterval</span>, <span style="color:#a6e22e">key</span>)
+        }
+    }
+    <span style="color:#75715e">// 给予临时恢复
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">true</span>
+}
+</code></pre></div><h2 id="单元测试">单元测试</h2>
 <p>基于上面的实现，接下来编写测试代码进行case覆盖，演示并且循环滚动保持这两个过程：</p>
 <ul>
 <li><strong>失败-&gt;持续失败-&gt;熔断开启-&gt;经过冷却时间</strong></li>
 <li><strong>进入恢复期-&gt;继续访问</strong></li>
 </ul>
 <h3 id="模拟虚假请求">模拟虚假请求</h3>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">API_PREFIX</span> = <span style="color:#e6db74">&#34;/fake-api&#34;</span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">var</span> (
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 是否熔断过
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#a6e22e">HasCbk</span> = <span style="color:#66d9ef">false</span>
-</span></span><span style="display:flex;"><span>)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">StartJob</span>(<span style="color:#a6e22e">cbk</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">CircuitBreakerImp</span>) {
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> {
-</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// 每秒发1次失败, 参数0代表failed, 1代表成功
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        <span style="color:#a6e22e">ReqForTest</span>(<span style="color:#a6e22e">cbk</span>, <span style="color:#ae81ff">0</span>)
-</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Sleep</span>(<span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Second</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">1</span>)
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">// 构建请求调度，熔断恢复其让其成功1次
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">ReqForTest</span>(<span style="color:#a6e22e">cbk</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">CircuitBreakerImp</span>, <span style="color:#a6e22e">req</span> <span style="color:#66d9ef">int</span>) {
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// mock failed case
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#a6e22e">mockAPI</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">API_PREFIX</span> <span style="color:#75715e">//+ strconv.Itoa(req)
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">//log.Infof(&#34;Ready to reqForTest: %s, req-id-%v&#34;, HOST_PREFIX+mockAPI, req)
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> !<span style="color:#a6e22e">cbk</span>.<span style="color:#a6e22e">CanAccess</span>(<span style="color:#a6e22e">mockAPI</span>, <span style="color:#a6e22e">req</span>) {
-</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Warnf</span>(<span style="color:#e6db74">&#34;Api: %v is break, req-id-%v, wait for next round or success for one...&#34;</span>, <span style="color:#a6e22e">mockAPI</span>, <span style="color:#a6e22e">req</span>)
-</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">HasCbk</span> = <span style="color:#66d9ef">true</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span>
-</span></span><span style="display:flex;"><span>    } <span style="color:#66d9ef">else</span> {
-</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Infof</span>(<span style="color:#e6db74">&#34;Request can access: %s, req-id-%v&#34;</span>, <span style="color:#a6e22e">HOST_PREFIX</span><span style="color:#f92672">+</span><span style="color:#a6e22e">mockAPI</span>, <span style="color:#a6e22e">req</span>)
-</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// 度过恢复期, 熔断恢复之后, 跳过错误让其成功
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">HasCbk</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#a6e22e">req</span> <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span> {
-</span></span><span style="display:flex;"><span>            <span style="color:#a6e22e">HasCbk</span> = <span style="color:#66d9ef">false</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#a6e22e">req</span> = <span style="color:#ae81ff">1</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Warnf</span>(<span style="color:#e6db74">&#34;Transfer fail to success: %s, req-id-%v&#34;</span>, <span style="color:#a6e22e">HOST_PREFIX</span><span style="color:#f92672">+</span><span style="color:#a6e22e">mockAPI</span>, <span style="color:#a6e22e">req</span>)
-</span></span><span style="display:flex;"><span>        }
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">req</span> <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span> {
-</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Errorf</span>(<span style="color:#e6db74">&#34;# Meet failed ReqForTest: %s&#34;</span>, <span style="color:#a6e22e">HOST_PREFIX</span><span style="color:#f92672">+</span><span style="color:#a6e22e">mockAPI</span>)
-</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">cbk</span>.<span style="color:#a6e22e">Failed</span>(<span style="color:#a6e22e">mockAPI</span>)
-</span></span><span style="display:flex;"><span>    } <span style="color:#66d9ef">else</span> {
-</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Infof</span>(<span style="color:#e6db74">&#34;# Meet success ReqForTest: %s&#34;</span>, <span style="color:#a6e22e">HOST_PREFIX</span><span style="color:#f92672">+</span><span style="color:#a6e22e">mockAPI</span>)
-</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">cbk</span>.<span style="color:#a6e22e">Succeed</span>(<span style="color:#a6e22e">mockAPI</span>)
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><h3 id="初始化熔断器">初始化熔断器</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">API_PREFIX</span> = <span style="color:#e6db74">&#34;/fake-api&#34;</span>
+<span style="color:#66d9ef">var</span> (
+    <span style="color:#75715e">// 是否熔断过
+</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">HasCbk</span> = <span style="color:#66d9ef">false</span>
+)
+
+<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">StartJob</span>(<span style="color:#a6e22e">cbk</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">CircuitBreakerImp</span>) {
+    <span style="color:#66d9ef">for</span> {
+        <span style="color:#75715e">// 每秒发1次失败, 参数0代表failed, 1代表成功
+</span><span style="color:#75715e"></span>        <span style="color:#a6e22e">ReqForTest</span>(<span style="color:#a6e22e">cbk</span>, <span style="color:#ae81ff">0</span>)
+        <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Sleep</span>(<span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Second</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">1</span>)
+    }
+}
+
+<span style="color:#75715e">// 构建请求调度，熔断恢复其让其成功1次
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">ReqForTest</span>(<span style="color:#a6e22e">cbk</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">CircuitBreakerImp</span>, <span style="color:#a6e22e">req</span> <span style="color:#66d9ef">int</span>) {
+    <span style="color:#75715e">// mock failed case
+</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">mockAPI</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">API_PREFIX</span> <span style="color:#75715e">//+ strconv.Itoa(req)
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">//log.Infof(&#34;Ready to reqForTest: %s, req-id-%v&#34;, HOST_PREFIX+mockAPI, req)
+</span><span style="color:#75715e"></span>
+    <span style="color:#66d9ef">if</span> !<span style="color:#a6e22e">cbk</span>.<span style="color:#a6e22e">CanAccess</span>(<span style="color:#a6e22e">mockAPI</span>, <span style="color:#a6e22e">req</span>) {
+        <span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Warnf</span>(<span style="color:#e6db74">&#34;Api: %v is break, req-id-%v, wait for next round or success for one...&#34;</span>, <span style="color:#a6e22e">mockAPI</span>, <span style="color:#a6e22e">req</span>)
+        <span style="color:#a6e22e">HasCbk</span> = <span style="color:#66d9ef">true</span>
+        <span style="color:#66d9ef">return</span>
+    } <span style="color:#66d9ef">else</span> {
+        <span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Infof</span>(<span style="color:#e6db74">&#34;Request can access: %s, req-id-%v&#34;</span>, <span style="color:#a6e22e">HOST_PREFIX</span><span style="color:#f92672">+</span><span style="color:#a6e22e">mockAPI</span>, <span style="color:#a6e22e">req</span>)
+        <span style="color:#75715e">// 度过恢复期, 熔断恢复之后, 跳过错误让其成功
+</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">HasCbk</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#a6e22e">req</span> <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span> {
+            <span style="color:#a6e22e">HasCbk</span> = <span style="color:#66d9ef">false</span>
+            <span style="color:#a6e22e">req</span> = <span style="color:#ae81ff">1</span>
+            <span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Warnf</span>(<span style="color:#e6db74">&#34;Transfer fail to success: %s, req-id-%v&#34;</span>, <span style="color:#a6e22e">HOST_PREFIX</span><span style="color:#f92672">+</span><span style="color:#a6e22e">mockAPI</span>, <span style="color:#a6e22e">req</span>)
+        }
+    }
+
+    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">req</span> <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span> {
+        <span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Errorf</span>(<span style="color:#e6db74">&#34;# Meet failed ReqForTest: %s&#34;</span>, <span style="color:#a6e22e">HOST_PREFIX</span><span style="color:#f92672">+</span><span style="color:#a6e22e">mockAPI</span>)
+        <span style="color:#a6e22e">cbk</span>.<span style="color:#a6e22e">Failed</span>(<span style="color:#a6e22e">mockAPI</span>)
+    } <span style="color:#66d9ef">else</span> {
+        <span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Infof</span>(<span style="color:#e6db74">&#34;# Meet success ReqForTest: %s&#34;</span>, <span style="color:#a6e22e">HOST_PREFIX</span><span style="color:#f92672">+</span><span style="color:#a6e22e">mockAPI</span>)
+        <span style="color:#a6e22e">cbk</span>.<span style="color:#a6e22e">Succeed</span>(<span style="color:#a6e22e">mockAPI</span>)
+    }
+}
+</code></pre></div><h3 id="初始化熔断器">初始化熔断器</h3>
 <p>初始化熔断器并分配相关参数</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">cbk</span> <span style="color:#f92672">:=</span> <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">CircuitBreakerImp</span>{}
-</span></span><span style="display:flex;"><span><span style="color:#a6e22e">cbk</span>.<span style="color:#a6e22e">apiMap</span> = make(<span style="color:#66d9ef">map</span>[<span style="color:#66d9ef">string</span>]<span style="color:#f92672">*</span><span style="color:#a6e22e">apiSnapShop</span>)
-</span></span><span style="display:flex;"><span><span style="color:#75715e">// 控制时间窗口，15秒一轮, 重置api错误率
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#a6e22e">cbk</span>.<span style="color:#a6e22e">roundInterval</span> = <span style="color:#a6e22e">util</span>.<span style="color:#a6e22e">ToDuration</span>(<span style="color:#ae81ff">15</span> <span style="color:#f92672">*</span> <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Second</span>)
-</span></span><span style="display:flex;"><span><span style="color:#75715e">// 熔断之后，5秒不出现错误再恢复
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#a6e22e">cbk</span>.<span style="color:#a6e22e">recoverInterval</span> = <span style="color:#a6e22e">util</span>.<span style="color:#a6e22e">ToDuration</span>(<span style="color:#ae81ff">5</span> <span style="color:#f92672">*</span> <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Second</span>)
-</span></span><span style="display:flex;"><span><span style="color:#75715e">// 请求到达5次以上才进行熔断检测
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#a6e22e">cbk</span>.<span style="color:#a6e22e">minCheck</span> = <span style="color:#ae81ff">5</span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">// 错误率到达 50% 开启熔断
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#a6e22e">cbk</span>.<span style="color:#a6e22e">cbkErrRate</span> = <span style="color:#ae81ff">0.5</span>
-</span></span></code></pre></div><h3 id="程序输出解析">程序输出解析</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#a6e22e">cbk</span> <span style="color:#f92672">:=</span> <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">CircuitBreakerImp</span>{}
+<span style="color:#a6e22e">cbk</span>.<span style="color:#a6e22e">apiMap</span> = make(<span style="color:#66d9ef">map</span>[<span style="color:#66d9ef">string</span>]<span style="color:#f92672">*</span><span style="color:#a6e22e">apiSnapShop</span>)
+<span style="color:#75715e">// 控制时间窗口，15秒一轮, 重置api错误率
+</span><span style="color:#75715e"></span><span style="color:#a6e22e">cbk</span>.<span style="color:#a6e22e">roundInterval</span> = <span style="color:#a6e22e">util</span>.<span style="color:#a6e22e">ToDuration</span>(<span style="color:#ae81ff">15</span> <span style="color:#f92672">*</span> <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Second</span>)
+<span style="color:#75715e">// 熔断之后，5秒不出现错误再恢复
+</span><span style="color:#75715e"></span><span style="color:#a6e22e">cbk</span>.<span style="color:#a6e22e">recoverInterval</span> = <span style="color:#a6e22e">util</span>.<span style="color:#a6e22e">ToDuration</span>(<span style="color:#ae81ff">5</span> <span style="color:#f92672">*</span> <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Second</span>)
+<span style="color:#75715e">// 请求到达5次以上才进行熔断检测
+</span><span style="color:#75715e"></span><span style="color:#a6e22e">cbk</span>.<span style="color:#a6e22e">minCheck</span> = <span style="color:#ae81ff">5</span>
+<span style="color:#75715e">// 错误率到达 50% 开启熔断
+</span><span style="color:#75715e"></span><span style="color:#a6e22e">cbk</span>.<span style="color:#a6e22e">cbkErrRate</span> = <span style="color:#ae81ff">0.5</span>
+</code></pre></div><h3 id="程序输出解析">程序输出解析</h3>
 <p><strong>可以看到程序输出如下，符合预期</strong>
 <img src="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/blog/cbk/cbk_status_0.png" alt="熔断状态"></p>
 <ol>
@@ -559,8 +536,6 @@
 <strong>微服务架构中的熔断器设计与实现</strong><br>
 <a href="https://mp.weixin.qq.com/s/DGRnUhyv6SS_E36ZQKGpPA">https://mp.weixin.qq.com/s/DGRnUhyv6SS_E36ZQKGpPA</a></p>
               
-
-
             </div>
           </div>
           <div id="post-footer" class="post-footer main-content-wrap">
@@ -571,149 +546,147 @@
                   <div class="post-footer-tags">
                     <span class="text-color-light text-small">标签</span><br/>
                     
-  <a class="tag tag--primary tag--small" href="https://pixeldin.github.io/zh/tags/%E7%86%94%E6%96%AD%E5%99%A8/">熔断器</a>
+  <a class="tag tag--primary tag--small" href="/zh/tags/%E7%86%94%E6%96%AD%E5%99%A8/">熔断器</a>
 
-  <a class="tag tag--primary tag--small" href="https://pixeldin.github.io/zh/tags/%E5%BF%AB%E9%80%9F%E5%A4%B1%E8%B4%A5/">快速失败</a>
+  <a class="tag tag--primary tag--small" href="/zh/tags/%E5%BF%AB%E9%80%9F%E5%A4%B1%E8%B4%A5/">快速失败</a>
 
-  <a class="tag tag--primary tag--small" href="https://pixeldin.github.io/zh/tags/circuit-breaker/">circuit breaker</a>
+  <a class="tag tag--primary tag--small" href="/zh/tags/circuit-breaker/">circuit breaker</a>
 
                   </div>
                 
               
             
-            
-<div class="post-actions-wrap">
-  <nav >
-    <ul class="post-actions post-action-nav">
+            <div class="post-actions-wrap">
+  
+      <nav >
+        <ul class="post-actions post-action-nav">
+          
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="/zh/2022/03/%E8%81%8A%E4%B8%80%E8%81%8Ago%E7%9A%84%E5%8D%8F%E7%A8%8B%E4%BF%A1%E6%81%AF%E5%92%8C%E5%A6%82%E4%BD%95%E9%A2%84%E9%98%B2%E6%B3%84%E9%9C%B2/" data-tooltip="聊一聊Go的协程信息和如何预防泄露">
+              
+                  <i class="fa fa-angle-left"></i>
+                  <span class="hide-xs hide-sm text-small icon-ml">下一篇</span>
+                </a>
+            </li>
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="/zh/2022/02/%E8%81%8A%E4%B8%80%E8%81%8A%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8Btcp%E6%B5%81%E7%9A%84%E7%BB%84%E5%8C%85%E6%8B%86%E5%8C%85/" data-tooltip="聊一聊网络编程TCP流的组包拆包">
+              
+                  <span class="hide-xs hide-sm text-small icon-mr">上一篇</span>
+                  <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+          
+        </ul>
+      </nav>
+    <ul class="post-actions post-action-share" >
       
-        <li class="post-action">
-          
-            <a class="post-action-btn btn btn--default tooltip--top" href="https://pixeldin.github.io/zh/2022/03/%E8%81%8A%E4%B8%80%E8%81%8Ago%E7%9A%84%E5%8D%8F%E7%A8%8B%E4%BF%A1%E6%81%AF%E5%92%8C%E5%A6%82%E4%BD%95%E9%A2%84%E9%98%B2%E6%B3%84%E9%9C%B2/" data-tooltip="聊一聊Go的协程信息和如何预防泄露" aria-label="后一篇: 聊一聊Go的协程信息和如何预防泄露">
-          
-              <i class="fa fa-angle-left"></i>
-              <span class="hide-xs hide-sm text-small icon-ml">后一篇</span>
-            </a>
+        <li class="post-action hide-lg hide-md hide-sm">
+          <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
+            <i class="fa fa-share-alt"></i>
+          </a>
         </li>
-        <li class="post-action">
-          
-            <a class="post-action-btn btn btn--default tooltip--top" href="https://pixeldin.github.io/zh/2022/02/%E8%81%8A%E4%B8%80%E8%81%8A%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8Btcp%E6%B5%81%E7%9A%84%E7%BB%84%E5%8C%85%E6%8B%86%E5%8C%85/" data-tooltip="聊一聊网络编程TCP流的组包拆包" aria-label="前一篇: 聊一聊网络编程TCP流的组包拆包">
-          
-              <span class="hide-xs hide-sm text-small icon-mr">前一篇</span>
-              <i class="fa fa-angle-right"></i>
-            </a>
-        </li>
+        
       
+      
+      <li class="post-action">
+        
+          <a class="post-action-btn btn btn--default" href="#">
+        
+          <i class="fa fa-list"></i>
+        </a>
+      </li>
     </ul>
-  </nav>
-<ul class="post-actions post-action-share" >
   
-    <li class="post-action hide-lg hide-md hide-sm">
-      <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions" aria-label="分享这个帖子">
-        <i class="fa fa-share-alt" aria-hidden="true"></i>
-      </a>
-    </li>
-    
-  
-  
-  <li class="post-action">
-    
-      <a class="post-action-btn btn btn--default" href="#top" aria-label="回到顶部">
-      <i class="fa fa-arrow-up" aria-hidden="true"></i>
-    
-    </a>
-  </li>
-</ul>
 </div>
 
-
             
-  
-
-
+              
+            
           </div>
         </article>
         <footer id="footer" class="main-content-wrap">
   <span class="copyrights">
-    &copy; 2023 <a href="https://github.com/pixeldin">pixeldin</a>. All Rights Reserved
+    &copy; 2024 <a href="https://github.com/pixeldin">pixeldin</a>. All Rights Reserved
   </span>
 </footer>
 
       </div>
-      <div id="bottom-bar" class="post-bottom-bar" data-behavior="1">
+      <div id="bottom-bar" class="post-bottom-bar" data-behavior="5">
+        <div class="post-actions-wrap">
+  
+      <nav >
+        <ul class="post-actions post-action-nav">
+          
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="/zh/2022/03/%E8%81%8A%E4%B8%80%E8%81%8Ago%E7%9A%84%E5%8D%8F%E7%A8%8B%E4%BF%A1%E6%81%AF%E5%92%8C%E5%A6%82%E4%BD%95%E9%A2%84%E9%98%B2%E6%B3%84%E9%9C%B2/" data-tooltip="聊一聊Go的协程信息和如何预防泄露">
+              
+                  <i class="fa fa-angle-left"></i>
+                  <span class="hide-xs hide-sm text-small icon-ml">下一篇</span>
+                </a>
+            </li>
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="/zh/2022/02/%E8%81%8A%E4%B8%80%E8%81%8A%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8Btcp%E6%B5%81%E7%9A%84%E7%BB%84%E5%8C%85%E6%8B%86%E5%8C%85/" data-tooltip="聊一聊网络编程TCP流的组包拆包">
+              
+                  <span class="hide-xs hide-sm text-small icon-mr">上一篇</span>
+                  <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+          
+        </ul>
+      </nav>
+    <ul class="post-actions post-action-share" >
+      
+        <li class="post-action hide-lg hide-md hide-sm">
+          <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
+            <i class="fa fa-share-alt"></i>
+          </a>
+        </li>
         
-<div class="post-actions-wrap">
-  <nav >
-    <ul class="post-actions post-action-nav">
       
-        <li class="post-action">
-          
-            <a class="post-action-btn btn btn--default tooltip--top" href="https://pixeldin.github.io/zh/2022/03/%E8%81%8A%E4%B8%80%E8%81%8Ago%E7%9A%84%E5%8D%8F%E7%A8%8B%E4%BF%A1%E6%81%AF%E5%92%8C%E5%A6%82%E4%BD%95%E9%A2%84%E9%98%B2%E6%B3%84%E9%9C%B2/" data-tooltip="聊一聊Go的协程信息和如何预防泄露" aria-label="后一篇: 聊一聊Go的协程信息和如何预防泄露">
-          
-              <i class="fa fa-angle-left"></i>
-              <span class="hide-xs hide-sm text-small icon-ml">后一篇</span>
-            </a>
-        </li>
-        <li class="post-action">
-          
-            <a class="post-action-btn btn btn--default tooltip--top" href="https://pixeldin.github.io/zh/2022/02/%E8%81%8A%E4%B8%80%E8%81%8A%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8Btcp%E6%B5%81%E7%9A%84%E7%BB%84%E5%8C%85%E6%8B%86%E5%8C%85/" data-tooltip="聊一聊网络编程TCP流的组包拆包" aria-label="前一篇: 聊一聊网络编程TCP流的组包拆包">
-          
-              <span class="hide-xs hide-sm text-small icon-mr">前一篇</span>
-              <i class="fa fa-angle-right"></i>
-            </a>
-        </li>
       
+      <li class="post-action">
+        
+          <a class="post-action-btn btn btn--default" href="#">
+        
+          <i class="fa fa-list"></i>
+        </a>
+      </li>
     </ul>
-  </nav>
-<ul class="post-actions post-action-share" >
   
-    <li class="post-action hide-lg hide-md hide-sm">
-      <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions" aria-label="分享这个帖子">
-        <i class="fa fa-share-alt" aria-hidden="true"></i>
-      </a>
-    </li>
-    
-  
-  
-  <li class="post-action">
-    
-      <a class="post-action-btn btn btn--default" href="#top" aria-label="回到顶部">
-      <i class="fa fa-arrow-up" aria-hidden="true"></i>
-    
-    </a>
-  </li>
-</ul>
 </div>
 
-
       </div>
-      
-
+      <div id="share-options-bar" class="share-options-bar" data-behavior="5">
+  <i id="btn-close-shareoptions" class="fa fa-close"></i>
+  <ul class="share-options">
+    
+  </ul>
+</div>
+<div id="share-options-mask" class="share-options-mask"></div>
     </div>
     
     <div id="about">
   <div id="about-card">
     <div id="about-btn-close">
-      <i class="fa fa-times"></i>
+      <i class="fa fa-remove"></i>
     </div>
     
       <img id="about-card-picture" src="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/pig.jpg" alt="作者的图片" />
     
-    <h4 id="about-card-name">@Pixelpig</h4>
+    <h4 id="about-card-name">pixelpig</h4>
     
-      <div id="about-card-bio">Keep it simple, so as this bio <strong>:）</strong></div>
+      <div id="about-card-bio">With enthusiasm for open source and I am looking forward to be a better developer. Stay hungry, stay foolish <strong>:）</strong></div>
     
-    
-      <div id="about-card-job">
-        <i class="fa fa-briefcase"></i>
-        <br/>
-        Software Developer
-      </div>
     
     
       <div id="about-card-location">
-        <i class="fa fa-map-marker-alt"></i>
+        <i class="fa fa-map-marker"></i>
         <br/>
-        GuangDong - China
+        GuangDong - CHINA
       </div>
     
   </div>
@@ -728,16 +701,30 @@
 
 
     
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.1.0/highlight.min.js" integrity="sha512-z+/WWfyD5tccCukM4VvONpEtLmbAm5LDu7eKiyMQJ9m7OfPEDL7gENyDRL3Yfe8XAuGsS2fS4xSMnl6d30kqGQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js" integrity="sha256-/BfiIkHlHoVihZdc6TFuj7MmJ0TWcWsMXkeDFwhi0zw=" crossorigin="anonymous"></script>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js" integrity="sha512-uURl+ZXMBrF4AwGaWmEetzrd+J5/8NRkWAvJx5sbPSSuOb0bZLqf+tOzniObO00BjHa/dD7gub9oCGMLPQHtQA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
-
-<script src="https://pixeldin.github.io/js/script-d9gfx1pdvbfdgoahypizomgoamlbumvk1ugdifqa59ynqvdh8wfsinmt5oj.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.7/js/jquery.fancybox.min.js" integrity="sha256-GEAnjcTqVP+vBp3SSc8bEDQqvWAZMiHyUSIorrWwH50=" crossorigin="anonymous"></script>
 
 
+<script src="/js/script-pcw6v3xilnxydl1vddzazdverrnn9ctynvnxgwho987mfyqkuylcb1nlt.min.js"></script>
+
+
+<script lang="javascript">
+window.onload = updateMinWidth;
+window.onresize = updateMinWidth;
+document.getElementById("sidebar").addEventListener("transitionend", updateMinWidth);
+function updateMinWidth() {
+  var sidebar = document.getElementById("sidebar");
+  var main = document.getElementById("main");
+  main.style.minWidth = "";
+  var w1 = getComputedStyle(main).getPropertyValue("min-width");
+  var w2 = getComputedStyle(sidebar).getPropertyValue("width");
+  var w3 = getComputedStyle(sidebar).getPropertyValue("left");
+  main.style.minWidth = `calc(${w1} - ${w2} - ${w3})`;
+}
+</script>
 
 <script>
 $(document).ready(function() {
@@ -750,6 +737,11 @@ $(document).ready(function() {
   });
 });
 </script>
+
+
+  
+    
+  
 
 
 

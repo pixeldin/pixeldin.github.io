@@ -2,31 +2,11 @@
 <html lang="zh-cn">
   <head>
     
-    <script type="application/ld+json">
-
-{  
-  "@context":"http://schema.org",
-  "@type":"Website",
-  "@id":"https:\/\/pixeldin.github.io\/",
-  "author": {
-    "@type": "Person",
-    "name": "@Pixelpig",
-    
-    "image": "https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/pig.jpg"
-    
-  },
-  "name":"pixelpig.tech",
-  "description":"\u003cp\u003e线程池可以避免频繁创建销毁线程，提高性能。常见如数据库的连接池。\u003c\/p\u003e",
-  "url":"https:\/\/pixeldin.github.io\/zh\/2019\/07\/%E7%AE%80%E8%BF%B0-java%E7%BA%BF%E7%A8%8B%E6%B1%A0%E4%BB%A5%E5%8F%8A%E4%BD%BF%E7%94%A8\/",
-  "keywords":"[]"
-}
-
-</script>
     <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="generator" content="Hugo 0.111.3 with theme Tranquilpeak 0.5.3-BETA">
-<meta name="author" content="@Pixelpig">
+<meta name="generator" content="Hugo 0.80.0 with theme Tranquilpeak 0.4.8-BETA">
+<meta name="author" content="pixelpig">
 <meta name="keywords" content="">
 <meta name="description" content="线程池可以避免频繁创建销毁线程，提高性能。常见如数据库的连接池。">
 
@@ -35,9 +15,9 @@
 <meta property="og:type" content="article">
 <meta property="og:title" content="简述 Java线程池以及使用">
 <meta name="twitter:title" content="简述 Java线程池以及使用">
-<meta property="og:url" content="https://pixeldin.github.io/zh/2019/07/%E7%AE%80%E8%BF%B0-java%E7%BA%BF%E7%A8%8B%E6%B1%A0%E4%BB%A5%E5%8F%8A%E4%BD%BF%E7%94%A8/">
-<meta property="twitter:url" content="https://pixeldin.github.io/zh/2019/07/%E7%AE%80%E8%BF%B0-java%E7%BA%BF%E7%A8%8B%E6%B1%A0%E4%BB%A5%E5%8F%8A%E4%BD%BF%E7%94%A8/">
-<meta property="og:site_name" content="pixelpig.tech">
+<meta property="og:url" content="/zh/2019/07/%E7%AE%80%E8%BF%B0-java%E7%BA%BF%E7%A8%8B%E6%B1%A0%E4%BB%A5%E5%8F%8A%E4%BD%BF%E7%94%A8/">
+<meta property="twitter:url" content="/zh/2019/07/%E7%AE%80%E8%BF%B0-java%E7%BA%BF%E7%A8%8B%E6%B1%A0%E4%BB%A5%E5%8F%8A%E4%BD%BF%E7%94%A8/">
+<meta property="og:site_name" content="pixelpig.space">
 <meta property="og:description" content="线程池可以避免频繁创建销毁线程，提高性能。常见如数据库的连接池。">
 <meta name="twitter:description" content="线程池可以避免频繁创建销毁线程，提高性能。常见如数据库的连接池。">
 <meta property="og:locale" content="zh">
@@ -75,12 +55,12 @@
 
 
 
+
+
+
+
   <meta property="og:image" content="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/pig.jpg">
   <meta property="twitter:image" content="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/pig.jpg">
-
-
-
-
 
 
     <title>简述 Java线程池以及使用</title>
@@ -90,15 +70,15 @@
 
     
 
-    <link rel="canonical" href="https://pixeldin.github.io/zh/2019/07/%E7%AE%80%E8%BF%B0-java%E7%BA%BF%E7%A8%8B%E6%B1%A0%E4%BB%A5%E5%8F%8A%E4%BD%BF%E7%94%A8/">
+    <link rel="canonical" href="/zh/2019/07/%E7%AE%80%E8%BF%B0-java%E7%BA%BF%E7%A8%8B%E6%B1%A0%E4%BB%A5%E5%8F%8A%E4%BD%BF%E7%94%A8/">
 
     
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" integrity="sha512-H9jrZiiopUdsLpg94A333EfumgUBpO9MdbxStdeITo+KEIMaNfHNvwyjjDJb+ERPaRS6DpyRlKbvPUasNItRyw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/jquery.fancybox.min.css" integrity="sha256-vuXZ9LGmmwtjqFX1F+EKin1ThZMub58gKULUyf0qECk=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/helpers/jquery.fancybox-thumbs.min.css" integrity="sha256-SEa4XYAHihTcEP1f5gARTB2K26Uk8PsndQYHQC1f4jU=" crossorigin="anonymous" />
     
     
-    
-    <link rel="stylesheet" href="https://pixeldin.github.io/css/style-fneuerdunt9vf6vafpewt2nttopqa9hdugoae6mfs7phtuibtq6qjxkds96.min.css" />
+    <link rel="stylesheet" href="/css/style-twzjdbqhmnnacqs0pwwdzcdbt8yhv8giawvjqjmyfoqnvazl0dalmnhdkvp7.min.css" />
     
     
 
@@ -110,15 +90,15 @@
 
   <body>
     <div id="blog">
-      <header id="header" data-behavior="1">
+      <header id="header" data-behavior="5">
   <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
   <div class="header-title">
-    <a class="header-title-link" href="https://pixeldin.github.io/zh/" aria-label="去首页">pixelpig.tech</a>
+    <a class="header-title-link" href="/zh/">pixelpig.space</a>
   </div>
   
     
       <a class="header-right-picture "
-         href="https://pixeldin.github.io/#about" aria-label="打开链接: /#about">
+         href="/#about">
     
     
     
@@ -130,16 +110,16 @@
   
 </header>
 
-      <nav id="sidebar" data-behavior="1">
+      <nav id="sidebar" data-behavior="5">
   <div class="sidebar-container">
     
       <div class="sidebar-profile">
-        <a href="https://pixeldin.github.io/#about" aria-label="阅读有关作者的更多信息">
+        <a href="/#about">
           <img class="sidebar-profile-picture" src="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/pig.jpg" alt="作者的图片" />
         </a>
-        <h4 class="sidebar-profile-name">@Pixelpig</h4>
+        <h4 class="sidebar-profile-name">pixelpig</h4>
         
-          <h5 class="sidebar-profile-bio">Keep it simple, so as this bio <strong>:）</strong></h5>
+          <h5 class="sidebar-profile-bio">With enthusiasm for open source and I am looking forward to be a better developer. Stay hungry, stay foolish <strong>:）</strong></h5>
         
       </div>
     
@@ -147,7 +127,7 @@
       
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="https://pixeldin.github.io/en" title="English">
+      <a class="sidebar-button-link " href="/en">
     
       <i class="sidebar-button-icon fa fa-lg fa-language"></i>
       
@@ -157,7 +137,7 @@
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="https://pixeldin.github.io/zh/" title="Home">
+      <a class="sidebar-button-link " href="/zh/">
     
       <i class="sidebar-button-icon fa fa-lg fa-home"></i>
       
@@ -167,7 +147,7 @@
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="https://pixeldin.github.io/zh/categories" title="Categories">
+      <a class="sidebar-button-link " href="/zh/categories">
     
       <i class="sidebar-button-icon fa fa-lg fa-bookmark"></i>
       
@@ -177,7 +157,7 @@
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="https://pixeldin.github.io/zh/tags" title="Tags">
+      <a class="sidebar-button-link " href="/zh/tags">
     
       <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
       
@@ -187,7 +167,7 @@
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="https://pixeldin.github.io/zh/archives" title="Archives">
+      <a class="sidebar-button-link " href="/zh/archives">
     
       <i class="sidebar-button-icon fa fa-lg fa-archive"></i>
       
@@ -197,9 +177,9 @@
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="https://pixeldin.github.io/zh/#about" title="About">
+      <a class="sidebar-button-link " href="/zh/#about">
     
-      <i class="sidebar-button-icon fa fa-lg fa-question-circle"></i>
+      <i class="sidebar-button-icon fa fa-lg fa-question"></i>
       
       <span class="sidebar-button-desc">关于我</span>
     </a>
@@ -207,25 +187,22 @@
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="https://github.com/pixeldin" target="_blank" rel="noopener" title="pixeldin">
+      <a class="sidebar-button-link " href="https://github.com/pixeldin" target="_blank" rel="noopener">
     
-      <i class="sidebar-button-icon fab fa-lg fa-github-alt"></i>
+      <i class="sidebar-button-icon fa fa-lg fa-github"></i>
       
-      <span class="sidebar-button-desc">github</span>
+      <span class="sidebar-button-desc">pixeldin</span>
     </a>
   </li>
 
 
-
     </ul>
     <ul class="sidebar-buttons">
       
 
-
     </ul>
     <ul class="sidebar-buttons">
       
-
 
     </ul>
   </div>
@@ -233,23 +210,23 @@
 
       
 
-      <div id="main" data-behavior="1"
+      <div id="main" data-behavior="5"
         class="
                hasCoverMetaIn
                ">
-        <article class="post" id="top">
+        <article class="post" itemscope itemType="http://schema.org/BlogPosting">
           
           
             <div class="post-header main-content-wrap text-left">
   
-    <h1 class="post-title">
+    <h1 class="post-title" itemprop="headline">
       简述 Java线程池以及使用
     </h1>
   
   
   <div class="postShorten-meta post-meta">
     
-      <time datetime="2019-07-15T00:00:00Z">
+      <time itemprop="datePublished" datetime="2019-07-15T00:00:00Z">
         
   七月 15, 2019
 
@@ -260,9 +237,9 @@
   
     <span>发布在</span>
     
-      <a class="category-link" href="https://pixeldin.github.io/zh/categories/java">Java</a>, 
+      <a class="category-link" href="/zh/categories/java">Java</a>, 
     
-      <a class="category-link" href="https://pixeldin.github.io/zh/categories/%e5%b9%b6%e5%8f%91">并发</a>
+      <a class="category-link" href="/zh/categories/%e5%b9%b6%e5%8f%91">并发</a>
     
   
 
@@ -270,7 +247,7 @@
 
 </div>
           
-          <div class="post-content markdown">
+          <div class="post-content markdown" itemprop="articleBody">
             <div class="main-content-wrap">
               <p>线程池可以避免频繁创建销毁线程，提高性能。常见如数据库的连接池。</p>
 <h4 id="创建线程的几种方式">创建线程的几种方式</h4>
@@ -301,7 +278,7 @@ About Callable的返回值，可以使用Future或者FutureTask来获取。</li>
 <p>底部实现<strong>RunnableFuture</strong>接口，而<strong>RunnableFuture</strong>继承了<strong>Future</strong>和<strong>Runnable</strong>
 所以<strong>FutureTask</strong>同样具备上述5个方法。
 参考部分源码：</p>
-<pre tabindex="0"><code>/**
+<pre><code>/**
      * Creates a {@code FutureTask} that will, upon running, execute the
      * given {@code Callable}.
      *
@@ -322,7 +299,7 @@ About Callable的返回值，可以使用Future或者FutureTask来获取。</li>
      *
      * @param runnable the runnable task
      * @param result the result to return on successful completion. If
-     * you don&#39;t need a particular result, consider using
+     * you don't need a particular result, consider using
      * constructions of the form:
      * {@code Future&lt;?&gt; f = new FutureTask&lt;Void&gt;(runnable, null)}
      * @throws NullPointerException if the runnable is null
@@ -337,7 +314,7 @@ About Callable的返回值，可以使用Future或者FutureTask来获取。</li>
 <li>后者传入参数<strong>Runnable</strong>和<strong>Result</strong>,如果执行成功，返回<strong>Result</strong></li>
 </ol>
 <h3 id="futuretask和callable实现创建线程的demo">Futuretask和Callable实现创建线程的Demo</h3>
-<pre tabindex="0"><code>import java.util.concurrent.Callable;
+<pre><code>import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.FutureTask;
 
@@ -350,7 +327,7 @@ public class CallableThread {
 		while (true) {
 			if (result.isDone()) {
 				try {
-					System.out.println(&#34;Call执行结束:&#34;+result.get());
+					System.out.println(&quot;Call执行结束:&quot;+result.get());
 					break;
 				} catch (InterruptedException | ExecutionException e) {
 					e.printStackTrace();
@@ -364,7 +341,7 @@ class ThreadCall implements Callable&lt;String&gt;{
 
 	@Override
 	public String call() throws Exception {
-		return &#34;为Java打Call！&#34;;
+		return &quot;为Java打Call！&quot;;
 	}
 	
 }
@@ -386,7 +363,7 @@ Call执行结束:为Java打Call！</p>
 指定按照设置的时间周期执行任务，池中线程数量根据参数<strong>corePoolSize</strong>决定，即时有线程空闲状态也不会撤销。</li>
 </ul>
 <h4 id="demo">Demo:</h4>
-<pre tabindex="0"><code>package com.dd.code.ThreadByCallable;
+<pre><code>package com.dd.code.ThreadByCallable;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -414,12 +391,13 @@ class ThreadPoolDemo implements Runnable{
 	
 	@Override
 	public void run() {
-		System.out.println(&#34;当前线程号：&#34;+Thread.currentThread().getName() + &#34;，i = &#34; + i++);
+		System.out.println(&quot;当前线程号：&quot;+Thread.currentThread().getName() + &quot;，i = &quot; + i++);
 	}
 	
 }
+
 </code></pre><p>执行结果：</p>
-<pre tabindex="0"><code>当前线程号：pool-1-thread-3，i = 2
+<pre><code>当前线程号：pool-1-thread-3，i = 2
 当前线程号：pool-1-thread-5，i = 3
 当前线程号：pool-1-thread-1，i = 0
 当前线程号：pool-1-thread-2，i = 1
@@ -429,6 +407,7 @@ class ThreadPoolDemo implements Runnable{
 当前线程号：pool-1-thread-3，i = 8
 当前线程号：pool-1-thread-2，i = 7
 当前线程号：pool-1-thread-1，i = 9
+
 </code></pre><p>可以看到，尽管分配10个任务给线程池，然而我们初始化5个固定线程的线程池，所以线程池执行的所在进程号不会超过5，而且可以看出在<strong>newFixedThreadPool</strong>中线程的调度是随机的。</p>
 <hr>
 <h4 id="线程池多任务计算">线程池多任务计算</h4>
@@ -439,11 +418,11 @@ class ThreadPoolDemo implements Runnable{
 <li>创建所需线程池，返回执行器[<strong>ExecutorService</strong>]<strong>executor</strong></li>
 <li>使用<strong>FutureTask</strong>构造方法传入需要计算的<strong>Callable</strong>实例化创建<strong>FutureTask</strong></li>
 <li>调用执行器<strong>executor</strong>的方法<strong>executor.execute(futuretask);</strong></li>
-<li>创建**<code>List&lt;FutureTask&gt;</code><strong>将执行的</strong>futuretask**添加到List中，方便后续取值。
+<li>创建**<code>List&lt;FutureTask&gt;</code>**将执行的**futuretask**添加到List中，方便后续取值。
 ####示例：
-<strong>下面模拟一个计算延迟操作，我们来看看多线程和单线程执行的效率对比</strong></li>
+**下面模拟一个计算延迟操作，我们来看看多线程和单线程执行的效率对比**</li>
 </ol>
-<pre tabindex="0"><code>package com.dd.code.ThreadByCallable;
+<pre><code>package com.dd.code.ThreadByCallable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -490,13 +469,13 @@ public class MutilThreadTask {
 		
 		long t1  = System.currentTimeMillis();
 		//使用单线程进行计算
-		System.out.println(&#34;累加结果:&#34; + SumWithOneThread(uidList));
-		System.out.println(&#34;常规计算时间:&#34;+(System.currentTimeMillis()-t1));
+		System.out.println(&quot;累加结果:&quot; + SumWithOneThread(uidList));
+		System.out.println(&quot;常规计算时间:&quot;+(System.currentTimeMillis()-t1));
 		
 		long t2  = System.currentTimeMillis();
 		//创建10个线程的线程池参与运算
-		System.out.println(&#34;累加结果:&#34; + SumWithMutilThread(uidList,10));
-		System.out.println(&#34;线程池计算时间:&#34;+(System.currentTimeMillis()-t2));
+		System.out.println(&quot;累加结果:&quot; + SumWithMutilThread(uidList,10));
+		System.out.println(&quot;线程池计算时间:&quot;+(System.currentTimeMillis()-t2));
 	}
 	
 	static Long SumWithOneThread(List&lt;Long&gt; uidList){
@@ -561,22 +540,21 @@ public class MutilThreadTask {
 	}
 
 }
+
 </code></pre><p>执行结果：</p>
-<pre tabindex="0"><code>累加结果:2000
+<pre><code>累加结果:2000
 常规计算时间:10035
 累加结果:2000
 线程池计算时间:1020
 </code></pre><h4 id="效率对比">效率对比</h4>
 <p>果然，使用线程池创建多个线程计算效率快了许多，但是使用多线程就一定快吗?
 我们稍作修改一下方法的参数，只给FutureTask分配5个任务[区别于之前的100个任务]，并且将模拟计算时间修改为1毫秒[区别于之前的100毫秒]，再看看执行结果。</p>
-<pre tabindex="0"><code>累加结果:100
+<pre><code>累加结果:100
 常规计算时间:6
 累加结果:100
 线程池计算时间:24
 </code></pre><p>发现使用线程池的多线程计算反而更慢了，可以初步断定，如果任务量不是很大，计算量不是很复杂的情况下，多线程并不是首先，相反<strong>线程池还需要耗费资源去维护池中的线程</strong>，所以考虑多线程的使用场景，还要权衡一下任务量。</p>
               
-
-
             </div>
           </div>
           <div id="post-footer" class="post-footer main-content-wrap">
@@ -587,131 +565,129 @@ public class MutilThreadTask {
                   <div class="post-footer-tags">
                     <span class="text-color-light text-small">标签</span><br/>
                     
-  <a class="tag tag--primary tag--small" href="https://pixeldin.github.io/zh/tags/%E7%BA%BF%E7%A8%8B/">线程</a>
+  <a class="tag tag--primary tag--small" href="/zh/tags/%E7%BA%BF%E7%A8%8B/">线程</a>
 
                   </div>
                 
               
             
-            
-<div class="post-actions-wrap">
-  <nav >
-    <ul class="post-actions post-action-nav">
+            <div class="post-actions-wrap">
+  
+      <nav >
+        <ul class="post-actions post-action-nav">
+          
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="/zh/2019/08/%E6%B5%85%E8%B0%88-java%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/" data-tooltip="浅谈 Java单例模式">
+              
+                  <i class="fa fa-angle-left"></i>
+                  <span class="hide-xs hide-sm text-small icon-ml">下一篇</span>
+                </a>
+            </li>
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="/zh/2019/03/java%E5%8F%8D%E5%B0%84%E6%9C%BA%E5%88%B6%E5%92%8C%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F%E7%9A%84%E5%BA%94%E7%94%A8/" data-tooltip="Java反射机制和代理模式的应用">
+              
+                  <span class="hide-xs hide-sm text-small icon-mr">上一篇</span>
+                  <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+          
+        </ul>
+      </nav>
+    <ul class="post-actions post-action-share" >
       
-        <li class="post-action">
-          
-            <a class="post-action-btn btn btn--default tooltip--top" href="https://pixeldin.github.io/zh/2019/08/%E6%B5%85%E8%B0%88-java%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/" data-tooltip="浅谈 Java单例模式" aria-label="后一篇: 浅谈 Java单例模式">
-          
-              <i class="fa fa-angle-left"></i>
-              <span class="hide-xs hide-sm text-small icon-ml">后一篇</span>
-            </a>
-        </li>
-        <li class="post-action">
-          
-            <a class="post-action-btn btn btn--default tooltip--top" href="https://pixeldin.github.io/zh/2019/03/java%E5%8F%8D%E5%B0%84%E6%9C%BA%E5%88%B6%E5%92%8C%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F%E7%9A%84%E5%BA%94%E7%94%A8/" data-tooltip="Java反射机制和代理模式的应用" aria-label="前一篇: Java反射机制和代理模式的应用">
-          
-              <span class="hide-xs hide-sm text-small icon-mr">前一篇</span>
-              <i class="fa fa-angle-right"></i>
-            </a>
-        </li>
       
+      <li class="post-action">
+        
+          <a class="post-action-btn btn btn--default" href="#">
+        
+          <i class="fa fa-list"></i>
+        </a>
+      </li>
     </ul>
-  </nav>
-<ul class="post-actions post-action-share" >
   
-  
-  <li class="post-action">
-    
-      <a class="post-action-btn btn btn--default" href="#top" aria-label="回到顶部">
-      <i class="fa fa-arrow-up" aria-hidden="true"></i>
-    
-    </a>
-  </li>
-</ul>
 </div>
 
-
             
-  
-
-
+              
+            
           </div>
         </article>
         <footer id="footer" class="main-content-wrap">
   <span class="copyrights">
-    &copy; 2023 <a href="https://github.com/pixeldin">pixeldin</a>. All Rights Reserved
+    &copy; 2024 <a href="https://github.com/pixeldin">pixeldin</a>. All Rights Reserved
   </span>
 </footer>
 
       </div>
-      <div id="bottom-bar" class="post-bottom-bar" data-behavior="1">
+      <div id="bottom-bar" class="post-bottom-bar" data-behavior="5">
+        <div class="post-actions-wrap">
+  
+      <nav >
+        <ul class="post-actions post-action-nav">
+          
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="/zh/2019/08/%E6%B5%85%E8%B0%88-java%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/" data-tooltip="浅谈 Java单例模式">
+              
+                  <i class="fa fa-angle-left"></i>
+                  <span class="hide-xs hide-sm text-small icon-ml">下一篇</span>
+                </a>
+            </li>
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="/zh/2019/03/java%E5%8F%8D%E5%B0%84%E6%9C%BA%E5%88%B6%E5%92%8C%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F%E7%9A%84%E5%BA%94%E7%94%A8/" data-tooltip="Java反射机制和代理模式的应用">
+              
+                  <span class="hide-xs hide-sm text-small icon-mr">上一篇</span>
+                  <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+          
+        </ul>
+      </nav>
+    <ul class="post-actions post-action-share" >
+      
+      
+      <li class="post-action">
         
-<div class="post-actions-wrap">
-  <nav >
-    <ul class="post-actions post-action-nav">
-      
-        <li class="post-action">
-          
-            <a class="post-action-btn btn btn--default tooltip--top" href="https://pixeldin.github.io/zh/2019/08/%E6%B5%85%E8%B0%88-java%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/" data-tooltip="浅谈 Java单例模式" aria-label="后一篇: 浅谈 Java单例模式">
-          
-              <i class="fa fa-angle-left"></i>
-              <span class="hide-xs hide-sm text-small icon-ml">后一篇</span>
-            </a>
-        </li>
-        <li class="post-action">
-          
-            <a class="post-action-btn btn btn--default tooltip--top" href="https://pixeldin.github.io/zh/2019/03/java%E5%8F%8D%E5%B0%84%E6%9C%BA%E5%88%B6%E5%92%8C%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F%E7%9A%84%E5%BA%94%E7%94%A8/" data-tooltip="Java反射机制和代理模式的应用" aria-label="前一篇: Java反射机制和代理模式的应用">
-          
-              <span class="hide-xs hide-sm text-small icon-mr">前一篇</span>
-              <i class="fa fa-angle-right"></i>
-            </a>
-        </li>
-      
+          <a class="post-action-btn btn btn--default" href="#">
+        
+          <i class="fa fa-list"></i>
+        </a>
+      </li>
     </ul>
-  </nav>
-<ul class="post-actions post-action-share" >
   
-  
-  <li class="post-action">
-    
-      <a class="post-action-btn btn btn--default" href="#top" aria-label="回到顶部">
-      <i class="fa fa-arrow-up" aria-hidden="true"></i>
-    
-    </a>
-  </li>
-</ul>
 </div>
 
-
       </div>
-      
-
+      <div id="share-options-bar" class="share-options-bar" data-behavior="5">
+  <i id="btn-close-shareoptions" class="fa fa-close"></i>
+  <ul class="share-options">
+    
+  </ul>
+</div>
+<div id="share-options-mask" class="share-options-mask"></div>
     </div>
     
     <div id="about">
   <div id="about-card">
     <div id="about-btn-close">
-      <i class="fa fa-times"></i>
+      <i class="fa fa-remove"></i>
     </div>
     
       <img id="about-card-picture" src="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/pig.jpg" alt="作者的图片" />
     
-    <h4 id="about-card-name">@Pixelpig</h4>
+    <h4 id="about-card-name">pixelpig</h4>
     
-      <div id="about-card-bio">Keep it simple, so as this bio <strong>:）</strong></div>
+      <div id="about-card-bio">With enthusiasm for open source and I am looking forward to be a better developer. Stay hungry, stay foolish <strong>:）</strong></div>
     
-    
-      <div id="about-card-job">
-        <i class="fa fa-briefcase"></i>
-        <br/>
-        Software Developer
-      </div>
     
     
       <div id="about-card-location">
-        <i class="fa fa-map-marker-alt"></i>
+        <i class="fa fa-map-marker"></i>
         <br/>
-        GuangDong - China
+        GuangDong - CHINA
       </div>
     
   </div>
@@ -726,16 +702,30 @@ public class MutilThreadTask {
 
 
     
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.1.0/highlight.min.js" integrity="sha512-z+/WWfyD5tccCukM4VvONpEtLmbAm5LDu7eKiyMQJ9m7OfPEDL7gENyDRL3Yfe8XAuGsS2fS4xSMnl6d30kqGQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js" integrity="sha256-/BfiIkHlHoVihZdc6TFuj7MmJ0TWcWsMXkeDFwhi0zw=" crossorigin="anonymous"></script>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js" integrity="sha512-uURl+ZXMBrF4AwGaWmEetzrd+J5/8NRkWAvJx5sbPSSuOb0bZLqf+tOzniObO00BjHa/dD7gub9oCGMLPQHtQA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
-
-<script src="https://pixeldin.github.io/js/script-d9gfx1pdvbfdgoahypizomgoamlbumvk1ugdifqa59ynqvdh8wfsinmt5oj.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.7/js/jquery.fancybox.min.js" integrity="sha256-GEAnjcTqVP+vBp3SSc8bEDQqvWAZMiHyUSIorrWwH50=" crossorigin="anonymous"></script>
 
 
+<script src="/js/script-pcw6v3xilnxydl1vddzazdverrnn9ctynvnxgwho987mfyqkuylcb1nlt.min.js"></script>
+
+
+<script lang="javascript">
+window.onload = updateMinWidth;
+window.onresize = updateMinWidth;
+document.getElementById("sidebar").addEventListener("transitionend", updateMinWidth);
+function updateMinWidth() {
+  var sidebar = document.getElementById("sidebar");
+  var main = document.getElementById("main");
+  main.style.minWidth = "";
+  var w1 = getComputedStyle(main).getPropertyValue("min-width");
+  var w2 = getComputedStyle(sidebar).getPropertyValue("width");
+  var w3 = getComputedStyle(sidebar).getPropertyValue("left");
+  main.style.minWidth = `calc(${w1} - ${w2} - ${w3})`;
+}
+</script>
 
 <script>
 $(document).ready(function() {
@@ -748,6 +738,11 @@ $(document).ready(function() {
   });
 });
 </script>
+
+
+  
+    
+  
 
 
 

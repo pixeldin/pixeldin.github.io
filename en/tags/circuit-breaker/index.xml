@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>circuit breaker on pixelpig.tech</title>
-    <link>https://pixeldin.github.io/en/tags/circuit-breaker/</link>
-    <description>Recent content in circuit breaker on pixelpig.tech</description>
+    <title>circuit breaker on pixelpig.space</title>
+    <link>/en/tags/circuit-breaker/</link>
+    <description>Recent content in circuit breaker on pixelpig.space</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 25 Feb 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://pixeldin.github.io/en/tags/circuit-breaker/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 25 Feb 2022 00:00:00 +0000</lastBuildDate><atom:link href="/en/tags/circuit-breaker/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Talk about Go: A simple implement of Circuit Breaker</title>
-      <link>https://pixeldin.github.io/en/2022/02/talk-about-go-a-simple-implement-of-circuit-breaker/</link>
+      <link>/en/2022/02/talk-about-go-a-simple-implement-of-circuit-breaker/</link>
       <pubDate>Fri, 25 Feb 2022 00:00:00 +0000</pubDate>
       
-      <guid>https://pixeldin.github.io/en/2022/02/talk-about-go-a-simple-implement-of-circuit-breaker/</guid>
+      <guid>/en/2022/02/talk-about-go-a-simple-implement-of-circuit-breaker/</guid>
       <description>&lt;p&gt;A simple implement of circuit breaker with Go, trigger for fail-fast and return quickly when your API comes to &lt;strong&gt;high error rate durning a period of time&lt;/strong&gt;.
 It&amp;rsquo;s a protection strategy that prevents the upstream from retrying repeatedly so that the downstream is overwhelmed.&lt;/p&gt;</description>
     </item>
