@@ -1,38 +1,38 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>raft on pixelpig.tech</title>
-    <link>https://pixeldin.github.io/en/tags/raft/</link>
-    <description>Recent content in raft on pixelpig.tech</description>
+    <title>raft on pixelpig.space</title>
+    <link>/en/tags/raft/</link>
+    <description>Recent content in raft on pixelpig.space</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 23 Jun 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://pixeldin.github.io/en/tags/raft/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 23 Jun 2022 00:00:00 +0000</lastBuildDate><atom:link href="/en/tags/raft/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Talk about etcd (Part3): the Communication Protocol between Client and Server</title>
-      <link>https://pixeldin.github.io/en/2022/06/talk-about-etcd-part3-the-communication-protocol-between-client-and-server/</link>
+      <link>/en/2022/06/talk-about-etcd-part3-the-communication-protocol-between-client-and-server/</link>
       <pubDate>Thu, 23 Jun 2022 00:00:00 +0000</pubDate>
       
-      <guid>https://pixeldin.github.io/en/2022/06/talk-about-etcd-part3-the-communication-protocol-between-client-and-server/</guid>
+      <guid>/en/2022/06/talk-about-etcd-part3-the-communication-protocol-between-client-and-server/</guid>
       <description>&lt;p&gt;As mentioned earlier, etcd implements each module through layers. This time we will enter the network part.
 Today, let’s talk about the communication way of etcd inside the server and client role.&lt;/p&gt;</description>
     </item>
     
     <item>
       <title>Talk about etcd (Part2): the raft consistency protocol</title>
-      <link>https://pixeldin.github.io/en/2022/06/talk-about-etcd-part2-the-raft-consistency-protocol/</link>
+      <link>/en/2022/06/talk-about-etcd-part2-the-raft-consistency-protocol/</link>
       <pubDate>Fri, 03 Jun 2022 00:00:00 +0000</pubDate>
       
-      <guid>https://pixeldin.github.io/en/2022/06/talk-about-etcd-part2-the-raft-consistency-protocol/</guid>
+      <guid>/en/2022/06/talk-about-etcd-part2-the-raft-consistency-protocol/</guid>
       <description>&lt;p&gt;The purpose of the consensus algorithm is to maintain a consensus conclusion when there is an abnormality in the machine cluster to ensure the provision of services to the outside world.&lt;/p&gt;
 &lt;p&gt;Today, let’s talk about the consensus mechanism of etcd, the raft protocol.&lt;/p&gt;</description>
     </item>
     
     <item>
       <title>Talk about etcd (Part1): Hierarchy Overview with bird&#39;s eye view</title>
-      <link>https://pixeldin.github.io/en/2022/05/talk-about-etcd-part1-hierarchy-overview-with-birds-eye-view/</link>
+      <link>/en/2022/05/talk-about-etcd-part1-hierarchy-overview-with-birds-eye-view/</link>
       <pubDate>Tue, 17 May 2022 00:00:00 +0000</pubDate>
       
-      <guid>https://pixeldin.github.io/en/2022/05/talk-about-etcd-part1-hierarchy-overview-with-birds-eye-view/</guid>
+      <guid>/en/2022/05/talk-about-etcd-part1-hierarchy-overview-with-birds-eye-view/</guid>
       <description>&lt;p&gt;etcd is very common in the field of microservices. This series will talk about what problems etcd solves and how it solves it for a step-by-step analysis.&lt;/p&gt;</description>
     </item>
     
