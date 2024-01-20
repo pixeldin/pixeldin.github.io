@@ -5,14 +5,15 @@
     <link>/en/tags/cv/</link>
     <description>Recent content in CV on pixelpig.space</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language><atom:link href="/en/tags/cv/index.xml" rel="self" type="application/rss+xml" />
+    <language>en-us</language>
+    <lastBuildDate>Sun, 21 Jan 2024 01:11:49 +0800</lastBuildDate><atom:link href="/en/tags/cv/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>简述</title>
-      <link>/en/1/01/%E7%AE%80%E8%BF%B0/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <title>About Pixelpig</title>
+      <link>/en/cv/about-pixelpig/</link>
+      <pubDate>Sun, 21 Jan 2024 01:11:49 +0800</pubDate>
       
-      <guid>/en/1/01/%E7%AE%80%E8%BF%B0/</guid>
-      <description>Hello there~</description>
+      <guid>/en/cv/about-pixelpig/</guid>
+      <description>&lt;p&gt;你好， 我是 Pixelpig。&lt;/p&gt;</description>
     </item>
     
   </channel>
