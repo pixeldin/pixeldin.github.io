@@ -1,171 +1,279 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Tags on pixelpig.tech</title>
-    <link>https://pixeldin.github.io/en/tags/</link>
-    <description>Recent content in Tags on pixelpig.tech</description>
+    <title>Tags on pixelpig.space</title>
+    <link>/en/tags/</link>
+    <description>Recent content in Tags on pixelpig.space</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 01 May 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://pixeldin.github.io/en/tags/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>CV</title>
-      <link>https://pixeldin.github.io/en/tags/cv/</link>
-      <pubDate>Mon, 01 May 2023 00:00:00 +0000</pubDate>
-      
-      <guid>https://pixeldin.github.io/en/tags/cv/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>简历</title>
-      <link>https://pixeldin.github.io/en/tags/%E7%AE%80%E5%8E%86/</link>
-      <pubDate>Mon, 01 May 2023 00:00:00 +0000</pubDate>
-      
-      <guid>https://pixeldin.github.io/en/tags/%E7%AE%80%E5%8E%86/</guid>
-      <description></description>
-    </item>
-    
+    <lastBuildDate>Sat, 04 Feb 2023 00:00:00 +0000</lastBuildDate><atom:link href="/en/tags/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>TypeScript</title>
-      <link>https://pixeldin.github.io/en/tags/typescript/</link>
+      <link>/en/tags/typescript/</link>
       <pubDate>Sat, 04 Feb 2023 00:00:00 +0000</pubDate>
       
-      <guid>https://pixeldin.github.io/en/tags/typescript/</guid>
+      <guid>/en/tags/typescript/</guid>
       <description></description>
     </item>
     
     <item>
       <title>distributed systems</title>
-      <link>https://pixeldin.github.io/en/tags/distributed-systems/</link>
+      <link>/en/tags/distributed-systems/</link>
       <pubDate>Thu, 23 Jun 2022 00:00:00 +0000</pubDate>
       
-      <guid>https://pixeldin.github.io/en/tags/distributed-systems/</guid>
+      <guid>/en/tags/distributed-systems/</guid>
       <description></description>
     </item>
     
     <item>
       <title>etcd</title>
-      <link>https://pixeldin.github.io/en/tags/etcd/</link>
+      <link>/en/tags/etcd/</link>
       <pubDate>Thu, 23 Jun 2022 00:00:00 +0000</pubDate>
       
-      <guid>https://pixeldin.github.io/en/tags/etcd/</guid>
+      <guid>/en/tags/etcd/</guid>
       <description></description>
     </item>
     
     <item>
       <title>raft</title>
-      <link>https://pixeldin.github.io/en/tags/raft/</link>
+      <link>/en/tags/raft/</link>
       <pubDate>Thu, 23 Jun 2022 00:00:00 +0000</pubDate>
       
-      <guid>https://pixeldin.github.io/en/tags/raft/</guid>
+      <guid>/en/tags/raft/</guid>
       <description></description>
     </item>
     
     <item>
       <title>false sharing</title>
-      <link>https://pixeldin.github.io/en/tags/false-sharing/</link>
+      <link>/en/tags/false-sharing/</link>
       <pubDate>Sat, 23 Apr 2022 00:00:00 +0000</pubDate>
       
-      <guid>https://pixeldin.github.io/en/tags/false-sharing/</guid>
+      <guid>/en/tags/false-sharing/</guid>
       <description></description>
     </item>
     
     <item>
       <title>object pool</title>
-      <link>https://pixeldin.github.io/en/tags/object-pool/</link>
+      <link>/en/tags/object-pool/</link>
       <pubDate>Sat, 23 Apr 2022 00:00:00 +0000</pubDate>
       
-      <guid>https://pixeldin.github.io/en/tags/object-pool/</guid>
+      <guid>/en/tags/object-pool/</guid>
       <description></description>
     </item>
     
     <item>
       <title>sync.Pool</title>
-      <link>https://pixeldin.github.io/en/tags/sync.pool/</link>
+      <link>/en/tags/sync.pool/</link>
       <pubDate>Sat, 23 Apr 2022 00:00:00 +0000</pubDate>
       
-      <guid>https://pixeldin.github.io/en/tags/sync.pool/</guid>
+      <guid>/en/tags/sync.pool/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Talk about Go</title>
-      <link>https://pixeldin.github.io/en/tags/talk-about-go/</link>
+      <link>/en/tags/talk-about-go/</link>
       <pubDate>Sat, 23 Apr 2022 00:00:00 +0000</pubDate>
       
-      <guid>https://pixeldin.github.io/en/tags/talk-about-go/</guid>
+      <guid>/en/tags/talk-about-go/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Goroutine</title>
-      <link>https://pixeldin.github.io/en/tags/goroutine/</link>
+      <link>/en/tags/goroutine/</link>
       <pubDate>Thu, 17 Mar 2022 00:00:00 +0000</pubDate>
       
-      <guid>https://pixeldin.github.io/en/tags/goroutine/</guid>
+      <guid>/en/tags/goroutine/</guid>
       <description></description>
     </item>
     
     <item>
       <title>pprof</title>
-      <link>https://pixeldin.github.io/en/tags/pprof/</link>
+      <link>/en/tags/pprof/</link>
       <pubDate>Thu, 17 Mar 2022 00:00:00 +0000</pubDate>
       
-      <guid>https://pixeldin.github.io/en/tags/pprof/</guid>
+      <guid>/en/tags/pprof/</guid>
       <description></description>
     </item>
     
     <item>
       <title>circuit breaker</title>
-      <link>https://pixeldin.github.io/en/tags/circuit-breaker/</link>
+      <link>/en/tags/circuit-breaker/</link>
       <pubDate>Fri, 25 Feb 2022 00:00:00 +0000</pubDate>
       
-      <guid>https://pixeldin.github.io/en/tags/circuit-breaker/</guid>
+      <guid>/en/tags/circuit-breaker/</guid>
       <description></description>
     </item>
     
     <item>
       <title>HA</title>
-      <link>https://pixeldin.github.io/en/tags/ha/</link>
+      <link>/en/tags/ha/</link>
       <pubDate>Thu, 23 Dec 2021 00:00:00 +0000</pubDate>
       
-      <guid>https://pixeldin.github.io/en/tags/ha/</guid>
+      <guid>/en/tags/ha/</guid>
       <description></description>
     </item>
     
     <item>
       <title>microservice</title>
-      <link>https://pixeldin.github.io/en/tags/microservice/</link>
+      <link>/en/tags/microservice/</link>
       <pubDate>Thu, 23 Dec 2021 00:00:00 +0000</pubDate>
       
-      <guid>https://pixeldin.github.io/en/tags/microservice/</guid>
+      <guid>/en/tags/microservice/</guid>
       <description></description>
     </item>
     
     <item>
       <title>process communication</title>
-      <link>https://pixeldin.github.io/en/tags/process-communication/</link>
+      <link>/en/tags/process-communication/</link>
       <pubDate>Thu, 23 Dec 2021 00:00:00 +0000</pubDate>
       
-      <guid>https://pixeldin.github.io/en/tags/process-communication/</guid>
+      <guid>/en/tags/process-communication/</guid>
       <description></description>
     </item>
     
     <item>
       <title>gin</title>
-      <link>https://pixeldin.github.io/en/tags/gin/</link>
+      <link>/en/tags/gin/</link>
       <pubDate>Fri, 15 Oct 2021 00:00:00 +0000</pubDate>
       
-      <guid>https://pixeldin.github.io/en/tags/gin/</guid>
+      <guid>/en/tags/gin/</guid>
       <description></description>
     </item>
     
     <item>
       <title>interceptor</title>
-      <link>https://pixeldin.github.io/en/tags/interceptor/</link>
+      <link>/en/tags/interceptor/</link>
       <pubDate>Fri, 15 Oct 2021 00:00:00 +0000</pubDate>
       
-      <guid>https://pixeldin.github.io/en/tags/interceptor/</guid>
+      <guid>/en/tags/interceptor/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>errgroup</title>
+      <link>/en/tags/errgroup/</link>
+      <pubDate>Tue, 29 Jun 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/en/tags/errgroup/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>HTTP header</title>
+      <link>/en/tags/http-header/</link>
+      <pubDate>Tue, 29 Jun 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/en/tags/http-header/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>文件读写</title>
+      <link>/en/tags/%E6%96%87%E4%BB%B6%E8%AF%BB%E5%86%99/</link>
+      <pubDate>Tue, 29 Jun 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/en/tags/%E6%96%87%E4%BB%B6%E8%AF%BB%E5%86%99/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Concurrent</title>
+      <link>/en/tags/concurrent/</link>
+      <pubDate>Mon, 18 Jan 2021 03:40:05 +0800</pubDate>
+      
+      <guid>/en/tags/concurrent/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>生产者消费者</title>
+      <link>/en/tags/%E7%94%9F%E4%BA%A7%E8%80%85%E6%B6%88%E8%B4%B9%E8%80%85/</link>
+      <pubDate>Mon, 18 Jan 2021 03:40:05 +0800</pubDate>
+      
+      <guid>/en/tags/%E7%94%9F%E4%BA%A7%E8%80%85%E6%B6%88%E8%B4%B9%E8%80%85/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>管道通信</title>
+      <link>/en/tags/%E7%AE%A1%E9%81%93%E9%80%9A%E4%BF%A1/</link>
+      <pubDate>Mon, 18 Jan 2021 03:40:05 +0800</pubDate>
+      
+      <guid>/en/tags/%E7%AE%A1%E9%81%93%E9%80%9A%E4%BF%A1/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>堆栈</title>
+      <link>/en/tags/%E5%A0%86%E6%A0%88/</link>
+      <pubDate>Thu, 16 Apr 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/en/tags/%E5%A0%86%E6%A0%88/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>指针</title>
+      <link>/en/tags/%E6%8C%87%E9%92%88/</link>
+      <pubDate>Thu, 16 Apr 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/en/tags/%E6%8C%87%E9%92%88/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>errors</title>
+      <link>/en/tags/errors/</link>
+      <pubDate>Sun, 15 Mar 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/en/tags/errors/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>cmd</title>
+      <link>/en/tags/cmd/</link>
+      <pubDate>Thu, 20 Feb 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/en/tags/cmd/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>flag</title>
+      <link>/en/tags/flag/</link>
+      <pubDate>Thu, 20 Feb 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/en/tags/flag/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>后端</title>
+      <link>/en/tags/%E5%90%8E%E7%AB%AF/</link>
+      <pubDate>Sun, 11 Aug 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/en/tags/%E5%90%8E%E7%AB%AF/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>线程</title>
+      <link>/en/tags/%E7%BA%BF%E7%A8%8B/</link>
+      <pubDate>Mon, 15 Jul 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/en/tags/%E7%BA%BF%E7%A8%8B/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>CV</title>
+      <link>/en/tags/cv/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/en/tags/cv/</guid>
       <description></description>
     </item>
     

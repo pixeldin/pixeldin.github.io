@@ -2,31 +2,11 @@
 <html lang="en-us">
   <head>
     
-    <script type="application/ld+json">
-
-{  
-  "@context":"http://schema.org",
-  "@type":"Website",
-  "@id":"https:\/\/pixeldin.github.io\/",
-  "author": {
-    "@type": "Person",
-    "name": "@Pixelpig",
-    
-    "image": "https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/pig.jpg"
-    
-  },
-  "name":"pixelpig.tech",
-  "description":"\u003cp\u003eA simple implement of circuit breaker with Go, trigger for fail-fast and return quickly when your API comes to \u003cstrong\u003ehigh error rate durning a period of time\u003c\/strong\u003e.\nIt\u0026rsquo;s a protection strategy that prevents the upstream from retrying repeatedly so that the downstream is overwhelmed.\u003c\/p\u003e",
-  "url":"https:\/\/pixeldin.github.io\/en\/2022\/02\/talk-about-go-a-simple-implement-of-circuit-breaker\/",
-  "keywords":"[]"
-}
-
-</script>
     <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="generator" content="Hugo 0.111.3 with theme Tranquilpeak 0.5.3-BETA">
-<meta name="author" content="@Pixelpig">
+<meta name="generator" content="Hugo 0.80.0 with theme Tranquilpeak 0.4.8-BETA">
+<meta name="author" content="pixelpig">
 <meta name="keywords" content="">
 <meta name="description" content="A simple implement of circuit breaker with Go, trigger for fail-fast and return quickly when your API comes to high error rate durning a period of time.
 It&rsquo;s a protection strategy that prevents the upstream from retrying repeatedly so that the downstream is overwhelmed.">
@@ -37,9 +17,9 @@ It&rsquo;s a protection strategy that prevents the upstream from retrying repeat
 <meta property="og:type" content="article">
 <meta property="og:title" content="Talk about Go: A simple implement of Circuit Breaker">
 <meta name="twitter:title" content="Talk about Go: A simple implement of Circuit Breaker">
-<meta property="og:url" content="https://pixeldin.github.io/en/2022/02/talk-about-go-a-simple-implement-of-circuit-breaker/">
-<meta property="twitter:url" content="https://pixeldin.github.io/en/2022/02/talk-about-go-a-simple-implement-of-circuit-breaker/">
-<meta property="og:site_name" content="pixelpig.tech">
+<meta property="og:url" content="/en/2022/02/talk-about-go-a-simple-implement-of-circuit-breaker/">
+<meta property="twitter:url" content="/en/2022/02/talk-about-go-a-simple-implement-of-circuit-breaker/">
+<meta property="og:site_name" content="pixelpig.space">
 <meta property="og:description" content="A simple implement of circuit breaker with Go, trigger for fail-fast and return quickly when your API comes to high error rate durning a period of time.
 It&rsquo;s a protection strategy that prevents the upstream from retrying repeatedly so that the downstream is overwhelmed.">
 <meta name="twitter:description" content="A simple implement of circuit breaker with Go, trigger for fail-fast and return quickly when your API comes to high error rate durning a period of time.
@@ -81,12 +61,12 @@ It&rsquo;s a protection strategy that prevents the upstream from retrying repeat
 
 
 
+
+
+
+
   <meta property="og:image" content="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/pig.jpg">
   <meta property="twitter:image" content="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/pig.jpg">
-
-
-
-
 
 
     <title>Talk about Go: A simple implement of Circuit Breaker</title>
@@ -96,15 +76,15 @@ It&rsquo;s a protection strategy that prevents the upstream from retrying repeat
 
     
 
-    <link rel="canonical" href="https://pixeldin.github.io/en/2022/02/talk-about-go-a-simple-implement-of-circuit-breaker/">
+    <link rel="canonical" href="/en/2022/02/talk-about-go-a-simple-implement-of-circuit-breaker/">
 
     
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" integrity="sha512-H9jrZiiopUdsLpg94A333EfumgUBpO9MdbxStdeITo+KEIMaNfHNvwyjjDJb+ERPaRS6DpyRlKbvPUasNItRyw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/jquery.fancybox.min.css" integrity="sha256-vuXZ9LGmmwtjqFX1F+EKin1ThZMub58gKULUyf0qECk=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/helpers/jquery.fancybox-thumbs.min.css" integrity="sha256-SEa4XYAHihTcEP1f5gARTB2K26Uk8PsndQYHQC1f4jU=" crossorigin="anonymous" />
     
     
-    
-    <link rel="stylesheet" href="https://pixeldin.github.io/css/style-fneuerdunt9vf6vafpewt2nttopqa9hdugoae6mfs7phtuibtq6qjxkds96.min.css" />
+    <link rel="stylesheet" href="/css/style-a2ye1m9gwuhplkfulh7wjm6oz6xbbggcrapph79uf9g8howmnzp9iqxaluy.min.css" />
     
     
 
@@ -116,15 +96,15 @@ It&rsquo;s a protection strategy that prevents the upstream from retrying repeat
 
   <body>
     <div id="blog">
-      <header id="header" data-behavior="1">
+      <header id="header" data-behavior="4">
   <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
   <div class="header-title">
-    <a class="header-title-link" href="https://pixeldin.github.io/en/" aria-label="Go to homepage">pixelpig.tech</a>
+    <a class="header-title-link" href="/en/">pixelpig.space</a>
   </div>
   
     
       <a class="header-right-picture "
-         href="https://pixeldin.github.io/#about" aria-label="Open the link: /#about">
+         href="/#about">
     
     
     
@@ -136,16 +116,16 @@ It&rsquo;s a protection strategy that prevents the upstream from retrying repeat
   
 </header>
 
-      <nav id="sidebar" data-behavior="1">
+      <nav id="sidebar" data-behavior="4">
   <div class="sidebar-container">
     
       <div class="sidebar-profile">
-        <a href="https://pixeldin.github.io/#about" aria-label="Read more about the author">
+        <a href="/#about">
           <img class="sidebar-profile-picture" src="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/pig.jpg" alt="Author&#39;s picture" />
         </a>
-        <h4 class="sidebar-profile-name">@Pixelpig</h4>
+        <h4 class="sidebar-profile-name">pixelpig</h4>
         
-          <h5 class="sidebar-profile-bio">Keep it simple, so as this bio <strong>:）</strong></h5>
+          <h5 class="sidebar-profile-bio">Keep it simple, so as this bio :)</h5>
         
       </div>
     
@@ -153,7 +133,7 @@ It&rsquo;s a protection strategy that prevents the upstream from retrying repeat
       
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="https://pixeldin.github.io/zh" title="简体中文">
+      <a class="sidebar-button-link " href="/zh">
     
       <i class="sidebar-button-icon fa fa-lg fa-language"></i>
       
@@ -163,7 +143,7 @@ It&rsquo;s a protection strategy that prevents the upstream from retrying repeat
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="https://pixeldin.github.io/en/" title="Home">
+      <a class="sidebar-button-link " href="/en/">
     
       <i class="sidebar-button-icon fa fa-lg fa-home"></i>
       
@@ -173,7 +153,7 @@ It&rsquo;s a protection strategy that prevents the upstream from retrying repeat
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="https://pixeldin.github.io/en/categories" title="Categories">
+      <a class="sidebar-button-link " href="/en/categories">
     
       <i class="sidebar-button-icon fa fa-lg fa-bookmark"></i>
       
@@ -183,7 +163,7 @@ It&rsquo;s a protection strategy that prevents the upstream from retrying repeat
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="https://pixeldin.github.io/en/tags" title="Tags">
+      <a class="sidebar-button-link " href="/en/tags">
     
       <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
       
@@ -193,7 +173,7 @@ It&rsquo;s a protection strategy that prevents the upstream from retrying repeat
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="https://pixeldin.github.io/en/archives" title="Archives">
+      <a class="sidebar-button-link " href="/en/archives">
     
       <i class="sidebar-button-icon fa fa-lg fa-archive"></i>
       
@@ -203,9 +183,9 @@ It&rsquo;s a protection strategy that prevents the upstream from retrying repeat
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="https://pixeldin.github.io/en/#about" title="About me">
+      <a class="sidebar-button-link " href="/en/#about">
     
-      <i class="sidebar-button-icon fa fa-lg fa-question"></i>
+      <i class="sidebar-button-icon fa fa-lg fa-question-circle"></i>
       
       <span class="sidebar-button-desc">About me</span>
     </a>
@@ -213,35 +193,32 @@ It&rsquo;s a protection strategy that prevents the upstream from retrying repeat
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="https://twitter.com/pixelpigpigpig/" target="_blank" rel="noopener" title="Twitter">
+      <a class="sidebar-button-link " href="https://twitter.com/pixelpigpigpig/" target="_blank" rel="noopener">
     
-      <i class="sidebar-button-icon fab fa-lg fa-twitter"></i>
+      <i class="sidebar-button-icon fa fa-lg fa-twitter"></i>
       
-      <span class="sidebar-button-desc">twitter</span>
+      <span class="sidebar-button-desc">Twitter</span>
     </a>
   </li>
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="https://github.com/pixeldin" target="_blank" rel="noopener" title="pixeldin">
+      <a class="sidebar-button-link " href="https://github.com/pixeldin" target="_blank" rel="noopener">
     
-      <i class="sidebar-button-icon fab fa-lg fa-github-alt"></i>
+      <i class="sidebar-button-icon fa fa-lg fa-github-alt"></i>
       
       <span class="sidebar-button-desc">pixeldin</span>
     </a>
   </li>
 
 
-
     </ul>
     <ul class="sidebar-buttons">
       
 
-
     </ul>
     <ul class="sidebar-buttons">
       
-
 
     </ul>
   </div>
@@ -249,23 +226,23 @@ It&rsquo;s a protection strategy that prevents the upstream from retrying repeat
 
       
 
-      <div id="main" data-behavior="1"
+      <div id="main" data-behavior="4"
         class="
                hasCoverMetaIn
                ">
-        <article class="post" id="top">
+        <article class="post" itemscope itemType="http://schema.org/BlogPosting">
           
           
             <div class="post-header main-content-wrap text-center">
   
-    <h1 class="post-title">
+    <h1 class="post-title" itemprop="headline">
       Talk about Go: A simple implement of Circuit Breaker
     </h1>
   
   
   <div class="postShorten-meta post-meta">
     
-      <time datetime="2022-02-25T00:00:00Z">
+      <time itemprop="datePublished" datetime="2022-02-25T00:00:00Z">
         
   February 25, 2022
 
@@ -276,9 +253,9 @@ It&rsquo;s a protection strategy that prevents the upstream from retrying repeat
   
     <span>in</span>
     
-      <a class="category-link" href="https://pixeldin.github.io/en/categories/go">Go</a>, 
+      <a class="category-link" href="/en/categories/go">Go</a>, 
     
-      <a class="category-link" href="https://pixeldin.github.io/en/categories/middleware">Middleware</a>
+      <a class="category-link" href="/en/categories/middleware">Middleware</a>
     
   
 
@@ -286,7 +263,7 @@ It&rsquo;s a protection strategy that prevents the upstream from retrying repeat
 
 </div>
           
-          <div class="post-content markdown">
+          <div class="post-content markdown" itemprop="articleBody">
             <div class="main-content-wrap">
               <p>A simple implement of circuit breaker with Go, trigger for fail-fast and return quickly when your API comes to <strong>high error rate durning a period of time</strong>.
 It&rsquo;s a protection strategy that prevents the upstream from retrying repeatedly so that the downstream is overwhelmed.</p>
@@ -321,123 +298,123 @@ I believe you will understand the concept of slice-oriented. Many common compone
 <p>Let&rsquo;s look at the code implementation part.</p>
 <h3 id="interface-definition">Interface definition</h3>
 <p>Based on the characteristics of the circuit breaker, first define the circuit breaker interface ``CircuitBreaker```, where the key refers to the API collected by the circuit breaker, which can be the request identifier on the link to distinguish different requests.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">CircuitBreaker</span> <span style="color:#66d9ef">interface</span> {
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// check if your api(key) allow to access
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#a6e22e">CanAccess</span>(<span style="color:#a6e22e">key</span> <span style="color:#66d9ef">string</span>) <span style="color:#66d9ef">bool</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// mark failed api result
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#a6e22e">Failed</span>(<span style="color:#a6e22e">key</span> <span style="color:#66d9ef">string</span>)
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// mark succeed api result
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#a6e22e">Succeed</span>(<span style="color:#a6e22e">key</span> <span style="color:#66d9ef">string</span>)
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><h3 id="interface-implement">Interface implement</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">CircuitBreaker</span> <span style="color:#66d9ef">interface</span> {
+    <span style="color:#75715e">// check if your api(key) allow to access
+</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">CanAccess</span>(<span style="color:#a6e22e">key</span> <span style="color:#66d9ef">string</span>) <span style="color:#66d9ef">bool</span>
+    <span style="color:#75715e">// mark failed api result
+</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">Failed</span>(<span style="color:#a6e22e">key</span> <span style="color:#66d9ef">string</span>)
+    <span style="color:#75715e">// mark succeed api result
+</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">Succeed</span>(<span style="color:#a6e22e">key</span> <span style="color:#66d9ef">string</span>)
+}
+</code></pre></div><h3 id="interface-implement">Interface implement</h3>
 <p>Based on several functional characteristics agreed upon above, create ``CircuitBreakerImp``` as the implementation body</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">CircuitBreakerImp</span> <span style="color:#66d9ef">struct</span> {
-</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">lock</span>            <span style="color:#a6e22e">sync</span>.<span style="color:#a6e22e">RWMutex</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">apiMap</span>          <span style="color:#66d9ef">map</span>[<span style="color:#66d9ef">string</span>]<span style="color:#f92672">*</span><span style="color:#a6e22e">apiSnapShop</span> 
-</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">minCheck</span>        <span style="color:#66d9ef">int64</span>                   
-</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">cbkErrRate</span>      <span style="color:#66d9ef">float64</span>                 
-</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">recoverInterval</span> <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Duration</span>           
-</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">roundInterval</span>   <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Duration</span>           
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>The <code>apiMap</code> of the circuit breaker implementation body mainly stores the list of collection APIs, which is used to represent the overall snapshot of each API collected at the current stage.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">apiSnapShop</span> <span style="color:#66d9ef">struct</span> {
-</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">isPaused</span>   <span style="color:#66d9ef">bool</span> 
-</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">errCount</span>   <span style="color:#66d9ef">int64</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">totalCount</span> <span style="color:#66d9ef">int64</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">accessLast</span> <span style="color:#66d9ef">int64</span> <span style="color:#75715e">// The last access time of the api
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#a6e22e">roundLast</span>  <span style="color:#66d9ef">int64</span> <span style="color:#75715e">// fuse cycle time
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>}
-</span></span></code></pre></div><hr>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">CircuitBreakerImp</span> <span style="color:#66d9ef">struct</span> {
+    <span style="color:#a6e22e">lock</span>            <span style="color:#a6e22e">sync</span>.<span style="color:#a6e22e">RWMutex</span>
+    <span style="color:#a6e22e">apiMap</span>          <span style="color:#66d9ef">map</span>[<span style="color:#66d9ef">string</span>]<span style="color:#f92672">*</span><span style="color:#a6e22e">apiSnapShop</span> 
+    <span style="color:#a6e22e">minCheck</span>        <span style="color:#66d9ef">int64</span>                   
+    <span style="color:#a6e22e">cbkErrRate</span>      <span style="color:#66d9ef">float64</span>                 
+    <span style="color:#a6e22e">recoverInterval</span> <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Duration</span>           
+    <span style="color:#a6e22e">roundInterval</span>   <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Duration</span>           
+}
+</code></pre></div><p>The <code>apiMap</code> of the circuit breaker implementation body mainly stores the list of collection APIs, which is used to represent the overall snapshot of each API collected at the current stage.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">apiSnapShop</span> <span style="color:#66d9ef">struct</span> {
+    <span style="color:#a6e22e">isPaused</span>   <span style="color:#66d9ef">bool</span> 
+    <span style="color:#a6e22e">errCount</span>   <span style="color:#66d9ef">int64</span>
+    <span style="color:#a6e22e">totalCount</span> <span style="color:#66d9ef">int64</span>
+
+    <span style="color:#a6e22e">accessLast</span> <span style="color:#66d9ef">int64</span> <span style="color:#75715e">// The last access time of the api
+</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">roundLast</span>  <span style="color:#66d9ef">int64</span> <span style="color:#75715e">// fuse cycle time
+</span><span style="color:#75715e"></span>}
+</code></pre></div><hr>
 <p><strong>Circuit breaker status</strong>, based on each failed request, the request snapshot will be stored in the apiMap of the current <code>CircuitBreakerImp</code> instance, so the implementation of the <code>IsBreak()</code> interface is relatively Simple, just return its status directly:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">c</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">CircuitBreakerImp</span>) <span style="color:#a6e22e">IsBreak</span>(<span style="color:#a6e22e">key</span> <span style="color:#66d9ef">string</span>) <span style="color:#66d9ef">bool</span> {
-</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">lock</span>.<span style="color:#a6e22e">RLock</span>()
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">defer</span> <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">lock</span>.<span style="color:#a6e22e">RUnlock</span>()
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// Find out whether the current key (API) has reached a fuse
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">api</span>, <span style="color:#a6e22e">ok</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">apiMap</span>[<span style="color:#a6e22e">key</span>]; <span style="color:#a6e22e">ok</span> {
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">api</span>.<span style="color:#a6e22e">isPaused</span>
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">false</span>
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><hr>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">c</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">CircuitBreakerImp</span>) <span style="color:#a6e22e">IsBreak</span>(<span style="color:#a6e22e">key</span> <span style="color:#66d9ef">string</span>) <span style="color:#66d9ef">bool</span> {
+    <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">lock</span>.<span style="color:#a6e22e">RLock</span>()
+    <span style="color:#66d9ef">defer</span> <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">lock</span>.<span style="color:#a6e22e">RUnlock</span>()
+
+    <span style="color:#75715e">// Find out whether the current key (API) has reached a fuse
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">api</span>, <span style="color:#a6e22e">ok</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">apiMap</span>[<span style="color:#a6e22e">key</span>]; <span style="color:#a6e22e">ok</span> {
+        <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">api</span>.<span style="color:#a6e22e">isPaused</span>
+    }
+    <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">false</span>
+}
+</code></pre></div><hr>
 <p><strong>Access record</strong>，Every time the gateway receives a request, it will report the number of interface accesses and the information on whether the return is successful or not to the circuit breaker at the origin of the request and the return of the request, as shown in the AOP picture above, the <code>accessed()</code> function is used to report each time the API is requested.<br>
 In addition, as mentioned earlier, the circuit breaker has a <strong>reset period</strong>, that is, after how long the interface will be accessed again, its snapshot count will be reset. Therefore, at each <code>access</code>, an additional judgment is required. Used to reset API counts.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#75715e">// accessed record
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">c</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">CircuitBreakerImp</span>) <span style="color:#a6e22e">accessed</span>(<span style="color:#a6e22e">api</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">apiSnapShop</span>) {
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">/*
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">        whether now it is older than the cycle time?
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">        - yes: reset counter
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">        - no: update counter
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">    */</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">now</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Now</span>().<span style="color:#a6e22e">UnixNano</span>()
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">util</span>.<span style="color:#a6e22e">Abs64</span>(<span style="color:#a6e22e">now</span><span style="color:#f92672">-</span><span style="color:#a6e22e">api</span>.<span style="color:#a6e22e">roundLast</span>) &gt; int64(<span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">roundInterval</span>) {
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">api</span>.<span style="color:#a6e22e">roundLast</span> <span style="color:#f92672">!=</span> <span style="color:#ae81ff">0</span> {            
-</span></span><span style="display:flex;"><span>            <span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Warnf</span>(<span style="color:#e6db74">&#34;# Trigger circuit breaker windows，reset API counter!&#34;</span>)
-</span></span><span style="display:flex;"><span>        }
-</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">api</span>.<span style="color:#a6e22e">errCount</span> = <span style="color:#ae81ff">0</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">api</span>.<span style="color:#a6e22e">totalCount</span> = <span style="color:#ae81ff">0</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">api</span>.<span style="color:#a6e22e">roundLast</span> = <span style="color:#a6e22e">now</span>
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">api</span>.<span style="color:#a6e22e">totalCount</span><span style="color:#f92672">++</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">api</span>.<span style="color:#a6e22e">accessLast</span> = <span style="color:#a6e22e">now</span>
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><hr>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#75715e">// accessed record
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">c</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">CircuitBreakerImp</span>) <span style="color:#a6e22e">accessed</span>(<span style="color:#a6e22e">api</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">apiSnapShop</span>) {
+    <span style="color:#75715e">/*
+</span><span style="color:#75715e">        whether now it is older than the cycle time?
+</span><span style="color:#75715e">        - yes: reset counter
+</span><span style="color:#75715e">        - no: update counter
+</span><span style="color:#75715e">    */</span>
+    <span style="color:#a6e22e">now</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Now</span>().<span style="color:#a6e22e">UnixNano</span>()
+    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">util</span>.<span style="color:#a6e22e">Abs64</span>(<span style="color:#a6e22e">now</span><span style="color:#f92672">-</span><span style="color:#a6e22e">api</span>.<span style="color:#a6e22e">roundLast</span>) &gt; int64(<span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">roundInterval</span>) {
+        <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">api</span>.<span style="color:#a6e22e">roundLast</span> <span style="color:#f92672">!=</span> <span style="color:#ae81ff">0</span> {            
+            <span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Warnf</span>(<span style="color:#e6db74">&#34;# Trigger circuit breaker windows，reset API counter!&#34;</span>)
+        }
+        <span style="color:#a6e22e">api</span>.<span style="color:#a6e22e">errCount</span> = <span style="color:#ae81ff">0</span>
+        <span style="color:#a6e22e">api</span>.<span style="color:#a6e22e">totalCount</span> = <span style="color:#ae81ff">0</span>
+        <span style="color:#a6e22e">api</span>.<span style="color:#a6e22e">roundLast</span> = <span style="color:#a6e22e">now</span>
+    }
+    <span style="color:#a6e22e">api</span>.<span style="color:#a6e22e">totalCount</span><span style="color:#f92672">++</span>
+    <span style="color:#a6e22e">api</span>.<span style="color:#a6e22e">accessLast</span> = <span style="color:#a6e22e">now</span>
+}
+</code></pre></div><hr>
 <p><strong>report success</strong>，After the gateway receives the successful response code, it will record its success. Another detail is why the <code>accessed()</code> function above does not need to add a mutex, it is actually needed, but in <code>accessed()</code> function is added at the upper level of the call, that is, in the subsequent <code>Successd()</code> and <code>Failed()</code> function bodies.
 Let&rsquo;s first look at the implementation of <code>Successd()</code>, <strong>If the current api is recorded in the circuit breaker (it has failed), then close the circuit breaker after success and give the request</strong>, even if the api fails again, it will be based on Request error rate redistribution circuit breaker.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#75715e">/*
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">    Succeed record
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">    Only collect which api in global map,
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">    check whether is&#39;s paused:
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">    - yes, cancel the paused breaker state.
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">*/</span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">c</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">CircuitBreakerImp</span>) <span style="color:#a6e22e">Succeed</span>(<span style="color:#a6e22e">key</span> <span style="color:#66d9ef">string</span>) {
-</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">lock</span>.<span style="color:#a6e22e">Lock</span>()
-</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">lock</span>.<span style="color:#a6e22e">Unlock</span>()
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">api</span>, <span style="color:#a6e22e">ok</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">apiMap</span>[<span style="color:#a6e22e">key</span>]; <span style="color:#a6e22e">ok</span> {
-</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">accessed</span>(<span style="color:#a6e22e">api</span>)
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">api</span>.<span style="color:#a6e22e">isPaused</span> {
-</span></span><span style="display:flex;"><span>            <span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Warnf</span>(<span style="color:#e6db74">&#34;# Trigger API: %v access succeed.&#34;</span>, <span style="color:#a6e22e">key</span>)
-</span></span><span style="display:flex;"><span>            <span style="color:#a6e22e">api</span>.<span style="color:#a6e22e">isPaused</span> = <span style="color:#66d9ef">false</span>
-</span></span><span style="display:flex;"><span>        }
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><hr>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#75715e">/*
+</span><span style="color:#75715e">    Succeed record
+</span><span style="color:#75715e">    Only collect which api in global map,
+</span><span style="color:#75715e">    check whether is&#39;s paused:
+</span><span style="color:#75715e">    - yes, cancel the paused breaker state.
+</span><span style="color:#75715e">*/</span>
+<span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">c</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">CircuitBreakerImp</span>) <span style="color:#a6e22e">Succeed</span>(<span style="color:#a6e22e">key</span> <span style="color:#66d9ef">string</span>) {
+    <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">lock</span>.<span style="color:#a6e22e">Lock</span>()
+    <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">lock</span>.<span style="color:#a6e22e">Unlock</span>()
+
+    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">api</span>, <span style="color:#a6e22e">ok</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">apiMap</span>[<span style="color:#a6e22e">key</span>]; <span style="color:#a6e22e">ok</span> {
+        <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">accessed</span>(<span style="color:#a6e22e">api</span>)
+        <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">api</span>.<span style="color:#a6e22e">isPaused</span> {
+            <span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Warnf</span>(<span style="color:#e6db74">&#34;# Trigger API: %v access succeed.&#34;</span>, <span style="color:#a6e22e">key</span>)
+            <span style="color:#a6e22e">api</span>.<span style="color:#a6e22e">isPaused</span> = <span style="color:#66d9ef">false</span>
+        }
+    }
+}
+</code></pre></div><hr>
 <p><strong>Reporting failed access</strong>, the logic of counting failures is relatively simple. For the interface that fails for the first time, add it to the health check map. For the interface that has been recorded, it is necessary to judge the error rate and update it in time.<br>
 In addition, the premise of triggering the circuit breaker is the request The amount has to reach a certain threshold.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#75715e">/*
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">    Failed record
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">    whether exists in api map,
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">        - yes:
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">            - record access and error count
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">            - the percentage of failures reaches the threshold? yes, mark as paused
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">        - no:
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">            update in global map for access and error count
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">*/</span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">c</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">CircuitBreakerImp</span>) <span style="color:#a6e22e">Failed</span>(<span style="color:#a6e22e">key</span> <span style="color:#66d9ef">string</span>) {
-</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">lock</span>.<span style="color:#a6e22e">Lock</span>()
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">defer</span> <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">lock</span>.<span style="color:#a6e22e">Unlock</span>()
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">api</span>, <span style="color:#a6e22e">ok</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">apiMap</span>[<span style="color:#a6e22e">key</span>]; <span style="color:#a6e22e">ok</span> {
-</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">accessed</span>(<span style="color:#a6e22e">api</span>)
-</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">api</span>.<span style="color:#a6e22e">errCount</span><span style="color:#f92672">++</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">errRate</span> <span style="color:#f92672">:=</span> float64(<span style="color:#a6e22e">api</span>.<span style="color:#a6e22e">errCount</span>) <span style="color:#f92672">/</span> float64(<span style="color:#a6e22e">api</span>.<span style="color:#a6e22e">totalCount</span>)
-</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// access count reaches the threshold &amp;&amp; failures rate above the fuse limit
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">api</span>.<span style="color:#a6e22e">totalCount</span> &gt; <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">minCheck</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#a6e22e">errRate</span> &gt; <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">cbkErrRate</span> {
-</span></span><span style="display:flex;"><span>            <span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Warnf</span>(<span style="color:#e6db74">&#34;# Trigger CBK！: %v, total: %v, &#34;</span><span style="color:#f92672">+</span>
-</span></span><span style="display:flex;"><span>                <span style="color:#e6db74">&#34;errRate: %.3f.&#34;</span>, <span style="color:#a6e22e">key</span>, <span style="color:#a6e22e">api</span>.<span style="color:#a6e22e">totalCount</span>, <span style="color:#a6e22e">errRate</span>)
-</span></span><span style="display:flex;"><span>            <span style="color:#a6e22e">api</span>.<span style="color:#a6e22e">isPaused</span> = <span style="color:#66d9ef">true</span>
-</span></span><span style="display:flex;"><span>        }
-</span></span><span style="display:flex;"><span>    } <span style="color:#66d9ef">else</span> {
-</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">api</span> <span style="color:#f92672">:=</span> <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">apiSnapShop</span>{}
-</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">accessed</span>(<span style="color:#a6e22e">api</span>)
-</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">api</span>.<span style="color:#a6e22e">errCount</span><span style="color:#f92672">++</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">apiMap</span>[<span style="color:#a6e22e">key</span>] = <span style="color:#a6e22e">api</span>
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><hr>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#75715e">/*
+</span><span style="color:#75715e">    Failed record
+</span><span style="color:#75715e">    whether exists in api map,
+</span><span style="color:#75715e">        - yes:
+</span><span style="color:#75715e">            - record access and error count
+</span><span style="color:#75715e">            - the percentage of failures reaches the threshold? yes, mark as paused
+</span><span style="color:#75715e">        - no:
+</span><span style="color:#75715e">            update in global map for access and error count
+</span><span style="color:#75715e">*/</span>
+<span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">c</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">CircuitBreakerImp</span>) <span style="color:#a6e22e">Failed</span>(<span style="color:#a6e22e">key</span> <span style="color:#66d9ef">string</span>) {
+    <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">lock</span>.<span style="color:#a6e22e">Lock</span>()
+    <span style="color:#66d9ef">defer</span> <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">lock</span>.<span style="color:#a6e22e">Unlock</span>()
+
+    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">api</span>, <span style="color:#a6e22e">ok</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">apiMap</span>[<span style="color:#a6e22e">key</span>]; <span style="color:#a6e22e">ok</span> {
+        <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">accessed</span>(<span style="color:#a6e22e">api</span>)
+        <span style="color:#a6e22e">api</span>.<span style="color:#a6e22e">errCount</span><span style="color:#f92672">++</span>
+
+        <span style="color:#a6e22e">errRate</span> <span style="color:#f92672">:=</span> float64(<span style="color:#a6e22e">api</span>.<span style="color:#a6e22e">errCount</span>) <span style="color:#f92672">/</span> float64(<span style="color:#a6e22e">api</span>.<span style="color:#a6e22e">totalCount</span>)
+        <span style="color:#75715e">// access count reaches the threshold &amp;&amp; failures rate above the fuse limit
+</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">api</span>.<span style="color:#a6e22e">totalCount</span> &gt; <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">minCheck</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#a6e22e">errRate</span> &gt; <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">cbkErrRate</span> {
+            <span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Warnf</span>(<span style="color:#e6db74">&#34;# Trigger CBK！: %v, total: %v, &#34;</span><span style="color:#f92672">+</span>
+                <span style="color:#e6db74">&#34;errRate: %.3f.&#34;</span>, <span style="color:#a6e22e">key</span>, <span style="color:#a6e22e">api</span>.<span style="color:#a6e22e">totalCount</span>, <span style="color:#a6e22e">errRate</span>)
+            <span style="color:#a6e22e">api</span>.<span style="color:#a6e22e">isPaused</span> = <span style="color:#66d9ef">true</span>
+        }
+    } <span style="color:#66d9ef">else</span> {
+        <span style="color:#a6e22e">api</span> <span style="color:#f92672">:=</span> <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">apiSnapShop</span>{}
+        <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">accessed</span>(<span style="color:#a6e22e">api</span>)
+        <span style="color:#a6e22e">api</span>.<span style="color:#a6e22e">errCount</span><span style="color:#f92672">++</span>
+        <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">apiMap</span>[<span style="color:#a6e22e">key</span>] = <span style="color:#a6e22e">api</span>
+    }
+}
+</code></pre></div><hr>
 <p><strong>Access permission query</strong>, Based on the core function of the function circuit breaker implemented above, it is necessary to provide the gateway layer with a circuit breaker status to obtain the current interface.<br>
 The following is the <strong>access query</strong> provided for the caller.</p>
 <p>One question here, isn&rsquo;t the <code>IsBreak()</code> function already implemented above, why do we need the <code>CanAccess()</code> function?<br>
@@ -446,92 +423,92 @@ Among them, the input key represents the identifier of the interface to be acces
 <blockquote>
 <p>During the fuse cycle, if the recovery period (cooling-off period) has passed, you can release access, or call the <code>Successd()</code> fuse state to temporarily recover, otherwise the fuse state will remain, and the interface will be restricted and fast The core code that fails is here.</p>
 </blockquote>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">c</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">CircuitBreakerImp</span>) <span style="color:#a6e22e">CanAccess</span>(<span style="color:#a6e22e">key</span> <span style="color:#66d9ef">string</span>) <span style="color:#66d9ef">bool</span> {
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">/*
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">        return the api&#39;s status of isPaused
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">        - not paused, return true
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">        - paused, return whether current time oldder then recovery period
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">    */</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">lock</span>.<span style="color:#a6e22e">RLock</span>()
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">defer</span> <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">lock</span>.<span style="color:#a6e22e">RUnlock</span>()
-</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Debugf</span>(<span style="color:#e6db74">&#34;# Cbk check accessable for api id-%v key&#34;</span>, <span style="color:#a6e22e">reqType</span>)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">api</span>, <span style="color:#a6e22e">ok</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">apiMap</span>[<span style="color:#a6e22e">key</span>]; <span style="color:#a6e22e">ok</span> {
-</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Debugf</span>(<span style="color:#e6db74">&#34;# Cbk detail for api id-%v key, total: %v, &#34;</span><span style="color:#f92672">+</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#34;errCount: %v, paused: %v&#34;</span>, <span style="color:#a6e22e">reqType</span>, <span style="color:#a6e22e">api</span>.<span style="color:#a6e22e">totalCount</span>,
-</span></span><span style="display:flex;"><span>            <span style="color:#a6e22e">api</span>.<span style="color:#a6e22e">errCount</span>, <span style="color:#a6e22e">api</span>.<span style="color:#a6e22e">isPaused</span>)
-</span></span><span style="display:flex;"><span>            
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">api</span>.<span style="color:#a6e22e">isPaused</span> {            
-</span></span><span style="display:flex;"><span>            <span style="color:#a6e22e">latency</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">util</span>.<span style="color:#a6e22e">Abs64</span>(<span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Now</span>().<span style="color:#a6e22e">UnixNano</span>() <span style="color:#f92672">-</span> <span style="color:#a6e22e">api</span>.<span style="color:#a6e22e">accessLast</span>)
-</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">latency</span> &lt; int64(<span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">recoverInterval</span>) {
-</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">false</span>
-</span></span><span style="display:flex;"><span>            }
-</span></span><span style="display:flex;"><span>            <span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Warnf</span>(<span style="color:#e6db74">&#34;# Trigger: The CBK has passed the recovery period: %v, key: %v!&#34;</span>, <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">recoverInterval</span>, <span style="color:#a6e22e">key</span>)
-</span></span><span style="display:flex;"><span>        }
-</span></span><span style="display:flex;"><span>    }    
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">true</span>
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><h2 id="unit-test">Unit Test</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">c</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">CircuitBreakerImp</span>) <span style="color:#a6e22e">CanAccess</span>(<span style="color:#a6e22e">key</span> <span style="color:#66d9ef">string</span>) <span style="color:#66d9ef">bool</span> {
+    <span style="color:#75715e">/*
+</span><span style="color:#75715e">        return the api&#39;s status of isPaused
+</span><span style="color:#75715e">        - not paused, return true
+</span><span style="color:#75715e">        - paused, return whether current time oldder then recovery period
+</span><span style="color:#75715e">    */</span>
+    <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">lock</span>.<span style="color:#a6e22e">RLock</span>()
+    <span style="color:#66d9ef">defer</span> <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">lock</span>.<span style="color:#a6e22e">RUnlock</span>()
+    <span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Debugf</span>(<span style="color:#e6db74">&#34;# Cbk check accessable for api id-%v key&#34;</span>, <span style="color:#a6e22e">reqType</span>)
+
+    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">api</span>, <span style="color:#a6e22e">ok</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">apiMap</span>[<span style="color:#a6e22e">key</span>]; <span style="color:#a6e22e">ok</span> {
+        <span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Debugf</span>(<span style="color:#e6db74">&#34;# Cbk detail for api id-%v key, total: %v, &#34;</span><span style="color:#f92672">+</span>
+            <span style="color:#e6db74">&#34;errCount: %v, paused: %v&#34;</span>, <span style="color:#a6e22e">reqType</span>, <span style="color:#a6e22e">api</span>.<span style="color:#a6e22e">totalCount</span>,
+            <span style="color:#a6e22e">api</span>.<span style="color:#a6e22e">errCount</span>, <span style="color:#a6e22e">api</span>.<span style="color:#a6e22e">isPaused</span>)
+            
+        <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">api</span>.<span style="color:#a6e22e">isPaused</span> {            
+            <span style="color:#a6e22e">latency</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">util</span>.<span style="color:#a6e22e">Abs64</span>(<span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Now</span>().<span style="color:#a6e22e">UnixNano</span>() <span style="color:#f92672">-</span> <span style="color:#a6e22e">api</span>.<span style="color:#a6e22e">accessLast</span>)
+            <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">latency</span> &lt; int64(<span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">recoverInterval</span>) {
+                <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">false</span>
+            }
+            <span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Warnf</span>(<span style="color:#e6db74">&#34;# Trigger: The CBK has passed the recovery period: %v, key: %v!&#34;</span>, <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">recoverInterval</span>, <span style="color:#a6e22e">key</span>)
+        }
+    }    
+    <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">true</span>
+}
+</code></pre></div><h2 id="unit-test">Unit Test</h2>
 <p>Based on the above implementation, next write test code to cover the case, demonstrate and keep these two processes in loop scrolling:</p>
 <ul>
 <li><strong>Fail -&gt; Keep failed -&gt; Fuse on -&gt; Cooldown time elapsed</strong></li>
 <li><strong>Enter Recovery Period -&gt; Continue Access</strong></li>
 </ul>
 <h3 id="mock-api-access">Mock API Access</h3>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">API_PREFIX</span> = <span style="color:#e6db74">&#34;/fake-api&#34;</span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">var</span> (
-</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">HasCbk</span> = <span style="color:#66d9ef">false</span>
-</span></span><span style="display:flex;"><span>)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">StartJob</span>(<span style="color:#a6e22e">cbk</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">CircuitBreakerImp</span>) {
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> {
-</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// 1 failure per second, parameter 0 means failed, 1 means success
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        <span style="color:#a6e22e">ReqForTest</span>(<span style="color:#a6e22e">cbk</span>, <span style="color:#ae81ff">0</span>)
-</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Sleep</span>(<span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Second</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">1</span>)
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">// Build request scheduling, fuse to restore it and let it succeed 1 time
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">ReqForTest</span>(<span style="color:#a6e22e">cbk</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">CircuitBreakerImp</span>, <span style="color:#a6e22e">req</span> <span style="color:#66d9ef">int</span>) {
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// mock failed case
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#a6e22e">mockAPI</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">API_PREFIX</span> <span style="color:#75715e">//+ strconv.Itoa(req)
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">//log.Infof(&#34;Ready to reqForTest: %s, req-id-%v&#34;, HOST_PREFIX+mockAPI, req)
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> !<span style="color:#a6e22e">cbk</span>.<span style="color:#a6e22e">CanAccess</span>(<span style="color:#a6e22e">mockAPI</span>, <span style="color:#a6e22e">req</span>) {
-</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Warnf</span>(<span style="color:#e6db74">&#34;Api: %v is break, req-id-%v, wait for next round or success for one...&#34;</span>, <span style="color:#a6e22e">mockAPI</span>, <span style="color:#a6e22e">req</span>)
-</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">HasCbk</span> = <span style="color:#66d9ef">true</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span>
-</span></span><span style="display:flex;"><span>    } <span style="color:#66d9ef">else</span> {
-</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Infof</span>(<span style="color:#e6db74">&#34;Request can access: %s, req-id-%v&#34;</span>, <span style="color:#a6e22e">HOST_PREFIX</span><span style="color:#f92672">+</span><span style="color:#a6e22e">mockAPI</span>, <span style="color:#a6e22e">req</span>)
-</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// After the recovery period, after the circuit breaker is recovered, skip the error and let it succeed
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">HasCbk</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#a6e22e">req</span> <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span> {
-</span></span><span style="display:flex;"><span>            <span style="color:#a6e22e">HasCbk</span> = <span style="color:#66d9ef">false</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#a6e22e">req</span> = <span style="color:#ae81ff">1</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Warnf</span>(<span style="color:#e6db74">&#34;Transfer fail to success: %s, req-id-%v&#34;</span>, <span style="color:#a6e22e">HOST_PREFIX</span><span style="color:#f92672">+</span><span style="color:#a6e22e">mockAPI</span>, <span style="color:#a6e22e">req</span>)
-</span></span><span style="display:flex;"><span>        }
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">req</span> <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span> {
-</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Errorf</span>(<span style="color:#e6db74">&#34;# Meet failed ReqForTest: %s&#34;</span>, <span style="color:#a6e22e">HOST_PREFIX</span><span style="color:#f92672">+</span><span style="color:#a6e22e">mockAPI</span>)
-</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">cbk</span>.<span style="color:#a6e22e">Failed</span>(<span style="color:#a6e22e">mockAPI</span>)
-</span></span><span style="display:flex;"><span>    } <span style="color:#66d9ef">else</span> {
-</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Infof</span>(<span style="color:#e6db74">&#34;# Meet success ReqForTest: %s&#34;</span>, <span style="color:#a6e22e">HOST_PREFIX</span><span style="color:#f92672">+</span><span style="color:#a6e22e">mockAPI</span>)
-</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">cbk</span>.<span style="color:#a6e22e">Succeed</span>(<span style="color:#a6e22e">mockAPI</span>)
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><h3 id="initialize-the-fuse">Initialize the fuse</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">API_PREFIX</span> = <span style="color:#e6db74">&#34;/fake-api&#34;</span>
+<span style="color:#66d9ef">var</span> (
+    <span style="color:#a6e22e">HasCbk</span> = <span style="color:#66d9ef">false</span>
+)
+
+<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">StartJob</span>(<span style="color:#a6e22e">cbk</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">CircuitBreakerImp</span>) {
+    <span style="color:#66d9ef">for</span> {
+        <span style="color:#75715e">// 1 failure per second, parameter 0 means failed, 1 means success
+</span><span style="color:#75715e"></span>        <span style="color:#a6e22e">ReqForTest</span>(<span style="color:#a6e22e">cbk</span>, <span style="color:#ae81ff">0</span>)
+        <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Sleep</span>(<span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Second</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">1</span>)
+    }
+}
+
+<span style="color:#75715e">// Build request scheduling, fuse to restore it and let it succeed 1 time
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">ReqForTest</span>(<span style="color:#a6e22e">cbk</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">CircuitBreakerImp</span>, <span style="color:#a6e22e">req</span> <span style="color:#66d9ef">int</span>) {
+    <span style="color:#75715e">// mock failed case
+</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">mockAPI</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">API_PREFIX</span> <span style="color:#75715e">//+ strconv.Itoa(req)
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">//log.Infof(&#34;Ready to reqForTest: %s, req-id-%v&#34;, HOST_PREFIX+mockAPI, req)
+</span><span style="color:#75715e"></span>
+    <span style="color:#66d9ef">if</span> !<span style="color:#a6e22e">cbk</span>.<span style="color:#a6e22e">CanAccess</span>(<span style="color:#a6e22e">mockAPI</span>, <span style="color:#a6e22e">req</span>) {
+        <span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Warnf</span>(<span style="color:#e6db74">&#34;Api: %v is break, req-id-%v, wait for next round or success for one...&#34;</span>, <span style="color:#a6e22e">mockAPI</span>, <span style="color:#a6e22e">req</span>)
+        <span style="color:#a6e22e">HasCbk</span> = <span style="color:#66d9ef">true</span>
+        <span style="color:#66d9ef">return</span>
+    } <span style="color:#66d9ef">else</span> {
+        <span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Infof</span>(<span style="color:#e6db74">&#34;Request can access: %s, req-id-%v&#34;</span>, <span style="color:#a6e22e">HOST_PREFIX</span><span style="color:#f92672">+</span><span style="color:#a6e22e">mockAPI</span>, <span style="color:#a6e22e">req</span>)
+        <span style="color:#75715e">// After the recovery period, after the circuit breaker is recovered, skip the error and let it succeed
+</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">HasCbk</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#a6e22e">req</span> <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span> {
+            <span style="color:#a6e22e">HasCbk</span> = <span style="color:#66d9ef">false</span>
+            <span style="color:#a6e22e">req</span> = <span style="color:#ae81ff">1</span>
+            <span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Warnf</span>(<span style="color:#e6db74">&#34;Transfer fail to success: %s, req-id-%v&#34;</span>, <span style="color:#a6e22e">HOST_PREFIX</span><span style="color:#f92672">+</span><span style="color:#a6e22e">mockAPI</span>, <span style="color:#a6e22e">req</span>)
+        }
+    }
+
+    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">req</span> <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span> {
+        <span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Errorf</span>(<span style="color:#e6db74">&#34;# Meet failed ReqForTest: %s&#34;</span>, <span style="color:#a6e22e">HOST_PREFIX</span><span style="color:#f92672">+</span><span style="color:#a6e22e">mockAPI</span>)
+        <span style="color:#a6e22e">cbk</span>.<span style="color:#a6e22e">Failed</span>(<span style="color:#a6e22e">mockAPI</span>)
+    } <span style="color:#66d9ef">else</span> {
+        <span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Infof</span>(<span style="color:#e6db74">&#34;# Meet success ReqForTest: %s&#34;</span>, <span style="color:#a6e22e">HOST_PREFIX</span><span style="color:#f92672">+</span><span style="color:#a6e22e">mockAPI</span>)
+        <span style="color:#a6e22e">cbk</span>.<span style="color:#a6e22e">Succeed</span>(<span style="color:#a6e22e">mockAPI</span>)
+    }
+}
+</code></pre></div><h3 id="initialize-the-fuse">Initialize the fuse</h3>
 <p>Initialize the circuit breaker and assign relevant parameters</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">cbk</span> <span style="color:#f92672">:=</span> <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">CircuitBreakerImp</span>{}
-</span></span><span style="display:flex;"><span><span style="color:#a6e22e">cbk</span>.<span style="color:#a6e22e">apiMap</span> = make(<span style="color:#66d9ef">map</span>[<span style="color:#66d9ef">string</span>]<span style="color:#f92672">*</span><span style="color:#a6e22e">apiSnapShop</span>)
-</span></span><span style="display:flex;"><span><span style="color:#75715e">// 15s per round to reset the err rate
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#a6e22e">cbk</span>.<span style="color:#a6e22e">roundInterval</span> = <span style="color:#a6e22e">util</span>.<span style="color:#a6e22e">ToDuration</span>(<span style="color:#ae81ff">15</span> <span style="color:#f92672">*</span> <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Second</span>)
-</span></span><span style="display:flex;"><span><span style="color:#75715e">// when breaker is triggered, recover for next try
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#a6e22e">cbk</span>.<span style="color:#a6e22e">recoverInterval</span> = <span style="color:#a6e22e">util</span>.<span style="color:#a6e22e">ToDuration</span>(<span style="color:#ae81ff">5</span> <span style="color:#f92672">*</span> <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Second</span>)
-</span></span><span style="display:flex;"><span><span style="color:#75715e">// consider the api at least request for 5 time durning the round interval
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#a6e22e">cbk</span>.<span style="color:#a6e22e">minCheck</span> = <span style="color:#ae81ff">5</span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">// when error rate comes to 50%, circuit breaker triggered
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#a6e22e">cbk</span>.<span style="color:#a6e22e">cbkErrRate</span> = <span style="color:#ae81ff">0.5</span>
-</span></span></code></pre></div><h3 id="output-explanation">Output explanation</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#a6e22e">cbk</span> <span style="color:#f92672">:=</span> <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">CircuitBreakerImp</span>{}
+<span style="color:#a6e22e">cbk</span>.<span style="color:#a6e22e">apiMap</span> = make(<span style="color:#66d9ef">map</span>[<span style="color:#66d9ef">string</span>]<span style="color:#f92672">*</span><span style="color:#a6e22e">apiSnapShop</span>)
+<span style="color:#75715e">// 15s per round to reset the err rate
+</span><span style="color:#75715e"></span><span style="color:#a6e22e">cbk</span>.<span style="color:#a6e22e">roundInterval</span> = <span style="color:#a6e22e">util</span>.<span style="color:#a6e22e">ToDuration</span>(<span style="color:#ae81ff">15</span> <span style="color:#f92672">*</span> <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Second</span>)
+<span style="color:#75715e">// when breaker is triggered, recover for next try
+</span><span style="color:#75715e"></span><span style="color:#a6e22e">cbk</span>.<span style="color:#a6e22e">recoverInterval</span> = <span style="color:#a6e22e">util</span>.<span style="color:#a6e22e">ToDuration</span>(<span style="color:#ae81ff">5</span> <span style="color:#f92672">*</span> <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Second</span>)
+<span style="color:#75715e">// consider the api at least request for 5 time durning the round interval
+</span><span style="color:#75715e"></span><span style="color:#a6e22e">cbk</span>.<span style="color:#a6e22e">minCheck</span> = <span style="color:#ae81ff">5</span>
+<span style="color:#75715e">// when error rate comes to 50%, circuit breaker triggered
+</span><span style="color:#75715e"></span><span style="color:#a6e22e">cbk</span>.<span style="color:#a6e22e">cbkErrRate</span> = <span style="color:#ae81ff">0.5</span>
+</code></pre></div><h3 id="output-explanation">Output explanation</h3>
 <p><img src="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/blog/cbk/en-cbk-output.png" alt="CBK status"></p>
 <p>As we expected, although the failure rate of the first 5 requests on the interface is 100%, the request volume has not increased, so the circuit breaker is not triggered until continued fusing condition is met, breaker trigged.<br>
 After the breaker trigged lasts for 5 seconds, it turns to the idle period, the API becomes accessible, and the interface is accessed again. If the error rate is still satisfied, the fuse state will continue to be restored.</p>
@@ -548,8 +525,6 @@ After the breaker trigged lasts for 5 seconds, it turns to the idle period, the 
 <strong>微服务架构中的熔断器设计与实现</strong><br>
 <a href="https://mp.weixin.qq.com/s/DGRnUhyv6SS_E36ZQKGpPA">https://mp.weixin.qq.com/s/DGRnUhyv6SS_E36ZQKGpPA</a></p>
               
-
-
             </div>
           </div>
           <div id="post-footer" class="post-footer main-content-wrap">
@@ -560,134 +535,138 @@ After the breaker trigged lasts for 5 seconds, it turns to the idle period, the 
                   <div class="post-footer-tags">
                     <span class="text-color-light text-small">TAGGED IN</span><br/>
                     
-  <a class="tag tag--primary tag--small" href="https://pixeldin.github.io/en/tags/circuit-breaker/">circuit breaker</a>
+  <a class="tag tag--primary tag--small" href="/en/tags/circuit-breaker/">circuit breaker</a>
 
-  <a class="tag tag--primary tag--small" href="https://pixeldin.github.io/en/tags/talk-about-go/">Talk about Go</a>
+  <a class="tag tag--primary tag--small" href="/en/tags/talk-about-go/">Talk about Go</a>
 
                   </div>
                 
               
             
-            
-<div class="post-actions-wrap">
-  <nav >
-    <ul class="post-actions post-action-nav">
+            <div class="post-actions-wrap">
+  
+      <nav >
+        <ul class="post-actions post-action-nav">
+          
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="/en/2022/03/talk-about-go-goroutines-information-and-how-to-prevent-goroutine-leaks/" data-tooltip="Talk about Go: Goroutine&#39;s information and how to prevent goroutine leaks">
+              
+                  <i class="fa fa-angle-left"></i>
+                  <span class="hide-xs hide-sm text-small icon-ml">NEXT</span>
+                </a>
+            </li>
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="/en/2022/02/talk-about-go-network-programming-about-grouping-and-unpacking-in-tcp-flow/" data-tooltip="Talk about Go: Network programming about grouping and unpacking in TCP flow">
+              
+                  <span class="hide-xs hide-sm text-small icon-mr">PREVIOUS</span>
+                  <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+          
+        </ul>
+      </nav>
+    <ul class="post-actions post-action-share" >
       
-        <li class="post-action">
-          
-            <a class="post-action-btn btn btn--default tooltip--top" href="https://pixeldin.github.io/en/2022/03/talk-about-go-goroutines-information-and-how-to-prevent-goroutine-leaks/" data-tooltip="Talk about Go: Goroutine&#39;s information and how to prevent goroutine leaks" aria-label="NEXT: Talk about Go: Goroutine&#39;s information and how to prevent goroutine leaks">
-          
-              <i class="fa fa-angle-left"></i>
-              <span class="hide-xs hide-sm text-small icon-ml">NEXT</span>
-            </a>
+        <li class="post-action hide-lg hide-md hide-sm">
+          <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
+            <i class="fa fa-share-alt"></i>
+          </a>
         </li>
-        <li class="post-action">
-          
-            <a class="post-action-btn btn btn--default tooltip--top" href="https://pixeldin.github.io/en/2022/02/talk-about-go-network-programming-about-grouping-and-unpacking-in-tcp-flow/" data-tooltip="Talk about Go: Network programming about grouping and unpacking in TCP flow" aria-label="PREVIOUS: Talk about Go: Network programming about grouping and unpacking in TCP flow">
-          
-              <span class="hide-xs hide-sm text-small icon-mr">PREVIOUS</span>
-              <i class="fa fa-angle-right"></i>
-            </a>
-        </li>
+        
       
+      
+      <li class="post-action">
+        
+          <a class="post-action-btn btn btn--default" href="#">
+        
+          <i class="fa fa-list"></i>
+        </a>
+      </li>
     </ul>
-  </nav>
-<ul class="post-actions post-action-share" >
   
-    <li class="post-action hide-lg hide-md hide-sm">
-      <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions" aria-label="Share this post">
-        <i class="fa fa-share-alt" aria-hidden="true"></i>
-      </a>
-    </li>
-    
-  
-  
-  <li class="post-action">
-    
-      <a class="post-action-btn btn btn--default" href="#top" aria-label="Back to top">
-      <i class="fa fa-arrow-up" aria-hidden="true"></i>
-    
-    </a>
-  </li>
-</ul>
 </div>
 
-
             
-  
-
-
+              
+            
           </div>
         </article>
         <footer id="footer" class="main-content-wrap">
   <span class="copyrights">
-    &copy; 2023 <a href="https://github.com/pixeldin">pixeldin</a>. All Rights Reserved
+    &copy; 2024 <a href="https://github.com/pixeldin">pixeldin</a>. All Rights Reserved
   </span>
 </footer>
 
       </div>
-      <div id="bottom-bar" class="post-bottom-bar" data-behavior="1">
+      <div id="bottom-bar" class="post-bottom-bar" data-behavior="4">
+        <div class="post-actions-wrap">
+  
+      <nav >
+        <ul class="post-actions post-action-nav">
+          
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="/en/2022/03/talk-about-go-goroutines-information-and-how-to-prevent-goroutine-leaks/" data-tooltip="Talk about Go: Goroutine&#39;s information and how to prevent goroutine leaks">
+              
+                  <i class="fa fa-angle-left"></i>
+                  <span class="hide-xs hide-sm text-small icon-ml">NEXT</span>
+                </a>
+            </li>
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="/en/2022/02/talk-about-go-network-programming-about-grouping-and-unpacking-in-tcp-flow/" data-tooltip="Talk about Go: Network programming about grouping and unpacking in TCP flow">
+              
+                  <span class="hide-xs hide-sm text-small icon-mr">PREVIOUS</span>
+                  <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+          
+        </ul>
+      </nav>
+    <ul class="post-actions post-action-share" >
+      
+        <li class="post-action hide-lg hide-md hide-sm">
+          <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
+            <i class="fa fa-share-alt"></i>
+          </a>
+        </li>
         
-<div class="post-actions-wrap">
-  <nav >
-    <ul class="post-actions post-action-nav">
       
-        <li class="post-action">
-          
-            <a class="post-action-btn btn btn--default tooltip--top" href="https://pixeldin.github.io/en/2022/03/talk-about-go-goroutines-information-and-how-to-prevent-goroutine-leaks/" data-tooltip="Talk about Go: Goroutine&#39;s information and how to prevent goroutine leaks" aria-label="NEXT: Talk about Go: Goroutine&#39;s information and how to prevent goroutine leaks">
-          
-              <i class="fa fa-angle-left"></i>
-              <span class="hide-xs hide-sm text-small icon-ml">NEXT</span>
-            </a>
-        </li>
-        <li class="post-action">
-          
-            <a class="post-action-btn btn btn--default tooltip--top" href="https://pixeldin.github.io/en/2022/02/talk-about-go-network-programming-about-grouping-and-unpacking-in-tcp-flow/" data-tooltip="Talk about Go: Network programming about grouping and unpacking in TCP flow" aria-label="PREVIOUS: Talk about Go: Network programming about grouping and unpacking in TCP flow">
-          
-              <span class="hide-xs hide-sm text-small icon-mr">PREVIOUS</span>
-              <i class="fa fa-angle-right"></i>
-            </a>
-        </li>
       
+      <li class="post-action">
+        
+          <a class="post-action-btn btn btn--default" href="#">
+        
+          <i class="fa fa-list"></i>
+        </a>
+      </li>
     </ul>
-  </nav>
-<ul class="post-actions post-action-share" >
   
-    <li class="post-action hide-lg hide-md hide-sm">
-      <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions" aria-label="Share this post">
-        <i class="fa fa-share-alt" aria-hidden="true"></i>
-      </a>
-    </li>
-    
-  
-  
-  <li class="post-action">
-    
-      <a class="post-action-btn btn btn--default" href="#top" aria-label="Back to top">
-      <i class="fa fa-arrow-up" aria-hidden="true"></i>
-    
-    </a>
-  </li>
-</ul>
 </div>
 
-
       </div>
-      
-
+      <div id="share-options-bar" class="share-options-bar" data-behavior="4">
+  <i id="btn-close-shareoptions" class="fa fa-close"></i>
+  <ul class="share-options">
+    
+  </ul>
+</div>
+<div id="share-options-mask" class="share-options-mask"></div>
     </div>
     
     <div id="about">
   <div id="about-card">
     <div id="about-btn-close">
-      <i class="fa fa-times"></i>
+      <i class="fa fa-remove"></i>
     </div>
     
       <img id="about-card-picture" src="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/pig.jpg" alt="Author&#39;s picture" />
     
-    <h4 id="about-card-name">@Pixelpig</h4>
+    <h4 id="about-card-name">pixelpig</h4>
     
-      <div id="about-card-bio">Keep it simple, so as this bio <strong>:）</strong></div>
+      <div id="about-card-bio">Keep it simple, so as this bio :)</div>
     
     
       <div id="about-card-job">
@@ -698,9 +677,9 @@ After the breaker trigged lasts for 5 seconds, it turns to the idle period, the 
     
     
       <div id="about-card-location">
-        <i class="fa fa-map-marker-alt"></i>
+        <i class="fa fa-map-marker"></i>
         <br/>
-        GuangDong - China
+        Guangdong - China
       </div>
     
   </div>
@@ -715,16 +694,30 @@ After the breaker trigged lasts for 5 seconds, it turns to the idle period, the 
 
 
     
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.1.0/highlight.min.js" integrity="sha512-z+/WWfyD5tccCukM4VvONpEtLmbAm5LDu7eKiyMQJ9m7OfPEDL7gENyDRL3Yfe8XAuGsS2fS4xSMnl6d30kqGQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js" integrity="sha256-/BfiIkHlHoVihZdc6TFuj7MmJ0TWcWsMXkeDFwhi0zw=" crossorigin="anonymous"></script>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js" integrity="sha512-uURl+ZXMBrF4AwGaWmEetzrd+J5/8NRkWAvJx5sbPSSuOb0bZLqf+tOzniObO00BjHa/dD7gub9oCGMLPQHtQA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
-
-<script src="https://pixeldin.github.io/js/script-d9gfx1pdvbfdgoahypizomgoamlbumvk1ugdifqa59ynqvdh8wfsinmt5oj.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.7/js/jquery.fancybox.min.js" integrity="sha256-GEAnjcTqVP+vBp3SSc8bEDQqvWAZMiHyUSIorrWwH50=" crossorigin="anonymous"></script>
 
 
+<script src="/js/script-vl2saiwwv2xiez4lde0rm1wmexz8htzz8onnothyei9lqwshvghg9rqd1s.min.js"></script>
+
+
+<script lang="javascript">
+window.onload = updateMinWidth;
+window.onresize = updateMinWidth;
+document.getElementById("sidebar").addEventListener("transitionend", updateMinWidth);
+function updateMinWidth() {
+  var sidebar = document.getElementById("sidebar");
+  var main = document.getElementById("main");
+  main.style.minWidth = "";
+  var w1 = getComputedStyle(main).getPropertyValue("min-width");
+  var w2 = getComputedStyle(sidebar).getPropertyValue("width");
+  var w3 = getComputedStyle(sidebar).getPropertyValue("left");
+  main.style.minWidth = `calc(${w1} - ${w2} - ${w3})`;
+}
+</script>
 
 <script>
 $(document).ready(function() {
@@ -737,6 +730,11 @@ $(document).ready(function() {
   });
 });
 </script>
+
+
+  
+    
+  
 
 
 

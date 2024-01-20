@@ -2,31 +2,11 @@
 <html lang="zh-cn">
   <head>
     
-    <script type="application/ld+json">
-
-{  
-  "@context":"http://schema.org",
-  "@type":"Website",
-  "@id":"https:\/\/pixeldin.github.io\/",
-  "author": {
-    "@type": "Person",
-    "name": "@Pixelpig",
-    
-    "image": "https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/pig.jpg"
-    
-  },
-  "name":"pixelpig.tech",
-  "description":"\u003cp\u003e\u0026ldquo;如果它表现得像个鸭子，那么就可以称它为鸭子\u0026rdquo;。interface（接口），它用于定义对象的形状或结构。\u003c\/p\u003e",
-  "url":"https:\/\/pixeldin.github.io\/zh\/2023\/04\/%E8%81%8A%E4%B8%80%E8%81%8Atypescript%E7%9A%84interface\/",
-  "keywords":"[]"
-}
-
-</script>
     <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="generator" content="Hugo 0.111.3 with theme Tranquilpeak 0.5.3-BETA">
-<meta name="author" content="@Pixelpig">
+<meta name="generator" content="Hugo 0.80.0 with theme Tranquilpeak 0.4.8-BETA">
+<meta name="author" content="pixelpig">
 <meta name="keywords" content="">
 <meta name="description" content="&ldquo;如果它表现得像个鸭子，那么就可以称它为鸭子&rdquo;。interface（接口），它用于定义对象的形状或结构。">
 
@@ -35,9 +15,9 @@
 <meta property="og:type" content="article">
 <meta property="og:title" content="聊一聊TypeScript的interface">
 <meta name="twitter:title" content="聊一聊TypeScript的interface">
-<meta property="og:url" content="https://pixeldin.github.io/zh/2023/04/%E8%81%8A%E4%B8%80%E8%81%8Atypescript%E7%9A%84interface/">
-<meta property="twitter:url" content="https://pixeldin.github.io/zh/2023/04/%E8%81%8A%E4%B8%80%E8%81%8Atypescript%E7%9A%84interface/">
-<meta property="og:site_name" content="pixelpig.tech">
+<meta property="og:url" content="/zh/2023/04/%E8%81%8A%E4%B8%80%E8%81%8Atypescript%E7%9A%84interface/">
+<meta property="twitter:url" content="/zh/2023/04/%E8%81%8A%E4%B8%80%E8%81%8Atypescript%E7%9A%84interface/">
+<meta property="og:site_name" content="pixelpig.space">
 <meta property="og:description" content="&ldquo;如果它表现得像个鸭子，那么就可以称它为鸭子&rdquo;。interface（接口），它用于定义对象的形状或结构。">
 <meta name="twitter:description" content="&ldquo;如果它表现得像个鸭子，那么就可以称它为鸭子&rdquo;。interface（接口），它用于定义对象的形状或结构。">
 <meta property="og:locale" content="zh">
@@ -75,12 +55,12 @@
 
 
 
+
+
+
+
   <meta property="og:image" content="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/pig.jpg">
   <meta property="twitter:image" content="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/pig.jpg">
-
-
-
-
 
 
     <title>聊一聊TypeScript的interface</title>
@@ -90,15 +70,15 @@
 
     
 
-    <link rel="canonical" href="https://pixeldin.github.io/zh/2023/04/%E8%81%8A%E4%B8%80%E8%81%8Atypescript%E7%9A%84interface/">
+    <link rel="canonical" href="/zh/2023/04/%E8%81%8A%E4%B8%80%E8%81%8Atypescript%E7%9A%84interface/">
 
     
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" integrity="sha512-H9jrZiiopUdsLpg94A333EfumgUBpO9MdbxStdeITo+KEIMaNfHNvwyjjDJb+ERPaRS6DpyRlKbvPUasNItRyw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/jquery.fancybox.min.css" integrity="sha256-vuXZ9LGmmwtjqFX1F+EKin1ThZMub58gKULUyf0qECk=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/helpers/jquery.fancybox-thumbs.min.css" integrity="sha256-SEa4XYAHihTcEP1f5gARTB2K26Uk8PsndQYHQC1f4jU=" crossorigin="anonymous" />
     
     
-    
-    <link rel="stylesheet" href="https://pixeldin.github.io/css/style-fneuerdunt9vf6vafpewt2nttopqa9hdugoae6mfs7phtuibtq6qjxkds96.min.css" />
+    <link rel="stylesheet" href="/css/style-a2ye1m9gwuhplkfulh7wjm6oz6xbbggcrapph79uf9g8howmnzp9iqxaluy.min.css" />
     
     
 
@@ -110,15 +90,15 @@
 
   <body>
     <div id="blog">
-      <header id="header" data-behavior="1">
+      <header id="header" data-behavior="4">
   <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
   <div class="header-title">
-    <a class="header-title-link" href="https://pixeldin.github.io/zh/" aria-label="去首页">pixelpig.tech</a>
+    <a class="header-title-link" href="/zh/">pixelpig.space</a>
   </div>
   
     
       <a class="header-right-picture "
-         href="https://pixeldin.github.io/#about" aria-label="打开链接: /#about">
+         href="/#about">
     
     
     
@@ -130,16 +110,16 @@
   
 </header>
 
-      <nav id="sidebar" data-behavior="1">
+      <nav id="sidebar" data-behavior="4">
   <div class="sidebar-container">
     
       <div class="sidebar-profile">
-        <a href="https://pixeldin.github.io/#about" aria-label="阅读有关作者的更多信息">
+        <a href="/#about">
           <img class="sidebar-profile-picture" src="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/pig.jpg" alt="作者的图片" />
         </a>
-        <h4 class="sidebar-profile-name">@Pixelpig</h4>
+        <h4 class="sidebar-profile-name">pixelpig</h4>
         
-          <h5 class="sidebar-profile-bio">Keep it simple, so as this bio <strong>:）</strong></h5>
+          <h5 class="sidebar-profile-bio">Keep it simple, so as this bio :)</h5>
         
       </div>
     
@@ -147,7 +127,7 @@
       
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="https://pixeldin.github.io/en" title="English">
+      <a class="sidebar-button-link " href="/en">
     
       <i class="sidebar-button-icon fa fa-lg fa-language"></i>
       
@@ -157,7 +137,7 @@
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="https://pixeldin.github.io/zh/" title="Home">
+      <a class="sidebar-button-link " href="/zh/">
     
       <i class="sidebar-button-icon fa fa-lg fa-home"></i>
       
@@ -167,7 +147,7 @@
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="https://pixeldin.github.io/zh/categories" title="Categories">
+      <a class="sidebar-button-link " href="/zh/categories">
     
       <i class="sidebar-button-icon fa fa-lg fa-bookmark"></i>
       
@@ -177,7 +157,7 @@
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="https://pixeldin.github.io/zh/tags" title="Tags">
+      <a class="sidebar-button-link " href="/zh/tags">
     
       <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
       
@@ -187,7 +167,7 @@
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="https://pixeldin.github.io/zh/archives" title="Archives">
+      <a class="sidebar-button-link " href="/zh/archives">
     
       <i class="sidebar-button-icon fa fa-lg fa-archive"></i>
       
@@ -197,7 +177,7 @@
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="https://pixeldin.github.io/zh/#about" title="About">
+      <a class="sidebar-button-link " href="/zh/#about">
     
       <i class="sidebar-button-icon fa fa-lg fa-question-circle"></i>
       
@@ -207,25 +187,22 @@
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="https://github.com/pixeldin" target="_blank" rel="noopener" title="pixeldin">
+      <a class="sidebar-button-link " href="https://github.com/pixeldin" target="_blank" rel="noopener">
     
-      <i class="sidebar-button-icon fab fa-lg fa-github-alt"></i>
+      <i class="sidebar-button-icon fa fa-lg fa-github-alt"></i>
       
-      <span class="sidebar-button-desc">github</span>
+      <span class="sidebar-button-desc">pixeldin</span>
     </a>
   </li>
 
 
-
     </ul>
     <ul class="sidebar-buttons">
       
 
-
     </ul>
     <ul class="sidebar-buttons">
       
-
 
     </ul>
   </div>
@@ -233,23 +210,23 @@
 
       
 
-      <div id="main" data-behavior="1"
+      <div id="main" data-behavior="4"
         class="
                hasCoverMetaIn
                ">
-        <article class="post" id="top">
+        <article class="post" itemscope itemType="http://schema.org/BlogPosting">
           
           
             <div class="post-header main-content-wrap text-center">
   
-    <h1 class="post-title">
+    <h1 class="post-title" itemprop="headline">
       聊一聊TypeScript的interface
     </h1>
   
   
   <div class="postShorten-meta post-meta">
     
-      <time datetime="2023-04-14T00:00:00Z">
+      <time itemprop="datePublished" datetime="2023-04-14T00:00:00Z">
         
   四月 14, 2023
 
@@ -260,9 +237,9 @@
   
     <span>发布在</span>
     
-      <a class="category-link" href="https://pixeldin.github.io/zh/categories/frontend">FrontEnd</a>, 
+      <a class="category-link" href="/zh/categories/frontend">FrontEnd</a>, 
     
-      <a class="category-link" href="https://pixeldin.github.io/zh/categories/javascript">JavaScript</a>
+      <a class="category-link" href="/zh/categories/javascript">JavaScript</a>
     
   
 
@@ -270,7 +247,7 @@
 
 </div>
           
-          <div class="post-content markdown">
+          <div class="post-content markdown" itemprop="articleBody">
             <div class="main-content-wrap">
               <p>&ldquo;如果它表现得像个鸭子，那么就可以称它为鸭子&rdquo;。interface（接口），它用于定义对象的形状或结构。</p>
 <p><img src="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/blog/bg/typesc-brick-bg.jpg" alt="recover"></p>
@@ -279,126 +256,124 @@
 <p>interface可以理解为一个契约，用于描述一个对象的属性、方法和函数签名。在TypeScript中，我们可以使用interface来实现对代码的抽象和模块化。interface设计原理基于面向对象编程思想，通过将相同或相似的行为和特征抽象为一个接口，从而实现代码重用和降低耦合度。</p>
 <h2 id="基础概念">基础概念</h2>
 <h3 id="接口定义">接口定义:</h3>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-TypeScript" data-lang="TypeScript"><span style="display:flex;"><span><span style="color:#66d9ef">interface</span> <span style="color:#a6e22e">Person</span> {
-</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">firstName</span>: <span style="color:#66d9ef">string</span>;
-</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">lastName</span>: <span style="color:#66d9ef">string</span>;
-</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">age</span>: <span style="color:#66d9ef">number</span>;
-</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">greet</span>()<span style="color:#f92672">:</span> <span style="color:#66d9ef">void</span>;
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>这个接口定义了一个Person类型的对象，它有firstName、lastName和age三个属性，以及一个greet方法。需要注意的是，在interface中只声明了属性和方法的名称和类型，没有具体的实现。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-TypeScript" data-lang="TypeScript"><span style="color:#66d9ef">interface</span> <span style="color:#a6e22e">Person</span> {
+  <span style="color:#a6e22e">firstName</span>: <span style="color:#66d9ef">string</span>;
+  <span style="color:#a6e22e">lastName</span>: <span style="color:#66d9ef">string</span>;
+  <span style="color:#a6e22e">age</span>: <span style="color:#66d9ef">number</span>;
+  <span style="color:#a6e22e">greet</span>()<span style="color:#f92672">:</span> <span style="color:#66d9ef">void</span>;
+}
+</code></pre></div><p>这个接口定义了一个Person类型的对象，它有firstName、lastName和age三个属性，以及一个greet方法。需要注意的是，在interface中只声明了属性和方法的名称和类型，没有具体的实现。</p>
 <p>我们可以使用这个接口来定义一个符合该接口要求的对象：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-TypeScript" data-lang="TypeScript"><span style="display:flex;"><span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">person</span>: <span style="color:#66d9ef">Person</span> <span style="color:#f92672">=</span> {
-</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">firstName</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;John&#39;</span>,
-</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">lastName</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;Doe&#39;</span>,
-</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">age</span>: <span style="color:#66d9ef">30</span>,
-</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">greet() {</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#e6db74">`Hello, my name is </span><span style="color:#e6db74">${</span><span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">firstName</span><span style="color:#e6db74">}</span><span style="color:#e6db74"> </span><span style="color:#e6db74">${</span><span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">lastName</span><span style="color:#e6db74">}</span><span style="color:#e6db74">.`</span>);
-</span></span><span style="display:flex;"><span>  },
-</span></span><span style="display:flex;"><span>};
-</span></span></code></pre></div><p>上述代码定义了一个名为person的常量，它是一个Person类型的对象。person对象具有firstName、lastName、age和greet四个属性，其中greet属性指向一个函数。这个函数实现了在接口中定义的greet方法，它可以输出一条问候语。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-TypeScript" data-lang="TypeScript"><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">person</span>: <span style="color:#66d9ef">Person</span> <span style="color:#f92672">=</span> {
+  <span style="color:#a6e22e">firstName</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;John&#39;</span>,
+  <span style="color:#a6e22e">lastName</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;Doe&#39;</span>,
+  <span style="color:#a6e22e">age</span>: <span style="color:#66d9ef">30</span>,
+  <span style="color:#a6e22e">greet() {</span>
+    <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#e6db74">`Hello, my name is </span><span style="color:#e6db74">${</span><span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">firstName</span><span style="color:#e6db74">}</span><span style="color:#e6db74"> </span><span style="color:#e6db74">${</span><span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">lastName</span><span style="color:#e6db74">}</span><span style="color:#e6db74">.`</span>);
+  },
+};
+</code></pre></div><p>上述代码定义了一个名为person的常量，它是一个Person类型的对象。person对象具有firstName、lastName、age和greet四个属性，其中greet属性指向一个函数。这个函数实现了在接口中定义的greet方法，它可以输出一条问候语。</p>
 <p>由于person对象符合Person接口的定义，因此TypeScript不会给出任何警告或错误提示。</p>
 <p>总的来说，interface是TypeScript中重要的概念之一，它可以用来描述对象的形状、实现抽象和模块化等。在实际开发中，我们可以根据具体情况灵活运用interface，从而提高代码质量和可维护性。</p>
 <p><img src="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/blog/bg/duck.jpg" alt="duck demo"></p>
 <h3 id="泛型与延伸">泛型与延伸</h3>
 <p><strong>TypeScript的interface也可以结合泛型进行拓展</strong></p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-TypeScript" data-lang="TypeScript"><span style="display:flex;"><span><span style="color:#66d9ef">interface</span> <span style="color:#a6e22e">Box</span>&lt;<span style="color:#f92672">T</span>&gt; {
-</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">value</span>: <span style="color:#66d9ef">T</span>;
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">box</span>: <span style="color:#66d9ef">Box</span>&lt;<span style="color:#f92672">string</span>&gt; <span style="color:#f92672">=</span> { <span style="color:#a6e22e">value</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;Hello, ts &lt;T&gt; fooing&#39;</span> };
-</span></span></code></pre></div><p><strong>类型别名：可以使用type关键字定义一个类型别名，方便复用某个类型。例如：</strong></p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-TypeScript" data-lang="TypeScript"><span style="display:flex;"><span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">UserId</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">string</span>;
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">UserName</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">string</span>;
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">interface</span> <span style="color:#a6e22e">User</span> {
-</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">id</span>: <span style="color:#66d9ef">UserId</span>;
-</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">name</span>: <span style="color:#66d9ef">UserName</span>;
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p><strong>可索引类型：可以用接口来描述具有索引签名的类型（如数组或对象）。例如：</strong></p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-TypeScript" data-lang="TypeScript"><span style="display:flex;"><span><span style="color:#66d9ef">interface</span> <span style="color:#a6e22e">StringArray</span> {
-</span></span><span style="display:flex;"><span>  [<span style="color:#a6e22e">index</span>: <span style="color:#66d9ef">number</span>]<span style="color:#f92672">:</span> <span style="color:#66d9ef">string</span>;
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">arr</span>: <span style="color:#66d9ef">StringArray</span> <span style="color:#f92672">=</span> [<span style="color:#e6db74">&#39;foo&#39;</span>, <span style="color:#e6db74">&#39;bar&#39;</span>];
-</span></span></code></pre></div><p><strong>接口继承：可以通过extends关键字让一个接口去继承另一个接口中的属性和方法。例如：</strong></p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-TypeScript" data-lang="TypeScript"><span style="display:flex;"><span><span style="color:#66d9ef">interface</span> <span style="color:#a6e22e">Animal</span> {
-</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">eat</span>()<span style="color:#f92672">:</span> <span style="color:#66d9ef">void</span>;
-</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">sleep</span>()<span style="color:#f92672">:</span> <span style="color:#66d9ef">void</span>;
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">interface</span> <span style="color:#a6e22e">Cat</span> <span style="color:#66d9ef">extends</span> <span style="color:#a6e22e">Animal</span> {
-</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">meow</span>()<span style="color:#f92672">:</span> <span style="color:#66d9ef">void</span>;
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">HouseCat</span> <span style="color:#66d9ef">implements</span> <span style="color:#a6e22e">Cat</span> {
-</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">eat() {</span> <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#e6db74">&#39;Nom nom nom&#39;</span>); }
-</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">sleep() {</span> <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#e6db74">&#39;Zzzzzz...&#39;</span>); }
-</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">meow() {</span> <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#e6db74">&#39;Meow!&#39;</span>); }
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><h3 id="常用前端框架的拓展">常用前端框架的拓展</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-TypeScript" data-lang="TypeScript"><span style="color:#66d9ef">interface</span> <span style="color:#a6e22e">Box</span>&lt;<span style="color:#f92672">T</span>&gt; {
+  <span style="color:#a6e22e">value</span>: <span style="color:#66d9ef">T</span>;
+}
+
+<span style="color:#66d9ef">const</span> <span style="color:#a6e22e">box</span>: <span style="color:#66d9ef">Box</span>&lt;<span style="color:#f92672">string</span>&gt; <span style="color:#f92672">=</span> { <span style="color:#a6e22e">value</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;Hello, ts &lt;T&gt; fooing&#39;</span> };
+</code></pre></div><p><strong>类型别名：可以使用type关键字定义一个类型别名，方便复用某个类型。例如：</strong></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-TypeScript" data-lang="TypeScript"><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">UserId</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">string</span>;
+<span style="color:#66d9ef">type</span> <span style="color:#a6e22e">UserName</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">string</span>;
+
+<span style="color:#66d9ef">interface</span> <span style="color:#a6e22e">User</span> {
+  <span style="color:#a6e22e">id</span>: <span style="color:#66d9ef">UserId</span>;
+  <span style="color:#a6e22e">name</span>: <span style="color:#66d9ef">UserName</span>;
+}
+</code></pre></div><p><strong>可索引类型：可以用接口来描述具有索引签名的类型（如数组或对象）。例如：</strong></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-TypeScript" data-lang="TypeScript"><span style="color:#66d9ef">interface</span> <span style="color:#a6e22e">StringArray</span> {
+  [<span style="color:#a6e22e">index</span>: <span style="color:#66d9ef">number</span>]<span style="color:#f92672">:</span> <span style="color:#66d9ef">string</span>;
+}
+
+<span style="color:#66d9ef">const</span> <span style="color:#a6e22e">arr</span>: <span style="color:#66d9ef">StringArray</span> <span style="color:#f92672">=</span> [<span style="color:#e6db74">&#39;foo&#39;</span>, <span style="color:#e6db74">&#39;bar&#39;</span>];
+</code></pre></div><p><strong>接口继承：可以通过extends关键字让一个接口去继承另一个接口中的属性和方法。例如：</strong></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-TypeScript" data-lang="TypeScript"><span style="color:#66d9ef">interface</span> <span style="color:#a6e22e">Animal</span> {
+  <span style="color:#a6e22e">eat</span>()<span style="color:#f92672">:</span> <span style="color:#66d9ef">void</span>;
+  <span style="color:#a6e22e">sleep</span>()<span style="color:#f92672">:</span> <span style="color:#66d9ef">void</span>;
+}
+
+<span style="color:#66d9ef">interface</span> <span style="color:#a6e22e">Cat</span> <span style="color:#66d9ef">extends</span> <span style="color:#a6e22e">Animal</span> {
+  <span style="color:#a6e22e">meow</span>()<span style="color:#f92672">:</span> <span style="color:#66d9ef">void</span>;
+}
+
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">HouseCat</span> <span style="color:#66d9ef">implements</span> <span style="color:#a6e22e">Cat</span> {
+  <span style="color:#a6e22e">eat() {</span> <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#e6db74">&#39;Nom nom nom&#39;</span>); }
+  <span style="color:#a6e22e">sleep() {</span> <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#e6db74">&#39;Zzzzzz...&#39;</span>); }
+  <span style="color:#a6e22e">meow() {</span> <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#e6db74">&#39;Meow!&#39;</span>); }
+}
+</code></pre></div><h3 id="常用前端框架的拓展">常用前端框架的拓展</h3>
 <p>引用一些使用这些模式的流行框架及其内部代码：</p>
 <blockquote>
 <p>Vue.js 使用了 TypeScript 的接口继承和类型别名等高级特性。例如，Vue.js 中定义组件时可以使用Props类型别名来指定组件的属性类型：</p>
 </blockquote>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Javascript" data-lang="Javascript"><span style="display:flex;"><span><span style="color:#66d9ef">import</span> { <span style="color:#a6e22e">PropType</span> } <span style="color:#a6e22e">from</span> <span style="color:#e6db74">&#39;vue&#39;</span>;
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#a6e22e">type</span> <span style="color:#a6e22e">Props</span> <span style="color:#f92672">=</span> {
-</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">msg</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">string</span>;
-</span></span><span style="display:flex;"><span>};
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">export</span> <span style="color:#66d9ef">default</span> {
-</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">props</span><span style="color:#f92672">:</span> {
-</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">msg</span><span style="color:#f92672">:</span> {
-</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">type</span><span style="color:#f92672">:</span> String <span style="color:#a6e22e">as</span> <span style="color:#a6e22e">PropType</span><span style="color:#f92672">&lt;</span><span style="color:#a6e22e">Props</span>[<span style="color:#e6db74">&#39;msg&#39;</span>]<span style="color:#f92672">&gt;</span>,
-</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">required</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">true</span>
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>  },
-</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// ...
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>}
-</span></span></code></pre></div><blockquote>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Javascript" data-lang="Javascript"><span style="color:#66d9ef">import</span> { <span style="color:#a6e22e">PropType</span> } <span style="color:#a6e22e">from</span> <span style="color:#e6db74">&#39;vue&#39;</span>;
+
+<span style="color:#a6e22e">type</span> <span style="color:#a6e22e">Props</span> <span style="color:#f92672">=</span> {
+  <span style="color:#a6e22e">msg</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">string</span>;
+};
+
+<span style="color:#66d9ef">export</span> <span style="color:#66d9ef">default</span> {
+  <span style="color:#a6e22e">props</span><span style="color:#f92672">:</span> {
+    <span style="color:#a6e22e">msg</span><span style="color:#f92672">:</span> {
+      <span style="color:#a6e22e">type</span><span style="color:#f92672">:</span> String <span style="color:#a6e22e">as</span> <span style="color:#a6e22e">PropType</span><span style="color:#f92672">&lt;</span><span style="color:#a6e22e">Props</span>[<span style="color:#e6db74">&#39;msg&#39;</span>]<span style="color:#f92672">&gt;</span>,
+      <span style="color:#a6e22e">required</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">true</span>
+    }
+  },
+  <span style="color:#75715e">// ...
+</span><span style="color:#75715e"></span>}
+</code></pre></div><blockquote>
 <p>NestJS 是一个基于 Node.js 和 TypeScript 的开发框架，它广泛使用了 TypeScript 的 interface 高级用法。例如，NestJS 中的服务类可以定义依赖注入的参数类型</p>
 </blockquote>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-JavaScript" data-lang="JavaScript"><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">@</span><span style="color:#a6e22e">Injectable</span>()
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">export</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">CatsService</span> {
-</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">constructor</span>(
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#a6e22e">readonly</span> <span style="color:#a6e22e">catsRepository</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">CatsRepository</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#a6e22e">readonly</span> <span style="color:#a6e22e">logger</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">LoggerService</span>,
-</span></span><span style="display:flex;"><span>  ) {}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">async</span> <span style="color:#a6e22e">create</span>(<span style="color:#a6e22e">catDto</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">CreateCatDto</span>)<span style="color:#f92672">:</span> Promise<span style="color:#f92672">&lt;</span><span style="color:#a6e22e">Cat</span><span style="color:#f92672">&gt;</span> {
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">createdCat</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">await</span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">catsRepository</span>.<span style="color:#a6e22e">create</span>(<span style="color:#a6e22e">catDto</span>);
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">logger</span>.<span style="color:#a6e22e">log</span>(<span style="color:#e6db74">`Created a cat with id </span><span style="color:#e6db74">${</span><span style="color:#a6e22e">createdCat</span>.<span style="color:#a6e22e">id</span><span style="color:#e6db74">}</span><span style="color:#e6db74">`</span>);
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">createdCat</span>;
-</span></span><span style="display:flex;"><span>  }
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><blockquote>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-JavaScript" data-lang="JavaScript"><span style="color:#960050;background-color:#1e0010">@</span><span style="color:#a6e22e">Injectable</span>()
+<span style="color:#66d9ef">export</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">CatsService</span> {
+  <span style="color:#a6e22e">constructor</span>(
+    <span style="color:#66d9ef">private</span> <span style="color:#a6e22e">readonly</span> <span style="color:#a6e22e">catsRepository</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">CatsRepository</span>,
+    <span style="color:#66d9ef">private</span> <span style="color:#a6e22e">readonly</span> <span style="color:#a6e22e">logger</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">LoggerService</span>,
+  ) {}
+
+  <span style="color:#66d9ef">async</span> <span style="color:#a6e22e">create</span>(<span style="color:#a6e22e">catDto</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">CreateCatDto</span>)<span style="color:#f92672">:</span> Promise<span style="color:#f92672">&lt;</span><span style="color:#a6e22e">Cat</span><span style="color:#f92672">&gt;</span> {
+    <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">createdCat</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">await</span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">catsRepository</span>.<span style="color:#a6e22e">create</span>(<span style="color:#a6e22e">catDto</span>);
+    <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">logger</span>.<span style="color:#a6e22e">log</span>(<span style="color:#e6db74">`Created a cat with id </span><span style="color:#e6db74">${</span><span style="color:#a6e22e">createdCat</span>.<span style="color:#a6e22e">id</span><span style="color:#e6db74">}</span><span style="color:#e6db74">`</span>);
+    <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">createdCat</span>;
+  }
+}
+</code></pre></div><blockquote>
 <p>RxJS 是一个响应式编程库，它使用了 TypeScript 的泛型接口来实现类型安全的流式处理操作。例如，RxJS 中的Observable类就是一个泛型接口：</p>
 </blockquote>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-JavaScript" data-lang="JavaScript"><span style="display:flex;"><span><span style="color:#66d9ef">interface</span> <span style="color:#a6e22e">Observable</span><span style="color:#f92672">&lt;</span><span style="color:#a6e22e">T</span><span style="color:#f92672">&gt;</span> {
-</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">subscribe</span>(<span style="color:#a6e22e">observer</span><span style="color:#f92672">?:</span> <span style="color:#a6e22e">PartialObserver</span><span style="color:#f92672">&lt;</span><span style="color:#a6e22e">T</span><span style="color:#f92672">&gt;</span>)<span style="color:#f92672">:</span> <span style="color:#a6e22e">Subscription</span>;
-</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// ...
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">source$</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">Observable</span><span style="color:#f92672">&lt;</span><span style="color:#a6e22e">number</span><span style="color:#f92672">&gt;</span>(<span style="color:#a6e22e">subscriber</span> =&gt; {
-</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">subscriber</span>.<span style="color:#a6e22e">next</span>(<span style="color:#ae81ff">1</span>);
-</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">subscriber</span>.<span style="color:#a6e22e">next</span>(<span style="color:#ae81ff">2</span>);
-</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">subscriber</span>.<span style="color:#a6e22e">next</span>(<span style="color:#ae81ff">3</span>);
-</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">subscriber</span>.<span style="color:#a6e22e">complete</span>();
-</span></span><span style="display:flex;"><span>});
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#a6e22e">source$</span>.<span style="color:#a6e22e">subscribe</span>({
-</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">next</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">value</span> =&gt; <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#a6e22e">value</span>),
-</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">complete</span><span style="color:#f92672">:</span> () =&gt; <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#e6db74">&#39;Complete!&#39;</span>)
-</span></span><span style="display:flex;"><span>});
-</span></span></code></pre></div><h2 id="参考链接">参考链接</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-JavaScript" data-lang="JavaScript"><span style="color:#66d9ef">interface</span> <span style="color:#a6e22e">Observable</span><span style="color:#f92672">&lt;</span><span style="color:#a6e22e">T</span><span style="color:#f92672">&gt;</span> {
+  <span style="color:#a6e22e">subscribe</span>(<span style="color:#a6e22e">observer</span><span style="color:#f92672">?:</span> <span style="color:#a6e22e">PartialObserver</span><span style="color:#f92672">&lt;</span><span style="color:#a6e22e">T</span><span style="color:#f92672">&gt;</span>)<span style="color:#f92672">:</span> <span style="color:#a6e22e">Subscription</span>;
+  <span style="color:#75715e">// ...
+</span><span style="color:#75715e"></span>}
+
+<span style="color:#66d9ef">const</span> <span style="color:#a6e22e">source$</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">Observable</span><span style="color:#f92672">&lt;</span><span style="color:#a6e22e">number</span><span style="color:#f92672">&gt;</span>(<span style="color:#a6e22e">subscriber</span> =&gt; {
+  <span style="color:#a6e22e">subscriber</span>.<span style="color:#a6e22e">next</span>(<span style="color:#ae81ff">1</span>);
+  <span style="color:#a6e22e">subscriber</span>.<span style="color:#a6e22e">next</span>(<span style="color:#ae81ff">2</span>);
+  <span style="color:#a6e22e">subscriber</span>.<span style="color:#a6e22e">next</span>(<span style="color:#ae81ff">3</span>);
+  <span style="color:#a6e22e">subscriber</span>.<span style="color:#a6e22e">complete</span>();
+});
+
+<span style="color:#a6e22e">source$</span>.<span style="color:#a6e22e">subscribe</span>({
+  <span style="color:#a6e22e">next</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">value</span> =&gt; <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#a6e22e">value</span>),
+  <span style="color:#a6e22e">complete</span><span style="color:#f92672">:</span> () =&gt; <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#e6db74">&#39;Complete!&#39;</span>)
+});
+</code></pre></div><h2 id="参考链接">参考链接</h2>
 <ul>
 <li><strong>TypeScript手册</strong></li>
 <li><strong>《前端interface设计艺术》</strong></li>
 <li><strong>响应式编程的演变</strong></li>
 </ul>
               
-
-
             </div>
           </div>
           <div id="post-footer" class="post-footer main-content-wrap">
@@ -409,132 +384,136 @@
                   <div class="post-footer-tags">
                     <span class="text-color-light text-small">标签</span><br/>
                     
-  <a class="tag tag--primary tag--small" href="https://pixeldin.github.io/zh/tags/typescript/">TypeScript</a>
+  <a class="tag tag--primary tag--small" href="/zh/tags/typescript/">TypeScript</a>
 
                   </div>
                 
               
             
-            
-<div class="post-actions-wrap">
-  <nav >
-    <ul class="post-actions post-action-nav">
+            <div class="post-actions-wrap">
+  
+      <nav >
+        <ul class="post-actions post-action-nav">
+          
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--disabled">
+              
+                  <i class="fa fa-angle-left"></i>
+                  <span class="hide-xs hide-sm text-small icon-ml">下一篇</span>
+                </a>
+            </li>
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="/zh/2023/02/%E8%81%8A%E4%B8%80%E8%81%8Anext.js%E7%9A%84%E9%A2%84%E6%B8%B2%E6%9F%93/" data-tooltip="聊一聊Next.js的预渲染">
+              
+                  <span class="hide-xs hide-sm text-small icon-mr">上一篇</span>
+                  <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+          
+        </ul>
+      </nav>
+    <ul class="post-actions post-action-share" >
       
-        <li class="post-action">
-          
-            <a class="post-action-btn btn btn--disabled">
-          
-              <i class="fa fa-angle-left"></i>
-              <span class="hide-xs hide-sm text-small icon-ml">后一篇</span>
-            </a>
+        <li class="post-action hide-lg hide-md hide-sm">
+          <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
+            <i class="fa fa-share-alt"></i>
+          </a>
         </li>
-        <li class="post-action">
-          
-            <a class="post-action-btn btn btn--default tooltip--top" href="https://pixeldin.github.io/zh/2023/02/%E8%81%8A%E4%B8%80%E8%81%8Anext.js%E7%9A%84%E9%A2%84%E6%B8%B2%E6%9F%93/" data-tooltip="聊一聊Next.js的预渲染" aria-label="前一篇: 聊一聊Next.js的预渲染">
-          
-              <span class="hide-xs hide-sm text-small icon-mr">前一篇</span>
-              <i class="fa fa-angle-right"></i>
-            </a>
-        </li>
+        
       
+      
+      <li class="post-action">
+        
+          <a class="post-action-btn btn btn--default" href="#">
+        
+          <i class="fa fa-list"></i>
+        </a>
+      </li>
     </ul>
-  </nav>
-<ul class="post-actions post-action-share" >
   
-    <li class="post-action hide-lg hide-md hide-sm">
-      <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions" aria-label="分享这个帖子">
-        <i class="fa fa-share-alt" aria-hidden="true"></i>
-      </a>
-    </li>
-    
-  
-  
-  <li class="post-action">
-    
-      <a class="post-action-btn btn btn--default" href="#top" aria-label="回到顶部">
-      <i class="fa fa-arrow-up" aria-hidden="true"></i>
-    
-    </a>
-  </li>
-</ul>
 </div>
 
-
             
-  
-
-
+              
+            
           </div>
         </article>
         <footer id="footer" class="main-content-wrap">
   <span class="copyrights">
-    &copy; 2023 <a href="https://github.com/pixeldin">pixeldin</a>. All Rights Reserved
+    &copy; 2024 <a href="https://github.com/pixeldin">pixeldin</a>. All Rights Reserved
   </span>
 </footer>
 
       </div>
-      <div id="bottom-bar" class="post-bottom-bar" data-behavior="1">
+      <div id="bottom-bar" class="post-bottom-bar" data-behavior="4">
+        <div class="post-actions-wrap">
+  
+      <nav >
+        <ul class="post-actions post-action-nav">
+          
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--disabled">
+              
+                  <i class="fa fa-angle-left"></i>
+                  <span class="hide-xs hide-sm text-small icon-ml">下一篇</span>
+                </a>
+            </li>
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="/zh/2023/02/%E8%81%8A%E4%B8%80%E8%81%8Anext.js%E7%9A%84%E9%A2%84%E6%B8%B2%E6%9F%93/" data-tooltip="聊一聊Next.js的预渲染">
+              
+                  <span class="hide-xs hide-sm text-small icon-mr">上一篇</span>
+                  <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+          
+        </ul>
+      </nav>
+    <ul class="post-actions post-action-share" >
+      
+        <li class="post-action hide-lg hide-md hide-sm">
+          <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
+            <i class="fa fa-share-alt"></i>
+          </a>
+        </li>
         
-<div class="post-actions-wrap">
-  <nav >
-    <ul class="post-actions post-action-nav">
       
-        <li class="post-action">
-          
-            <a class="post-action-btn btn btn--disabled">
-          
-              <i class="fa fa-angle-left"></i>
-              <span class="hide-xs hide-sm text-small icon-ml">后一篇</span>
-            </a>
-        </li>
-        <li class="post-action">
-          
-            <a class="post-action-btn btn btn--default tooltip--top" href="https://pixeldin.github.io/zh/2023/02/%E8%81%8A%E4%B8%80%E8%81%8Anext.js%E7%9A%84%E9%A2%84%E6%B8%B2%E6%9F%93/" data-tooltip="聊一聊Next.js的预渲染" aria-label="前一篇: 聊一聊Next.js的预渲染">
-          
-              <span class="hide-xs hide-sm text-small icon-mr">前一篇</span>
-              <i class="fa fa-angle-right"></i>
-            </a>
-        </li>
       
+      <li class="post-action">
+        
+          <a class="post-action-btn btn btn--default" href="#">
+        
+          <i class="fa fa-list"></i>
+        </a>
+      </li>
     </ul>
-  </nav>
-<ul class="post-actions post-action-share" >
   
-    <li class="post-action hide-lg hide-md hide-sm">
-      <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions" aria-label="分享这个帖子">
-        <i class="fa fa-share-alt" aria-hidden="true"></i>
-      </a>
-    </li>
-    
-  
-  
-  <li class="post-action">
-    
-      <a class="post-action-btn btn btn--default" href="#top" aria-label="回到顶部">
-      <i class="fa fa-arrow-up" aria-hidden="true"></i>
-    
-    </a>
-  </li>
-</ul>
 </div>
 
-
       </div>
-      
-
+      <div id="share-options-bar" class="share-options-bar" data-behavior="4">
+  <i id="btn-close-shareoptions" class="fa fa-close"></i>
+  <ul class="share-options">
+    
+  </ul>
+</div>
+<div id="share-options-mask" class="share-options-mask"></div>
     </div>
     
     <div id="about">
   <div id="about-card">
     <div id="about-btn-close">
-      <i class="fa fa-times"></i>
+      <i class="fa fa-remove"></i>
     </div>
     
       <img id="about-card-picture" src="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/pig.jpg" alt="作者的图片" />
     
-    <h4 id="about-card-name">@Pixelpig</h4>
+    <h4 id="about-card-name">pixelpig</h4>
     
-      <div id="about-card-bio">Keep it simple, so as this bio <strong>:）</strong></div>
+      <div id="about-card-bio">Keep it simple, so as this bio :)</div>
     
     
       <div id="about-card-job">
@@ -545,9 +524,9 @@
     
     
       <div id="about-card-location">
-        <i class="fa fa-map-marker-alt"></i>
+        <i class="fa fa-map-marker"></i>
         <br/>
-        GuangDong - China
+        Guangdong - China
       </div>
     
   </div>
@@ -562,16 +541,30 @@
 
 
     
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.1.0/highlight.min.js" integrity="sha512-z+/WWfyD5tccCukM4VvONpEtLmbAm5LDu7eKiyMQJ9m7OfPEDL7gENyDRL3Yfe8XAuGsS2fS4xSMnl6d30kqGQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js" integrity="sha256-/BfiIkHlHoVihZdc6TFuj7MmJ0TWcWsMXkeDFwhi0zw=" crossorigin="anonymous"></script>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js" integrity="sha512-uURl+ZXMBrF4AwGaWmEetzrd+J5/8NRkWAvJx5sbPSSuOb0bZLqf+tOzniObO00BjHa/dD7gub9oCGMLPQHtQA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
-
-<script src="https://pixeldin.github.io/js/script-d9gfx1pdvbfdgoahypizomgoamlbumvk1ugdifqa59ynqvdh8wfsinmt5oj.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.7/js/jquery.fancybox.min.js" integrity="sha256-GEAnjcTqVP+vBp3SSc8bEDQqvWAZMiHyUSIorrWwH50=" crossorigin="anonymous"></script>
 
 
+<script src="/js/script-vl2saiwwv2xiez4lde0rm1wmexz8htzz8onnothyei9lqwshvghg9rqd1s.min.js"></script>
+
+
+<script lang="javascript">
+window.onload = updateMinWidth;
+window.onresize = updateMinWidth;
+document.getElementById("sidebar").addEventListener("transitionend", updateMinWidth);
+function updateMinWidth() {
+  var sidebar = document.getElementById("sidebar");
+  var main = document.getElementById("main");
+  main.style.minWidth = "";
+  var w1 = getComputedStyle(main).getPropertyValue("min-width");
+  var w2 = getComputedStyle(sidebar).getPropertyValue("width");
+  var w3 = getComputedStyle(sidebar).getPropertyValue("left");
+  main.style.minWidth = `calc(${w1} - ${w2} - ${w3})`;
+}
+</script>
 
 <script>
 $(document).ready(function() {
@@ -584,6 +577,11 @@ $(document).ready(function() {
   });
 });
 </script>
+
+
+  
+    
+  
 
 
 

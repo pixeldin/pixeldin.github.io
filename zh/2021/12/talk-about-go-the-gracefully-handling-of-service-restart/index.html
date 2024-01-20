@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+  <head>
+    
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="generator" content="Hugo 0.80.0 with theme Tranquilpeak 0.4.8-BETA">
+<meta name="author" content="pixelpig">
+<meta name="keywords" content="">
+<meta name="description" content="Last time we talked about graceful shutdown of Go programs, today we will talk about graceful restarts.">
+
+
+<meta property="og:description" content="Last time we talked about graceful shutdown of Go programs, today we will talk about graceful restarts.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Talk about Go: The gracefully handling of service restart">
+<meta name="twitter:title" content="Talk about Go: The gracefully handling of service restart">
+<meta property="og:url" content="/zh/2021/12/talk-about-go-the-gracefully-handling-of-service-restart/">
+<meta property="twitter:url" content="/zh/2021/12/talk-about-go-the-gracefully-handling-of-service-restart/">
+<meta property="og:site_name" content="pixelpig.space">
+<meta property="og:description" content="Last time we talked about graceful shutdown of Go programs, today we will talk about graceful restarts.">
+<meta name="twitter:description" content="Last time we talked about graceful shutdown of Go programs, today we will talk about graceful restarts.">
+<meta property="og:locale" content="zh">
+
+  
+    <meta property="article:published_time" content="2021-12-23T00:00:00">
+  
+  
+    <meta property="article:modified_time" content="2021-12-23T00:00:00">
+  
+  
+  
+    
+      <meta property="article:section" content="Go">
+    
+      <meta property="article:section" content="microservice">
+    
+  
+  
+    
+      <meta property="article:tag" content="Talk about Go">
+    
+      <meta property="article:tag" content="microservice">
+    
+      <meta property="article:tag" content="HA">
+    
+      <meta property="article:tag" content="process communication">
+    
+  
+
+
+<meta name="twitter:card" content="summary">
+
+  <meta name="twitter:site" content="@pixelpigpigpig">
+
+
+  <meta name="twitter:creator" content="@pixelpigpigpig">
+
+
+
+
+
+
+  <meta property="og:image" content="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/blog/graceful/lastgreen.png">
+  <meta property="twitter:image" content="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/blog/graceful/lastgreen.png">
+
+
+
+
+
+  <meta property="og:image" content="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/pig.jpg">
+  <meta property="twitter:image" content="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/pig.jpg">
+
+
+    <title>Talk about Go: The gracefully handling of service restart</title>
+
+    <link rel="icon" href="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/blog/static/pig_round_circle.png">
+    
+
+    
+
+    <link rel="canonical" href="/zh/2021/12/talk-about-go-the-gracefully-handling-of-service-restart/">
+
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/jquery.fancybox.min.css" integrity="sha256-vuXZ9LGmmwtjqFX1F+EKin1ThZMub58gKULUyf0qECk=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/helpers/jquery.fancybox-thumbs.min.css" integrity="sha256-SEa4XYAHihTcEP1f5gARTB2K26Uk8PsndQYHQC1f4jU=" crossorigin="anonymous" />
+    
+    
+    <link rel="stylesheet" href="/css/style-twzjdbqhmnnacqs0pwwdzcdbt8yhv8giawvjqjmyfoqnvazl0dalmnhdkvp7.min.css" />
+    
+    
+
+    
+      
+    
+    
+  </head>
+
+  <body>
+    <div id="blog">
+      <header id="header" data-behavior="4">
+  <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+  <div class="header-title">
+    <a class="header-title-link" href="/zh/">pixelpig.space</a>
+  </div>
+  
+    
+      <a class="header-right-picture "
+         href="/#about">
+    
+    
+    
+      
+        <img class="header-picture" src="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/pig.jpg" alt="作者的图片" />
+      
+    
+    </a>
+  
+</header>
+
+      <nav id="sidebar" data-behavior="4">
+  <div class="sidebar-container">
+    
+      <div class="sidebar-profile">
+        <a href="/#about">
+          <img class="sidebar-profile-picture" src="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/pig.jpg" alt="作者的图片" />
+        </a>
+        <h4 class="sidebar-profile-name">pixelpig</h4>
+        
+          <h5 class="sidebar-profile-bio">Keep it simple, so as this bio :)</h5>
+        
+      </div>
+    
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/en">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-language"></i>
+      
+      <span class="sidebar-button-desc">English</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/zh/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-home"></i>
+      
+      <span class="sidebar-button-desc">首页</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/zh/categories">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-bookmark"></i>
+      
+      <span class="sidebar-button-desc">分类</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/zh/tags">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
+      
+      <span class="sidebar-button-desc">标签</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/zh/archives">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-archive"></i>
+      
+      <span class="sidebar-button-desc">归档</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/zh/#about">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-question-circle"></i>
+      
+      <span class="sidebar-button-desc">关于我</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://github.com/pixeldin" target="_blank" rel="noopener">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-github-alt"></i>
+      
+      <span class="sidebar-button-desc">pixeldin</span>
+    </a>
+  </li>
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+
+    </ul>
+  </div>
+</nav>
+
+      
+
+      <div id="main" data-behavior="4"
+        class="
+               hasCoverMetaIn
+               ">
+        <article class="post" itemscope itemType="http://schema.org/BlogPosting">
+          
+          
+            <div class="post-header main-content-wrap text-center">
+  
+    <h1 class="post-title" itemprop="headline">
+      Talk about Go: The gracefully handling of service restart
+    </h1>
+  
+  
+  <div class="postShorten-meta post-meta">
+    
+      <time itemprop="datePublished" datetime="2021-12-23T00:00:00Z">
+        
+  十二月 23, 2021
+
+      </time>
+    
+    
+  
+  
+    <span>发布在</span>
+    
+      <a class="category-link" href="/zh/categories/go">Go</a>, 
+    
+      <a class="category-link" href="/zh/categories/microservice">microservice</a>
+    
+  
+
+  </div>
+
+</div>
+          
+          <div class="post-content markdown" itemprop="articleBody">
+            <div class="main-content-wrap">
+              <p>Last time we talked about graceful shutdown of Go programs, today we will talk about graceful restarts.</p>
+<p><img src="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/blog/graceful/recover.png" alt="recover"></p>
+<h3 id="foreword">Foreword</h3>
+<p>A while ago, we talked about how to close the Go program gracefully. I remembered that I saw an implementation of semaphore interaction before. I found it very interesting, so I took it out and share something of my opinion. The source article link will be placed in the reference link.</p>
+<p>In fact, the core of graceful restart is that we need to have a <strong>Panman</strong>, if the offline service has unfinished connections, we need to provide a new service/process to handle as much as possible, and continue to continuously monitor new requests, provide external availability, and make the requester unaware.</p>
+<p>In short, achieving graceful restart requires solving two problems:</p>
+<ol>
+<li>How to keep the originally created socket at the operating system level so that the newly restarted process can continue to listen</li>
+<li>ensure that all subsequent requests will be able to respond or time out</li>
+</ol>
+<p>This sounds ideal, so let&rsquo;s see how it is achieved step by step.</p>
+<h4 id="key-step">Key Step</h4>
+<ol>
+<li>Under the process currently listening to the socket, fork a child process to handle</li>
+<li>New(child) process replace and reuse the original socket</li>
+<li>New(child) process notify old(parents) process stop handle new request and close gradually</li>
+</ol>
+<h4 id="state-transition">State Transition</h4>
+<p>In the early stage, we didn&rsquo;t go too deep into the details of the subsequent processing of the process startup. First, let&rsquo;s sort out the state that the program needs to monitor, or what events the program needs to respond to when it restarts.<br>
+In fact, the current service is nothing more than two states,</p>
+<ul>
+<li>State 1: the first time of starting</li>
+<li>State 2: starts a new process to replace the old process, when something happened like service upgate or version change</li>
+</ul>
+<p>State 1 is actually not fundamentally different from ordinary services, that is, just start listening.</p>
+<p>Let&rsquo;s talk about State 2. State 2 is actually extended from State 1, so the program needs to monitor both states at the same time, and the trigger event of the monitoring is the ** semaphore** mentioned above in graceful stop.</p>
+<p>I drew a general flow chart to facilitate further understanding:
+<img src="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/blog/graceful/en-graceful%20state%20change.png" alt="state change"></p>
+<h4 id="pre-concept">Pre-concept</h4>
+<p>Let&rsquo;s familiarize ourselves with some concepts in network socket programming so as to know how to reuse connections.</p>
+<p>We know that in a network environment, an end-to-end connection can be established using <strong>TCP quads</strong>, namely <code>&lt;src addr&gt;, &lt;src port&gt;, &lt;dest addr&gt;, &lt;dest port&gt;</code> to mark as the unique connection.</p>
+<p>A TCP connection disconnection needs to go through four waves, among which there is a <code>TIME_WAIT</code> state on the disconnected party, which is used to wait for the disconnected party to close the connection, or the sender buffer data is actually sent. This waiting time generally does not change (default 2min), which means that the current tcp tuple cannot be reused before the <code>TIME_WAIT</code> state ends, unless <code>SO_REUSEADDR</code> is set.</p>
+<p>There are two key parameters here, <code>SO_REUSEADDR</code> and <code>SO_REUSEPORT</code>,
+First of all, it literally means <strong>reuse</strong>. The specific concepts are as follows:</p>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SO_REUSEADDR</td>
+<td>Allow connection ip addresses to be reused without being completely disconnected</td>
+</tr>
+<tr>
+<td>SO_REUSEPORT</td>
+<td>Under the premise of enabling <code>SO_REUSEADDR</code>, the connection port address is allowed to be reused</td>
+</tr>
+</tbody>
+</table>
+<p>Then if multiplexing is enabled and the connection is successful, at the operating system level, if multiple file handles are bound to the system&rsquo;s <strong>ip+port</strong>, what will the system do? The answer is load balancing, that is, the system will respond to requests. Assignment, similar to random polling, interacts with connections of the same unique ip and port.</p>
+<p>Some people may say here, whether there is a problem of out-of-bounds access to different client processes in this way, there is indeed a problem, so there is a convention based on security considerations:</p>
+<blockquote>
+<p>To prevent &ldquo;port hijacking&rdquo;, there is one special limitation: All sockets that want to share the same address and port combination must belong to processes that share the same effective user ID</p>
+</blockquote>
+<h3 id="program-example">Program example</h3>
+<p>Let&rsquo;s see how the program is implemented</p>
+<ol>
+<li>Configuration items for incoming multiplexed connections</li>
+</ol>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">control</span>(<span style="color:#a6e22e">network</span>, <span style="color:#a6e22e">address</span> <span style="color:#66d9ef">string</span>, <span style="color:#a6e22e">c</span> <span style="color:#a6e22e">syscall</span>.<span style="color:#a6e22e">RawConn</span>) <span style="color:#66d9ef">error</span> {
+	<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">err</span> <span style="color:#66d9ef">error</span>
+	<span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">Control</span>(<span style="color:#66d9ef">func</span>(<span style="color:#a6e22e">fd</span> <span style="color:#66d9ef">uintptr</span>) {
+		<span style="color:#a6e22e">err</span> = <span style="color:#a6e22e">unix</span>.<span style="color:#a6e22e">SetsockoptInt</span>(int(<span style="color:#a6e22e">fd</span>), <span style="color:#a6e22e">unix</span>.<span style="color:#a6e22e">SOL_SOCKET</span>, <span style="color:#a6e22e">unix</span>.<span style="color:#a6e22e">SO_REUSEADDR</span>, <span style="color:#ae81ff">1</span>)
+		<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+			<span style="color:#66d9ef">return</span>
+		}
+		<span style="color:#a6e22e">err</span> = <span style="color:#a6e22e">unix</span>.<span style="color:#a6e22e">SetsockoptInt</span>(int(<span style="color:#a6e22e">fd</span>), <span style="color:#a6e22e">unix</span>.<span style="color:#a6e22e">SOL_SOCKET</span>, <span style="color:#a6e22e">unix</span>.<span style="color:#a6e22e">SO_REUSEPORT</span>, <span style="color:#ae81ff">1</span>)
+		<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+			<span style="color:#66d9ef">return</span>
+		}
+	})
+	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">err</span>
+}
+</code></pre></div><ol start="2">
+<li>Check if the currently listening tcp tuple is listening</li>
+</ol>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">listener</span>() (<span style="color:#a6e22e">net</span>.<span style="color:#a6e22e">Listener</span>, <span style="color:#66d9ef">error</span>) {
+	<span style="color:#a6e22e">lc</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">net</span>.<span style="color:#a6e22e">ListenConfig</span>{
+		<span style="color:#a6e22e">Control</span>: <span style="color:#a6e22e">control</span>,
+	}
+	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">l</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">lc</span>.<span style="color:#a6e22e">Listen</span>(<span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">TODO</span>(), <span style="color:#e6db74">&#34;tcp&#34;</span>, <span style="color:#e6db74">&#34;:8080&#34;</span>); <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+	    <span style="color:#75715e">// port not in use, return err
+</span><span style="color:#75715e"></span>		<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>, <span style="color:#a6e22e">err</span>
+	} <span style="color:#66d9ef">else</span> {
+		<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">l</span>, <span style="color:#66d9ef">nil</span>
+	}
+}
+</code></pre></div><ol start="3">
+<li>Monitor system semaphores</li>
+</ol>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">upgradeLoop</span>(<span style="color:#a6e22e">l</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">net</span>.<span style="color:#a6e22e">Listener</span>, <span style="color:#a6e22e">s</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">Server</span>) {
+	<span style="color:#a6e22e">sig</span> <span style="color:#f92672">:=</span> make(<span style="color:#66d9ef">chan</span> <span style="color:#a6e22e">os</span>.<span style="color:#a6e22e">Signal</span>)
+	<span style="color:#a6e22e">signal</span>.<span style="color:#a6e22e">Notify</span>(<span style="color:#a6e22e">sig</span>, <span style="color:#a6e22e">syscall</span>.<span style="color:#a6e22e">SIGQUIT</span>, <span style="color:#a6e22e">syscall</span>.<span style="color:#a6e22e">SIGUSR2</span>)
+	<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">t</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">range</span> <span style="color:#a6e22e">sig</span> {
+		<span style="color:#66d9ef">switch</span> <span style="color:#a6e22e">t</span> {
+		<span style="color:#66d9ef">case</span> <span style="color:#a6e22e">syscall</span>.<span style="color:#a6e22e">SIGUSR2</span>:
+			<span style="color:#75715e">// receive upgrade semaphore
+</span><span style="color:#75715e"></span>			<span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;Received SIGUSR2 upgrading binary&#34;</span>)
+			<span style="color:#75715e">// graceful upgrade of frok child processes
+</span><span style="color:#75715e"></span>			<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">spawnChild</span>(); <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+				<span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Println</span>(
+					<span style="color:#e6db74">&#34;Cannot perform binary upgrade, when starting process: &#34;</span>,
+					<span style="color:#a6e22e">err</span>.<span style="color:#a6e22e">Error</span>(),
+				)
+				<span style="color:#66d9ef">continue</span>
+			}
+		<span style="color:#66d9ef">case</span> <span style="color:#a6e22e">syscall</span>.<span style="color:#a6e22e">SIGQUIT</span>:
+		    <span style="color:#75715e">// receive a semaphore to kill the current process
+</span><span style="color:#75715e"></span>			<span style="color:#a6e22e">s</span>.<span style="color:#a6e22e">Shutdown</span>(<span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">Background</span>())
+			<span style="color:#a6e22e">os</span>.<span style="color:#a6e22e">Exit</span>(<span style="color:#ae81ff">0</span>)
+		}
+	}
+}
+
+<span style="color:#75715e">// fork child process, and update override global parent process id before new process
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">spawnChild</span>() <span style="color:#66d9ef">error</span> {
+	<span style="color:#75715e">// get the parameters of the current startup incoming executable file, such as./main
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">argv0</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">exec</span>.<span style="color:#a6e22e">LookPath</span>(<span style="color:#a6e22e">os</span>.<span style="color:#a6e22e">Args</span>[<span style="color:#ae81ff">0</span>])
+	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+		<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">err</span>
+	}
+	<span style="color:#a6e22e">wd</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">os</span>.<span style="color:#a6e22e">Getwd</span>()
+	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+		<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">err</span>
+	}
+
+	<span style="color:#a6e22e">files</span> <span style="color:#f92672">:=</span> make([]<span style="color:#f92672">*</span><span style="color:#a6e22e">os</span>.<span style="color:#a6e22e">File</span>, <span style="color:#ae81ff">0</span>)
+	<span style="color:#a6e22e">files</span> = append(<span style="color:#a6e22e">files</span>, <span style="color:#a6e22e">os</span>.<span style="color:#a6e22e">Stdin</span>, <span style="color:#a6e22e">os</span>.<span style="color:#a6e22e">Stdout</span>, <span style="color:#a6e22e">os</span>.<span style="color:#a6e22e">Stderr</span>)
+
+	<span style="color:#75715e">// save the current process, this id will be killed after the new process is started
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">ppid</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">os</span>.<span style="color:#a6e22e">Getpid</span>()
+	<span style="color:#a6e22e">os</span>.<span style="color:#a6e22e">Setenv</span>(<span style="color:#e6db74">&#34;APP_PPID&#34;</span>, <span style="color:#a6e22e">strconv</span>.<span style="color:#a6e22e">Itoa</span>(<span style="color:#a6e22e">ppid</span>))
+
+	<span style="color:#a6e22e">os</span>.<span style="color:#a6e22e">StartProcess</span>(<span style="color:#a6e22e">argv0</span>, <span style="color:#a6e22e">os</span>.<span style="color:#a6e22e">Args</span>, <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">os</span>.<span style="color:#a6e22e">ProcAttr</span>{
+		<span style="color:#a6e22e">Dir</span>:   <span style="color:#a6e22e">wd</span>,
+		<span style="color:#a6e22e">Env</span>:   <span style="color:#a6e22e">os</span>.<span style="color:#a6e22e">Environ</span>(),
+		<span style="color:#a6e22e">Files</span>: <span style="color:#a6e22e">files</span>,
+		<span style="color:#a6e22e">Sys</span>:   <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">syscall</span>.<span style="color:#a6e22e">SysProcAttr</span>{},
+	})
+
+	<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>
+}
+</code></pre></div><ol start="4">
+<li>Main coroutine</li>
+</ol>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+	<span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;Started HTTP API, PID: &#34;</span>, <span style="color:#a6e22e">os</span>.<span style="color:#a6e22e">Getpid</span>())
+	<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">l</span> <span style="color:#a6e22e">net</span>.<span style="color:#a6e22e">Listener</span>
+    <span style="color:#75715e">// start at first
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">fd</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">listener</span>(); <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+    	<span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;Parent does not exists, starting a normal way&#34;</span>)
+    	<span style="color:#a6e22e">l</span>, <span style="color:#a6e22e">err</span> = <span style="color:#a6e22e">net</span>.<span style="color:#a6e22e">Listen</span>(<span style="color:#e6db74">&#34;tcp&#34;</span>, <span style="color:#e6db74">&#34;:8080&#34;</span>)
+    
+    	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+    		panic(<span style="color:#a6e22e">err</span>)
+    	}
+    } <span style="color:#66d9ef">else</span> {
+    	<span style="color:#75715e">// the current port has been monitored
+</span><span style="color:#75715e"></span>    	<span style="color:#a6e22e">l</span> = <span style="color:#a6e22e">fd</span>
+    	<span style="color:#75715e">// send quit to the parent process
+</span><span style="color:#75715e"></span>    	<span style="color:#a6e22e">killParent</span>()
+    	<span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Sleep</span>(<span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Second</span>)
+    }
+    
+    <span style="color:#75715e">// start server listening
+</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">s</span> <span style="color:#f92672">:=</span> <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">Server</span>{}
+    	<span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">HandleFunc</span>(<span style="color:#e6db74">&#34;/&#34;</span>, <span style="color:#66d9ef">func</span>(<span style="color:#a6e22e">rw</span> <span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">ResponseWriter</span>, <span style="color:#a6e22e">r</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">Request</span>) {
+    		<span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;New request! From: %d, path: %s, method: %s: &#34;</span>, <span style="color:#a6e22e">os</span>.<span style="color:#a6e22e">Getpid</span>(),
+    			<span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">URL</span>, <span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">Method</span>)
+    	})
+    <span style="color:#66d9ef">go</span> <span style="color:#a6e22e">s</span>.<span style="color:#a6e22e">Serve</span>(<span style="color:#a6e22e">l</span>)
+    
+    <span style="color:#75715e">// monitor semaphore
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">upgradeLoop</span>(<span style="color:#f92672">&amp;</span><span style="color:#a6e22e">l</span>, <span style="color:#a6e22e">s</span>)
+}
+</code></pre></div><h4 id="code-reference">Code Reference：</h4>
+<p><a href="https://github.com/wutchzone/zero-downtime-application/blob/master/inherit-version/main.go">zero-downtime-application source code</a>, in fact, the core lies in the process of elegant migration from new process to old process, as long as you understand the core step, it will look more clearer at the code.</p>
+<p>This is why the main function logic block needs to be compatible with two situations, one is the normal server process, and the other is to receive the end of the old process.</p>
+<h3 id="expand-the-application">Expand the application</h3>
+<p>Regarding the graceful restart triggering mechanism above, the user sends the semaphore <code>pkill -SIGUSR2</code> to the process, as a seamless switch for manual upgrade.</p>
+<p>In fact, based on this function, it can be expanded, such as adding connection detection to monitoring services, requesting response time alarms, etc. When a certain trigger mechanism is reached, graceful restart can be triggered, so as to achieve the effect of dynamic pull-up. Of course, the follow-up still needs to review the positioning service. After all sometimes rebooting doesn&rsquo;t solve everything.</p>
+<h3 id="reference-link">Reference link</h3>
+<ul>
+<li><a href="https://wutch.medium.com/zero-downtime-api-in-golang-d5b6a52cc0ed">Zero downtime API in Golang</a></li>
+<li><a href="https://grisha.org/blog/2014/06/03/graceful-restart-in-golang/">Graceful Restart in Golang</a></li>
+<li><a href="https://medium.com/over-engineering/graceful-shutdown-with-go-http-servers-and-kubernetes-rolling-updates-6697e7db17cf">基于K8S的优雅关闭</a></li>
+<li><a href="https://stackoverflow.com/questions/14388706/how-do-so-reuseaddr-and-so-reuseport-differ/14388707#14388707">关于BSD套接字参数讨论</a></li>
+</ul>
+              
+            </div>
+          </div>
+          <div id="post-footer" class="post-footer main-content-wrap">
+            
+              
+                
+                
+                  <div class="post-footer-tags">
+                    <span class="text-color-light text-small">标签</span><br/>
+                    
+  <a class="tag tag--primary tag--small" href="/zh/tags/talk-about-go/">Talk about Go</a>
+
+  <a class="tag tag--primary tag--small" href="/zh/tags/microservice/">microservice</a>
+
+  <a class="tag tag--primary tag--small" href="/zh/tags/ha/">HA</a>
+
+  <a class="tag tag--primary tag--small" href="/zh/tags/process-communication/">process communication</a>
+
+                  </div>
+                
+              
+            
+            <div class="post-actions-wrap">
+  
+      <nav >
+        <ul class="post-actions post-action-nav">
+          
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="/zh/2022/02/%E8%81%8A%E4%B8%80%E8%81%8A%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8Btcp%E6%B5%81%E7%9A%84%E7%BB%84%E5%8C%85%E6%8B%86%E5%8C%85/" data-tooltip="聊一聊网络编程TCP流的组包拆包">
+              
+                  <i class="fa fa-angle-left"></i>
+                  <span class="hide-xs hide-sm text-small icon-ml">下一篇</span>
+                </a>
+            </li>
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="/zh/2021/12/%E8%81%8A%E4%B8%80%E8%81%8Ago%E6%9C%8D%E5%8A%A1%E7%9A%84%E4%BC%98%E9%9B%85%E5%A4%84%E7%90%86%E4%BA%8C-%E4%BC%98%E9%9B%85%E9%87%8D%E5%90%AF/" data-tooltip="聊一聊Go服务的优雅处理(二)--优雅重启">
+              
+                  <span class="hide-xs hide-sm text-small icon-mr">上一篇</span>
+                  <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+          
+        </ul>
+      </nav>
+    <ul class="post-actions post-action-share" >
+      
+        <li class="post-action hide-lg hide-md hide-sm">
+          <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
+            <i class="fa fa-share-alt"></i>
+          </a>
+        </li>
+        
+      
+      
+      <li class="post-action">
+        
+          <a class="post-action-btn btn btn--default" href="#">
+        
+          <i class="fa fa-list"></i>
+        </a>
+      </li>
+    </ul>
+  
+</div>
+
+            
+              
+            
+          </div>
+        </article>
+        <footer id="footer" class="main-content-wrap">
+  <span class="copyrights">
+    &copy; 2024 <a href="https://github.com/pixeldin">pixeldin</a>. All Rights Reserved
+  </span>
+</footer>
+
+      </div>
+      <div id="bottom-bar" class="post-bottom-bar" data-behavior="4">
+        <div class="post-actions-wrap">
+  
+      <nav >
+        <ul class="post-actions post-action-nav">
+          
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="/zh/2022/02/%E8%81%8A%E4%B8%80%E8%81%8A%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8Btcp%E6%B5%81%E7%9A%84%E7%BB%84%E5%8C%85%E6%8B%86%E5%8C%85/" data-tooltip="聊一聊网络编程TCP流的组包拆包">
+              
+                  <i class="fa fa-angle-left"></i>
+                  <span class="hide-xs hide-sm text-small icon-ml">下一篇</span>
+                </a>
+            </li>
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="/zh/2021/12/%E8%81%8A%E4%B8%80%E8%81%8Ago%E6%9C%8D%E5%8A%A1%E7%9A%84%E4%BC%98%E9%9B%85%E5%A4%84%E7%90%86%E4%BA%8C-%E4%BC%98%E9%9B%85%E9%87%8D%E5%90%AF/" data-tooltip="聊一聊Go服务的优雅处理(二)--优雅重启">
+              
+                  <span class="hide-xs hide-sm text-small icon-mr">上一篇</span>
+                  <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+          
+        </ul>
+      </nav>
+    <ul class="post-actions post-action-share" >
+      
+        <li class="post-action hide-lg hide-md hide-sm">
+          <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
+            <i class="fa fa-share-alt"></i>
+          </a>
+        </li>
+        
+      
+      
+      <li class="post-action">
+        
+          <a class="post-action-btn btn btn--default" href="#">
+        
+          <i class="fa fa-list"></i>
+        </a>
+      </li>
+    </ul>
+  
+</div>
+
+      </div>
+      <div id="share-options-bar" class="share-options-bar" data-behavior="4">
+  <i id="btn-close-shareoptions" class="fa fa-close"></i>
+  <ul class="share-options">
+    
+  </ul>
+</div>
+<div id="share-options-mask" class="share-options-mask"></div>
+    </div>
+    
+    <div id="about">
+  <div id="about-card">
+    <div id="about-btn-close">
+      <i class="fa fa-remove"></i>
+    </div>
+    
+      <img id="about-card-picture" src="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/pig.jpg" alt="作者的图片" />
+    
+    <h4 id="about-card-name">pixelpig</h4>
+    
+      <div id="about-card-bio">Keep it simple, so as this bio :)</div>
+    
+    
+    
+      <div id="about-card-location">
+        <i class="fa fa-map-marker"></i>
+        <br/>
+        GuangDong - CHINA
+      </div>
+    
+  </div>
+</div>
+
+    
+
+    
+  
+    <div id="cover" style="background-image:url('https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/cover.jpg');"></div>
+  
+
+
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js" integrity="sha256-/BfiIkHlHoVihZdc6TFuj7MmJ0TWcWsMXkeDFwhi0zw=" crossorigin="anonymous"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.7/js/jquery.fancybox.min.js" integrity="sha256-GEAnjcTqVP+vBp3SSc8bEDQqvWAZMiHyUSIorrWwH50=" crossorigin="anonymous"></script>
+
+
+<script src="/js/script-pcw6v3xilnxydl1vddzazdverrnn9ctynvnxgwho987mfyqkuylcb1nlt.min.js"></script>
+
+
+<script lang="javascript">
+window.onload = updateMinWidth;
+window.onresize = updateMinWidth;
+document.getElementById("sidebar").addEventListener("transitionend", updateMinWidth);
+function updateMinWidth() {
+  var sidebar = document.getElementById("sidebar");
+  var main = document.getElementById("main");
+  main.style.minWidth = "";
+  var w1 = getComputedStyle(main).getPropertyValue("min-width");
+  var w2 = getComputedStyle(sidebar).getPropertyValue("width");
+  var w3 = getComputedStyle(sidebar).getPropertyValue("left");
+  main.style.minWidth = `calc(${w1} - ${w2} - ${w3})`;
+}
+</script>
+
+<script>
+$(document).ready(function() {
+  hljs.configure({ classPrefix: '', useBR: false });
+  $('pre.code-highlight > code, pre > code').each(function(i, block) {
+    if (!$(this).hasClass('codeblock')) {
+      $(this).addClass('codeblock');
+    }
+    hljs.highlightBlock(block);
+  });
+});
+</script>
+
+
+  
+    
+  
+
+
+
+
+    
+  </body>
+</html>
+

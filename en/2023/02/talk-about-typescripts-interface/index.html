@@ -2,31 +2,11 @@
 <html lang="en-us">
   <head>
     
-    <script type="application/ld+json">
-
-{  
-  "@context":"http://schema.org",
-  "@type":"Website",
-  "@id":"https:\/\/pixeldin.github.io\/",
-  "author": {
-    "@type": "Person",
-    "name": "@Pixelpig",
-    
-    "image": "https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/pig.jpg"
-    
-  },
-  "name":"pixelpig.tech",
-  "description":"\u003cp\u003e\u0026ldquo;\u0026ldquo;Call it a duck if it looks like one.\u0026rdquo; Interface is used to define the shape or structure of an object.\u003c\/p\u003e",
-  "url":"https:\/\/pixeldin.github.io\/en\/2023\/02\/talk-about-typescripts-interface\/",
-  "keywords":"[]"
-}
-
-</script>
     <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="generator" content="Hugo 0.111.3 with theme Tranquilpeak 0.5.3-BETA">
-<meta name="author" content="@Pixelpig">
+<meta name="generator" content="Hugo 0.80.0 with theme Tranquilpeak 0.4.8-BETA">
+<meta name="author" content="pixelpig">
 <meta name="keywords" content="">
 <meta name="description" content="&ldquo;&ldquo;Call it a duck if it looks like one.&rdquo; Interface is used to define the shape or structure of an object.">
 
@@ -35,9 +15,9 @@
 <meta property="og:type" content="article">
 <meta property="og:title" content="Talk about TypeScript&#39;s interface">
 <meta name="twitter:title" content="Talk about TypeScript&#39;s interface">
-<meta property="og:url" content="https://pixeldin.github.io/en/2023/02/talk-about-typescripts-interface/">
-<meta property="twitter:url" content="https://pixeldin.github.io/en/2023/02/talk-about-typescripts-interface/">
-<meta property="og:site_name" content="pixelpig.tech">
+<meta property="og:url" content="/en/2023/02/talk-about-typescripts-interface/">
+<meta property="twitter:url" content="/en/2023/02/talk-about-typescripts-interface/">
+<meta property="og:site_name" content="pixelpig.space">
 <meta property="og:description" content="&ldquo;&ldquo;Call it a duck if it looks like one.&rdquo; Interface is used to define the shape or structure of an object.">
 <meta name="twitter:description" content="&ldquo;&ldquo;Call it a duck if it looks like one.&rdquo; Interface is used to define the shape or structure of an object.">
 <meta property="og:locale" content="en">
@@ -75,12 +55,12 @@
 
 
 
+
+
+
+
   <meta property="og:image" content="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/pig.jpg">
   <meta property="twitter:image" content="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/pig.jpg">
-
-
-
-
 
 
     <title>Talk about TypeScript&#39;s interface</title>
@@ -90,15 +70,15 @@
 
     
 
-    <link rel="canonical" href="https://pixeldin.github.io/en/2023/02/talk-about-typescripts-interface/">
+    <link rel="canonical" href="/en/2023/02/talk-about-typescripts-interface/">
 
     
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" integrity="sha512-H9jrZiiopUdsLpg94A333EfumgUBpO9MdbxStdeITo+KEIMaNfHNvwyjjDJb+ERPaRS6DpyRlKbvPUasNItRyw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/jquery.fancybox.min.css" integrity="sha256-vuXZ9LGmmwtjqFX1F+EKin1ThZMub58gKULUyf0qECk=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/helpers/jquery.fancybox-thumbs.min.css" integrity="sha256-SEa4XYAHihTcEP1f5gARTB2K26Uk8PsndQYHQC1f4jU=" crossorigin="anonymous" />
     
     
-    
-    <link rel="stylesheet" href="https://pixeldin.github.io/css/style-fneuerdunt9vf6vafpewt2nttopqa9hdugoae6mfs7phtuibtq6qjxkds96.min.css" />
+    <link rel="stylesheet" href="/css/style-a2ye1m9gwuhplkfulh7wjm6oz6xbbggcrapph79uf9g8howmnzp9iqxaluy.min.css" />
     
     
 
@@ -110,15 +90,15 @@
 
   <body>
     <div id="blog">
-      <header id="header" data-behavior="1">
+      <header id="header" data-behavior="4">
   <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
   <div class="header-title">
-    <a class="header-title-link" href="https://pixeldin.github.io/en/" aria-label="Go to homepage">pixelpig.tech</a>
+    <a class="header-title-link" href="/en/">pixelpig.space</a>
   </div>
   
     
       <a class="header-right-picture "
-         href="https://pixeldin.github.io/#about" aria-label="Open the link: /#about">
+         href="/#about">
     
     
     
@@ -130,16 +110,16 @@
   
 </header>
 
-      <nav id="sidebar" data-behavior="1">
+      <nav id="sidebar" data-behavior="4">
   <div class="sidebar-container">
     
       <div class="sidebar-profile">
-        <a href="https://pixeldin.github.io/#about" aria-label="Read more about the author">
+        <a href="/#about">
           <img class="sidebar-profile-picture" src="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/pig.jpg" alt="Author&#39;s picture" />
         </a>
-        <h4 class="sidebar-profile-name">@Pixelpig</h4>
+        <h4 class="sidebar-profile-name">pixelpig</h4>
         
-          <h5 class="sidebar-profile-bio">Keep it simple, so as this bio <strong>:）</strong></h5>
+          <h5 class="sidebar-profile-bio">Keep it simple, so as this bio :)</h5>
         
       </div>
     
@@ -147,7 +127,7 @@
       
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="https://pixeldin.github.io/zh" title="简体中文">
+      <a class="sidebar-button-link " href="/zh">
     
       <i class="sidebar-button-icon fa fa-lg fa-language"></i>
       
@@ -157,7 +137,7 @@
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="https://pixeldin.github.io/en/" title="Home">
+      <a class="sidebar-button-link " href="/en/">
     
       <i class="sidebar-button-icon fa fa-lg fa-home"></i>
       
@@ -167,7 +147,7 @@
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="https://pixeldin.github.io/en/categories" title="Categories">
+      <a class="sidebar-button-link " href="/en/categories">
     
       <i class="sidebar-button-icon fa fa-lg fa-bookmark"></i>
       
@@ -177,7 +157,7 @@
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="https://pixeldin.github.io/en/tags" title="Tags">
+      <a class="sidebar-button-link " href="/en/tags">
     
       <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
       
@@ -187,7 +167,7 @@
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="https://pixeldin.github.io/en/archives" title="Archives">
+      <a class="sidebar-button-link " href="/en/archives">
     
       <i class="sidebar-button-icon fa fa-lg fa-archive"></i>
       
@@ -197,9 +177,9 @@
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="https://pixeldin.github.io/en/#about" title="About me">
+      <a class="sidebar-button-link " href="/en/#about">
     
-      <i class="sidebar-button-icon fa fa-lg fa-question"></i>
+      <i class="sidebar-button-icon fa fa-lg fa-question-circle"></i>
       
       <span class="sidebar-button-desc">About me</span>
     </a>
@@ -207,35 +187,32 @@
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="https://twitter.com/pixelpigpigpig/" target="_blank" rel="noopener" title="Twitter">
+      <a class="sidebar-button-link " href="https://twitter.com/pixelpigpigpig/" target="_blank" rel="noopener">
     
-      <i class="sidebar-button-icon fab fa-lg fa-twitter"></i>
+      <i class="sidebar-button-icon fa fa-lg fa-twitter"></i>
       
-      <span class="sidebar-button-desc">twitter</span>
+      <span class="sidebar-button-desc">Twitter</span>
     </a>
   </li>
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="https://github.com/pixeldin" target="_blank" rel="noopener" title="pixeldin">
+      <a class="sidebar-button-link " href="https://github.com/pixeldin" target="_blank" rel="noopener">
     
-      <i class="sidebar-button-icon fab fa-lg fa-github-alt"></i>
+      <i class="sidebar-button-icon fa fa-lg fa-github-alt"></i>
       
       <span class="sidebar-button-desc">pixeldin</span>
     </a>
   </li>
 
 
-
     </ul>
     <ul class="sidebar-buttons">
       
 
-
     </ul>
     <ul class="sidebar-buttons">
       
-
 
     </ul>
   </div>
@@ -243,23 +220,23 @@
 
       
 
-      <div id="main" data-behavior="1"
+      <div id="main" data-behavior="4"
         class="
                hasCoverMetaIn
                ">
-        <article class="post" id="top">
+        <article class="post" itemscope itemType="http://schema.org/BlogPosting">
           
           
             <div class="post-header main-content-wrap text-center">
   
-    <h1 class="post-title">
+    <h1 class="post-title" itemprop="headline">
       Talk about TypeScript&#39;s interface
     </h1>
   
   
   <div class="postShorten-meta post-meta">
     
-      <time datetime="2023-02-04T00:00:00Z">
+      <time itemprop="datePublished" datetime="2023-02-04T00:00:00Z">
         
   February 4, 2023
 
@@ -270,9 +247,9 @@
   
     <span>in</span>
     
-      <a class="category-link" href="https://pixeldin.github.io/en/categories/frontend">FrontEnd</a>, 
+      <a class="category-link" href="/en/categories/frontend">FrontEnd</a>, 
     
-      <a class="category-link" href="https://pixeldin.github.io/en/categories/javascript">JavaScript</a>
+      <a class="category-link" href="/en/categories/javascript">JavaScript</a>
     
   
 
@@ -280,7 +257,7 @@
 
 </div>
           
-          <div class="post-content markdown">
+          <div class="post-content markdown" itemprop="articleBody">
             <div class="main-content-wrap">
               <p>&ldquo;&ldquo;Call it a duck if it looks like one.&rdquo; Interface is used to define the shape or structure of an object.</p>
 <p><img src="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/blog/bg/typesc-brick-bg.jpg" alt="recover"></p>
@@ -289,126 +266,124 @@
 <p>Interface can be understood as a contract that describes the properties, methods, and function signatures of an object. In TypeScript, we can use interface to implement abstraction and modularity in code. The design principle of interface is based on the object-oriented programming idea, which abstracts the same or similar behaviors and characteristics into an interface, so as to achieve code reuse and reduce coupling.</p>
 <h2 id="basic-concepts">Basic Concepts</h2>
 <h3 id="interface-definition">Interface Definition:</h3>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-TypeScript" data-lang="TypeScript"><span style="display:flex;"><span><span style="color:#66d9ef">interface</span> <span style="color:#a6e22e">Person</span> {
-</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">firstName</span>: <span style="color:#66d9ef">string</span>;
-</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">lastName</span>: <span style="color:#66d9ef">string</span>;
-</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">age</span>: <span style="color:#66d9ef">number</span>;
-</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">greet</span>()<span style="color:#f92672">:</span> <span style="color:#66d9ef">void</span>;
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>This interface defines an object of type Person, which has three properties: firstName, lastName, and age, as well as a greet method. Note that only the names and types of properties and methods are declared in the interface, without specific implementation.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-TypeScript" data-lang="TypeScript"><span style="color:#66d9ef">interface</span> <span style="color:#a6e22e">Person</span> {
+  <span style="color:#a6e22e">firstName</span>: <span style="color:#66d9ef">string</span>;
+  <span style="color:#a6e22e">lastName</span>: <span style="color:#66d9ef">string</span>;
+  <span style="color:#a6e22e">age</span>: <span style="color:#66d9ef">number</span>;
+  <span style="color:#a6e22e">greet</span>()<span style="color:#f92672">:</span> <span style="color:#66d9ef">void</span>;
+}
+</code></pre></div><p>This interface defines an object of type Person, which has three properties: firstName, lastName, and age, as well as a greet method. Note that only the names and types of properties and methods are declared in the interface, without specific implementation.</p>
 <p>We can use this interface to define an object that meets the requirements of the interface:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-TypeScript" data-lang="TypeScript"><span style="display:flex;"><span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">person</span>: <span style="color:#66d9ef">Person</span> <span style="color:#f92672">=</span> {
-</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">firstName</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;John&#39;</span>,
-</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">lastName</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;Doe&#39;</span>,
-</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">age</span>: <span style="color:#66d9ef">30</span>,
-</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">greet() {</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#e6db74">`Hello, my name is </span><span style="color:#e6db74">${</span><span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">firstName</span><span style="color:#e6db74">}</span><span style="color:#e6db74"> </span><span style="color:#e6db74">${</span><span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">lastName</span><span style="color:#e6db74">}</span><span style="color:#e6db74">.`</span>);
-</span></span><span style="display:flex;"><span>  },
-</span></span><span style="display:flex;"><span>};
-</span></span></code></pre></div><p>The above code defines a constant named &ldquo;person&rdquo;, which is an object of type Person. The person object has four properties: firstName, lastName, age and greet, where the greet property points to a function. This function implements the greet method defined in the interface and can output a greeting.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-TypeScript" data-lang="TypeScript"><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">person</span>: <span style="color:#66d9ef">Person</span> <span style="color:#f92672">=</span> {
+  <span style="color:#a6e22e">firstName</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;John&#39;</span>,
+  <span style="color:#a6e22e">lastName</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;Doe&#39;</span>,
+  <span style="color:#a6e22e">age</span>: <span style="color:#66d9ef">30</span>,
+  <span style="color:#a6e22e">greet() {</span>
+    <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#e6db74">`Hello, my name is </span><span style="color:#e6db74">${</span><span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">firstName</span><span style="color:#e6db74">}</span><span style="color:#e6db74"> </span><span style="color:#e6db74">${</span><span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">lastName</span><span style="color:#e6db74">}</span><span style="color:#e6db74">.`</span>);
+  },
+};
+</code></pre></div><p>The above code defines a constant named &ldquo;person&rdquo;, which is an object of type Person. The person object has four properties: firstName, lastName, age and greet, where the greet property points to a function. This function implements the greet method defined in the interface and can output a greeting.</p>
 <p>Since the person object meets the definition of the Person interface, TypeScript does not give any warnings or error prompts.</p>
 <p>In general, interface is one of the important concepts in TypeScript, which can be used to describe the shape of objects, implement abstraction and modularity, etc. In actual development, we can flexibly use interface according to specific situations, so as to improve code quality and maintainability.</p>
 <p><img src="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/blog/bg/duck.jpg" alt="duck demo"></p>
 <h3 id="generic-and-extension">Generic and Extension</h3>
 <p><strong>TypeScript&rsquo;s interface can also be extended with generics</strong></p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-TypeScript" data-lang="TypeScript"><span style="display:flex;"><span><span style="color:#66d9ef">interface</span> <span style="color:#a6e22e">Box</span>&lt;<span style="color:#f92672">T</span>&gt; {
-</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">value</span>: <span style="color:#66d9ef">T</span>;
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">box</span>: <span style="color:#66d9ef">Box</span>&lt;<span style="color:#f92672">string</span>&gt; <span style="color:#f92672">=</span> { <span style="color:#a6e22e">value</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;Hello, ts &lt;T&gt; fooing&#39;</span> };
-</span></span></code></pre></div><p><strong>Type Alias: Type alias can be defined using the type keyword to facilitate the reuse of a type. For example:</strong></p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-TypeScript" data-lang="TypeScript"><span style="display:flex;"><span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">UserId</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">string</span>;
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">UserName</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">string</span>;
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">interface</span> <span style="color:#a6e22e">User</span> {
-</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">id</span>: <span style="color:#66d9ef">UserId</span>;
-</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">name</span>: <span style="color:#66d9ef">UserName</span>;
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p><strong>Indexable Types: Interface can be used to describe types with index signatures (such as arrays or objects). For example:</strong></p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-TypeScript" data-lang="TypeScript"><span style="display:flex;"><span><span style="color:#66d9ef">interface</span> <span style="color:#a6e22e">StringArray</span> {
-</span></span><span style="display:flex;"><span>  [<span style="color:#a6e22e">index</span>: <span style="color:#66d9ef">number</span>]<span style="color:#f92672">:</span> <span style="color:#66d9ef">string</span>;
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">arr</span>: <span style="color:#66d9ef">StringArray</span> <span style="color:#f92672">=</span> [<span style="color:#e6db74">&#39;foo&#39;</span>, <span style="color:#e6db74">&#39;bar&#39;</span>];
-</span></span></code></pre></div><p><strong>Interface Inheritance: Another interface&rsquo;s property and method can be inherited through the extends keyword. For example:</strong></p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-TypeScript" data-lang="TypeScript"><span style="display:flex;"><span><span style="color:#66d9ef">interface</span> <span style="color:#a6e22e">Animal</span> {
-</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">eat</span>()<span style="color:#f92672">:</span> <span style="color:#66d9ef">void</span>;
-</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">sleep</span>()<span style="color:#f92672">:</span> <span style="color:#66d9ef">void</span>;
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">interface</span> <span style="color:#a6e22e">Cat</span> <span style="color:#66d9ef">extends</span> <span style="color:#a6e22e">Animal</span> {
-</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">meow</span>()<span style="color:#f92672">:</span> <span style="color:#66d9ef">void</span>;
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">HouseCat</span> <span style="color:#66d9ef">implements</span> <span style="color:#a6e22e">Cat</span> {
-</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">eat() {</span> <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#e6db74">&#39;Nom nom nom&#39;</span>); }
-</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">sleep() {</span> <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#e6db74">&#39;Zzzzzz...&#39;</span>); }
-</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">meow() {</span> <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#e6db74">&#39;Meow!&#39;</span>); }
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><h3 id="extensions-of-popular-front-end-frameworks">Extensions of Popular Front-End Frameworks</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-TypeScript" data-lang="TypeScript"><span style="color:#66d9ef">interface</span> <span style="color:#a6e22e">Box</span>&lt;<span style="color:#f92672">T</span>&gt; {
+  <span style="color:#a6e22e">value</span>: <span style="color:#66d9ef">T</span>;
+}
+
+<span style="color:#66d9ef">const</span> <span style="color:#a6e22e">box</span>: <span style="color:#66d9ef">Box</span>&lt;<span style="color:#f92672">string</span>&gt; <span style="color:#f92672">=</span> { <span style="color:#a6e22e">value</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;Hello, ts &lt;T&gt; fooing&#39;</span> };
+</code></pre></div><p><strong>Type Alias: Type alias can be defined using the type keyword to facilitate the reuse of a type. For example:</strong></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-TypeScript" data-lang="TypeScript"><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">UserId</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">string</span>;
+<span style="color:#66d9ef">type</span> <span style="color:#a6e22e">UserName</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">string</span>;
+
+<span style="color:#66d9ef">interface</span> <span style="color:#a6e22e">User</span> {
+  <span style="color:#a6e22e">id</span>: <span style="color:#66d9ef">UserId</span>;
+  <span style="color:#a6e22e">name</span>: <span style="color:#66d9ef">UserName</span>;
+}
+</code></pre></div><p><strong>Indexable Types: Interface can be used to describe types with index signatures (such as arrays or objects). For example:</strong></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-TypeScript" data-lang="TypeScript"><span style="color:#66d9ef">interface</span> <span style="color:#a6e22e">StringArray</span> {
+  [<span style="color:#a6e22e">index</span>: <span style="color:#66d9ef">number</span>]<span style="color:#f92672">:</span> <span style="color:#66d9ef">string</span>;
+}
+
+<span style="color:#66d9ef">const</span> <span style="color:#a6e22e">arr</span>: <span style="color:#66d9ef">StringArray</span> <span style="color:#f92672">=</span> [<span style="color:#e6db74">&#39;foo&#39;</span>, <span style="color:#e6db74">&#39;bar&#39;</span>];
+</code></pre></div><p><strong>Interface Inheritance: Another interface&rsquo;s property and method can be inherited through the extends keyword. For example:</strong></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-TypeScript" data-lang="TypeScript"><span style="color:#66d9ef">interface</span> <span style="color:#a6e22e">Animal</span> {
+  <span style="color:#a6e22e">eat</span>()<span style="color:#f92672">:</span> <span style="color:#66d9ef">void</span>;
+  <span style="color:#a6e22e">sleep</span>()<span style="color:#f92672">:</span> <span style="color:#66d9ef">void</span>;
+}
+
+<span style="color:#66d9ef">interface</span> <span style="color:#a6e22e">Cat</span> <span style="color:#66d9ef">extends</span> <span style="color:#a6e22e">Animal</span> {
+  <span style="color:#a6e22e">meow</span>()<span style="color:#f92672">:</span> <span style="color:#66d9ef">void</span>;
+}
+
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">HouseCat</span> <span style="color:#66d9ef">implements</span> <span style="color:#a6e22e">Cat</span> {
+  <span style="color:#a6e22e">eat() {</span> <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#e6db74">&#39;Nom nom nom&#39;</span>); }
+  <span style="color:#a6e22e">sleep() {</span> <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#e6db74">&#39;Zzzzzz...&#39;</span>); }
+  <span style="color:#a6e22e">meow() {</span> <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#e6db74">&#39;Meow!&#39;</span>); }
+}
+</code></pre></div><h3 id="extensions-of-popular-front-end-frameworks">Extensions of Popular Front-End Frameworks</h3>
 <p>Here are some popular frameworks that use these patterns:</p>
 <blockquote>
 <p>Vue.js uses advanced features such as interface inheritance and type aliases of TypeScript. For example, when defining a component in Vue.js, Props type alias can be used to specify the property type of the component:</p>
 </blockquote>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Javascript" data-lang="Javascript"><span style="display:flex;"><span><span style="color:#66d9ef">import</span> { <span style="color:#a6e22e">PropType</span> } <span style="color:#a6e22e">from</span> <span style="color:#e6db74">&#39;vue&#39;</span>;
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#a6e22e">type</span> <span style="color:#a6e22e">Props</span> <span style="color:#f92672">=</span> {
-</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">msg</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">string</span>;
-</span></span><span style="display:flex;"><span>};
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">export</span> <span style="color:#66d9ef">default</span> {
-</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">props</span><span style="color:#f92672">:</span> {
-</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">msg</span><span style="color:#f92672">:</span> {
-</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">type</span><span style="color:#f92672">:</span> String <span style="color:#a6e22e">as</span> <span style="color:#a6e22e">PropType</span><span style="color:#f92672">&lt;</span><span style="color:#a6e22e">Props</span>[<span style="color:#e6db74">&#39;msg&#39;</span>]<span style="color:#f92672">&gt;</span>,
-</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">required</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">true</span>
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>  },
-</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// ...
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>}
-</span></span></code></pre></div><blockquote>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Javascript" data-lang="Javascript"><span style="color:#66d9ef">import</span> { <span style="color:#a6e22e">PropType</span> } <span style="color:#a6e22e">from</span> <span style="color:#e6db74">&#39;vue&#39;</span>;
+
+<span style="color:#a6e22e">type</span> <span style="color:#a6e22e">Props</span> <span style="color:#f92672">=</span> {
+  <span style="color:#a6e22e">msg</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">string</span>;
+};
+
+<span style="color:#66d9ef">export</span> <span style="color:#66d9ef">default</span> {
+  <span style="color:#a6e22e">props</span><span style="color:#f92672">:</span> {
+    <span style="color:#a6e22e">msg</span><span style="color:#f92672">:</span> {
+      <span style="color:#a6e22e">type</span><span style="color:#f92672">:</span> String <span style="color:#a6e22e">as</span> <span style="color:#a6e22e">PropType</span><span style="color:#f92672">&lt;</span><span style="color:#a6e22e">Props</span>[<span style="color:#e6db74">&#39;msg&#39;</span>]<span style="color:#f92672">&gt;</span>,
+      <span style="color:#a6e22e">required</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">true</span>
+    }
+  },
+  <span style="color:#75715e">// ...
+</span><span style="color:#75715e"></span>}
+</code></pre></div><blockquote>
 <p>NestJS is a Node.js and TypeScript-based development framework that extensively uses advanced interfaces of TypeScript. For example, the service class in NestJS can define the parameter type of dependency injection:</p>
 </blockquote>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-JavaScript" data-lang="JavaScript"><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">@</span><span style="color:#a6e22e">Injectable</span>()
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">export</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">CatsService</span> {
-</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">constructor</span>(
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#a6e22e">readonly</span> <span style="color:#a6e22e">catsRepository</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">CatsRepository</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#a6e22e">readonly</span> <span style="color:#a6e22e">logger</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">LoggerService</span>,
-</span></span><span style="display:flex;"><span>  ) {}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">async</span> <span style="color:#a6e22e">create</span>(<span style="color:#a6e22e">catDto</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">CreateCatDto</span>)<span style="color:#f92672">:</span> Promise<span style="color:#f92672">&lt;</span><span style="color:#a6e22e">Cat</span><span style="color:#f92672">&gt;</span> {
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">createdCat</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">await</span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">catsRepository</span>.<span style="color:#a6e22e">create</span>(<span style="color:#a6e22e">catDto</span>);
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">logger</span>.<span style="color:#a6e22e">log</span>(<span style="color:#e6db74">`Created a cat with id </span><span style="color:#e6db74">${</span><span style="color:#a6e22e">createdCat</span>.<span style="color:#a6e22e">id</span><span style="color:#e6db74">}</span><span style="color:#e6db74">`</span>);
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">createdCat</span>;
-</span></span><span style="display:flex;"><span>  }
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><blockquote>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-JavaScript" data-lang="JavaScript"><span style="color:#960050;background-color:#1e0010">@</span><span style="color:#a6e22e">Injectable</span>()
+<span style="color:#66d9ef">export</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">CatsService</span> {
+  <span style="color:#a6e22e">constructor</span>(
+    <span style="color:#66d9ef">private</span> <span style="color:#a6e22e">readonly</span> <span style="color:#a6e22e">catsRepository</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">CatsRepository</span>,
+    <span style="color:#66d9ef">private</span> <span style="color:#a6e22e">readonly</span> <span style="color:#a6e22e">logger</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">LoggerService</span>,
+  ) {}
+
+  <span style="color:#66d9ef">async</span> <span style="color:#a6e22e">create</span>(<span style="color:#a6e22e">catDto</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">CreateCatDto</span>)<span style="color:#f92672">:</span> Promise<span style="color:#f92672">&lt;</span><span style="color:#a6e22e">Cat</span><span style="color:#f92672">&gt;</span> {
+    <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">createdCat</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">await</span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">catsRepository</span>.<span style="color:#a6e22e">create</span>(<span style="color:#a6e22e">catDto</span>);
+    <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">logger</span>.<span style="color:#a6e22e">log</span>(<span style="color:#e6db74">`Created a cat with id </span><span style="color:#e6db74">${</span><span style="color:#a6e22e">createdCat</span>.<span style="color:#a6e22e">id</span><span style="color:#e6db74">}</span><span style="color:#e6db74">`</span>);
+    <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">createdCat</span>;
+  }
+}
+</code></pre></div><blockquote>
 <p>RxJS is a reactive programming library that uses TypeScript&rsquo;s generic interfaces to implement type-safe streaming operations. For example, the Observable class in RxJS is a generic interface:</p>
 </blockquote>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-JavaScript" data-lang="JavaScript"><span style="display:flex;"><span><span style="color:#66d9ef">interface</span> <span style="color:#a6e22e">Observable</span><span style="color:#f92672">&lt;</span><span style="color:#a6e22e">T</span><span style="color:#f92672">&gt;</span> {
-</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">subscribe</span>(<span style="color:#a6e22e">observer</span><span style="color:#f92672">?:</span> <span style="color:#a6e22e">PartialObserver</span><span style="color:#f92672">&lt;</span><span style="color:#a6e22e">T</span><span style="color:#f92672">&gt;</span>)<span style="color:#f92672">:</span> <span style="color:#a6e22e">Subscription</span>;
-</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// ...
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">source$</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">Observable</span><span style="color:#f92672">&lt;</span><span style="color:#a6e22e">number</span><span style="color:#f92672">&gt;</span>(<span style="color:#a6e22e">subscriber</span> =&gt; {
-</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">subscriber</span>.<span style="color:#a6e22e">next</span>(<span style="color:#ae81ff">1</span>);
-</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">subscriber</span>.<span style="color:#a6e22e">next</span>(<span style="color:#ae81ff">2</span>);
-</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">subscriber</span>.<span style="color:#a6e22e">next</span>(<span style="color:#ae81ff">3</span>);
-</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">subscriber</span>.<span style="color:#a6e22e">complete</span>();
-</span></span><span style="display:flex;"><span>});
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#a6e22e">source$</span>.<span style="color:#a6e22e">subscribe</span>({
-</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">next</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">value</span> =&gt; <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#a6e22e">value</span>),
-</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">complete</span><span style="color:#f92672">:</span> () =&gt; <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#e6db74">&#39;Complete!&#39;</span>)
-</span></span><span style="display:flex;"><span>});
-</span></span></code></pre></div><h2 id="参考链接">参考链接</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-JavaScript" data-lang="JavaScript"><span style="color:#66d9ef">interface</span> <span style="color:#a6e22e">Observable</span><span style="color:#f92672">&lt;</span><span style="color:#a6e22e">T</span><span style="color:#f92672">&gt;</span> {
+  <span style="color:#a6e22e">subscribe</span>(<span style="color:#a6e22e">observer</span><span style="color:#f92672">?:</span> <span style="color:#a6e22e">PartialObserver</span><span style="color:#f92672">&lt;</span><span style="color:#a6e22e">T</span><span style="color:#f92672">&gt;</span>)<span style="color:#f92672">:</span> <span style="color:#a6e22e">Subscription</span>;
+  <span style="color:#75715e">// ...
+</span><span style="color:#75715e"></span>}
+
+<span style="color:#66d9ef">const</span> <span style="color:#a6e22e">source$</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">Observable</span><span style="color:#f92672">&lt;</span><span style="color:#a6e22e">number</span><span style="color:#f92672">&gt;</span>(<span style="color:#a6e22e">subscriber</span> =&gt; {
+  <span style="color:#a6e22e">subscriber</span>.<span style="color:#a6e22e">next</span>(<span style="color:#ae81ff">1</span>);
+  <span style="color:#a6e22e">subscriber</span>.<span style="color:#a6e22e">next</span>(<span style="color:#ae81ff">2</span>);
+  <span style="color:#a6e22e">subscriber</span>.<span style="color:#a6e22e">next</span>(<span style="color:#ae81ff">3</span>);
+  <span style="color:#a6e22e">subscriber</span>.<span style="color:#a6e22e">complete</span>();
+});
+
+<span style="color:#a6e22e">source$</span>.<span style="color:#a6e22e">subscribe</span>({
+  <span style="color:#a6e22e">next</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">value</span> =&gt; <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#a6e22e">value</span>),
+  <span style="color:#a6e22e">complete</span><span style="color:#f92672">:</span> () =&gt; <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#e6db74">&#39;Complete!&#39;</span>)
+});
+</code></pre></div><h2 id="参考链接">参考链接</h2>
 <ul>
 <li><strong>TypeScript official doc</strong></li>
 <li><strong>《The art of front-end interface》</strong></li>
 <li><strong>The Evolution of Reactive Programming</strong></li>
 </ul>
               
-
-
             </div>
           </div>
           <div id="post-footer" class="post-footer main-content-wrap">
@@ -419,132 +394,136 @@
                   <div class="post-footer-tags">
                     <span class="text-color-light text-small">TAGGED IN</span><br/>
                     
-  <a class="tag tag--primary tag--small" href="https://pixeldin.github.io/en/tags/typescript/">TypeScript</a>
+  <a class="tag tag--primary tag--small" href="/en/tags/typescript/">TypeScript</a>
 
                   </div>
                 
               
             
-            
-<div class="post-actions-wrap">
-  <nav >
-    <ul class="post-actions post-action-nav">
+            <div class="post-actions-wrap">
+  
+      <nav >
+        <ul class="post-actions post-action-nav">
+          
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--disabled">
+              
+                  <i class="fa fa-angle-left"></i>
+                  <span class="hide-xs hide-sm text-small icon-ml">NEXT</span>
+                </a>
+            </li>
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="/en/2022/06/talk-about-etcd-part3-the-communication-protocol-between-client-and-server/" data-tooltip="Talk about etcd (Part3): the Communication Protocol between Client and Server">
+              
+                  <span class="hide-xs hide-sm text-small icon-mr">PREVIOUS</span>
+                  <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+          
+        </ul>
+      </nav>
+    <ul class="post-actions post-action-share" >
       
-        <li class="post-action">
-          
-            <a class="post-action-btn btn btn--disabled">
-          
-              <i class="fa fa-angle-left"></i>
-              <span class="hide-xs hide-sm text-small icon-ml">NEXT</span>
-            </a>
+        <li class="post-action hide-lg hide-md hide-sm">
+          <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
+            <i class="fa fa-share-alt"></i>
+          </a>
         </li>
-        <li class="post-action">
-          
-            <a class="post-action-btn btn btn--default tooltip--top" href="https://pixeldin.github.io/en/2022/06/talk-about-etcd-part3-the-communication-protocol-between-client-and-server/" data-tooltip="Talk about etcd (Part3): the Communication Protocol between Client and Server" aria-label="PREVIOUS: Talk about etcd (Part3): the Communication Protocol between Client and Server">
-          
-              <span class="hide-xs hide-sm text-small icon-mr">PREVIOUS</span>
-              <i class="fa fa-angle-right"></i>
-            </a>
-        </li>
+        
       
+      
+      <li class="post-action">
+        
+          <a class="post-action-btn btn btn--default" href="#">
+        
+          <i class="fa fa-list"></i>
+        </a>
+      </li>
     </ul>
-  </nav>
-<ul class="post-actions post-action-share" >
   
-    <li class="post-action hide-lg hide-md hide-sm">
-      <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions" aria-label="Share this post">
-        <i class="fa fa-share-alt" aria-hidden="true"></i>
-      </a>
-    </li>
-    
-  
-  
-  <li class="post-action">
-    
-      <a class="post-action-btn btn btn--default" href="#top" aria-label="Back to top">
-      <i class="fa fa-arrow-up" aria-hidden="true"></i>
-    
-    </a>
-  </li>
-</ul>
 </div>
 
-
             
-  
-
-
+              
+            
           </div>
         </article>
         <footer id="footer" class="main-content-wrap">
   <span class="copyrights">
-    &copy; 2023 <a href="https://github.com/pixeldin">pixeldin</a>. All Rights Reserved
+    &copy; 2024 <a href="https://github.com/pixeldin">pixeldin</a>. All Rights Reserved
   </span>
 </footer>
 
       </div>
-      <div id="bottom-bar" class="post-bottom-bar" data-behavior="1">
+      <div id="bottom-bar" class="post-bottom-bar" data-behavior="4">
+        <div class="post-actions-wrap">
+  
+      <nav >
+        <ul class="post-actions post-action-nav">
+          
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--disabled">
+              
+                  <i class="fa fa-angle-left"></i>
+                  <span class="hide-xs hide-sm text-small icon-ml">NEXT</span>
+                </a>
+            </li>
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="/en/2022/06/talk-about-etcd-part3-the-communication-protocol-between-client-and-server/" data-tooltip="Talk about etcd (Part3): the Communication Protocol between Client and Server">
+              
+                  <span class="hide-xs hide-sm text-small icon-mr">PREVIOUS</span>
+                  <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+          
+        </ul>
+      </nav>
+    <ul class="post-actions post-action-share" >
+      
+        <li class="post-action hide-lg hide-md hide-sm">
+          <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
+            <i class="fa fa-share-alt"></i>
+          </a>
+        </li>
         
-<div class="post-actions-wrap">
-  <nav >
-    <ul class="post-actions post-action-nav">
       
-        <li class="post-action">
-          
-            <a class="post-action-btn btn btn--disabled">
-          
-              <i class="fa fa-angle-left"></i>
-              <span class="hide-xs hide-sm text-small icon-ml">NEXT</span>
-            </a>
-        </li>
-        <li class="post-action">
-          
-            <a class="post-action-btn btn btn--default tooltip--top" href="https://pixeldin.github.io/en/2022/06/talk-about-etcd-part3-the-communication-protocol-between-client-and-server/" data-tooltip="Talk about etcd (Part3): the Communication Protocol between Client and Server" aria-label="PREVIOUS: Talk about etcd (Part3): the Communication Protocol between Client and Server">
-          
-              <span class="hide-xs hide-sm text-small icon-mr">PREVIOUS</span>
-              <i class="fa fa-angle-right"></i>
-            </a>
-        </li>
       
+      <li class="post-action">
+        
+          <a class="post-action-btn btn btn--default" href="#">
+        
+          <i class="fa fa-list"></i>
+        </a>
+      </li>
     </ul>
-  </nav>
-<ul class="post-actions post-action-share" >
   
-    <li class="post-action hide-lg hide-md hide-sm">
-      <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions" aria-label="Share this post">
-        <i class="fa fa-share-alt" aria-hidden="true"></i>
-      </a>
-    </li>
-    
-  
-  
-  <li class="post-action">
-    
-      <a class="post-action-btn btn btn--default" href="#top" aria-label="Back to top">
-      <i class="fa fa-arrow-up" aria-hidden="true"></i>
-    
-    </a>
-  </li>
-</ul>
 </div>
 
-
       </div>
-      
-
+      <div id="share-options-bar" class="share-options-bar" data-behavior="4">
+  <i id="btn-close-shareoptions" class="fa fa-close"></i>
+  <ul class="share-options">
+    
+  </ul>
+</div>
+<div id="share-options-mask" class="share-options-mask"></div>
     </div>
     
     <div id="about">
   <div id="about-card">
     <div id="about-btn-close">
-      <i class="fa fa-times"></i>
+      <i class="fa fa-remove"></i>
     </div>
     
       <img id="about-card-picture" src="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/pig.jpg" alt="Author&#39;s picture" />
     
-    <h4 id="about-card-name">@Pixelpig</h4>
+    <h4 id="about-card-name">pixelpig</h4>
     
-      <div id="about-card-bio">Keep it simple, so as this bio <strong>:）</strong></div>
+      <div id="about-card-bio">Keep it simple, so as this bio :)</div>
     
     
       <div id="about-card-job">
@@ -555,9 +534,9 @@
     
     
       <div id="about-card-location">
-        <i class="fa fa-map-marker-alt"></i>
+        <i class="fa fa-map-marker"></i>
         <br/>
-        GuangDong - China
+        Guangdong - China
       </div>
     
   </div>
@@ -572,16 +551,30 @@
 
 
     
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.1.0/highlight.min.js" integrity="sha512-z+/WWfyD5tccCukM4VvONpEtLmbAm5LDu7eKiyMQJ9m7OfPEDL7gENyDRL3Yfe8XAuGsS2fS4xSMnl6d30kqGQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js" integrity="sha256-/BfiIkHlHoVihZdc6TFuj7MmJ0TWcWsMXkeDFwhi0zw=" crossorigin="anonymous"></script>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js" integrity="sha512-uURl+ZXMBrF4AwGaWmEetzrd+J5/8NRkWAvJx5sbPSSuOb0bZLqf+tOzniObO00BjHa/dD7gub9oCGMLPQHtQA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
-
-<script src="https://pixeldin.github.io/js/script-d9gfx1pdvbfdgoahypizomgoamlbumvk1ugdifqa59ynqvdh8wfsinmt5oj.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.7/js/jquery.fancybox.min.js" integrity="sha256-GEAnjcTqVP+vBp3SSc8bEDQqvWAZMiHyUSIorrWwH50=" crossorigin="anonymous"></script>
 
 
+<script src="/js/script-vl2saiwwv2xiez4lde0rm1wmexz8htzz8onnothyei9lqwshvghg9rqd1s.min.js"></script>
+
+
+<script lang="javascript">
+window.onload = updateMinWidth;
+window.onresize = updateMinWidth;
+document.getElementById("sidebar").addEventListener("transitionend", updateMinWidth);
+function updateMinWidth() {
+  var sidebar = document.getElementById("sidebar");
+  var main = document.getElementById("main");
+  main.style.minWidth = "";
+  var w1 = getComputedStyle(main).getPropertyValue("min-width");
+  var w2 = getComputedStyle(sidebar).getPropertyValue("width");
+  var w3 = getComputedStyle(sidebar).getPropertyValue("left");
+  main.style.minWidth = `calc(${w1} - ${w2} - ${w3})`;
+}
+</script>
 
 <script>
 $(document).ready(function() {
@@ -594,6 +587,11 @@ $(document).ready(function() {
   });
 });
 </script>
+
+
+  
+    
+  
 
 
 

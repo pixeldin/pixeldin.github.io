@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>TypeScript on pixelpig.tech</title>
-    <link>https://pixeldin.github.io/en/tags/typescript/</link>
-    <description>Recent content in TypeScript on pixelpig.tech</description>
+    <title>TypeScript on pixelpig.space</title>
+    <link>/en/tags/typescript/</link>
+    <description>Recent content in TypeScript on pixelpig.space</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 04 Feb 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://pixeldin.github.io/en/tags/typescript/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 04 Feb 2023 00:00:00 +0000</lastBuildDate><atom:link href="/en/tags/typescript/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Talk about TypeScript&#39;s interface</title>
-      <link>https://pixeldin.github.io/en/2023/02/talk-about-typescripts-interface/</link>
+      <link>/en/2023/02/talk-about-typescripts-interface/</link>
       <pubDate>Sat, 04 Feb 2023 00:00:00 +0000</pubDate>
       
-      <guid>https://pixeldin.github.io/en/2023/02/talk-about-typescripts-interface/</guid>
+      <guid>/en/2023/02/talk-about-typescripts-interface/</guid>
       <description>&lt;p&gt;&amp;ldquo;&amp;ldquo;Call it a duck if it looks like one.&amp;rdquo; Interface is used to define the shape or structure of an object.&lt;/p&gt;</description>
     </item>
     

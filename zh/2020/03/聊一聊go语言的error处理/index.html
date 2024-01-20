@@ -2,31 +2,11 @@
 <html lang="zh-cn">
   <head>
     
-    <script type="application/ld+json">
-
-{  
-  "@context":"http://schema.org",
-  "@type":"Website",
-  "@id":"https:\/\/pixeldin.github.io\/",
-  "author": {
-    "@type": "Person",
-    "name": "@Pixelpig",
-    
-    "image": "https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/pig.jpg"
-    
-  },
-  "name":"pixelpig.tech",
-  "description":"\u003cp\u003e在Go语言中，错误处理是一个常见的操作\u003c\/p\u003e",
-  "url":"https:\/\/pixeldin.github.io\/zh\/2020\/03\/%E8%81%8A%E4%B8%80%E8%81%8Ago%E8%AF%AD%E8%A8%80%E7%9A%84error%E5%A4%84%E7%90%86\/",
-  "keywords":"[]"
-}
-
-</script>
     <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="generator" content="Hugo 0.111.3 with theme Tranquilpeak 0.5.3-BETA">
-<meta name="author" content="@Pixelpig">
+<meta name="generator" content="Hugo 0.80.0 with theme Tranquilpeak 0.4.8-BETA">
+<meta name="author" content="pixelpig">
 <meta name="keywords" content="">
 <meta name="description" content="在Go语言中，错误处理是一个常见的操作">
 
@@ -35,9 +15,9 @@
 <meta property="og:type" content="article">
 <meta property="og:title" content="聊一聊Go语言的error处理">
 <meta name="twitter:title" content="聊一聊Go语言的error处理">
-<meta property="og:url" content="https://pixeldin.github.io/zh/2020/03/%E8%81%8A%E4%B8%80%E8%81%8Ago%E8%AF%AD%E8%A8%80%E7%9A%84error%E5%A4%84%E7%90%86/">
-<meta property="twitter:url" content="https://pixeldin.github.io/zh/2020/03/%E8%81%8A%E4%B8%80%E8%81%8Ago%E8%AF%AD%E8%A8%80%E7%9A%84error%E5%A4%84%E7%90%86/">
-<meta property="og:site_name" content="pixelpig.tech">
+<meta property="og:url" content="/zh/2020/03/%E8%81%8A%E4%B8%80%E8%81%8Ago%E8%AF%AD%E8%A8%80%E7%9A%84error%E5%A4%84%E7%90%86/">
+<meta property="twitter:url" content="/zh/2020/03/%E8%81%8A%E4%B8%80%E8%81%8Ago%E8%AF%AD%E8%A8%80%E7%9A%84error%E5%A4%84%E7%90%86/">
+<meta property="og:site_name" content="pixelpig.space">
 <meta property="og:description" content="在Go语言中，错误处理是一个常见的操作">
 <meta name="twitter:description" content="在Go语言中，错误处理是一个常见的操作">
 <meta property="og:locale" content="zh">
@@ -73,12 +53,12 @@
 
 
 
+
+
+
+
   <meta property="og:image" content="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/pig.jpg">
   <meta property="twitter:image" content="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/pig.jpg">
-
-
-
-
 
 
     <title>聊一聊Go语言的error处理</title>
@@ -88,15 +68,15 @@
 
     
 
-    <link rel="canonical" href="https://pixeldin.github.io/zh/2020/03/%E8%81%8A%E4%B8%80%E8%81%8Ago%E8%AF%AD%E8%A8%80%E7%9A%84error%E5%A4%84%E7%90%86/">
+    <link rel="canonical" href="/zh/2020/03/%E8%81%8A%E4%B8%80%E8%81%8Ago%E8%AF%AD%E8%A8%80%E7%9A%84error%E5%A4%84%E7%90%86/">
 
     
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" integrity="sha512-H9jrZiiopUdsLpg94A333EfumgUBpO9MdbxStdeITo+KEIMaNfHNvwyjjDJb+ERPaRS6DpyRlKbvPUasNItRyw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/jquery.fancybox.min.css" integrity="sha256-vuXZ9LGmmwtjqFX1F+EKin1ThZMub58gKULUyf0qECk=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/helpers/jquery.fancybox-thumbs.min.css" integrity="sha256-SEa4XYAHihTcEP1f5gARTB2K26Uk8PsndQYHQC1f4jU=" crossorigin="anonymous" />
     
     
-    
-    <link rel="stylesheet" href="https://pixeldin.github.io/css/style-fneuerdunt9vf6vafpewt2nttopqa9hdugoae6mfs7phtuibtq6qjxkds96.min.css" />
+    <link rel="stylesheet" href="/css/style-a2ye1m9gwuhplkfulh7wjm6oz6xbbggcrapph79uf9g8howmnzp9iqxaluy.min.css" />
     
     
 
@@ -108,15 +88,15 @@
 
   <body>
     <div id="blog">
-      <header id="header" data-behavior="1">
+      <header id="header" data-behavior="4">
   <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
   <div class="header-title">
-    <a class="header-title-link" href="https://pixeldin.github.io/zh/" aria-label="去首页">pixelpig.tech</a>
+    <a class="header-title-link" href="/zh/">pixelpig.space</a>
   </div>
   
     
       <a class="header-right-picture "
-         href="https://pixeldin.github.io/#about" aria-label="打开链接: /#about">
+         href="/#about">
     
     
     
@@ -128,16 +108,16 @@
   
 </header>
 
-      <nav id="sidebar" data-behavior="1">
+      <nav id="sidebar" data-behavior="4">
   <div class="sidebar-container">
     
       <div class="sidebar-profile">
-        <a href="https://pixeldin.github.io/#about" aria-label="阅读有关作者的更多信息">
+        <a href="/#about">
           <img class="sidebar-profile-picture" src="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/pig.jpg" alt="作者的图片" />
         </a>
-        <h4 class="sidebar-profile-name">@Pixelpig</h4>
+        <h4 class="sidebar-profile-name">pixelpig</h4>
         
-          <h5 class="sidebar-profile-bio">Keep it simple, so as this bio <strong>:）</strong></h5>
+          <h5 class="sidebar-profile-bio">Keep it simple, so as this bio :)</h5>
         
       </div>
     
@@ -145,7 +125,7 @@
       
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="https://pixeldin.github.io/en" title="English">
+      <a class="sidebar-button-link " href="/en">
     
       <i class="sidebar-button-icon fa fa-lg fa-language"></i>
       
@@ -155,7 +135,7 @@
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="https://pixeldin.github.io/zh/" title="Home">
+      <a class="sidebar-button-link " href="/zh/">
     
       <i class="sidebar-button-icon fa fa-lg fa-home"></i>
       
@@ -165,7 +145,7 @@
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="https://pixeldin.github.io/zh/categories" title="Categories">
+      <a class="sidebar-button-link " href="/zh/categories">
     
       <i class="sidebar-button-icon fa fa-lg fa-bookmark"></i>
       
@@ -175,7 +155,7 @@
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="https://pixeldin.github.io/zh/tags" title="Tags">
+      <a class="sidebar-button-link " href="/zh/tags">
     
       <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
       
@@ -185,7 +165,7 @@
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="https://pixeldin.github.io/zh/archives" title="Archives">
+      <a class="sidebar-button-link " href="/zh/archives">
     
       <i class="sidebar-button-icon fa fa-lg fa-archive"></i>
       
@@ -195,7 +175,7 @@
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="https://pixeldin.github.io/zh/#about" title="About">
+      <a class="sidebar-button-link " href="/zh/#about">
     
       <i class="sidebar-button-icon fa fa-lg fa-question-circle"></i>
       
@@ -205,25 +185,22 @@
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="https://github.com/pixeldin" target="_blank" rel="noopener" title="pixeldin">
+      <a class="sidebar-button-link " href="https://github.com/pixeldin" target="_blank" rel="noopener">
     
-      <i class="sidebar-button-icon fab fa-lg fa-github-alt"></i>
+      <i class="sidebar-button-icon fa fa-lg fa-github-alt"></i>
       
-      <span class="sidebar-button-desc">github</span>
+      <span class="sidebar-button-desc">pixeldin</span>
     </a>
   </li>
 
 
-
     </ul>
     <ul class="sidebar-buttons">
       
 
-
     </ul>
     <ul class="sidebar-buttons">
       
-
 
     </ul>
   </div>
@@ -231,23 +208,23 @@
 
       
 
-      <div id="main" data-behavior="1"
+      <div id="main" data-behavior="4"
         class="
                hasCoverMetaIn
                ">
-        <article class="post" id="top">
+        <article class="post" itemscope itemType="http://schema.org/BlogPosting">
           
           
             <div class="post-header main-content-wrap text-left">
   
-    <h1 class="post-title">
+    <h1 class="post-title" itemprop="headline">
       聊一聊Go语言的error处理
     </h1>
   
   
   <div class="postShorten-meta post-meta">
     
-      <time datetime="2020-03-15T00:00:00Z">
+      <time itemprop="datePublished" datetime="2020-03-15T00:00:00Z">
         
   三月 15, 2020
 
@@ -258,7 +235,7 @@
   
     <span>发布在</span>
     
-      <a class="category-link" href="https://pixeldin.github.io/zh/categories/go">Go</a>
+      <a class="category-link" href="/zh/categories/go">Go</a>
     
   
 
@@ -266,7 +243,7 @@
 
 </div>
           
-          <div class="post-content markdown">
+          <div class="post-content markdown" itemprop="articleBody">
             <div class="main-content-wrap">
               <p>在Go语言中，错误处理是一个常见的操作</p>
 <h2 id="前言">前言</h2>
@@ -274,29 +251,29 @@
 这一次尝试通过<strong>Go</strong>内置的<strong>error</strong>接口，我们聊一聊Go语言的错误处理以及<strong>Error</strong>的惯例用法。</p>
 <h2 id="单一职责error接口">单一职责：Error接口</h2>
 <h3 id="接口签名">接口签名</h3>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">type</span> <span style="color:#66d9ef">error</span> <span style="color:#66d9ef">interface</span> {
-</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">Error</span>() <span style="color:#66d9ef">string</span>
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>我们先看<strong>Go</strong>的src/builtin内置<strong>error</strong>接口，它只有一个<strong>Error</strong>()方法，返回一个<strong>string</strong>，用来备注错误信息。任何实现了这个方法的结构体都实现了<strong>error</strong>接口。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">type</span> <span style="color:#66d9ef">error</span> <span style="color:#66d9ef">interface</span> {
+    <span style="color:#a6e22e">Error</span>() <span style="color:#66d9ef">string</span>
+}
+</code></pre></div><p>我们先看<strong>Go</strong>的src/builtin内置<strong>error</strong>接口，它只有一个<strong>Error</strong>()方法，返回一个<strong>string</strong>，用来备注错误信息。任何实现了这个方法的结构体都实现了<strong>error</strong>接口。</p>
 <h3 id="实现类">实现类</h3>
 <p>随便列举一个Go自带的栗子，实现了<strong>Error接口</strong>的结构体，比如<code>Go1.12/src/net/net.go</code>的<code>AddrError</code></p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">AddrError</span> <span style="color:#66d9ef">struct</span> {
-</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">Err</span>  <span style="color:#66d9ef">string</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">Addr</span> <span style="color:#66d9ef">string</span>
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">//使用指针接收器实现该Error()接口
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">e</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">AddrError</span>) <span style="color:#a6e22e">Error</span>() <span style="color:#66d9ef">string</span> {
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">e</span> <span style="color:#f92672">==</span> <span style="color:#66d9ef">nil</span> {
-</span></span><span style="display:flex;"><span>    	<span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#34;&lt;nil&gt;&#34;</span>
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">s</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">e</span>.<span style="color:#a6e22e">Err</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">e</span>.<span style="color:#a6e22e">Addr</span> <span style="color:#f92672">!=</span> <span style="color:#e6db74">&#34;&#34;</span> {
-</span></span><span style="display:flex;"><span>    	<span style="color:#a6e22e">s</span> = <span style="color:#e6db74">&#34;address &#34;</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">e</span>.<span style="color:#a6e22e">Addr</span> <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;: &#34;</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">s</span>
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">s</span>
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><h3 id="那么问题来了">那么问题来了</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">AddrError</span> <span style="color:#66d9ef">struct</span> {
+    <span style="color:#a6e22e">Err</span>  <span style="color:#66d9ef">string</span>
+    <span style="color:#a6e22e">Addr</span> <span style="color:#66d9ef">string</span>
+}
+
+<span style="color:#75715e">//使用指针接收器实现该Error()接口
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">e</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">AddrError</span>) <span style="color:#a6e22e">Error</span>() <span style="color:#66d9ef">string</span> {
+    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">e</span> <span style="color:#f92672">==</span> <span style="color:#66d9ef">nil</span> {
+    	<span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#34;&lt;nil&gt;&#34;</span>
+    }
+    <span style="color:#a6e22e">s</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">e</span>.<span style="color:#a6e22e">Err</span>
+    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">e</span>.<span style="color:#a6e22e">Addr</span> <span style="color:#f92672">!=</span> <span style="color:#e6db74">&#34;&#34;</span> {
+    	<span style="color:#a6e22e">s</span> = <span style="color:#e6db74">&#34;address &#34;</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">e</span>.<span style="color:#a6e22e">Addr</span> <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;: &#34;</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">s</span>
+    }
+    <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">s</span>
+}
+</code></pre></div><h3 id="那么问题来了">那么问题来了</h3>
 <h4 id="为什么接口实现用指针接收器的场景">为什么接口实现用指针接收器的场景？</h4>
 <p>在Go里面，使用指针实现接口有两个主要用途：</p>
 <ol>
@@ -310,17 +287,17 @@
 <p>其次，在自定义错误中，通过指针的<code>.(type)</code>断言，可以针对不同<strong>error</strong>类型进行判断，执行多态处理，统一使用指针进行实现方便断言判断处进行归纳。可以在src/encoding/json/decode.go找到几个常用错误类型。</p>
 <h4 id="程序示例">程序示例:</h4>
 <p>下面是一个通过断言switch作出不同处理的例子</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">u</span> <span style="color:#a6e22e">user</span>
-</span></span><span style="display:flex;"><span><span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">json</span>.<span style="color:#a6e22e">Unmarshal</span>([]byte({<span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;<span style="color:#a6e22e">name</span><span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;:<span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;<span style="color:#a6e22e">bill</span><span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;}), <span style="color:#a6e22e">u</span>)
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">switch</span> <span style="color:#a6e22e">e</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">err</span>.(<span style="color:#66d9ef">type</span>) {
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">case</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">json</span>.<span style="color:#a6e22e">UnmarshalTypeError</span>:
-</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;UnmarshalTypeError: Value[%s] Type[%v]\n&#34;</span>, <span style="color:#a6e22e">e</span>.<span style="color:#a6e22e">Value</span>, <span style="color:#a6e22e">e</span>.<span style="color:#a6e22e">Type</span>)
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">case</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">json</span>.<span style="color:#a6e22e">InvalidUnmarshalError</span>:
-</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;InvalidUnmarshalError: Type[%v]\n&#34;</span>, <span style="color:#a6e22e">e</span>.<span style="color:#a6e22e">Type</span>)
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">default</span>:
-</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">err</span>)
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>如果是通过值实现<code>Error()</code>方法，在case判断处，需要归纳<code>*json.UnmarshalTypeError</code>以及<code>json.UnmarshalTypeError</code>，因为<strong>通过值实现的函数调用方可以是指针或者是值。</strong></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">u</span> <span style="color:#a6e22e">user</span>
+<span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">json</span>.<span style="color:#a6e22e">Unmarshal</span>([]byte({<span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;<span style="color:#a6e22e">name</span><span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;:<span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;<span style="color:#a6e22e">bill</span><span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;}), <span style="color:#a6e22e">u</span>)
+<span style="color:#66d9ef">switch</span> <span style="color:#a6e22e">e</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">err</span>.(<span style="color:#66d9ef">type</span>) {
+<span style="color:#66d9ef">case</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">json</span>.<span style="color:#a6e22e">UnmarshalTypeError</span>:
+    <span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;UnmarshalTypeError: Value[%s] Type[%v]\n&#34;</span>, <span style="color:#a6e22e">e</span>.<span style="color:#a6e22e">Value</span>, <span style="color:#a6e22e">e</span>.<span style="color:#a6e22e">Type</span>)
+<span style="color:#66d9ef">case</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">json</span>.<span style="color:#a6e22e">InvalidUnmarshalError</span>:
+    <span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;InvalidUnmarshalError: Type[%v]\n&#34;</span>, <span style="color:#a6e22e">e</span>.<span style="color:#a6e22e">Type</span>)
+<span style="color:#66d9ef">default</span>:
+    <span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">err</span>)
+}
+</code></pre></div><p>如果是通过值实现<code>Error()</code>方法，在case判断处，需要归纳<code>*json.UnmarshalTypeError</code>以及<code>json.UnmarshalTypeError</code>，因为<strong>通过值实现的函数调用方可以是指针或者是值。</strong></p>
 <h2 id="个性化自定义error">个性化：自定义Error</h2>
 <h3 id="应用场景">应用场景</h3>
 <p>当<strong>Error</strong>需要包装额外的信息，内置error又没有拓展空间时候，我偏要勉强怎么办？比如调用对象，程序栈信息等。<br>
@@ -333,153 +310,154 @@
 <li><strong>栈信息</strong>，可能用于追踪程序的执行</li>
 <li><strong>Type</strong>字段，这里用于后续本例调试</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> (
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;fmt&#34;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;reflect&#34;</span>
-</span></span><span style="display:flex;"><span>)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">//自定义错误1
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">TypeError</span> <span style="color:#66d9ef">struct</span> {
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">//上下文
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#a6e22e">context</span> <span style="color:#66d9ef">string</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">Type</span> <span style="color:#a6e22e">reflect</span>.<span style="color:#a6e22e">Type</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">trace</span> <span style="color:#66d9ef">string</span>
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">//具体Error()实现，返回类型，上下文，以及调用栈描述
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">tye</span><span style="color:#f92672">*</span> <span style="color:#a6e22e">TypeError</span>) <span style="color:#a6e22e">Error</span>() <span style="color:#66d9ef">string</span> {
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Sprintf</span>(<span style="color:#e6db74">&#34;Type of TypeError %s, contex: %s, trace[%s]&#34;</span>,
-</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">tye</span>.<span style="color:#a6e22e">Type</span>, <span style="color:#a6e22e">tye</span>.<span style="color:#a6e22e">context</span>, <span style="color:#a6e22e">tye</span>.<span style="color:#a6e22e">trace</span>)
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">//自定义错误2
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">SizeError</span> <span style="color:#66d9ef">struct</span> {
-</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">context</span> <span style="color:#66d9ef">string</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">Type</span> <span style="color:#a6e22e">reflect</span>.<span style="color:#a6e22e">Type</span>
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">sie</span> <span style="color:#f92672">*</span> <span style="color:#a6e22e">SizeError</span>) <span style="color:#a6e22e">Error</span>() <span style="color:#66d9ef">string</span> {
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Sprintf</span>(<span style="color:#e6db74">&#34;SizeError context: %s&#34;</span>, <span style="color:#a6e22e">sie</span>.<span style="color:#a6e22e">context</span>)
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">//自定义错误3
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">UserError</span> <span style="color:#66d9ef">struct</span> {
-</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">context</span> <span style="color:#66d9ef">string</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">Type</span> <span style="color:#a6e22e">reflect</span>.<span style="color:#a6e22e">Type</span>
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">tie</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">UserError</span>) <span style="color:#a6e22e">Error</span>() <span style="color:#66d9ef">string</span> {
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Sprintf</span>(<span style="color:#e6db74">&#34;UserError %s, contex: %s&#34;</span>, <span style="color:#a6e22e">tie</span>.<span style="color:#a6e22e">context</span>)
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p><strong>执行栈的获取示例：</strong></p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#75715e">/*
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">	https://www.komu.engineer/blogs/golang-stacktrace/golang-stacktrace
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">	获取当前执行点的栈信息
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">*/</span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">//Package errors provides ability to annotate you regular Go errors with stack traces.
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">getStackTrace</span>() <span style="color:#66d9ef">string</span> {
-</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">stackBuf</span> <span style="color:#f92672">:=</span> make([]<span style="color:#66d9ef">uintptr</span>, <span style="color:#ae81ff">50</span>)
-</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">length</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">runtime</span>.<span style="color:#a6e22e">Callers</span>(<span style="color:#ae81ff">3</span>, <span style="color:#a6e22e">stackBuf</span>[:])
-</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">stack</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">stackBuf</span>[:<span style="color:#a6e22e">length</span>]
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">trace</span> <span style="color:#f92672">:=</span> <span style="color:#e6db74">&#34;&#34;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">frames</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">runtime</span>.<span style="color:#a6e22e">CallersFrames</span>(<span style="color:#a6e22e">stack</span>)
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> {
-</span></span><span style="display:flex;"><span>    	<span style="color:#a6e22e">frame</span>, <span style="color:#a6e22e">more</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">frames</span>.<span style="color:#a6e22e">Next</span>()
-</span></span><span style="display:flex;"><span>    	<span style="color:#a6e22e">trace</span> = <span style="color:#a6e22e">trace</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Sprintf</span>(<span style="color:#e6db74">&#34;\n\tFile: %s, Line: %d. Function: %s&#34;</span>,
-</span></span><span style="display:flex;"><span>    		<span style="color:#a6e22e">frame</span>.<span style="color:#a6e22e">File</span>, <span style="color:#a6e22e">frame</span>.<span style="color:#a6e22e">Line</span>, <span style="color:#a6e22e">frame</span>.<span style="color:#a6e22e">Function</span>)
-</span></span><span style="display:flex;"><span>    	<span style="color:#66d9ef">if</span> !<span style="color:#a6e22e">more</span> {
-</span></span><span style="display:flex;"><span>    		<span style="color:#66d9ef">break</span>
-</span></span><span style="display:flex;"><span>    	}
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">trace</span>
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p><strong>生成错误示例：</strong></p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#75715e">/*
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">	模拟不同场景产生不同错误，使用入参instruction进行选择
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> */</span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">CreateWithDiffError</span>(<span style="color:#a6e22e">instruction</span> <span style="color:#66d9ef">string</span>) <span style="color:#66d9ef">error</span> {
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">switch</span> <span style="color:#a6e22e">instruction</span> {
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">case</span> <span style="color:#e6db74">&#34;typeErr&#34;</span>:
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e">//上下文添加备注
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    	<span style="color:#66d9ef">return</span> <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">TypeError</span>{<span style="color:#e6db74">&#34;Lack of energy.&#34;</span>, <span style="color:#a6e22e">reflect</span>.<span style="color:#a6e22e">TypeOf</span>(<span style="color:#a6e22e">TypeError</span>{}), <span style="color:#a6e22e">getStackTrace</span>()}
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">case</span> <span style="color:#e6db74">&#34;sizeErr&#34;</span>:
-</span></span><span style="display:flex;"><span>    	<span style="color:#75715e">//上下文添加时间信息
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    	<span style="color:#66d9ef">return</span> <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">SizeError</span>{<span style="color:#e6db74">&#34;time:&#34;</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">UnixDate</span>, <span style="color:#a6e22e">reflect</span>.<span style="color:#a6e22e">TypeOf</span>(<span style="color:#a6e22e">SizeError</span>{})}
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">case</span> <span style="color:#e6db74">&#34;userErr&#34;</span>:
-</span></span><span style="display:flex;"><span>    	<span style="color:#75715e">//上下文添加用户
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    	<span style="color:#66d9ef">return</span> <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">UserError</span>{<span style="color:#e6db74">&#34;UserErr with selfContext: @pixelpig.&#34;</span>,
-</span></span><span style="display:flex;"><span>    		<span style="color:#a6e22e">reflect</span>.<span style="color:#a6e22e">TypeOf</span>(<span style="color:#a6e22e">UserError</span>{})}
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">default</span>:
-</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">errors</span>.<span style="color:#a6e22e">New</span>(<span style="color:#e6db74">&#34;UnknownError&#34;</span>)
-</span></span><span style="display:flex;"><span>    }	
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><hr>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+
+<span style="color:#f92672">import</span> (
+    <span style="color:#e6db74">&#34;fmt&#34;</span>
+    <span style="color:#e6db74">&#34;reflect&#34;</span>
+)
+
+<span style="color:#75715e">//自定义错误1
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">TypeError</span> <span style="color:#66d9ef">struct</span> {
+    <span style="color:#75715e">//上下文
+</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">context</span> <span style="color:#66d9ef">string</span>
+    <span style="color:#a6e22e">Type</span> <span style="color:#a6e22e">reflect</span>.<span style="color:#a6e22e">Type</span>
+    <span style="color:#a6e22e">trace</span> <span style="color:#66d9ef">string</span>
+}
+
+<span style="color:#75715e">//具体Error()实现，返回类型，上下文，以及调用栈描述
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">tye</span><span style="color:#f92672">*</span> <span style="color:#a6e22e">TypeError</span>) <span style="color:#a6e22e">Error</span>() <span style="color:#66d9ef">string</span> {
+    <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Sprintf</span>(<span style="color:#e6db74">&#34;Type of TypeError %s, contex: %s, trace[%s]&#34;</span>,
+        <span style="color:#a6e22e">tye</span>.<span style="color:#a6e22e">Type</span>, <span style="color:#a6e22e">tye</span>.<span style="color:#a6e22e">context</span>, <span style="color:#a6e22e">tye</span>.<span style="color:#a6e22e">trace</span>)
+}
+
+<span style="color:#75715e">//自定义错误2
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">SizeError</span> <span style="color:#66d9ef">struct</span> {
+    <span style="color:#a6e22e">context</span> <span style="color:#66d9ef">string</span>
+    <span style="color:#a6e22e">Type</span> <span style="color:#a6e22e">reflect</span>.<span style="color:#a6e22e">Type</span>
+}
+
+<span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">sie</span> <span style="color:#f92672">*</span> <span style="color:#a6e22e">SizeError</span>) <span style="color:#a6e22e">Error</span>() <span style="color:#66d9ef">string</span> {
+    <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Sprintf</span>(<span style="color:#e6db74">&#34;SizeError context: %s&#34;</span>, <span style="color:#a6e22e">sie</span>.<span style="color:#a6e22e">context</span>)
+}
+
+<span style="color:#75715e">//自定义错误3
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">UserError</span> <span style="color:#66d9ef">struct</span> {
+    <span style="color:#a6e22e">context</span> <span style="color:#66d9ef">string</span>
+    <span style="color:#a6e22e">Type</span> <span style="color:#a6e22e">reflect</span>.<span style="color:#a6e22e">Type</span>
+}
+
+<span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">tie</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">UserError</span>) <span style="color:#a6e22e">Error</span>() <span style="color:#66d9ef">string</span> {
+    <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Sprintf</span>(<span style="color:#e6db74">&#34;UserError %s, contex: %s&#34;</span>, <span style="color:#a6e22e">tie</span>.<span style="color:#a6e22e">context</span>)
+}
+
+</code></pre></div><p><strong>执行栈的获取示例：</strong></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#75715e">/*
+</span><span style="color:#75715e">	https://www.komu.engineer/blogs/golang-stacktrace/golang-stacktrace
+</span><span style="color:#75715e">	获取当前执行点的栈信息
+</span><span style="color:#75715e">*/</span>
+<span style="color:#75715e">//Package errors provides ability to annotate you regular Go errors with stack traces.
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">getStackTrace</span>() <span style="color:#66d9ef">string</span> {
+    <span style="color:#a6e22e">stackBuf</span> <span style="color:#f92672">:=</span> make([]<span style="color:#66d9ef">uintptr</span>, <span style="color:#ae81ff">50</span>)
+    <span style="color:#a6e22e">length</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">runtime</span>.<span style="color:#a6e22e">Callers</span>(<span style="color:#ae81ff">3</span>, <span style="color:#a6e22e">stackBuf</span>[:])
+    <span style="color:#a6e22e">stack</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">stackBuf</span>[:<span style="color:#a6e22e">length</span>]
+
+    <span style="color:#a6e22e">trace</span> <span style="color:#f92672">:=</span> <span style="color:#e6db74">&#34;&#34;</span>
+    <span style="color:#a6e22e">frames</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">runtime</span>.<span style="color:#a6e22e">CallersFrames</span>(<span style="color:#a6e22e">stack</span>)
+    <span style="color:#66d9ef">for</span> {
+    	<span style="color:#a6e22e">frame</span>, <span style="color:#a6e22e">more</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">frames</span>.<span style="color:#a6e22e">Next</span>()
+    	<span style="color:#a6e22e">trace</span> = <span style="color:#a6e22e">trace</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Sprintf</span>(<span style="color:#e6db74">&#34;\n\tFile: %s, Line: %d. Function: %s&#34;</span>,
+    		<span style="color:#a6e22e">frame</span>.<span style="color:#a6e22e">File</span>, <span style="color:#a6e22e">frame</span>.<span style="color:#a6e22e">Line</span>, <span style="color:#a6e22e">frame</span>.<span style="color:#a6e22e">Function</span>)
+    	<span style="color:#66d9ef">if</span> !<span style="color:#a6e22e">more</span> {
+    		<span style="color:#66d9ef">break</span>
+    	}
+    }
+    <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">trace</span>
+}
+</code></pre></div><p><strong>生成错误示例：</strong></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#75715e">/*
+</span><span style="color:#75715e">	模拟不同场景产生不同错误，使用入参instruction进行选择
+</span><span style="color:#75715e"> */</span>
+<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">CreateWithDiffError</span>(<span style="color:#a6e22e">instruction</span> <span style="color:#66d9ef">string</span>) <span style="color:#66d9ef">error</span> {
+    <span style="color:#66d9ef">switch</span> <span style="color:#a6e22e">instruction</span> {
+    <span style="color:#66d9ef">case</span> <span style="color:#e6db74">&#34;typeErr&#34;</span>:
+	<span style="color:#75715e">//上下文添加备注
+</span><span style="color:#75715e"></span>    	<span style="color:#66d9ef">return</span> <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">TypeError</span>{<span style="color:#e6db74">&#34;Lack of energy.&#34;</span>, <span style="color:#a6e22e">reflect</span>.<span style="color:#a6e22e">TypeOf</span>(<span style="color:#a6e22e">TypeError</span>{}), <span style="color:#a6e22e">getStackTrace</span>()}
+    <span style="color:#66d9ef">case</span> <span style="color:#e6db74">&#34;sizeErr&#34;</span>:
+    	<span style="color:#75715e">//上下文添加时间信息
+</span><span style="color:#75715e"></span>    	<span style="color:#66d9ef">return</span> <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">SizeError</span>{<span style="color:#e6db74">&#34;time:&#34;</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">UnixDate</span>, <span style="color:#a6e22e">reflect</span>.<span style="color:#a6e22e">TypeOf</span>(<span style="color:#a6e22e">SizeError</span>{})}
+    <span style="color:#66d9ef">case</span> <span style="color:#e6db74">&#34;userErr&#34;</span>:
+    	<span style="color:#75715e">//上下文添加用户
+</span><span style="color:#75715e"></span>    	<span style="color:#66d9ef">return</span> <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">UserError</span>{<span style="color:#e6db74">&#34;UserErr with selfContext: @pixelpig.&#34;</span>,
+    		<span style="color:#a6e22e">reflect</span>.<span style="color:#a6e22e">TypeOf</span>(<span style="color:#a6e22e">UserError</span>{})}
+    <span style="color:#66d9ef">default</span>:
+	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">errors</span>.<span style="color:#a6e22e">New</span>(<span style="color:#e6db74">&#34;UnknownError&#34;</span>)
+    }	
+}
+</code></pre></div><hr>
 <p>上面提到，因为Error的接口实现是通过指针实现的，所以可以通过.(type)进行类型断言，针对不同错误类型进行处理。</p>
 <p><strong>我们来看下类型断言场景：</strong></p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">ParseErr</span>(<span style="color:#a6e22e">err</span> <span style="color:#66d9ef">error</span>) {
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
-</span></span><span style="display:flex;"><span>    	<span style="color:#66d9ef">switch</span> <span style="color:#a6e22e">e</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">err</span>.(<span style="color:#66d9ef">type</span>) {
-</span></span><span style="display:flex;"><span>    	<span style="color:#66d9ef">case</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">TypeError</span>:
-</span></span><span style="display:flex;"><span>    		<span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;ErrType[%v] Context[%s]\n, Trace[%s]\n&#34;</span>, <span style="color:#a6e22e">e</span>.<span style="color:#a6e22e">Type</span>, <span style="color:#a6e22e">e</span>.<span style="color:#a6e22e">context</span>, <span style="color:#a6e22e">e</span>.<span style="color:#a6e22e">trace</span>)
-</span></span><span style="display:flex;"><span>    		<span style="color:#75715e">//TODO: Handle 类型错误
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    		<span style="color:#66d9ef">break</span>
-</span></span><span style="display:flex;"><span>    	<span style="color:#66d9ef">case</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">UserError</span>:
-</span></span><span style="display:flex;"><span>    		<span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;ErrType[%v] Context[%s]\n&#34;</span>, <span style="color:#a6e22e">e</span>.<span style="color:#a6e22e">Type</span>, <span style="color:#a6e22e">e</span>.<span style="color:#a6e22e">context</span>)
-</span></span><span style="display:flex;"><span>    		<span style="color:#75715e">//TODO: Handle 用户错误
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    		<span style="color:#66d9ef">break</span>
-</span></span><span style="display:flex;"><span>    	<span style="color:#66d9ef">case</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">SizeError</span>:
-</span></span><span style="display:flex;"><span>    		<span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;ErrType[%v] Context[%s]\n&#34;</span>, <span style="color:#a6e22e">e</span>.<span style="color:#a6e22e">Type</span>, <span style="color:#a6e22e">e</span>.<span style="color:#a6e22e">context</span>)
-</span></span><span style="display:flex;"><span>    		<span style="color:#75715e">//TODO: Handle 容量错误
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    		<span style="color:#66d9ef">break</span>
-</span></span><span style="display:flex;"><span>    	<span style="color:#66d9ef">default</span>:
-</span></span><span style="display:flex;"><span>    		<span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">err</span>)
-</span></span><span style="display:flex;"><span>    	}
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><blockquote>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">ParseErr</span>(<span style="color:#a6e22e">err</span> <span style="color:#66d9ef">error</span>) {
+    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+    	<span style="color:#66d9ef">switch</span> <span style="color:#a6e22e">e</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">err</span>.(<span style="color:#66d9ef">type</span>) {
+    	<span style="color:#66d9ef">case</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">TypeError</span>:
+    		<span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;ErrType[%v] Context[%s]\n, Trace[%s]\n&#34;</span>, <span style="color:#a6e22e">e</span>.<span style="color:#a6e22e">Type</span>, <span style="color:#a6e22e">e</span>.<span style="color:#a6e22e">context</span>, <span style="color:#a6e22e">e</span>.<span style="color:#a6e22e">trace</span>)
+    		<span style="color:#75715e">//TODO: Handle 类型错误
+</span><span style="color:#75715e"></span>    		<span style="color:#66d9ef">break</span>
+    	<span style="color:#66d9ef">case</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">UserError</span>:
+    		<span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;ErrType[%v] Context[%s]\n&#34;</span>, <span style="color:#a6e22e">e</span>.<span style="color:#a6e22e">Type</span>, <span style="color:#a6e22e">e</span>.<span style="color:#a6e22e">context</span>)
+    		<span style="color:#75715e">//TODO: Handle 用户错误
+</span><span style="color:#75715e"></span>    		<span style="color:#66d9ef">break</span>
+    	<span style="color:#66d9ef">case</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">SizeError</span>:
+    		<span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;ErrType[%v] Context[%s]\n&#34;</span>, <span style="color:#a6e22e">e</span>.<span style="color:#a6e22e">Type</span>, <span style="color:#a6e22e">e</span>.<span style="color:#a6e22e">context</span>)
+    		<span style="color:#75715e">//TODO: Handle 容量错误
+</span><span style="color:#75715e"></span>    		<span style="color:#66d9ef">break</span>
+    	<span style="color:#66d9ef">default</span>:
+    		<span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">err</span>)
+    	}
+    }
+}
+</code></pre></div><blockquote>
 <p>err.(type)，这里的type是自定义Error结构体反射获取的类型，与生成<code>Error</code>处赋值的Type属性是两个含义。</p>
 </blockquote>
 <p><strong>主程序：</strong></p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">var</span> (
-</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">TYE</span> = <span style="color:#e6db74">&#34;typeErr&#34;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">SE</span> = <span style="color:#e6db74">&#34;sizeErr&#34;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">UE</span> = <span style="color:#e6db74">&#34;userErr&#34;</span>
-</span></span><span style="display:flex;"><span>)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
-</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">typeErr</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">CreateWithDiffError</span>(<span style="color:#a6e22e">TYE</span>)
-</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">seErr</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">CreateWithDiffError</span>(<span style="color:#a6e22e">SE</span>)
-</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">timeErr</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">CreateWithDiffError</span>(<span style="color:#a6e22e">UE</span>)
-</span></span><span style="display:flex;"><span>    
-</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">ParseErr</span>(<span style="color:#a6e22e">typeErr</span>)
-</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">ParseErr</span>(<span style="color:#a6e22e">seErr</span>)
-</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">ParseErr</span>(<span style="color:#a6e22e">timeErr</span>)
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p><strong>程序输出：</strong></p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#ae81ff">2020</span><span style="color:#f92672">/</span><span style="color:#ae81ff">02</span><span style="color:#f92672">/</span><span style="color:#ae81ff">02</span> <span style="color:#ae81ff">13</span>:<span style="color:#ae81ff">08</span>:<span style="color:#ae81ff">25</span> <span style="color:#a6e22e">ErrType</span>[<span style="color:#a6e22e">main</span>.<span style="color:#a6e22e">TypeError</span>] <span style="color:#a6e22e">Context</span>[<span style="color:#a6e22e">Lack</span> <span style="color:#a6e22e">of</span> <span style="color:#a6e22e">energy</span>.]
-</span></span><span style="display:flex;"><span>, <span style="color:#a6e22e">Trace</span>[
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">File</span>: <span style="color:#a6e22e">D</span>:<span style="color:#f92672">/</span><span style="color:#a6e22e">goProject</span><span style="color:#f92672">/</span><span style="color:#a6e22e">src</span><span style="color:#f92672">/</span><span style="color:#a6e22e">HelloGo</span><span style="color:#f92672">/</span><span style="color:#a6e22e">basic</span><span style="color:#f92672">/</span><span style="color:#a6e22e">ErrorHandle</span><span style="color:#f92672">/</span><span style="color:#a6e22e">ErrorDemo</span>.<span style="color:#66d9ef">go</span>, <span style="color:#a6e22e">Line</span>: <span style="color:#ae81ff">19.</span> <span style="color:#a6e22e">Function</span>: <span style="color:#a6e22e">main</span>.<span style="color:#a6e22e">main</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">File</span>: <span style="color:#a6e22e">D</span>:<span style="color:#f92672">/</span><span style="color:#a6e22e">Go1</span><span style="color:#ae81ff">.12</span><span style="color:#f92672">/</span><span style="color:#a6e22e">src</span><span style="color:#f92672">/</span><span style="color:#a6e22e">runtime</span><span style="color:#f92672">/</span><span style="color:#a6e22e">proc</span>.<span style="color:#66d9ef">go</span>, <span style="color:#a6e22e">Line</span>: <span style="color:#ae81ff">200.</span> <span style="color:#a6e22e">Function</span>: <span style="color:#a6e22e">runtime</span>.<span style="color:#a6e22e">main</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">File</span>: <span style="color:#a6e22e">D</span>:<span style="color:#f92672">/</span><span style="color:#a6e22e">Go1</span><span style="color:#ae81ff">.12</span><span style="color:#f92672">/</span><span style="color:#a6e22e">src</span><span style="color:#f92672">/</span><span style="color:#a6e22e">runtime</span><span style="color:#f92672">/</span><span style="color:#a6e22e">asm_amd64</span>.<span style="color:#a6e22e">s</span>, <span style="color:#a6e22e">Line</span>: <span style="color:#ae81ff">1337.</span> <span style="color:#a6e22e">Function</span>: <span style="color:#a6e22e">runtime</span>.<span style="color:#a6e22e">goexit</span>]
-</span></span><span style="display:flex;"><span><span style="color:#ae81ff">2020</span><span style="color:#f92672">/</span><span style="color:#ae81ff">02</span><span style="color:#f92672">/</span><span style="color:#ae81ff">02</span> <span style="color:#ae81ff">13</span>:<span style="color:#ae81ff">08</span>:<span style="color:#ae81ff">25</span> <span style="color:#a6e22e">ErrType</span>[<span style="color:#a6e22e">main</span>.<span style="color:#a6e22e">SizeError</span>] <span style="color:#a6e22e">Context</span>[<span style="color:#a6e22e">time</span>:<span style="color:#a6e22e">Mon</span> <span style="color:#a6e22e">Jan</span> <span style="color:#a6e22e">_2</span> <span style="color:#ae81ff">15</span>:<span style="color:#ae81ff">04</span>:<span style="color:#ae81ff">05</span> <span style="color:#a6e22e">MST</span> <span style="color:#ae81ff">2006</span>]
-</span></span><span style="display:flex;"><span><span style="color:#ae81ff">2020</span><span style="color:#f92672">/</span><span style="color:#ae81ff">02</span><span style="color:#f92672">/</span><span style="color:#ae81ff">02</span> <span style="color:#ae81ff">13</span>:<span style="color:#ae81ff">08</span>:<span style="color:#ae81ff">25</span> <span style="color:#a6e22e">ErrType</span>[<span style="color:#a6e22e">main</span>.<span style="color:#a6e22e">UserError</span>] <span style="color:#a6e22e">Context</span>[<span style="color:#a6e22e">UserErr</span> <span style="color:#a6e22e">with</span> <span style="color:#a6e22e">selfContext</span>: <span style="color:#960050;background-color:#1e0010">@</span><span style="color:#a6e22e">pixelpig</span>.]
-</span></span></code></pre></div><p>可以看到第一个自定义类型打印出了程序执行的栈信息。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">var</span> (
+    <span style="color:#a6e22e">TYE</span> = <span style="color:#e6db74">&#34;typeErr&#34;</span>
+    <span style="color:#a6e22e">SE</span> = <span style="color:#e6db74">&#34;sizeErr&#34;</span>
+    <span style="color:#a6e22e">UE</span> = <span style="color:#e6db74">&#34;userErr&#34;</span>
+)
+
+<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+    <span style="color:#a6e22e">typeErr</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">CreateWithDiffError</span>(<span style="color:#a6e22e">TYE</span>)
+    <span style="color:#a6e22e">seErr</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">CreateWithDiffError</span>(<span style="color:#a6e22e">SE</span>)
+    <span style="color:#a6e22e">timeErr</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">CreateWithDiffError</span>(<span style="color:#a6e22e">UE</span>)
+    
+    <span style="color:#a6e22e">ParseErr</span>(<span style="color:#a6e22e">typeErr</span>)
+    <span style="color:#a6e22e">ParseErr</span>(<span style="color:#a6e22e">seErr</span>)
+    <span style="color:#a6e22e">ParseErr</span>(<span style="color:#a6e22e">timeErr</span>)
+}
+</code></pre></div><p><strong>程序输出：</strong></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#ae81ff">2020</span><span style="color:#f92672">/</span><span style="color:#ae81ff">02</span><span style="color:#f92672">/</span><span style="color:#ae81ff">02</span> <span style="color:#ae81ff">13</span>:<span style="color:#ae81ff">08</span>:<span style="color:#ae81ff">25</span> <span style="color:#a6e22e">ErrType</span>[<span style="color:#a6e22e">main</span>.<span style="color:#a6e22e">TypeError</span>] <span style="color:#a6e22e">Context</span>[<span style="color:#a6e22e">Lack</span> <span style="color:#a6e22e">of</span> <span style="color:#a6e22e">energy</span>.]
+, <span style="color:#a6e22e">Trace</span>[
+	<span style="color:#a6e22e">File</span>: <span style="color:#a6e22e">D</span>:<span style="color:#f92672">/</span><span style="color:#a6e22e">goProject</span><span style="color:#f92672">/</span><span style="color:#a6e22e">src</span><span style="color:#f92672">/</span><span style="color:#a6e22e">HelloGo</span><span style="color:#f92672">/</span><span style="color:#a6e22e">basic</span><span style="color:#f92672">/</span><span style="color:#a6e22e">ErrorHandle</span><span style="color:#f92672">/</span><span style="color:#a6e22e">ErrorDemo</span>.<span style="color:#66d9ef">go</span>, <span style="color:#a6e22e">Line</span>: <span style="color:#ae81ff">19.</span> <span style="color:#a6e22e">Function</span>: <span style="color:#a6e22e">main</span>.<span style="color:#a6e22e">main</span>
+	<span style="color:#a6e22e">File</span>: <span style="color:#a6e22e">D</span>:<span style="color:#f92672">/</span><span style="color:#a6e22e">Go1</span><span style="color:#ae81ff">.12</span><span style="color:#f92672">/</span><span style="color:#a6e22e">src</span><span style="color:#f92672">/</span><span style="color:#a6e22e">runtime</span><span style="color:#f92672">/</span><span style="color:#a6e22e">proc</span>.<span style="color:#66d9ef">go</span>, <span style="color:#a6e22e">Line</span>: <span style="color:#ae81ff">200.</span> <span style="color:#a6e22e">Function</span>: <span style="color:#a6e22e">runtime</span>.<span style="color:#a6e22e">main</span>
+	<span style="color:#a6e22e">File</span>: <span style="color:#a6e22e">D</span>:<span style="color:#f92672">/</span><span style="color:#a6e22e">Go1</span><span style="color:#ae81ff">.12</span><span style="color:#f92672">/</span><span style="color:#a6e22e">src</span><span style="color:#f92672">/</span><span style="color:#a6e22e">runtime</span><span style="color:#f92672">/</span><span style="color:#a6e22e">asm_amd64</span>.<span style="color:#a6e22e">s</span>, <span style="color:#a6e22e">Line</span>: <span style="color:#ae81ff">1337.</span> <span style="color:#a6e22e">Function</span>: <span style="color:#a6e22e">runtime</span>.<span style="color:#a6e22e">goexit</span>]
+<span style="color:#ae81ff">2020</span><span style="color:#f92672">/</span><span style="color:#ae81ff">02</span><span style="color:#f92672">/</span><span style="color:#ae81ff">02</span> <span style="color:#ae81ff">13</span>:<span style="color:#ae81ff">08</span>:<span style="color:#ae81ff">25</span> <span style="color:#a6e22e">ErrType</span>[<span style="color:#a6e22e">main</span>.<span style="color:#a6e22e">SizeError</span>] <span style="color:#a6e22e">Context</span>[<span style="color:#a6e22e">time</span>:<span style="color:#a6e22e">Mon</span> <span style="color:#a6e22e">Jan</span> <span style="color:#a6e22e">_2</span> <span style="color:#ae81ff">15</span>:<span style="color:#ae81ff">04</span>:<span style="color:#ae81ff">05</span> <span style="color:#a6e22e">MST</span> <span style="color:#ae81ff">2006</span>]
+<span style="color:#ae81ff">2020</span><span style="color:#f92672">/</span><span style="color:#ae81ff">02</span><span style="color:#f92672">/</span><span style="color:#ae81ff">02</span> <span style="color:#ae81ff">13</span>:<span style="color:#ae81ff">08</span>:<span style="color:#ae81ff">25</span> <span style="color:#a6e22e">ErrType</span>[<span style="color:#a6e22e">main</span>.<span style="color:#a6e22e">UserError</span>] <span style="color:#a6e22e">Context</span>[<span style="color:#a6e22e">UserErr</span> <span style="color:#a6e22e">with</span> <span style="color:#a6e22e">selfContext</span>: <span style="color:#960050;background-color:#1e0010">@</span><span style="color:#a6e22e">pixelpig</span>.]
+</code></pre></div><p>可以看到第一个自定义类型打印出了程序执行的栈信息。</p>
 <h3 id="wrapingerror嵌套">Wraping：error嵌套</h3>
 <p>如果不想通过<strong>自定义error</strong>来实现内嵌信息，在Go1.13以上版本，提供了一个新的错误包装方式，通过扩展<strong>fmt.Errorf</strong>函数，加一个<code>%w</code>来生成一个可以包装的错误，通过这种方式，我们可以创建一个嵌套Error。</p>
 <h4 id="示例">示例：</h4>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#75715e">/*
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">	包装错误
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> */</span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">WrapErr</span>(<span style="color:#a6e22e">err</span> <span style="color:#66d9ef">error</span>) <span style="color:#66d9ef">error</span>{
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Errorf</span>(<span style="color:#e6db74">&#34;Wrap with shell: %v&#34;</span>, <span style="color:#a6e22e">err</span>)
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>经过<code>Errorf</code>的包装会返回一个新的<code>Error</code>，其中“Wrap with shell”是包装的内容。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#75715e">/*
+</span><span style="color:#75715e">	包装错误
+</span><span style="color:#75715e"> */</span>
+<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">WrapErr</span>(<span style="color:#a6e22e">err</span> <span style="color:#66d9ef">error</span>) <span style="color:#66d9ef">error</span>{
+    <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Errorf</span>(<span style="color:#e6db74">&#34;Wrap with shell: %v&#34;</span>, <span style="color:#a6e22e">err</span>)
+}
+</code></pre></div><p>经过<code>Errorf</code>的包装会返回一个新的<code>Error</code>，其中“Wrap with shell”是包装的内容。</p>
 <h4 id="输出如下">输出如下：</h4>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#ae81ff">2020</span><span style="color:#f92672">/</span><span style="color:#ae81ff">02</span><span style="color:#f92672">/</span><span style="color:#ae81ff">02</span> <span style="color:#ae81ff">17</span>:<span style="color:#ae81ff">20</span>:<span style="color:#ae81ff">38</span> <span style="color:#a6e22e">Wrap</span> <span style="color:#a6e22e">with</span> <span style="color:#a6e22e">shell</span>: <span style="color:#a6e22e">UserError</span> <span style="color:#a6e22e">contex</span>: <span style="color:#a6e22e">UserErr</span> <span style="color:#a6e22e">with</span> <span style="color:#a6e22e">selfContext</span>: <span style="color:#960050;background-color:#1e0010">@</span><span style="color:#a6e22e">pixelpig</span>.
-</span></span></code></pre></div><p>如果要还原解开错误，<strong>Go1.13</strong> 的<code>errors</code>提供了一个<strong>errors.Unwrap(w)</strong> 方法，返回原始错误，即被嵌套的那个<strong>error</strong> ，支持多次还原，直到返回nil。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#ae81ff">2020</span><span style="color:#f92672">/</span><span style="color:#ae81ff">02</span><span style="color:#f92672">/</span><span style="color:#ae81ff">02</span> <span style="color:#ae81ff">17</span>:<span style="color:#ae81ff">20</span>:<span style="color:#ae81ff">38</span> <span style="color:#a6e22e">Wrap</span> <span style="color:#a6e22e">with</span> <span style="color:#a6e22e">shell</span>: <span style="color:#a6e22e">UserError</span> <span style="color:#a6e22e">contex</span>: <span style="color:#a6e22e">UserErr</span> <span style="color:#a6e22e">with</span> <span style="color:#a6e22e">selfContext</span>: <span style="color:#960050;background-color:#1e0010">@</span><span style="color:#a6e22e">pixelpig</span>.
+</code></pre></div><p>如果要还原解开错误，<strong>Go1.13</strong> 的<code>errors</code>提供了一个<strong>errors.Unwrap(w)</strong> 方法，返回原始错误，即被嵌套的那个<strong>error</strong> ，支持多次还原，直到返回nil。</p>
 <h2 id="总结">总结</h2>
 <p><strong>Go语言</strong>不像<strong>Java</strong>有<strong>Exception</strong>异常和<strong>JVM堆栈</strong>环境，没有帮我们封装执行栈的数据到内置<strong>error</strong>中，它建议程序员在错误发生处尽早处理，不倾向于把错误往上层抛，所以如果要方便追溯错误在程序的位置，可以通过生成自定义错误，植入函数栈的位置。</p>
 <p>如果遵循Go的推荐实践，大部分情况希望我们在错误发生处进行handle，尽早处理，那么假如仅仅需要一些上下文信息，比如时间，用户等。这种情况可以使用<strong>自定义error</strong>，或者使用Go自带包装方式，存储我们额外需要的字段，如上述的<strong>UserError</strong>。</p>
@@ -493,8 +471,6 @@
 <p>//TODO：
 <a href="https://dave.cheney.net/2015/01/26/errors-and-exceptions-redux">https://dave.cheney.net/2015/01/26/errors-and-exceptions-redux</a></p>
               
-
-
             </div>
           </div>
           <div id="post-footer" class="post-footer main-content-wrap">
@@ -505,118 +481,122 @@
                   <div class="post-footer-tags">
                     <span class="text-color-light text-small">标签</span><br/>
                     
-  <a class="tag tag--primary tag--small" href="https://pixeldin.github.io/zh/tags/errors/">errors</a>
+  <a class="tag tag--primary tag--small" href="/zh/tags/errors/">errors</a>
 
                   </div>
                 
               
             
-            
-<div class="post-actions-wrap">
-  <nav >
-    <ul class="post-actions post-action-nav">
+            <div class="post-actions-wrap">
+  
+      <nav >
+        <ul class="post-actions post-action-nav">
+          
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="/zh/2020/04/%E8%81%8A%E4%B8%80%E8%81%8A%E5%A0%86%E6%A0%88%E4%B8%8Ego%E8%AF%AD%E8%A8%80%E7%9A%84%E6%8C%87%E9%92%88/" data-tooltip="聊一聊堆、栈与Go语言的指针">
+              
+                  <i class="fa fa-angle-left"></i>
+                  <span class="hide-xs hide-sm text-small icon-ml">下一篇</span>
+                </a>
+            </li>
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="/zh/2020/02/%E8%81%8A%E4%B8%80%E8%81%8Ago%E7%BC%96%E5%86%99%E7%9A%84%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%B7%A5%E5%85%B7%E7%B1%BB/" data-tooltip="聊一聊Go编写的命令行工具类">
+              
+                  <span class="hide-xs hide-sm text-small icon-mr">上一篇</span>
+                  <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+          
+        </ul>
+      </nav>
+    <ul class="post-actions post-action-share" >
       
-        <li class="post-action">
-          
-            <a class="post-action-btn btn btn--default tooltip--top" href="https://pixeldin.github.io/zh/2020/04/%E8%81%8A%E4%B8%80%E8%81%8A%E5%A0%86%E6%A0%88%E4%B8%8Ego%E8%AF%AD%E8%A8%80%E7%9A%84%E6%8C%87%E9%92%88/" data-tooltip="聊一聊堆、栈与Go语言的指针" aria-label="后一篇: 聊一聊堆、栈与Go语言的指针">
-          
-              <i class="fa fa-angle-left"></i>
-              <span class="hide-xs hide-sm text-small icon-ml">后一篇</span>
-            </a>
-        </li>
-        <li class="post-action">
-          
-            <a class="post-action-btn btn btn--default tooltip--top" href="https://pixeldin.github.io/zh/2020/02/%E8%81%8A%E4%B8%80%E8%81%8Ago%E7%BC%96%E5%86%99%E7%9A%84%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%B7%A5%E5%85%B7%E7%B1%BB/" data-tooltip="聊一聊Go编写的命令行工具类" aria-label="前一篇: 聊一聊Go编写的命令行工具类">
-          
-              <span class="hide-xs hide-sm text-small icon-mr">前一篇</span>
-              <i class="fa fa-angle-right"></i>
-            </a>
-        </li>
       
+      <li class="post-action">
+        
+          <a class="post-action-btn btn btn--default" href="#">
+        
+          <i class="fa fa-list"></i>
+        </a>
+      </li>
     </ul>
-  </nav>
-<ul class="post-actions post-action-share" >
   
-  
-  <li class="post-action">
-    
-      <a class="post-action-btn btn btn--default" href="#top" aria-label="回到顶部">
-      <i class="fa fa-arrow-up" aria-hidden="true"></i>
-    
-    </a>
-  </li>
-</ul>
 </div>
 
-
             
-  
-
-
+              
+            
           </div>
         </article>
         <footer id="footer" class="main-content-wrap">
   <span class="copyrights">
-    &copy; 2023 <a href="https://github.com/pixeldin">pixeldin</a>. All Rights Reserved
+    &copy; 2024 <a href="https://github.com/pixeldin">pixeldin</a>. All Rights Reserved
   </span>
 </footer>
 
       </div>
-      <div id="bottom-bar" class="post-bottom-bar" data-behavior="1">
+      <div id="bottom-bar" class="post-bottom-bar" data-behavior="4">
+        <div class="post-actions-wrap">
+  
+      <nav >
+        <ul class="post-actions post-action-nav">
+          
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="/zh/2020/04/%E8%81%8A%E4%B8%80%E8%81%8A%E5%A0%86%E6%A0%88%E4%B8%8Ego%E8%AF%AD%E8%A8%80%E7%9A%84%E6%8C%87%E9%92%88/" data-tooltip="聊一聊堆、栈与Go语言的指针">
+              
+                  <i class="fa fa-angle-left"></i>
+                  <span class="hide-xs hide-sm text-small icon-ml">下一篇</span>
+                </a>
+            </li>
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="/zh/2020/02/%E8%81%8A%E4%B8%80%E8%81%8Ago%E7%BC%96%E5%86%99%E7%9A%84%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%B7%A5%E5%85%B7%E7%B1%BB/" data-tooltip="聊一聊Go编写的命令行工具类">
+              
+                  <span class="hide-xs hide-sm text-small icon-mr">上一篇</span>
+                  <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+          
+        </ul>
+      </nav>
+    <ul class="post-actions post-action-share" >
+      
+      
+      <li class="post-action">
         
-<div class="post-actions-wrap">
-  <nav >
-    <ul class="post-actions post-action-nav">
-      
-        <li class="post-action">
-          
-            <a class="post-action-btn btn btn--default tooltip--top" href="https://pixeldin.github.io/zh/2020/04/%E8%81%8A%E4%B8%80%E8%81%8A%E5%A0%86%E6%A0%88%E4%B8%8Ego%E8%AF%AD%E8%A8%80%E7%9A%84%E6%8C%87%E9%92%88/" data-tooltip="聊一聊堆、栈与Go语言的指针" aria-label="后一篇: 聊一聊堆、栈与Go语言的指针">
-          
-              <i class="fa fa-angle-left"></i>
-              <span class="hide-xs hide-sm text-small icon-ml">后一篇</span>
-            </a>
-        </li>
-        <li class="post-action">
-          
-            <a class="post-action-btn btn btn--default tooltip--top" href="https://pixeldin.github.io/zh/2020/02/%E8%81%8A%E4%B8%80%E8%81%8Ago%E7%BC%96%E5%86%99%E7%9A%84%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%B7%A5%E5%85%B7%E7%B1%BB/" data-tooltip="聊一聊Go编写的命令行工具类" aria-label="前一篇: 聊一聊Go编写的命令行工具类">
-          
-              <span class="hide-xs hide-sm text-small icon-mr">前一篇</span>
-              <i class="fa fa-angle-right"></i>
-            </a>
-        </li>
-      
+          <a class="post-action-btn btn btn--default" href="#">
+        
+          <i class="fa fa-list"></i>
+        </a>
+      </li>
     </ul>
-  </nav>
-<ul class="post-actions post-action-share" >
   
-  
-  <li class="post-action">
-    
-      <a class="post-action-btn btn btn--default" href="#top" aria-label="回到顶部">
-      <i class="fa fa-arrow-up" aria-hidden="true"></i>
-    
-    </a>
-  </li>
-</ul>
 </div>
 
-
       </div>
-      
-
+      <div id="share-options-bar" class="share-options-bar" data-behavior="4">
+  <i id="btn-close-shareoptions" class="fa fa-close"></i>
+  <ul class="share-options">
+    
+  </ul>
+</div>
+<div id="share-options-mask" class="share-options-mask"></div>
     </div>
     
     <div id="about">
   <div id="about-card">
     <div id="about-btn-close">
-      <i class="fa fa-times"></i>
+      <i class="fa fa-remove"></i>
     </div>
     
       <img id="about-card-picture" src="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/pig.jpg" alt="作者的图片" />
     
-    <h4 id="about-card-name">@Pixelpig</h4>
+    <h4 id="about-card-name">pixelpig</h4>
     
-      <div id="about-card-bio">Keep it simple, so as this bio <strong>:）</strong></div>
+      <div id="about-card-bio">Keep it simple, so as this bio :)</div>
     
     
       <div id="about-card-job">
@@ -627,9 +607,9 @@
     
     
       <div id="about-card-location">
-        <i class="fa fa-map-marker-alt"></i>
+        <i class="fa fa-map-marker"></i>
         <br/>
-        GuangDong - China
+        Guangdong - China
       </div>
     
   </div>
@@ -644,16 +624,30 @@
 
 
     
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.1.0/highlight.min.js" integrity="sha512-z+/WWfyD5tccCukM4VvONpEtLmbAm5LDu7eKiyMQJ9m7OfPEDL7gENyDRL3Yfe8XAuGsS2fS4xSMnl6d30kqGQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js" integrity="sha256-/BfiIkHlHoVihZdc6TFuj7MmJ0TWcWsMXkeDFwhi0zw=" crossorigin="anonymous"></script>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js" integrity="sha512-uURl+ZXMBrF4AwGaWmEetzrd+J5/8NRkWAvJx5sbPSSuOb0bZLqf+tOzniObO00BjHa/dD7gub9oCGMLPQHtQA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
-
-<script src="https://pixeldin.github.io/js/script-d9gfx1pdvbfdgoahypizomgoamlbumvk1ugdifqa59ynqvdh8wfsinmt5oj.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.7/js/jquery.fancybox.min.js" integrity="sha256-GEAnjcTqVP+vBp3SSc8bEDQqvWAZMiHyUSIorrWwH50=" crossorigin="anonymous"></script>
 
 
+<script src="/js/script-vl2saiwwv2xiez4lde0rm1wmexz8htzz8onnothyei9lqwshvghg9rqd1s.min.js"></script>
+
+
+<script lang="javascript">
+window.onload = updateMinWidth;
+window.onresize = updateMinWidth;
+document.getElementById("sidebar").addEventListener("transitionend", updateMinWidth);
+function updateMinWidth() {
+  var sidebar = document.getElementById("sidebar");
+  var main = document.getElementById("main");
+  main.style.minWidth = "";
+  var w1 = getComputedStyle(main).getPropertyValue("min-width");
+  var w2 = getComputedStyle(sidebar).getPropertyValue("width");
+  var w3 = getComputedStyle(sidebar).getPropertyValue("left");
+  main.style.minWidth = `calc(${w1} - ${w2} - ${w3})`;
+}
+</script>
 
 <script>
 $(document).ready(function() {
@@ -666,6 +660,11 @@ $(document).ready(function() {
   });
 });
 </script>
+
+
+  
+    
+  
 
 
 
