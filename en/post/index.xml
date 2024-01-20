@@ -146,14 +146,5 @@ It&amp;rsquo;s a protection strategy that prevents the upstream from retrying re
 &lt;p&gt;Every task running on our computer is resource allocation at the operating system level. From starting a process to creating a thread, with a fixed number of cores, multiple threads execute concurrently.&lt;/p&gt;</description>
     </item>
     
-    <item>
-      <title>简述</title>
-      <link>/en/1/01/%E7%AE%80%E8%BF%B0/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>/en/1/01/%E7%AE%80%E8%BF%B0/</guid>
-      <description>Hello there~</description>
-    </item>
-    
   </channel>
 </rss>
