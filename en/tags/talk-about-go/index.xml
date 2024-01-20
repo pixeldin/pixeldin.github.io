@@ -1,82 +1,82 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Talk about Go on pixelpig.space</title>
-    <link>/en/tags/talk-about-go/</link>
-    <description>Recent content in Talk about Go on pixelpig.space</description>
+    <title>Talk about Go on pixelpig.tech</title>
+    <link>https://pixeldin.github.io/en/tags/talk-about-go/</link>
+    <description>Recent content in Talk about Go on pixelpig.tech</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 23 Apr 2022 00:00:00 +0000</lastBuildDate><atom:link href="/en/tags/talk-about-go/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 23 Apr 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://pixeldin.github.io/en/tags/talk-about-go/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Talk about Go: A high performance pool for reusing object - Sync.Pool</title>
-      <link>/en/2022/04/talk-about-go-a-high-performance-pool-for-reusing-object-sync.pool/</link>
+      <link>https://pixeldin.github.io/en/2022/04/talk-about-go-a-high-performance-pool-for-reusing-object-sync.pool/</link>
       <pubDate>Sat, 23 Apr 2022 00:00:00 +0000</pubDate>
       
-      <guid>/en/2022/04/talk-about-go-a-high-performance-pool-for-reusing-object-sync.pool/</guid>
+      <guid>https://pixeldin.github.io/en/2022/04/talk-about-go-a-high-performance-pool-for-reusing-object-sync.pool/</guid>
       <description>&lt;p&gt;Pooling is frequently occurring in software field, such as connection pool\thread pool\routine poool etc. A pool is essentially to reuse resources.&lt;/p&gt;</description>
     </item>
     
     <item>
       <title>Talk about Go: Goroutine&#39;s information and how to prevent goroutine leaks</title>
-      <link>/en/2022/03/talk-about-go-goroutines-information-and-how-to-prevent-goroutine-leaks/</link>
+      <link>https://pixeldin.github.io/en/2022/03/talk-about-go-goroutines-information-and-how-to-prevent-goroutine-leaks/</link>
       <pubDate>Thu, 17 Mar 2022 00:00:00 +0000</pubDate>
       
-      <guid>/en/2022/03/talk-about-go-goroutines-information-and-how-to-prevent-goroutine-leaks/</guid>
+      <guid>https://pixeldin.github.io/en/2022/03/talk-about-go-goroutines-information-and-how-to-prevent-goroutine-leaks/</guid>
       <description>&lt;p&gt;Goroutines are a common concept in Go, which starts and ends with the life cycle of a go program. Today, let&amp;rsquo;s talk about Go&amp;rsquo;s goroutine leak.&lt;/p&gt;</description>
     </item>
     
     <item>
       <title>Talk about Go: A simple implement of Circuit Breaker</title>
-      <link>/en/2022/02/talk-about-go-a-simple-implement-of-circuit-breaker/</link>
+      <link>https://pixeldin.github.io/en/2022/02/talk-about-go-a-simple-implement-of-circuit-breaker/</link>
       <pubDate>Fri, 25 Feb 2022 00:00:00 +0000</pubDate>
       
-      <guid>/en/2022/02/talk-about-go-a-simple-implement-of-circuit-breaker/</guid>
+      <guid>https://pixeldin.github.io/en/2022/02/talk-about-go-a-simple-implement-of-circuit-breaker/</guid>
       <description>&lt;p&gt;A simple implement of circuit breaker with Go, trigger for fail-fast and return quickly when your API comes to &lt;strong&gt;high error rate durning a period of time&lt;/strong&gt;.
 It&amp;rsquo;s a protection strategy that prevents the upstream from retrying repeatedly so that the downstream is overwhelmed.&lt;/p&gt;</description>
     </item>
     
     <item>
       <title>Talk about Go: Network programming about grouping and unpacking in TCP flow</title>
-      <link>/en/2022/02/talk-about-go-network-programming-about-grouping-and-unpacking-in-tcp-flow/</link>
+      <link>https://pixeldin.github.io/en/2022/02/talk-about-go-network-programming-about-grouping-and-unpacking-in-tcp-flow/</link>
       <pubDate>Fri, 04 Feb 2022 00:00:00 +0000</pubDate>
       
-      <guid>/en/2022/02/talk-about-go-network-programming-about-grouping-and-unpacking-in-tcp-flow/</guid>
+      <guid>https://pixeldin.github.io/en/2022/02/talk-about-go-network-programming-about-grouping-and-unpacking-in-tcp-flow/</guid>
       <description>&lt;p&gt;As we all know, packet body transmission is an import part of network communication, whether it is the &lt;code&gt;header&lt;/code&gt; or &lt;code&gt;body&lt;/code&gt; of HTTP packets at the application layer, or the streaming data of TCP at the transport layer.&lt;/p&gt;</description>
     </item>
     
     <item>
       <title>Talk about Go: The gracefully handling of service restart</title>
-      <link>/en/2021/12/talk-about-go-the-gracefully-handling-of-service-restart/</link>
+      <link>https://pixeldin.github.io/en/2021/12/talk-about-go-the-gracefully-handling-of-service-restart/</link>
       <pubDate>Thu, 23 Dec 2021 00:00:00 +0000</pubDate>
       
-      <guid>/en/2021/12/talk-about-go-the-gracefully-handling-of-service-restart/</guid>
+      <guid>https://pixeldin.github.io/en/2021/12/talk-about-go-the-gracefully-handling-of-service-restart/</guid>
       <description>&lt;p&gt;Last time we talked about graceful shutdown of Go programs, today we will talk about graceful restarts.&lt;/p&gt;</description>
     </item>
     
     <item>
       <title>Talk about Go: The gracefully handling of service shutdown</title>
-      <link>/en/2021/11/talk-about-go-the-gracefully-handling-of-service-shutdown/</link>
+      <link>https://pixeldin.github.io/en/2021/11/talk-about-go-the-gracefully-handling-of-service-shutdown/</link>
       <pubDate>Tue, 02 Nov 2021 00:00:00 +0000</pubDate>
       
-      <guid>/en/2021/11/talk-about-go-the-gracefully-handling-of-service-shutdown/</guid>
+      <guid>https://pixeldin.github.io/en/2021/11/talk-about-go-the-gracefully-handling-of-service-shutdown/</guid>
       <description>&lt;p&gt;From high availability to graceful shutdown/restart, to refinement to program offline/restart, etc. So what can we do in Go? Today let&amp;rsquo;s talk about the graceful shutdown of go programs.&lt;/p&gt;</description>
     </item>
     
     <item>
       <title>Talk about Go: Network programming--TCP Connection Management</title>
-      <link>/en/2021/05/talk-about-go-network-programming-tcp-connection-management/</link>
+      <link>https://pixeldin.github.io/en/2021/05/talk-about-go-network-programming--tcp-connection-management/</link>
       <pubDate>Sun, 16 May 2021 00:00:00 +0000</pubDate>
       
-      <guid>/en/2021/05/talk-about-go-network-programming-tcp-connection-management/</guid>
+      <guid>https://pixeldin.github.io/en/2021/05/talk-about-go-network-programming--tcp-connection-management/</guid>
       <description>&lt;p&gt;In the last article, we talked about how to initiate a TCP connection in Go, and listed a full-duplex demo. Today, we will talk about connection pool management further.&lt;/p&gt;</description>
     </item>
     
     <item>
       <title>Talk about Go: Network programming--TCP Communication</title>
-      <link>/en/2021/05/talk-about-go-network-programming-tcp-communication/</link>
+      <link>https://pixeldin.github.io/en/2021/05/talk-about-go-network-programming--tcp-communication/</link>
       <pubDate>Sat, 15 May 2021 00:00:00 +0000</pubDate>
       
-      <guid>/en/2021/05/talk-about-go-network-programming-tcp-communication/</guid>
+      <guid>https://pixeldin.github.io/en/2021/05/talk-about-go-network-programming--tcp-communication/</guid>
       <description>&lt;p&gt;In the seven-layer protocol of network layering, we know that TCP is below the HTTP layer. In essence, the HTTP packet body parsing is established based on the underlying TCP connection.&lt;/p&gt;</description>
     </item>
     

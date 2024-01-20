@@ -1,27 +1,27 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>gin on pixelpig.space</title>
-    <link>/en/tags/gin/</link>
-    <description>Recent content in gin on pixelpig.space</description>
+    <title>gin on pixelpig.tech</title>
+    <link>https://pixeldin.github.io/en/tags/gin/</link>
+    <description>Recent content in gin on pixelpig.tech</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 15 Oct 2021 00:00:00 +0000</lastBuildDate><atom:link href="/en/tags/gin/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 15 Oct 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://pixeldin.github.io/en/tags/gin/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Talk about Go: How to custom build a gateway interceptor in Gin framwork</title>
-      <link>/en/2021/10/talk-about-go-how-to-custom-build-a-gateway-interceptor-in-gin-framwork/</link>
+      <link>https://pixeldin.github.io/en/2021/10/talk-about-go-how-to-custom-build-a-gateway-interceptor-in-gin-framwork/</link>
       <pubDate>Fri, 15 Oct 2021 00:00:00 +0000</pubDate>
       
-      <guid>/en/2021/10/talk-about-go-how-to-custom-build-a-gateway-interceptor-in-gin-framwork/</guid>
+      <guid>https://pixeldin.github.io/en/2021/10/talk-about-go-how-to-custom-build-a-gateway-interceptor-in-gin-framwork/</guid>
       <description>&lt;p&gt;Middleware often used as a level &amp;ldquo;security check&amp;rdquo;, for core components such as request header/request body verification, caching, and current limiting.&lt;/p&gt;</description>
     </item>
     
     <item>
       <title>Before talking about the Gin web framework, let&#39;s take a look at httprouter</title>
-      <link>/en/2021/08/before-talking-about-the-gin-web-framework-lets-take-a-look-at-httprouter/</link>
+      <link>https://pixeldin.github.io/en/2021/08/before-talking-about-the-gin-web-framework-lets-take-a-look-at-httprouter/</link>
       <pubDate>Mon, 16 Aug 2021 00:00:00 +0000</pubDate>
       
-      <guid>/en/2021/08/before-talking-about-the-gin-web-framework-lets-take-a-look-at-httprouter/</guid>
+      <guid>https://pixeldin.github.io/en/2021/08/before-talking-about-the-gin-web-framework-lets-take-a-look-at-httprouter/</guid>
       <description>&lt;p&gt;The etymology of Gin a strong alcohol, comes from the Netherlands.&lt;/p&gt;</description>
     </item>
     
