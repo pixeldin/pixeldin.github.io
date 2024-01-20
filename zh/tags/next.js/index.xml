@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Next.js on pixelpig.tech</title>
-    <link>https://pixeldin.github.io/zh/tags/next.js/</link>
-    <description>Recent content in Next.js on pixelpig.tech</description>
+    <title>Next.js on pixelpig.space</title>
+    <link>/zh/tags/next.js/</link>
+    <description>Recent content in Next.js on pixelpig.space</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Fri, 24 Feb 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://pixeldin.github.io/zh/tags/next.js/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 24 Feb 2023 00:00:00 +0000</lastBuildDate><atom:link href="/zh/tags/next.js/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>聊一聊Next.js的预渲染</title>
-      <link>https://pixeldin.github.io/zh/2023/02/%E8%81%8A%E4%B8%80%E8%81%8Anext.js%E7%9A%84%E9%A2%84%E6%B8%B2%E6%9F%93/</link>
+      <link>/zh/2023/02/%E8%81%8A%E4%B8%80%E8%81%8Anext.js%E7%9A%84%E9%A2%84%E6%B8%B2%E6%9F%93/</link>
       <pubDate>Fri, 24 Feb 2023 00:00:00 +0000</pubDate>
       
-      <guid>https://pixeldin.github.io/zh/2023/02/%E8%81%8A%E4%B8%80%E8%81%8Anext.js%E7%9A%84%E9%A2%84%E6%B8%B2%E6%9F%93/</guid>
+      <guid>/zh/2023/02/%E8%81%8A%E4%B8%80%E8%81%8Anext.js%E7%9A%84%E9%A2%84%E6%B8%B2%E6%9F%93/</guid>
       <description>&lt;p&gt;众所周知，&lt;code&gt;Next.js&lt;/code&gt;具备在构建时预渲染、服务端渲染、路由预加载、智能打包、零配置等功能。提供多种渲染模式，可以用代理服务器将预渲染的页面提供给上游应用。&lt;/p&gt;</description>
     </item>
     

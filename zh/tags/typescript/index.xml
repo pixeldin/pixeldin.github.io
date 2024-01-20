@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>TypeScript on pixelpig.tech</title>
-    <link>https://pixeldin.github.io/zh/tags/typescript/</link>
-    <description>Recent content in TypeScript on pixelpig.tech</description>
+    <title>TypeScript on pixelpig.space</title>
+    <link>/zh/tags/typescript/</link>
+    <description>Recent content in TypeScript on pixelpig.space</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Fri, 14 Apr 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://pixeldin.github.io/zh/tags/typescript/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 14 Apr 2023 00:00:00 +0000</lastBuildDate><atom:link href="/zh/tags/typescript/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>聊一聊TypeScript的interface</title>
-      <link>https://pixeldin.github.io/zh/2023/04/%E8%81%8A%E4%B8%80%E8%81%8Atypescript%E7%9A%84interface/</link>
+      <link>/zh/2023/04/%E8%81%8A%E4%B8%80%E8%81%8Atypescript%E7%9A%84interface/</link>
       <pubDate>Fri, 14 Apr 2023 00:00:00 +0000</pubDate>
       
-      <guid>https://pixeldin.github.io/zh/2023/04/%E8%81%8A%E4%B8%80%E8%81%8Atypescript%E7%9A%84interface/</guid>
+      <guid>/zh/2023/04/%E8%81%8A%E4%B8%80%E8%81%8Atypescript%E7%9A%84interface/</guid>
       <description>&lt;p&gt;&amp;ldquo;如果它表现得像个鸭子，那么就可以称它为鸭子&amp;rdquo;。interface（接口），它用于定义对象的形状或结构。&lt;/p&gt;</description>
     </item>
     

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>microservice on pixelpig.space</title>
+    <link>/zh/categories/microservice/</link>
+    <description>Recent content in microservice on pixelpig.space</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Thu, 23 Dec 2021 00:00:00 +0000</lastBuildDate><atom:link href="/zh/categories/microservice/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Talk about Go: The gracefully handling of service restart</title>
+      <link>/zh/2021/12/talk-about-go-the-gracefully-handling-of-service-restart/</link>
+      <pubDate>Thu, 23 Dec 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/zh/2021/12/talk-about-go-the-gracefully-handling-of-service-restart/</guid>
+      <description>&lt;p&gt;Last time we talked about graceful shutdown of Go programs, today we will talk about graceful restarts.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Talk about Go: The gracefully handling of service shutdown</title>
+      <link>/zh/2021/11/talk-about-go-the-gracefully-handling-of-service-shutdown/</link>
+      <pubDate>Tue, 02 Nov 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/zh/2021/11/talk-about-go-the-gracefully-handling-of-service-shutdown/</guid>
+      <description>&lt;p&gt;From high availability to graceful shutdown/restart, to refinement to program offline/restart, etc. So what can we do in Go? Today let&amp;rsquo;s talk about the graceful shutdown of go programs.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Talk about Go: How to custom build a gateway interceptor in Gin framwork</title>
+      <link>/zh/2021/10/talk-about-go-how-to-custom-build-a-gateway-interceptor-in-gin-framwork/</link>
+      <pubDate>Fri, 15 Oct 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/zh/2021/10/talk-about-go-how-to-custom-build-a-gateway-interceptor-in-gin-framwork/</guid>
+      <description>&lt;p&gt;Middleware often used as a level &amp;ldquo;security check&amp;rdquo;, for core components such as request header/request body verification, caching, and current limiting.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Before talking about the Gin web framework, let&#39;s take a look at httprouter</title>
+      <link>/zh/2021/08/before-talking-about-the-gin-web-framework-lets-take-a-look-at-httprouter/</link>
+      <pubDate>Mon, 16 Aug 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/zh/2021/08/before-talking-about-the-gin-web-framework-lets-take-a-look-at-httprouter/</guid>
+      <description>&lt;p&gt;The etymology of Gin a strong alcohol, comes from the Netherlands.&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -6,7 +6,25 @@
     <description>Recent content on pixelpig.space</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Fri, 20 Jan 2023 00:00:00 +0000</lastBuildDate><atom:link href="/zh/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 14 Apr 2023 00:00:00 +0000</lastBuildDate><atom:link href="/zh/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>聊一聊TypeScript的interface</title>
+      <link>/zh/2023/04/%E8%81%8A%E4%B8%80%E8%81%8Atypescript%E7%9A%84interface/</link>
+      <pubDate>Fri, 14 Apr 2023 00:00:00 +0000</pubDate>
+      
+      <guid>/zh/2023/04/%E8%81%8A%E4%B8%80%E8%81%8Atypescript%E7%9A%84interface/</guid>
+      <description>&lt;p&gt;&amp;ldquo;如果它表现得像个鸭子，那么就可以称它为鸭子&amp;rdquo;。interface（接口），它用于定义对象的形状或结构。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>聊一聊Next.js的预渲染</title>
+      <link>/zh/2023/02/%E8%81%8A%E4%B8%80%E8%81%8Anext.js%E7%9A%84%E9%A2%84%E6%B8%B2%E6%9F%93/</link>
+      <pubDate>Fri, 24 Feb 2023 00:00:00 +0000</pubDate>
+      
+      <guid>/zh/2023/02/%E8%81%8A%E4%B8%80%E8%81%8Anext.js%E7%9A%84%E9%A2%84%E6%B8%B2%E6%9F%93/</guid>
+      <description>&lt;p&gt;众所周知，&lt;code&gt;Next.js&lt;/code&gt;具备在构建时预渲染、服务端渲染、路由预加载、智能打包、零配置等功能。提供多种渲染模式，可以用代理服务器将预渲染的页面提供给上游应用。&lt;/p&gt;</description>
+    </item>
+    
     <item>
       <title>APISIX：如何在VSCode搭建调试环境</title>
       <link>/zh/2023/01/apisix%E5%A6%82%E4%BD%95%E5%9C%A8vscode%E6%90%AD%E5%BB%BA%E8%B0%83%E8%AF%95%E7%8E%AF%E5%A2%83/</link>

@@ -1,0 +1,940 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+  <head>
+    
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="generator" content="Hugo 0.80.0 with theme Tranquilpeak 0.4.8-BETA">
+<meta name="author" content="pixelpig">
+<meta name="keywords" content="">
+<meta name="description" content="The etymology of Gin a strong alcohol, comes from the Netherlands.">
+
+
+<meta property="og:description" content="The etymology of Gin a strong alcohol, comes from the Netherlands.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Before talking about the Gin web framework, let&#39;s take a look at httprouter">
+<meta name="twitter:title" content="Before talking about the Gin web framework, let&#39;s take a look at httprouter">
+<meta property="og:url" content="/zh/2021/08/before-talking-about-the-gin-web-framework-lets-take-a-look-at-httprouter/">
+<meta property="twitter:url" content="/zh/2021/08/before-talking-about-the-gin-web-framework-lets-take-a-look-at-httprouter/">
+<meta property="og:site_name" content="pixelpig.space">
+<meta property="og:description" content="The etymology of Gin a strong alcohol, comes from the Netherlands.">
+<meta name="twitter:description" content="The etymology of Gin a strong alcohol, comes from the Netherlands.">
+<meta property="og:locale" content="zh">
+
+  
+    <meta property="article:published_time" content="2021-08-16T00:00:00">
+  
+  
+    <meta property="article:modified_time" content="2021-08-16T00:00:00">
+  
+  
+  
+    
+      <meta property="article:section" content="Go">
+    
+      <meta property="article:section" content="microservice">
+    
+  
+  
+    
+      <meta property="article:tag" content="gin">
+    
+  
+
+
+<meta name="twitter:card" content="summary">
+
+  <meta name="twitter:site" content="@pixelpigpigpig">
+
+
+  <meta name="twitter:creator" content="@pixelpigpigpig">
+
+
+
+
+
+
+
+
+
+
+  <meta property="og:image" content="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/pig.jpg">
+  <meta property="twitter:image" content="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/pig.jpg">
+
+
+    <title>Before talking about the Gin web framework, let&#39;s take a look at httprouter</title>
+
+    <link rel="icon" href="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/blog/static/pig_round_circle.png">
+    
+
+    
+
+    <link rel="canonical" href="/zh/2021/08/before-talking-about-the-gin-web-framework-lets-take-a-look-at-httprouter/">
+
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/jquery.fancybox.min.css" integrity="sha256-vuXZ9LGmmwtjqFX1F+EKin1ThZMub58gKULUyf0qECk=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/helpers/jquery.fancybox-thumbs.min.css" integrity="sha256-SEa4XYAHihTcEP1f5gARTB2K26Uk8PsndQYHQC1f4jU=" crossorigin="anonymous" />
+    
+    
+    <link rel="stylesheet" href="/css/style-twzjdbqhmnnacqs0pwwdzcdbt8yhv8giawvjqjmyfoqnvazl0dalmnhdkvp7.min.css" />
+    
+    
+
+    
+      
+    
+    
+  </head>
+
+  <body>
+    <div id="blog">
+      <header id="header" data-behavior="4">
+  <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+  <div class="header-title">
+    <a class="header-title-link" href="/zh/">pixelpig.space</a>
+  </div>
+  
+    
+      <a class="header-right-picture "
+         href="/#about">
+    
+    
+    
+      
+        <img class="header-picture" src="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/pig.jpg" alt="作者的图片" />
+      
+    
+    </a>
+  
+</header>
+
+      <nav id="sidebar" data-behavior="4">
+  <div class="sidebar-container">
+    
+      <div class="sidebar-profile">
+        <a href="/#about">
+          <img class="sidebar-profile-picture" src="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/pig.jpg" alt="作者的图片" />
+        </a>
+        <h4 class="sidebar-profile-name">pixelpig</h4>
+        
+          <h5 class="sidebar-profile-bio">Keep it simple, so as this bio :)</h5>
+        
+      </div>
+    
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/en">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-language"></i>
+      
+      <span class="sidebar-button-desc">English</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/zh/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-home"></i>
+      
+      <span class="sidebar-button-desc">首页</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/zh/categories">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-bookmark"></i>
+      
+      <span class="sidebar-button-desc">分类</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/zh/tags">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
+      
+      <span class="sidebar-button-desc">标签</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/zh/archives">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-archive"></i>
+      
+      <span class="sidebar-button-desc">归档</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/zh/#about">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-question-circle"></i>
+      
+      <span class="sidebar-button-desc">关于我</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://github.com/pixeldin" target="_blank" rel="noopener">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-github-alt"></i>
+      
+      <span class="sidebar-button-desc">pixeldin</span>
+    </a>
+  </li>
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+
+    </ul>
+  </div>
+</nav>
+
+      
+
+      <div id="main" data-behavior="4"
+        class="
+               hasCoverMetaIn
+               ">
+        <article class="post" itemscope itemType="http://schema.org/BlogPosting">
+          
+          
+            <div class="post-header main-content-wrap text-left">
+  
+    <h1 class="post-title" itemprop="headline">
+      Before talking about the Gin web framework, let&#39;s take a look at httprouter
+    </h1>
+  
+  
+  <div class="postShorten-meta post-meta">
+    
+      <time itemprop="datePublished" datetime="2021-08-16T00:00:00Z">
+        
+  八月 16, 2021
+
+      </time>
+    
+    
+  
+  
+    <span>发布在</span>
+    
+      <a class="category-link" href="/zh/categories/go">Go</a>, 
+    
+      <a class="category-link" href="/zh/categories/microservice">microservice</a>
+    
+  
+
+  </div>
+
+</div>
+          
+          <div class="post-content markdown" itemprop="articleBody">
+            <div class="main-content-wrap">
+              <p>The etymology of Gin a strong alcohol, comes from the Netherlands.</p>
+<p>In Go, there is a frequently mentioned <strong>web</strong> framework, which is <strong>Gin</strong>, which has the characteristics of high performance and flexible customization. Since it is so promising, before understanding it in depth, you might as well Let&rsquo;s take a look at what he is based on.</p>
+<h2 id="consider-the-origin">Consider the origin</h2>
+<p>According to the description of the Git author, the high performance of <strong>Gin</strong> is generated by a framework called <strong>httprouter</strong>. Looking at the source, we first target <strong>httprouter</strong> and start from <strong>HTTP routing</strong> , as an introduction to the <strong>Gin</strong> framework.</p>
+<h3 id="route">Route</h3>
+<p>First sort out the concept of <strong>routing</strong>: <br>
+Probably means to achieve interconnection by forwarding data packets, such as the common physical router in life, which refers to the distribution of information flow between the internal network and the external network.</p>
+<p>Similarly, the software layer also has the concept of routing, which is generally exposed on the business layer and used to forward requests to the appropriate logical processor.</p>
+<blockquote>
+<p>The router matches incoming requests by the request method and the path.</p>
+</blockquote>
+<p>In the application of the program, it is common for the external server to send the external request to the <strong>Nginx gateway</strong>, and then <strong>routing</strong> (forwarding) to the internal service or the &ldquo;control layer&rdquo; of the internal service, such as Java&rsquo;s <strong>springMVC</strong>, Go&rsquo;s native <strong>router</strong>, etc. forward different requests to different business layers.<br>
+Or to be more specific, calling a method with the same name with different parameters, such as <strong>Java</strong> overloading, can also be understood as the program is routed to different methods according to different parameters.</p>
+<h3 id="httprouter">httprouter</h3>
+<h4 id="method-usage">method usage：</h4>
+<p>On the README document of <strong>Git</strong>, <strong>httprouter</strong> shows one of its common functions straight to the point,<br>
+Start an <strong>HTTP</strong> server, listen on port 8080, and perform parameter parsing on the request. It is only a few lines of code. When I first saw this implementation, I really felt that the implementation of <strong>go</strong> is quite elegant.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#a6e22e">router</span>.<span style="color:#a6e22e">GET</span>(<span style="color:#e6db74">&#34;/&#34;</span>, <span style="color:#a6e22e">Index</span>)
+<span style="color:#a6e22e">router</span>.<span style="color:#a6e22e">GET</span>(<span style="color:#e6db74">&#34;/hello/:name&#34;</span>, <span style="color:#a6e22e">Hello</span>)
+
+<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">Hello</span>(<span style="color:#a6e22e">w</span> <span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">ResponseWriter</span>, <span style="color:#a6e22e">r</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">Request</span>) {
+    <span style="color:#75715e">// get the parameters by the context of the http.Request structure
+</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">params</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">httprouter</span>.<span style="color:#a6e22e">ParamsFromContext</span>(<span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">Context</span>())
+    <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Fprintf</span>(<span style="color:#a6e22e">w</span>, <span style="color:#e6db74">&#34;hello, %s!\n&#34;</span>, <span style="color:#a6e22e">params</span>.<span style="color:#a6e22e">ByName</span>(<span style="color:#e6db74">&#34;name&#34;</span>))
+}
+
+<span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">ListenAndServe</span>(<span style="color:#e6db74">&#34;:8080&#34;</span>, <span style="color:#a6e22e">router</span>)
+</code></pre></div><hr>
+<h3 id="interface-implement">interface implement</h3>
+<p>After observing how to create a listener, before digging into how this elegance is encapsulated and implemented, we must first understand that in native <strong>Go</strong>, each <code>Router``` routing structure implements </code> `http.Handler<code>interface,</code>Handler<code>has only one method body, which is</code>ServerHTTP```, which has only one function, that is, to process requests and respond.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Handler</span> <span style="color:#66d9ef">interface</span> {
+	<span style="color:#a6e22e">ServeHTTP</span>(<span style="color:#a6e22e">ResponseWriter</span>, <span style="color:#f92672">*</span><span style="color:#a6e22e">Request</span>)
+}
+</code></pre></div><p><strong>Go</strong> is more inclined to <strong>KISS Pattern</strong> or single responsibility, the function of each interface is singled, and if necessary we can combine them again, use combination instead of inheritance, and it will be used as a code specificationsin the future.</p>
+<h4 id="nethttpserver">net\http\server</h4>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#75715e">// The HandlerFunc type is an adapter to allow the use of
+</span><span style="color:#75715e">// ordinary functions as HTTP handlers. If f is a function
+</span><span style="color:#75715e">// with the appropriate signature, HandlerFunc(f) is a
+</span><span style="color:#75715e">// Handler that calls f.
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">HandlerFunc</span> <span style="color:#66d9ef">func</span>(<span style="color:#a6e22e">ResponseWriter</span>, <span style="color:#f92672">*</span><span style="color:#a6e22e">Request</span>)
+
+<span style="color:#75715e">// ServeHTTP calls f(w, r).
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">f</span> <span style="color:#a6e22e">HandlerFunc</span>) <span style="color:#a6e22e">ServeHTTP</span>(<span style="color:#a6e22e">w</span> <span style="color:#a6e22e">ResponseWriter</span>, <span style="color:#a6e22e">r</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Request</span>) {
+	<span style="color:#a6e22e">f</span>(<span style="color:#a6e22e">w</span>, <span style="color:#a6e22e">r</span>)
+}
+</code></pre></div><p>It can be seen that in the <code>Go</code> native library, the <code>ServeHTTP()</code> implementation body <code>HandlerFunc</code> is a func function type, and the specific implementation is to directly apply <code>HandlerFunc</code> Is there a kind of &ldquo;I realize myself&rdquo;.</p>
+<p>All in all, Let&rsquo;s put aside the encapsulation of third-party libraries and review the standard library. If we want to use the native <strong>http\server</strong> package to build an HTTP processing logic, we can generally use:<br>
+Way 1：</p>
+<ol>
+<li>define a method with signature as(ResponseWriter, *Request)</li>
+<li>register it to <code>http.Server</code>as a member call <code>Handler</code></li>
+<li>call <strong>ListenAndServer</strong> to listen on <strong>http.Server</strong></li>
+</ol>
+<p>Way 2：</p>
+<ol>
+<li>define a struct and implement it with <code>ServeHTTP(w http.ResponseWriter, req *http.Request)</code></li>
+<li>register it to <code>http.Server</code>as a member call <code>Handler</code></li>
+<li>call <strong>ListenAndServer</strong> to listen on <strong>http.Server</strong></li>
+</ol>
+<p><strong>Code Example：</strong></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#75715e">// Way 1
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">SelfHandler</span>(<span style="color:#a6e22e">w</span> <span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">ResponseWriter</span>, <span style="color:#a6e22e">r</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">Request</span>) {
+	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Fprint</span>(<span style="color:#a6e22e">w</span>, <span style="color:#e6db74">&#34;&lt;h1&gt;Hello!&lt;/h1&gt;&#34;</span>)
+}
+
+<span style="color:#75715e">// Way 2
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">HelloHandler</span> <span style="color:#66d9ef">struct</span> {
+}
+
+<span style="color:#75715e">// write your implement logic
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> (<span style="color:#f92672">*</span> <span style="color:#a6e22e">HelloHandler</span>) <span style="color:#a6e22e">ServeHTTP</span>(<span style="color:#a6e22e">w</span> <span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">ResponseWriter</span>, <span style="color:#a6e22e">req</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">Request</span>) {
+	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Fprint</span>(<span style="color:#a6e22e">w</span>, <span style="color:#e6db74">&#34;&lt;h1&gt;Hello!&lt;/h1&gt;&#34;</span>)
+}
+
+<span style="color:#a6e22e">s</span> <span style="color:#f92672">:=</span> <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">Server</span>{
+	<span style="color:#a6e22e">Addr</span>:           <span style="color:#e6db74">&#34;:8080&#34;</span>,
+	<span style="color:#75715e">// Way 1
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">Handler</span>:        <span style="color:#a6e22e">SelfHandler</span>,
+	<span style="color:#75715e">// Way 2
+</span><span style="color:#75715e"></span>	<span style="color:#75715e">// Handler:      &amp;HelloHandler{},
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">ReadTimeout</span>:    <span style="color:#ae81ff">10</span> <span style="color:#f92672">*</span> <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Second</span>,
+	<span style="color:#a6e22e">WriteTimeout</span>:   <span style="color:#ae81ff">10</span> <span style="color:#f92672">*</span> <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Second</span>,
+	<span style="color:#a6e22e">MaxHeaderBytes</span>: <span style="color:#ae81ff">1</span> <span style="color:#f92672">&lt;&lt;</span> <span style="color:#ae81ff">20</span>,
+}
+<span style="color:#a6e22e">s</span>.<span style="color:#a6e22e">ListenAndServe</span>()
+</code></pre></div><p><strong>Take a shot</strong><br>
+The above is the common usage of the <strong>Go</strong> standard library to implement http services. Now let&rsquo;s expand. If we need to get parameters through the url, such as <strong>Get</strong> request, <code>localhost:8080/abc/1</code>
+Q: How do we get abc or 1?<br>
+A：In fact, there is a relatively crude method</p>
+<ul>
+<li>Use the <code>Parse()</code> function of <code>net/url</code> to extract the paragraph after <code>8080</code></li>
+<li>Use <code>stings.split(ul, &quot;/&quot;)</code></li>
+<li>Parameter ranges using subscripts</li>
+</ul>
+<p><strong>Code Example</strong></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">TestStartHelloWithHttp</span>(<span style="color:#a6e22e">t</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">testing</span>.<span style="color:#a6e22e">T</span>)  {
+	<span style="color:#75715e">//fmt.Println(path.Base(ul))
+</span><span style="color:#75715e"></span>
+	<span style="color:#a6e22e">ul</span> <span style="color:#f92672">:=</span> <span style="color:#e6db74">`https://localhost:8080/pixeldin/123`</span>
+	<span style="color:#a6e22e">parse</span>, <span style="color:#a6e22e">e</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">url</span>.<span style="color:#a6e22e">Parse</span>(<span style="color:#a6e22e">ul</span>)
+	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">e</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+		<span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Fatalf</span>(<span style="color:#e6db74">&#34;%v&#34;</span>, <span style="color:#a6e22e">e</span>)
+	}
+	<span style="color:#75715e">//fmt.Println(parse.Path)	// &#34;/pixeldin/123&#34;
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">name</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">GetParamFromUrl</span>(<span style="color:#a6e22e">parse</span>.<span style="color:#a6e22e">Path</span>, <span style="color:#ae81ff">1</span>)
+	<span style="color:#a6e22e">id</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">GetParamFromUrl</span>(<span style="color:#a6e22e">parse</span>.<span style="color:#a6e22e">Path</span>, <span style="color:#ae81ff">2</span>)
+	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;name: &#34;</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">name</span> <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;, id: &#34;</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">id</span>)	
+}
+
+<span style="color:#75715e">// specify the subscript to return the value of the relative url
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">GetParamFromUrl</span>(<span style="color:#a6e22e">base</span> <span style="color:#66d9ef">string</span>, <span style="color:#a6e22e">index</span> <span style="color:#66d9ef">int</span>) (<span style="color:#a6e22e">ps</span> <span style="color:#66d9ef">string</span>) {
+	<span style="color:#a6e22e">kv</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">strings</span>.<span style="color:#a6e22e">Split</span>(<span style="color:#a6e22e">base</span>, <span style="color:#e6db74">&#34;/&#34;</span>)
+	<span style="color:#a6e22e">assert</span>(<span style="color:#a6e22e">index</span> &lt; len(<span style="color:#a6e22e">kv</span>), <span style="color:#a6e22e">errors</span>.<span style="color:#a6e22e">New</span>(<span style="color:#e6db74">&#34;index out of range.&#34;</span>))
+	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">kv</span>[<span style="color:#a6e22e">index</span>]
+}
+
+<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">assert</span>(<span style="color:#a6e22e">ok</span> <span style="color:#66d9ef">bool</span>, <span style="color:#a6e22e">err</span> <span style="color:#66d9ef">error</span>)  {
+	<span style="color:#66d9ef">if</span> !<span style="color:#a6e22e">ok</span> {
+		panic(<span style="color:#a6e22e">err</span>)
+	}
+}
+</code></pre></div><p><strong>Output:</strong></p>
+<pre><code>name: pixeldin, id: 123
+</code></pre><p>This method feels quite violent, and it needs to remember the location and corresponding value of each parameter, and multiple URLs cannot be managed uniformly, and each addressing is traversal. Although the Go standard library also provides some general functions.</p>
+<p>Such as the following example:<br>
+<strong>GET</strong> request url: <code>https://localhost:8080/?key=hello</code><br>
+we can use <code>*http.Request</code> to obtain, this request method is to declare the key-value pair in the url, and then the background extracts according to the request key.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#75715e">// Referenced from：https://golangcode.com/get-a-url-parameter-from-a-request/
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">handler</span>(<span style="color:#a6e22e">w</span> <span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">ResponseWriter</span>, <span style="color:#a6e22e">r</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">Request</span>) {
+
+    <span style="color:#a6e22e">keys</span>, <span style="color:#a6e22e">ok</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">URL</span>.<span style="color:#a6e22e">Query</span>()[<span style="color:#e6db74">&#34;key&#34;</span>]
+    
+    <span style="color:#66d9ef">if</span> !<span style="color:#a6e22e">ok</span> <span style="color:#f92672">||</span> len(<span style="color:#a6e22e">keys</span>[<span style="color:#ae81ff">0</span>]) &lt; <span style="color:#ae81ff">1</span> {
+        <span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;Url Param &#39;key&#39; is missing&#34;</span>)
+        <span style="color:#66d9ef">return</span>
+    }
+
+    <span style="color:#75715e">// Query()[&#34;key&#34;] will return an array of items, 
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">// we only want the single item.
+</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">key</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">keys</span>[<span style="color:#ae81ff">0</span>]
+
+    <span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;Url Param &#39;key&#39; is: &#34;</span> <span style="color:#f92672">+</span> string(<span style="color:#a6e22e">key</span>))
+}
+</code></pre></div><p>I believe that we all prefers the example listed at the beginning, including several mainstream frameworks that we are used to now, all tend to use the location of the url to search for parameters. Of course, the advantages of <code>httprouter</code> are definitely not only here, but here only as a An entry point to understand <code>httprouter</code>.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#a6e22e">router</span>.<span style="color:#a6e22e">GET</span>(<span style="color:#e6db74">&#34;/hello/:name&#34;</span>, <span style="color:#a6e22e">Hello</span>)
+<span style="color:#a6e22e">router</span>.<span style="color:#a6e22e">GET</span>(<span style="color:#e6db74">&#34;/hello/*name&#34;</span>, <span style="color:#a6e22e">HelloWorld</span>)
+</code></pre></div><p>Later, we will track the underlying implementation after they are encapsulated and how to plan url parameters.</p>
+<hr>
+<h3 id="how-httprouter-implement-the-serverhttp">How httprouter implement the ServerHTTP()</h3>
+<p>As mentioned earlier, all routing structures implement the <code>ServeHTTP()</code> method of the <code>http.Handler</code> interface. Let&rsquo;s take a look at the implementation method of <code>httprouter</code> based on it.</p>
+<h4 id="julienschmidthttprouter">julienschmidt\httprouter</h4>
+<p>In <strong>httprouter</strong>, the implementation structure of <strong>ServeHTTP()</strong> is called <code>*Router</code>, which encapsulates the tree structure used to retrieve url, several commonly used Boolean options, and several default handlers are also implemented based on <code>http.Handler</code>, and its implementation is as follows:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#75715e">// ServeHTTP makes the router implement the http.Handler interface.
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">r</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Router</span>) <span style="color:#a6e22e">ServeHTTP</span>(<span style="color:#a6e22e">w</span> <span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">ResponseWriter</span>, <span style="color:#a6e22e">req</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">Request</span>) {
+	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">PanicHandler</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+		<span style="color:#66d9ef">defer</span> <span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">recv</span>(<span style="color:#a6e22e">w</span>, <span style="color:#a6e22e">req</span>)
+	}
+
+	<span style="color:#a6e22e">path</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">req</span>.<span style="color:#a6e22e">URL</span>.<span style="color:#a6e22e">Path</span>
+
+	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">root</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">trees</span>[<span style="color:#a6e22e">req</span>.<span style="color:#a6e22e">Method</span>]; <span style="color:#a6e22e">root</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+	    <span style="color:#75715e">// getValue() returns the processing method and parameter list
+</span><span style="color:#75715e"></span>		<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">handle</span>, <span style="color:#a6e22e">ps</span>, <span style="color:#a6e22e">tsr</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">root</span>.<span style="color:#a6e22e">getValue</span>(<span style="color:#a6e22e">path</span>); <span style="color:#a6e22e">handle</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+			<span style="color:#a6e22e">handle</span>(<span style="color:#a6e22e">w</span>, <span style="color:#a6e22e">req</span>, <span style="color:#a6e22e">ps</span>)
+			<span style="color:#66d9ef">return</span>
+		} <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">req</span>.<span style="color:#a6e22e">Method</span> <span style="color:#f92672">!=</span> <span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">MethodConnect</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#a6e22e">path</span> <span style="color:#f92672">!=</span> <span style="color:#e6db74">&#34;/&#34;</span> {
+			<span style="color:#75715e">//...
+</span><span style="color:#75715e"></span>		}
+	}
+
+	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">req</span>.<span style="color:#a6e22e">Method</span> <span style="color:#f92672">==</span> <span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">MethodOptions</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">HandleOPTIONS</span> {
+		<span style="color:#75715e">// Handle OPTIONS requests
+</span><span style="color:#75715e"></span>	} <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">HandleMethodNotAllowed</span> { <span style="color:#75715e">// Handle 405
+</span><span style="color:#75715e"></span>		<span style="color:#75715e">// execute default handler...
+</span><span style="color:#75715e"></span>	}
+
+	<span style="color:#75715e">// Handle 404
+</span><span style="color:#75715e"></span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">NotFound</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+		<span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">NotFound</span>.<span style="color:#a6e22e">ServeHTTP</span>(<span style="color:#a6e22e">w</span>, <span style="color:#a6e22e">req</span>)
+	} <span style="color:#66d9ef">else</span> {
+		<span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">NotFound</span>(<span style="color:#a6e22e">w</span>, <span style="color:#a6e22e">req</span>)
+	}
+}
+</code></pre></div><p>At this point, it can be roughly guessed that it injects the processing method into the internal trees structure, uses the incoming url to perform matching searches in the trees, and executes the execution chain accordingly.<br>
+It can be guessed that this <code>Router.trees</code> contains handle and corresponding parameters, and then we enter its routing index function to see how it implements <strong>url matching</strong> and <strong>parameter parsing</strong>.</p>
+<p><strong>Sneaking in</strong><br>
+This <code>trees</code> exists in the tree.go source file, which is actually a map key-value pair,
+The key is <strong>HTTP methods</strong> (such as GET/HEAD/POST/PUT, etc.), and the method is the node on which the current method is bound to the method</p>
+<p>I added some comments to the source code, believe it will more easy for you to understand.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#75715e">// Handle registers a new request handle with the given path and method.
+</span><span style="color:#75715e">//
+</span><span style="color:#75715e">// For GET, POST, PUT, PATCH and DELETE requests the respective shortcut
+</span><span style="color:#75715e">// functions can be used.
+</span><span style="color:#75715e">// ...
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">r</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Router</span>) <span style="color:#a6e22e">Handle</span>(<span style="color:#a6e22e">method</span>, <span style="color:#a6e22e">path</span> <span style="color:#66d9ef">string</span>, <span style="color:#a6e22e">handle</span> <span style="color:#a6e22e">Handle</span>) {
+	<span style="color:#66d9ef">if</span> len(<span style="color:#a6e22e">path</span>) &lt; <span style="color:#ae81ff">1</span> <span style="color:#f92672">||</span> <span style="color:#a6e22e">path</span>[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">!=</span> <span style="color:#e6db74">&#39;/&#39;</span> {
+		panic(<span style="color:#e6db74">&#34;path must begin with &#39;/&#39; in path &#39;&#34;</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">path</span> <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;&#39;&#34;</span>)
+	}
+
+	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">trees</span> <span style="color:#f92672">==</span> <span style="color:#66d9ef">nil</span> {
+		<span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">trees</span> = make(<span style="color:#66d9ef">map</span>[<span style="color:#66d9ef">string</span>]<span style="color:#f92672">*</span><span style="color:#a6e22e">node</span>)
+	}
+
+    <span style="color:#75715e">// bind http methods root node, method can be GET/POST/PUT, etc.
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">root</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">trees</span>[<span style="color:#a6e22e">method</span>]
+	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">root</span> <span style="color:#f92672">==</span> <span style="color:#66d9ef">nil</span> {
+		<span style="color:#a6e22e">root</span> = new(<span style="color:#a6e22e">node</span>)
+		<span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">trees</span>[<span style="color:#a6e22e">method</span>] = <span style="color:#a6e22e">root</span>
+
+		<span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">globalAllowed</span> = <span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">allowed</span>(<span style="color:#e6db74">&#34;*&#34;</span>, <span style="color:#e6db74">&#34;&#34;</span>)
+	}
+    
+	<span style="color:#a6e22e">root</span>.<span style="color:#a6e22e">addRoute</span>(<span style="color:#a6e22e">path</span>, <span style="color:#a6e22e">handle</span>)
+}
+</code></pre></div><p>The value of the ``Router.trees<code>map key-value pair is a </code>node``` structure, each <strong>HTTP METHOD</strong> is a root node, and the most important path allocation is in these nodes the <strong>addRoute()</strong> function, eventually those paths with the same prefix will be bound to the same branch direction of the tree, which directly improves the efficiency of the index.</p>
+<p>Below I will list a few more important members of <code>node</code>:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">node</span> <span style="color:#66d9ef">struct</span> {
+	<span style="color:#a6e22e">path</span>      <span style="color:#66d9ef">string</span>
+	<span style="color:#75715e">// identifies whether the path is followed by &#39;:&#39;, which is used for parameter judgment
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">wildChild</span> <span style="color:#66d9ef">bool</span>
+	<span style="color:#75715e">/* type of the current node, the default is 0,
+</span><span style="color:#75715e">	(root/param/catchAll) Identify separately 
+</span><span style="color:#75715e">	(root/with parameters/full path) */</span>
+	<span style="color:#a6e22e">nType</span>     <span style="color:#a6e22e">nodeType</span>
+	<span style="color:#a6e22e">maxParams</span> <span style="color:#66d9ef">uint8</span>
+	<span style="color:#75715e">// the priority of the current node, the more child nodes hanging on it, the higher the priority
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">priority</span>  <span style="color:#66d9ef">uint32</span>
+	<span style="color:#a6e22e">indices</span>   <span style="color:#66d9ef">string</span>
+	<span style="color:#75715e">// child nodes that satisfy the prefix can be extended
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">children</span>  []<span style="color:#f92672">*</span><span style="color:#a6e22e">node</span>
+	<span style="color:#75715e">// the processing logic block bound to the current node
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">handle</span>    <span style="color:#a6e22e">Handle</span>
+}
+</code></pre></div><p>The more child nodes, or the root nodes with more handle methods bound, the higher the <strong>priority</strong> is. The author consciously prioritizes each registration completion.
+Quoting the author&rsquo;s note:</p>
+<blockquote>
+<p>This helps in two ways:</p>
+<ul>
+<li>Nodes which are part of the most routing paths are evaluated first. This helps to make as much routes as possible to be reachable as fast as possible.</li>
+<li>It is some sort of cost compensation. The longest reachable path (highest cost) can always be evaluated first. The following scheme visualizes the tree structure. Nodes are evaluated from top to bottom and from left to right.</li>
+</ul>
+</blockquote>
+<p>Nodes with high priority are conducive to the rapid positioning of handles. I believe it is easier to understand. In reality, densely populated areas are often crossroads, similar to transportation hubs. Matching based on the prefix tree allows addressing to start at a dense location, which helps to improve efficiency.</p>
+<p><strong>Step by step</strong><br>
+Let&rsquo;s first register the GET processing logic provided by several authors with the router, and then start debugging to see what changes to the tree members as the url is added.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#a6e22e">router</span>.<span style="color:#a6e22e">Handle</span>(<span style="color:#e6db74">&#34;GET&#34;</span>, <span style="color:#e6db74">&#34;/user/ab/&#34;</span>, <span style="color:#66d9ef">func</span>(<span style="color:#a6e22e">w</span> <span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">ResponseWriter</span>, <span style="color:#a6e22e">r</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">Request</span>, <span style="color:#a6e22e">ps</span> <span style="color:#a6e22e">httprouter</span>.<span style="color:#a6e22e">Params</span>) {
+	<span style="color:#75715e">//do nothing, just add path+handler
+</span><span style="color:#75715e"></span>})
+
+<span style="color:#a6e22e">router</span>.<span style="color:#a6e22e">Handle</span>(<span style="color:#e6db74">&#34;GET&#34;</span>, <span style="color:#e6db74">&#34;/user/abc/&#34;</span>, <span style="color:#66d9ef">func</span>(<span style="color:#a6e22e">w</span> <span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">ResponseWriter</span>, <span style="color:#a6e22e">r</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">Request</span>, <span style="color:#a6e22e">ps</span> <span style="color:#a6e22e">httprouter</span>.<span style="color:#a6e22e">Params</span>) {
+	<span style="color:#75715e">//do nothing, just add path+handler
+</span><span style="color:#75715e"></span>})
+
+<span style="color:#a6e22e">router</span>.<span style="color:#a6e22e">Handle</span>(<span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">MethodGet</span>, <span style="color:#e6db74">&#34;/user/query/:name&#34;</span>, <span style="color:#66d9ef">func</span>(<span style="color:#a6e22e">w</span> <span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">ResponseWriter</span>, <span style="color:#a6e22e">r</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">Request</span>, <span style="color:#a6e22e">ps</span> <span style="color:#a6e22e">httprouter</span>.<span style="color:#a6e22e">Params</span>) {
+	<span style="color:#a6e22e">routed</span> = <span style="color:#66d9ef">true</span>
+	<span style="color:#a6e22e">want</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">httprouter</span>.<span style="color:#a6e22e">Params</span>{<span style="color:#a6e22e">httprouter</span>.<span style="color:#a6e22e">Param</span>{<span style="color:#e6db74">&#34;name&#34;</span>, <span style="color:#e6db74">&#34;gopher&#34;</span>}}
+	<span style="color:#66d9ef">if</span> !<span style="color:#a6e22e">reflect</span>.<span style="color:#a6e22e">DeepEqual</span>(<span style="color:#a6e22e">ps</span>, <span style="color:#a6e22e">want</span>) {
+		<span style="color:#a6e22e">t</span>.<span style="color:#a6e22e">Fatalf</span>(<span style="color:#e6db74">&#34;wrong wildcard values: want %v, got %v&#34;</span>, <span style="color:#a6e22e">want</span>, <span style="color:#a6e22e">ps</span>)
+	}
+})
+</code></pre></div><p>The above operation takes [<strong>RESTful GET method</strong>, <strong>url path</strong>, <strong>anonymous function handler</strong>] as the parameters of <code>router.Handler()</code>, <code>router.Handler( )</code> operation has been briefly analyzed above. The main nodes are divided into the <code>addRoute()</code> function. Let&rsquo;s briefly go over its logic.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#75715e">// put the current url and processing logic on the current node
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">n</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">node</span>) <span style="color:#a6e22e">addRoute</span>(<span style="color:#a6e22e">path</span> <span style="color:#66d9ef">string</span>, <span style="color:#a6e22e">handle</span> <span style="color:#a6e22e">Handle</span>) {
+	<span style="color:#a6e22e">fullPath</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">path</span>
+	<span style="color:#a6e22e">n</span>.<span style="color:#a6e22e">priority</span><span style="color:#f92672">++</span>
+	<span style="color:#75715e">// extract the number of current url parameters
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">numParams</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">countParams</span>(<span style="color:#a6e22e">path</span>)
+
+	<span style="color:#75715e">// if the current node already has a registered link
+</span><span style="color:#75715e"></span>	<span style="color:#66d9ef">if</span> len(<span style="color:#a6e22e">n</span>.<span style="color:#a6e22e">path</span>) &gt; <span style="color:#ae81ff">0</span> <span style="color:#f92672">||</span> len(<span style="color:#a6e22e">n</span>.<span style="color:#a6e22e">children</span>) &gt; <span style="color:#ae81ff">0</span> {
+	<span style="color:#a6e22e">walk</span>:
+		<span style="color:#66d9ef">for</span> {
+			<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">numParams</span> &gt; <span style="color:#a6e22e">n</span>.<span style="color:#a6e22e">maxParams</span> {
+				<span style="color:#a6e22e">n</span>.<span style="color:#a6e22e">maxParams</span> = <span style="color:#a6e22e">numParams</span>
+			}
+			
+			<span style="color:#75715e">// This also implies that the common prefix contains no &#39;:&#39; or &#39;*&#39;
+</span><span style="color:#75715e"></span>			<span style="color:#75715e">// since the existing key can&#39;t contain those chars.
+</span><span style="color:#75715e"></span>			<span style="color:#a6e22e">i</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">0</span>
+			<span style="color:#a6e22e">max</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">min</span>(len(<span style="color:#a6e22e">path</span>), len(<span style="color:#a6e22e">n</span>.<span style="color:#a6e22e">path</span>))
+			<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">i</span> &lt; <span style="color:#a6e22e">max</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#a6e22e">path</span>[<span style="color:#a6e22e">i</span>] <span style="color:#f92672">==</span> <span style="color:#a6e22e">n</span>.<span style="color:#a6e22e">path</span>[<span style="color:#a6e22e">i</span>] {
+				<span style="color:#a6e22e">i</span><span style="color:#f92672">++</span>
+			}
+
+			<span style="color:#75715e">/*
+</span><span style="color:#75715e">			    If the matching length of the incoming url is greater than the existing url of the current node, create a child node
+</span><span style="color:#75715e">			    Like a /user/ab/ with func1，
+</span><span style="color:#75715e">			    
+</span><span style="color:#75715e">			    then receive a /user/abc/ with func2, then need to create child nodes of /user/ab/ and c/
+</span><span style="color:#75715e">			    the tree will look like this：
+</span><span style="color:#75715e">        			    |-/user/ab
+</span><span style="color:#75715e">        			    |--------|-/ func1  
+</span><span style="color:#75715e">        			    |--------|-c/ func2
+</span><span style="color:#75715e">        			    
+</span><span style="color:#75715e">			    and now, a new map comming, /user/a/ with func3,
+</span><span style="color:#75715e">			    then the final tree will be adjusted to：
+</span><span style="color:#75715e">        		Priority 3 |-/user/a 
+</span><span style="color:#75715e">        		Priority 2 |--------|-b 
+</span><span style="color:#75715e">        		Priority 1 |----------|-/ func1
+</span><span style="color:#75715e">        		Priority 1 |----------|-c/ func2
+</span><span style="color:#75715e">        		Priority 1 |--------|-/ func3
+</span><span style="color:#75715e">			    
+</span><span style="color:#75715e">		    */</span>
+			<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">i</span> &lt; len(<span style="color:#a6e22e">n</span>.<span style="color:#a6e22e">path</span>) {
+				<span style="color:#a6e22e">child</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">node</span>{
+					<span style="color:#a6e22e">path</span>:      <span style="color:#a6e22e">n</span>.<span style="color:#a6e22e">path</span>[<span style="color:#a6e22e">i</span>:],
+					<span style="color:#a6e22e">wildChild</span>: <span style="color:#a6e22e">n</span>.<span style="color:#a6e22e">wildChild</span>,
+					<span style="color:#a6e22e">nType</span>:     <span style="color:#a6e22e">static</span>,
+					<span style="color:#a6e22e">indices</span>:   <span style="color:#a6e22e">n</span>.<span style="color:#a6e22e">indices</span>,
+					<span style="color:#a6e22e">children</span>:  <span style="color:#a6e22e">n</span>.<span style="color:#a6e22e">children</span>,
+					<span style="color:#a6e22e">handle</span>:    <span style="color:#a6e22e">n</span>.<span style="color:#a6e22e">handle</span>,
+					<span style="color:#a6e22e">priority</span>:  <span style="color:#a6e22e">n</span>.<span style="color:#a6e22e">priority</span> <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>,
+				}
+
+				<span style="color:#75715e">// traverse the child nodes and take the highest priority as the priority of the parent node
+</span><span style="color:#75715e"></span>				<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">range</span> <span style="color:#a6e22e">child</span>.<span style="color:#a6e22e">children</span> {
+					<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">child</span>.<span style="color:#a6e22e">children</span>[<span style="color:#a6e22e">i</span>].<span style="color:#a6e22e">maxParams</span> &gt; <span style="color:#a6e22e">child</span>.<span style="color:#a6e22e">maxParams</span> {
+						<span style="color:#a6e22e">child</span>.<span style="color:#a6e22e">maxParams</span> = <span style="color:#a6e22e">child</span>.<span style="color:#a6e22e">children</span>[<span style="color:#a6e22e">i</span>].<span style="color:#a6e22e">maxParams</span>
+					}
+				}
+
+				<span style="color:#a6e22e">n</span>.<span style="color:#a6e22e">children</span> = []<span style="color:#f92672">*</span><span style="color:#a6e22e">node</span>{<span style="color:#f92672">&amp;</span><span style="color:#a6e22e">child</span>}
+				<span style="color:#75715e">// []byte for proper unicode char conversion, see #65
+</span><span style="color:#75715e"></span>				<span style="color:#a6e22e">n</span>.<span style="color:#a6e22e">indices</span> = string([]<span style="color:#66d9ef">byte</span>{<span style="color:#a6e22e">n</span>.<span style="color:#a6e22e">path</span>[<span style="color:#a6e22e">i</span>]})
+				<span style="color:#a6e22e">n</span>.<span style="color:#a6e22e">path</span> = <span style="color:#a6e22e">path</span>[:<span style="color:#a6e22e">i</span>]
+				<span style="color:#a6e22e">n</span>.<span style="color:#a6e22e">handle</span> = <span style="color:#66d9ef">nil</span>
+				<span style="color:#a6e22e">n</span>.<span style="color:#a6e22e">wildChild</span> = <span style="color:#66d9ef">false</span>
+			}
+
+			<span style="color:#75715e">// Make new node a child of this node
+</span><span style="color:#75715e"></span>			<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">i</span> &lt; len(<span style="color:#a6e22e">path</span>) {
+				<span style="color:#a6e22e">path</span> = <span style="color:#a6e22e">path</span>[<span style="color:#a6e22e">i</span>:]
+
+				<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">n</span>.<span style="color:#a6e22e">wildChild</span> {
+					<span style="color:#a6e22e">n</span> = <span style="color:#a6e22e">n</span>.<span style="color:#a6e22e">children</span>[<span style="color:#ae81ff">0</span>]
+					<span style="color:#a6e22e">n</span>.<span style="color:#a6e22e">priority</span><span style="color:#f92672">++</span>
+
+					<span style="color:#75715e">// Update maxParams of the child node
+</span><span style="color:#75715e"></span>					<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">numParams</span> &gt; <span style="color:#a6e22e">n</span>.<span style="color:#a6e22e">maxParams</span> {
+						<span style="color:#a6e22e">n</span>.<span style="color:#a6e22e">maxParams</span> = <span style="color:#a6e22e">numParams</span>
+					}
+					<span style="color:#a6e22e">numParams</span><span style="color:#f92672">--</span>
+
+					<span style="color:#75715e">// Check if the wildcard matches
+</span><span style="color:#75715e"></span>					<span style="color:#66d9ef">if</span> len(<span style="color:#a6e22e">path</span>) <span style="color:#f92672">&gt;=</span> len(<span style="color:#a6e22e">n</span>.<span style="color:#a6e22e">path</span>) <span style="color:#f92672">&amp;&amp;</span> <span style="color:#a6e22e">n</span>.<span style="color:#a6e22e">path</span> <span style="color:#f92672">==</span> <span style="color:#a6e22e">path</span>[:len(<span style="color:#a6e22e">n</span>.<span style="color:#a6e22e">path</span>)] <span style="color:#f92672">&amp;&amp;</span>
+						<span style="color:#75715e">// Adding a child to a catchAll is not possible
+</span><span style="color:#75715e"></span>						<span style="color:#a6e22e">n</span>.<span style="color:#a6e22e">nType</span> <span style="color:#f92672">!=</span> <span style="color:#a6e22e">catchAll</span> <span style="color:#f92672">&amp;&amp;</span>
+						<span style="color:#75715e">// Check for longer wildcard, e.g. :name and :names
+</span><span style="color:#75715e"></span>						(len(<span style="color:#a6e22e">n</span>.<span style="color:#a6e22e">path</span>) <span style="color:#f92672">&gt;=</span> len(<span style="color:#a6e22e">path</span>) <span style="color:#f92672">||</span> <span style="color:#a6e22e">path</span>[len(<span style="color:#a6e22e">n</span>.<span style="color:#a6e22e">path</span>)] <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;/&#39;</span>) {
+						<span style="color:#66d9ef">continue</span> <span style="color:#a6e22e">walk</span>
+					} <span style="color:#66d9ef">else</span> {
+						<span style="color:#75715e">// Wildcard conflict
+</span><span style="color:#75715e"></span>						<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">pathSeg</span> <span style="color:#66d9ef">string</span>
+						<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">n</span>.<span style="color:#a6e22e">nType</span> <span style="color:#f92672">==</span> <span style="color:#a6e22e">catchAll</span> {
+							<span style="color:#a6e22e">pathSeg</span> = <span style="color:#a6e22e">path</span>
+						} <span style="color:#66d9ef">else</span> {
+							<span style="color:#a6e22e">pathSeg</span> = <span style="color:#a6e22e">strings</span>.<span style="color:#a6e22e">SplitN</span>(<span style="color:#a6e22e">path</span>, <span style="color:#e6db74">&#34;/&#34;</span>, <span style="color:#ae81ff">2</span>)[<span style="color:#ae81ff">0</span>]
+						}
+						<span style="color:#a6e22e">prefix</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">fullPath</span>[:<span style="color:#a6e22e">strings</span>.<span style="color:#a6e22e">Index</span>(<span style="color:#a6e22e">fullPath</span>, <span style="color:#a6e22e">pathSeg</span>)] <span style="color:#f92672">+</span> <span style="color:#a6e22e">n</span>.<span style="color:#a6e22e">path</span>
+						panic(<span style="color:#e6db74">&#34;&#39;&#34;</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">pathSeg</span> <span style="color:#f92672">+</span>
+							<span style="color:#e6db74">&#34;&#39; in new path &#39;&#34;</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">fullPath</span> <span style="color:#f92672">+</span>
+							<span style="color:#e6db74">&#34;&#39; conflicts with existing wildcard &#39;&#34;</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">n</span>.<span style="color:#a6e22e">path</span> <span style="color:#f92672">+</span>
+							<span style="color:#e6db74">&#34;&#39; in existing prefix &#39;&#34;</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">prefix</span> <span style="color:#f92672">+</span>
+							<span style="color:#e6db74">&#34;&#39;&#34;</span>)
+					}
+				}
+
+				<span style="color:#a6e22e">c</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">path</span>[<span style="color:#ae81ff">0</span>]
+
+				<span style="color:#75715e">// slash after param
+</span><span style="color:#75715e"></span>				<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">n</span>.<span style="color:#a6e22e">nType</span> <span style="color:#f92672">==</span> <span style="color:#a6e22e">param</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#a6e22e">c</span> <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;/&#39;</span> <span style="color:#f92672">&amp;&amp;</span> len(<span style="color:#a6e22e">n</span>.<span style="color:#a6e22e">children</span>) <span style="color:#f92672">==</span> <span style="color:#ae81ff">1</span> {
+					<span style="color:#a6e22e">n</span> = <span style="color:#a6e22e">n</span>.<span style="color:#a6e22e">children</span>[<span style="color:#ae81ff">0</span>]
+					<span style="color:#a6e22e">n</span>.<span style="color:#a6e22e">priority</span><span style="color:#f92672">++</span>
+					<span style="color:#66d9ef">continue</span> <span style="color:#a6e22e">walk</span>
+				}
+
+				<span style="color:#75715e">// Check if a child with the next path byte exists
+</span><span style="color:#75715e"></span>				<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">0</span>; <span style="color:#a6e22e">i</span> &lt; len(<span style="color:#a6e22e">n</span>.<span style="color:#a6e22e">indices</span>); <span style="color:#a6e22e">i</span><span style="color:#f92672">++</span> {
+					<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">c</span> <span style="color:#f92672">==</span> <span style="color:#a6e22e">n</span>.<span style="color:#a6e22e">indices</span>[<span style="color:#a6e22e">i</span>] {
+					    <span style="color:#75715e">// increase the priority of the current node and make a position adjustment
+</span><span style="color:#75715e"></span>						<span style="color:#a6e22e">i</span> = <span style="color:#a6e22e">n</span>.<span style="color:#a6e22e">incrementChildPrio</span>(<span style="color:#a6e22e">i</span>)
+						<span style="color:#a6e22e">n</span> = <span style="color:#a6e22e">n</span>.<span style="color:#a6e22e">children</span>[<span style="color:#a6e22e">i</span>]
+						<span style="color:#66d9ef">continue</span> <span style="color:#a6e22e">walk</span>
+					}
+				}
+
+				<span style="color:#75715e">// Otherwise insert it
+</span><span style="color:#75715e"></span>				<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">c</span> <span style="color:#f92672">!=</span> <span style="color:#e6db74">&#39;:&#39;</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#a6e22e">c</span> <span style="color:#f92672">!=</span> <span style="color:#e6db74">&#39;*&#39;</span> {
+					<span style="color:#75715e">// []byte for proper unicode char conversion, see #65
+</span><span style="color:#75715e"></span>					<span style="color:#a6e22e">n</span>.<span style="color:#a6e22e">indices</span> <span style="color:#f92672">+=</span> string([]<span style="color:#66d9ef">byte</span>{<span style="color:#a6e22e">c</span>})
+					<span style="color:#a6e22e">child</span> <span style="color:#f92672">:=</span> <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">node</span>{
+						<span style="color:#a6e22e">maxParams</span>: <span style="color:#a6e22e">numParams</span>,
+					}
+					<span style="color:#a6e22e">n</span>.<span style="color:#a6e22e">children</span> = append(<span style="color:#a6e22e">n</span>.<span style="color:#a6e22e">children</span>, <span style="color:#a6e22e">child</span>)
+					<span style="color:#a6e22e">n</span>.<span style="color:#a6e22e">incrementChildPrio</span>(len(<span style="color:#a6e22e">n</span>.<span style="color:#a6e22e">indices</span>) <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>)
+					<span style="color:#a6e22e">n</span> = <span style="color:#a6e22e">child</span>
+				}
+				<span style="color:#a6e22e">n</span>.<span style="color:#a6e22e">insertChild</span>(<span style="color:#a6e22e">numParams</span>, <span style="color:#a6e22e">path</span>, <span style="color:#a6e22e">fullPath</span>, <span style="color:#a6e22e">handle</span>)
+				<span style="color:#66d9ef">return</span>
+
+			} <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">==</span> len(<span style="color:#a6e22e">path</span>) { <span style="color:#75715e">// Make node a (in-path) leaf
+</span><span style="color:#75715e"></span>				<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">n</span>.<span style="color:#a6e22e">handle</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+					panic(<span style="color:#e6db74">&#34;a handle is already registered for path &#39;&#34;</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">fullPath</span> <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;&#39;&#34;</span>)
+				}
+				<span style="color:#a6e22e">n</span>.<span style="color:#a6e22e">handle</span> = <span style="color:#a6e22e">handle</span>
+			}
+			<span style="color:#66d9ef">return</span>
+		}
+	} <span style="color:#66d9ef">else</span> { <span style="color:#75715e">// Empty tree
+</span><span style="color:#75715e"></span>		<span style="color:#a6e22e">n</span>.<span style="color:#a6e22e">insertChild</span>(<span style="color:#a6e22e">numParams</span>, <span style="color:#a6e22e">path</span>, <span style="color:#a6e22e">fullPath</span>, <span style="color:#a6e22e">handle</span>)
+		<span style="color:#a6e22e">n</span>.<span style="color:#a6e22e">nType</span> = <span style="color:#a6e22e">root</span>
+	}
+}
+</code></pre></div><p>The general idea above is to register each handle func() on a url prefix tree, and branch according to the same matching degree of url prefixes to improve routing efficiency.</p>
+<p><strong>Parameter Lookup</strong><br>
+Next, let&rsquo;s see how <strong>httprouter</strong> encapsulates the parameter <strong>param</strong> in the <strong>context</strong>:<br>
+It is not difficult to guess that when the branch is divided, the pre-received parameters are extracted by judging the keyword &ldquo;:&rdquo;. These parameters are stored in string (dictionary) key-value pairs, and the bottom layer is stored in a <code>Param</code> structure:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Param</span> <span style="color:#66d9ef">struct</span> {
+	<span style="color:#a6e22e">Key</span>   <span style="color:#66d9ef">string</span>
+	<span style="color:#a6e22e">Value</span> <span style="color:#66d9ef">string</span>
+}
+</code></pre></div><p>The concept of context is also very common in other languages, such as <code>application-context</code> in the <strong>Java Spring</strong> framework, which is used to manage some global properties throughout the program life cycle.<br>
+The context of <strong>Go</strong> also has multiple implementations in different frameworks. Here we first understand that the top-level context of the Go program is <code>background()</code>, which is the source of all subcontexts, similar to the Linux system&rsquo;s init() process.</p>
+<p>Let&rsquo;s take an example first, show the usage of <strong>context</strong> parameters in <strong>Go</strong>:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">TestContext</span>(<span style="color:#a6e22e">t</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">testing</span>.<span style="color:#a6e22e">T</span>) {	
+	<span style="color:#a6e22e">ctx</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">Background</span>()	
+	<span style="color:#a6e22e">valueCtx</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">WithValue</span>(<span style="color:#a6e22e">ctx</span>, <span style="color:#e6db74">&#34;hello&#34;</span>, <span style="color:#e6db74">&#34;pixel&#34;</span>)
+	<span style="color:#a6e22e">value</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">valueCtx</span>.<span style="color:#a6e22e">Value</span>(<span style="color:#e6db74">&#34;hello&#34;</span>)
+	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">value</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+		<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;Params type: %v, value: %v.\n&#34;</span>, <span style="color:#a6e22e">reflect</span>.<span style="color:#a6e22e">TypeOf</span>(<span style="color:#a6e22e">value</span>), <span style="color:#a6e22e">value</span>)
+	}
+}
+</code></pre></div><p><strong>Output:</strong></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">Params type: string, value: pixel.
+</code></pre></div><p>In <strong>httprouter</strong>, the context encapsulated in <code>http.request</code> is actually a <strong>valueCtx</strong>, the type is the same as <strong>valueCtx</strong> in our chestnut above, the framework provides A method to get the <strong>Params</strong> key-value pair from the context.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">ParamsFromContext</span>(<span style="color:#a6e22e">ctx</span> <span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">Context</span>) <span style="color:#a6e22e">Params</span> {
+	<span style="color:#a6e22e">p</span>, <span style="color:#a6e22e">_</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">ctx</span>.<span style="color:#a6e22e">Value</span>(<span style="color:#a6e22e">ParamsKey</span>).(<span style="color:#a6e22e">Params</span>)
+	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">p</span>
+}
+</code></pre></div><p>Using the returned Params, we can get our target value according to the key</p>
+<pre><code>params.ByName(key)
+</code></pre><p>After tracing, <strong>Params</strong> comes from a function called <code>getValue(path string) (handle Handle, p Params, tsr bool)</code>, remember the <code>ServeHTTP()</code> implemented by the *Router route listed above?</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#75715e">// part of the ServeHTTP() function
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">if</span> <span style="color:#a6e22e">root</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">trees</span>[<span style="color:#a6e22e">req</span>.<span style="color:#a6e22e">Method</span>]; <span style="color:#a6e22e">root</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {    
+	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">handle</span>, <span style="color:#a6e22e">ps</span>, <span style="color:#a6e22e">tsr</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">root</span>.<span style="color:#a6e22e">getValue</span>(<span style="color:#a6e22e">path</span>); <span style="color:#a6e22e">handle</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+	    <span style="color:#75715e">// matching execution, the handle here is the anonymous function above
+</span><span style="color:#75715e"></span>		<span style="color:#a6e22e">handle</span>(<span style="color:#a6e22e">w</span>, <span style="color:#a6e22e">req</span>, <span style="color:#a6e22e">ps</span>)
+		<span style="color:#66d9ef">return</span>
+	} <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">req</span>.<span style="color:#a6e22e">Method</span> <span style="color:#f92672">!=</span> <span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">MethodConnect</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#a6e22e">path</span> <span style="color:#f92672">!=</span> <span style="color:#e6db74">&#34;/&#34;</span> {
+		<span style="color:#75715e">// ...
+</span><span style="color:#75715e"></span>	}
+}
+</code></pre></div><p><code>ServeHTTP()</code> There is a <code>getValue</code> function, and its return value has two important members: the processing logic of the current route and the url parameter list, so when the route is registered, we need to put params is passed in as input parameters.</p>
+<p>Like this:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#a6e22e">router</span>.<span style="color:#a6e22e">Handle</span>(<span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">MethodGet</span>, <span style="color:#e6db74">&#34;/user/query/:name&#34;</span>, 
+<span style="color:#75715e">// Anonymous function, the ps parameter here is extracted for you when ServeHttp()
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span>(<span style="color:#a6e22e">w</span> <span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">ResponseWriter</span>, <span style="color:#a6e22e">r</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">Request</span>, <span style="color:#a6e22e">ps</span> <span style="color:#a6e22e">httprouter</span>.<span style="color:#a6e22e">Params</span>) {
+	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">params</span>.<span style="color:#a6e22e">ByName</span>(<span style="color:#e6db74">&#34;name&#34;</span>))
+})
+</code></pre></div><p><code>getValue()</code>When judging the type of the current node n, if it is of the &lsquo;param&rsquo; type (it has been classified according to the url when addingRoute), the parameter Params to be returned is filled.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#75715e">//-----------go
+</span><span style="color:#75715e">//...github.com/julienschmidt/httprouter@v1.3.0/tree.go:367
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">switch</span> <span style="color:#a6e22e">n</span>.<span style="color:#a6e22e">nType</span> {
+<span style="color:#66d9ef">case</span> <span style="color:#a6e22e">param</span>:
+	<span style="color:#75715e">// find param end (either &#39;/&#39; or path end)
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">end</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">0</span>
+	<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">end</span> &lt; len(<span style="color:#a6e22e">path</span>) <span style="color:#f92672">&amp;&amp;</span> <span style="color:#a6e22e">path</span>[<span style="color:#a6e22e">end</span>] <span style="color:#f92672">!=</span> <span style="color:#e6db74">&#39;/&#39;</span> {
+		<span style="color:#a6e22e">end</span><span style="color:#f92672">++</span>
+	}
+	
+    <span style="color:#75715e">// node parameter encountered
+</span><span style="color:#75715e"></span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">p</span> <span style="color:#f92672">==</span> <span style="color:#66d9ef">nil</span> {
+		<span style="color:#75715e">// lazy allocation
+</span><span style="color:#75715e"></span>		<span style="color:#a6e22e">p</span> = make(<span style="color:#a6e22e">Params</span>, <span style="color:#ae81ff">0</span>, <span style="color:#a6e22e">n</span>.<span style="color:#a6e22e">maxParams</span>)
+	}
+	<span style="color:#a6e22e">i</span> <span style="color:#f92672">:=</span> len(<span style="color:#a6e22e">p</span>)
+	<span style="color:#a6e22e">p</span> = <span style="color:#a6e22e">p</span>[:<span style="color:#a6e22e">i</span><span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>] <span style="color:#75715e">// expand slice within preallocated capacity
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">p</span>[<span style="color:#a6e22e">i</span>].<span style="color:#a6e22e">Key</span> = <span style="color:#a6e22e">n</span>.<span style="color:#a6e22e">path</span>[<span style="color:#ae81ff">1</span>:]
+	<span style="color:#a6e22e">p</span>[<span style="color:#a6e22e">i</span>].<span style="color:#a6e22e">Value</span> = <span style="color:#a6e22e">path</span>[:<span style="color:#a6e22e">end</span>]
+<span style="color:#75715e">//...
+</span></code></pre></div><p><strong>Process Step</strong><br>
+So far，Let&rsquo;s summarize the routing process of <code>httprouter</code> again:</p>
+<ul>
+<li>Step 1 Initialize the creation of the router router</li>
+<li>Step 2 Register a function whose signature is: <code>type Handle func(http.ResponseWriter, *http.Request, Params)</code> to the router</li>
+<li>Step 3 Call the HTTP common interface <code>ServeHTTP()</code> to extract the expected parameters of the current url and use it for the business layer</li>
+</ul>
+<hr>
+<p>The above is my understanding of httprouter in the past two days. By the way, I have a further understanding of <strong>Go</strong>&rsquo;s Http. I will try to enter gin later to see what <code>Gin</code> has done based on httprouter and familiar with common usage.</p>
+<h3 id="reference-link">Reference Link</h3>
+<p><strong>julienschmidt/httprouter</strong><br>
+<a href="https://github.com/julienschmidt/httprouter">https://github.com/julienschmidt/httprouter</a></p>
+              
+            </div>
+          </div>
+          <div id="post-footer" class="post-footer main-content-wrap">
+            
+              
+                
+                
+                  <div class="post-footer-tags">
+                    <span class="text-color-light text-small">标签</span><br/>
+                    
+  <a class="tag tag--primary tag--small" href="/zh/tags/gin/">gin</a>
+
+                  </div>
+                
+              
+            
+            <div class="post-actions-wrap">
+  
+      <nav >
+        <ul class="post-actions post-action-nav">
+          
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="/zh/2021/10/%E8%81%8A%E4%B8%80%E8%81%8Ago%E7%BD%91%E7%BB%9C%E6%A1%86%E6%9E%B6gin%E4%B9%8B%E5%A6%82%E4%BD%95%E5%AE%9A%E5%88%B6%E9%80%9A%E7%94%A8%E6%8B%A6%E6%88%AA%E5%99%A8/" data-tooltip="聊一聊Go网络框架Gin之如何定制通用拦截器">
+              
+                  <i class="fa fa-angle-left"></i>
+                  <span class="hide-xs hide-sm text-small icon-ml">下一篇</span>
+                </a>
+            </li>
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="/zh/2021/06/%E8%81%8A%E4%B8%80%E8%81%8Ago%E5%AE%9E%E7%8E%B0%E7%9A%84%E5%A4%9A%E5%8D%8F%E7%A8%8B%E4%B8%8B%E8%BD%BD%E5%99%A8-gopeed-core/" data-tooltip="聊一聊Go实现的多协程下载器: gopeed-core">
+              
+                  <span class="hide-xs hide-sm text-small icon-mr">上一篇</span>
+                  <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+          
+        </ul>
+      </nav>
+    <ul class="post-actions post-action-share" >
+      
+      
+      <li class="post-action">
+        
+          <a class="post-action-btn btn btn--default" href="#">
+        
+          <i class="fa fa-list"></i>
+        </a>
+      </li>
+    </ul>
+  
+</div>
+
+            
+              
+            
+          </div>
+        </article>
+        <footer id="footer" class="main-content-wrap">
+  <span class="copyrights">
+    &copy; 2024 <a href="https://github.com/pixeldin">pixeldin</a>. All Rights Reserved
+  </span>
+</footer>
+
+      </div>
+      <div id="bottom-bar" class="post-bottom-bar" data-behavior="4">
+        <div class="post-actions-wrap">
+  
+      <nav >
+        <ul class="post-actions post-action-nav">
+          
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="/zh/2021/10/%E8%81%8A%E4%B8%80%E8%81%8Ago%E7%BD%91%E7%BB%9C%E6%A1%86%E6%9E%B6gin%E4%B9%8B%E5%A6%82%E4%BD%95%E5%AE%9A%E5%88%B6%E9%80%9A%E7%94%A8%E6%8B%A6%E6%88%AA%E5%99%A8/" data-tooltip="聊一聊Go网络框架Gin之如何定制通用拦截器">
+              
+                  <i class="fa fa-angle-left"></i>
+                  <span class="hide-xs hide-sm text-small icon-ml">下一篇</span>
+                </a>
+            </li>
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="/zh/2021/06/%E8%81%8A%E4%B8%80%E8%81%8Ago%E5%AE%9E%E7%8E%B0%E7%9A%84%E5%A4%9A%E5%8D%8F%E7%A8%8B%E4%B8%8B%E8%BD%BD%E5%99%A8-gopeed-core/" data-tooltip="聊一聊Go实现的多协程下载器: gopeed-core">
+              
+                  <span class="hide-xs hide-sm text-small icon-mr">上一篇</span>
+                  <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+          
+        </ul>
+      </nav>
+    <ul class="post-actions post-action-share" >
+      
+      
+      <li class="post-action">
+        
+          <a class="post-action-btn btn btn--default" href="#">
+        
+          <i class="fa fa-list"></i>
+        </a>
+      </li>
+    </ul>
+  
+</div>
+
+      </div>
+      <div id="share-options-bar" class="share-options-bar" data-behavior="4">
+  <i id="btn-close-shareoptions" class="fa fa-close"></i>
+  <ul class="share-options">
+    
+  </ul>
+</div>
+<div id="share-options-mask" class="share-options-mask"></div>
+    </div>
+    
+    <div id="about">
+  <div id="about-card">
+    <div id="about-btn-close">
+      <i class="fa fa-remove"></i>
+    </div>
+    
+      <img id="about-card-picture" src="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/pig.jpg" alt="作者的图片" />
+    
+    <h4 id="about-card-name">pixelpig</h4>
+    
+      <div id="about-card-bio">Keep it simple, so as this bio :)</div>
+    
+    
+    
+      <div id="about-card-location">
+        <i class="fa fa-map-marker"></i>
+        <br/>
+        GuangDong - CHINA
+      </div>
+    
+  </div>
+</div>
+
+    
+
+    
+  
+    <div id="cover" style="background-image:url('https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/cover.jpg');"></div>
+  
+
+
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js" integrity="sha256-/BfiIkHlHoVihZdc6TFuj7MmJ0TWcWsMXkeDFwhi0zw=" crossorigin="anonymous"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.7/js/jquery.fancybox.min.js" integrity="sha256-GEAnjcTqVP+vBp3SSc8bEDQqvWAZMiHyUSIorrWwH50=" crossorigin="anonymous"></script>
+
+
+<script src="/js/script-pcw6v3xilnxydl1vddzazdverrnn9ctynvnxgwho987mfyqkuylcb1nlt.min.js"></script>
+
+
+<script lang="javascript">
+window.onload = updateMinWidth;
+window.onresize = updateMinWidth;
+document.getElementById("sidebar").addEventListener("transitionend", updateMinWidth);
+function updateMinWidth() {
+  var sidebar = document.getElementById("sidebar");
+  var main = document.getElementById("main");
+  main.style.minWidth = "";
+  var w1 = getComputedStyle(main).getPropertyValue("min-width");
+  var w2 = getComputedStyle(sidebar).getPropertyValue("width");
+  var w3 = getComputedStyle(sidebar).getPropertyValue("left");
+  main.style.minWidth = `calc(${w1} - ${w2} - ${w3})`;
+}
+</script>
+
+<script>
+$(document).ready(function() {
+  hljs.configure({ classPrefix: '', useBR: false });
+  $('pre.code-highlight > code, pre > code').each(function(i, block) {
+    if (!$(this).hasClass('codeblock')) {
+      $(this).addClass('codeblock');
+    }
+    hljs.highlightBlock(block);
+  });
+});
+</script>
+
+
+  
+    
+  
+
+
+
+
+    
+  </body>
+</html>
+
