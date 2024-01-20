@@ -2769,7 +2769,11 @@ REF: https: //3mile.github.io/archives/2019/0826154529/
 */
 pre > code {
   background: #f7f8f8;
-  color: #aaa; }
+  color: #aaa;
+  overflow-x: auto; }
+
+pre > code.codeblock {
+  overflow-x: auto; }
 
 code {
   background-color: #f7f8f8; }
