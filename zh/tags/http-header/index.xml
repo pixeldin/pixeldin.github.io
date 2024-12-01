@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>HTTP header on pixelpig.space</title>
+    <title>HTTP header on pixelpig.tech</title>
     <link>/zh/tags/http-header/</link>
-    <description>Recent content in HTTP header on pixelpig.space</description>
+    <description>Recent content in HTTP header on pixelpig.tech</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <lastBuildDate>Tue, 29 Jun 2021 00:00:00 +0000</lastBuildDate><atom:link href="/zh/tags/http-header/index.xml" rel="self" type="application/rss+xml" />
