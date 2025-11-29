@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>gin on pixelpig.tech</title>
+    <title>gin on pixelpig.space</title>
     <link>/en/tags/gin/</link>
-    <description>Recent content in gin on pixelpig.tech</description>
+    <description>Recent content in gin on pixelpig.space</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Fri, 15 Oct 2021 00:00:00 +0000</lastBuildDate><atom:link href="/en/tags/gin/index.xml" rel="self" type="application/rss+xml" />
@@ -23,6 +23,15 @@
       
       <guid>/en/2021/08/before-talking-about-the-gin-web-framework-lets-take-a-look-at-httprouter/</guid>
       <description>&lt;p&gt;The etymology of Gin a strong alcohol, comes from the Netherlands.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>聊一聊Go的Context上下文</title>
+      <link>/en/2020/06/%E8%81%8A%E4%B8%80%E8%81%8Ago%E7%9A%84context%E4%B8%8A%E4%B8%8B%E6%96%87/</link>
+      <pubDate>Fri, 19 Jun 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/en/2020/06/%E8%81%8A%E4%B8%80%E8%81%8Ago%E7%9A%84context%E4%B8%8A%E4%B8%8B%E6%96%87/</guid>
+      <description>&lt;p&gt;前面在“聊一聊http框架&lt;strong&gt;httprouter&lt;/strong&gt;”的时候，提到了上下文的概念&lt;/p&gt;</description>
     </item>
     
   </channel>

@@ -220,6 +220,16 @@
   <url>
     <loc>/zh/categories/%E5%90%8E%E7%AB%AF/</loc>
     <lastmod>2022-06-23T00:00:00+00:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="/en/categories/%E5%90%8E%E7%AB%AF/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh"
+                href="/zh/categories/%E5%90%8E%E7%AB%AF/"
+                />
   </url>
   
   <url>
@@ -330,6 +340,16 @@
   <url>
     <loc>/zh/categories/%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/</loc>
     <lastmod>2022-02-04T00:00:00+00:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="/en/categories/%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh"
+                href="/zh/categories/%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/"
+                />
   </url>
   
   <url>
@@ -395,21 +415,61 @@
   <url>
     <loc>/zh/tags/errgroup/</loc>
     <lastmod>2021-06-29T00:00:00+00:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="/en/tags/errgroup/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh"
+                href="/zh/tags/errgroup/"
+                />
   </url>
   
   <url>
     <loc>/zh/tags/http-header/</loc>
     <lastmod>2021-06-29T00:00:00+00:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="/en/tags/http-header/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh"
+                href="/zh/tags/http-header/"
+                />
   </url>
   
   <url>
     <loc>/zh/categories/%E5%B9%B6%E5%8F%91/</loc>
     <lastmod>2021-06-29T00:00:00+00:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="/en/categories/%E5%B9%B6%E5%8F%91/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh"
+                href="/zh/categories/%E5%B9%B6%E5%8F%91/"
+                />
   </url>
   
   <url>
     <loc>/zh/tags/%E6%96%87%E4%BB%B6%E8%AF%BB%E5%86%99/</loc>
     <lastmod>2021-06-29T00:00:00+00:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="/en/tags/%E6%96%87%E4%BB%B6%E8%AF%BB%E5%86%99/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh"
+                href="/zh/tags/%E6%96%87%E4%BB%B6%E8%AF%BB%E5%86%99/"
+                />
   </url>
   
   <url>
@@ -435,6 +495,16 @@
   <url>
     <loc>/zh/tags/concurrent/</loc>
     <lastmod>2021-01-18T03:40:05+08:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="/en/tags/concurrent/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh"
+                href="/zh/tags/concurrent/"
+                />
   </url>
   
   <url>
@@ -445,16 +515,46 @@
   <url>
     <loc>/zh/tags/%E7%94%9F%E4%BA%A7%E8%80%85%E6%B6%88%E8%B4%B9%E8%80%85/</loc>
     <lastmod>2021-01-18T03:40:05+08:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="/en/tags/%E7%94%9F%E4%BA%A7%E8%80%85%E6%B6%88%E8%B4%B9%E8%80%85/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh"
+                href="/zh/tags/%E7%94%9F%E4%BA%A7%E8%80%85%E6%B6%88%E8%B4%B9%E8%80%85/"
+                />
   </url>
   
   <url>
     <loc>/zh/tags/%E7%AE%A1%E9%81%93%E9%80%9A%E4%BF%A1/</loc>
     <lastmod>2021-01-18T03:40:05+08:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="/en/tags/%E7%AE%A1%E9%81%93%E9%80%9A%E4%BF%A1/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh"
+                href="/zh/tags/%E7%AE%A1%E9%81%93%E9%80%9A%E4%BF%A1/"
+                />
   </url>
   
   <url>
     <loc>/zh/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/</loc>
     <lastmod>2021-01-18T03:40:05+08:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="/en/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh"
+                href="/zh/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/"
+                />
   </url>
   
   <url>
@@ -465,6 +565,16 @@
   <url>
     <loc>/zh/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/</loc>
     <lastmod>2020-10-18T00:00:00+00:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="/en/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh"
+                href="/zh/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/"
+                />
   </url>
   
   <url>
@@ -505,11 +615,31 @@
   <url>
     <loc>/zh/tags/%E5%A0%86%E6%A0%88/</loc>
     <lastmod>2020-04-16T00:00:00+00:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="/en/tags/%E5%A0%86%E6%A0%88/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh"
+                href="/zh/tags/%E5%A0%86%E6%A0%88/"
+                />
   </url>
   
   <url>
     <loc>/zh/tags/%E6%8C%87%E9%92%88/</loc>
     <lastmod>2020-04-16T00:00:00+00:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="/en/tags/%E6%8C%87%E9%92%88/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh"
+                href="/zh/tags/%E6%8C%87%E9%92%88/"
+                />
   </url>
   
   <url>
@@ -520,6 +650,16 @@
   <url>
     <loc>/zh/tags/errors/</loc>
     <lastmod>2020-03-15T00:00:00+00:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="/en/tags/errors/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh"
+                href="/zh/tags/errors/"
+                />
   </url>
   
   <url>
@@ -530,16 +670,46 @@
   <url>
     <loc>/zh/tags/cmd/</loc>
     <lastmod>2020-02-20T00:00:00+00:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="/en/tags/cmd/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh"
+                href="/zh/tags/cmd/"
+                />
   </url>
   
   <url>
     <loc>/zh/tags/flag/</loc>
     <lastmod>2020-02-20T00:00:00+00:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="/en/tags/flag/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh"
+                href="/zh/tags/flag/"
+                />
   </url>
   
   <url>
     <loc>/zh/categories/%E5%91%BD%E4%BB%A4%E8%A1%8C%E7%BC%96%E7%A8%8B/</loc>
     <lastmod>2020-02-20T00:00:00+00:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="/en/categories/%E5%91%BD%E4%BB%A4%E8%A1%8C%E7%BC%96%E7%A8%8B/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh"
+                href="/zh/categories/%E5%91%BD%E4%BB%A4%E8%A1%8C%E7%BC%96%E7%A8%8B/"
+                />
   </url>
   
   <url>
@@ -550,11 +720,31 @@
   <url>
     <loc>/zh/categories/java/</loc>
     <lastmod>2019-08-11T00:00:00+00:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="/en/categories/java/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh"
+                href="/zh/categories/java/"
+                />
   </url>
   
   <url>
     <loc>/zh/tags/%E5%90%8E%E7%AB%AF/</loc>
     <lastmod>2019-08-11T00:00:00+00:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="/en/tags/%E5%90%8E%E7%AB%AF/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh"
+                href="/zh/tags/%E5%90%8E%E7%AB%AF/"
+                />
   </url>
   
   <url>
@@ -565,6 +755,16 @@
   <url>
     <loc>/zh/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/</loc>
     <lastmod>2019-08-11T00:00:00+00:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="/en/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh"
+                href="/zh/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"
+                />
   </url>
   
   <url>
@@ -575,6 +775,16 @@
   <url>
     <loc>/zh/tags/%E7%BA%BF%E7%A8%8B/</loc>
     <lastmod>2019-07-15T00:00:00+00:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="/en/tags/%E7%BA%BF%E7%A8%8B/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh"
+                href="/zh/tags/%E7%BA%BF%E7%A8%8B/"
+                />
   </url>
   
   <url>
@@ -585,11 +795,31 @@
   <url>
     <loc>/zh/categories/%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F/</loc>
     <lastmod>2019-03-15T00:00:00+00:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="/en/categories/%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh"
+                href="/zh/categories/%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F/"
+                />
   </url>
   
   <url>
     <loc>/zh/categories/%E5%8F%8D%E5%B0%84/</loc>
     <lastmod>2019-03-15T00:00:00+00:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="/en/categories/%E5%8F%8D%E5%B0%84/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh"
+                href="/zh/categories/%E5%8F%8D%E5%B0%84/"
+                />
   </url>
   
   <url>
