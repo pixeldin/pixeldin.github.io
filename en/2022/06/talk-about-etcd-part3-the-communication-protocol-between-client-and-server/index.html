@@ -17,8 +17,8 @@ Today, let’s talk about the communication way of etcd inside the server and cl
 <meta property="og:type" content="article">
 <meta property="og:title" content="Talk about etcd (Part3): the Communication Protocol between Client and Server">
 <meta name="twitter:title" content="Talk about etcd (Part3): the Communication Protocol between Client and Server">
-<meta property="og:url" content="https://pixeldin.github.io/en/2022/06/talk-about-etcd-part3-the-communication-protocol-between-client-and-server/">
-<meta property="twitter:url" content="https://pixeldin.github.io/en/2022/06/talk-about-etcd-part3-the-communication-protocol-between-client-and-server/">
+<meta property="og:url" content="https://pixelpig.space/en/2022/06/talk-about-etcd-part3-the-communication-protocol-between-client-and-server/">
+<meta property="twitter:url" content="https://pixelpig.space/en/2022/06/talk-about-etcd-part3-the-communication-protocol-between-client-and-server/">
 <meta property="og:site_name" content="pixelpig.space">
 <meta property="og:description" content="As mentioned earlier, etcd implements each module through layers. This time we will enter the network part.
 Today, let’s talk about the communication way of etcd inside the server and client role.">
@@ -78,7 +78,7 @@ Today, let’s talk about the communication way of etcd inside the server and cl
 
     
 
-    <link rel="canonical" href="https://pixeldin.github.io/en/2022/06/talk-about-etcd-part3-the-communication-protocol-between-client-and-server/">
+    <link rel="canonical" href="https://pixelpig.space/en/2022/06/talk-about-etcd-part3-the-communication-protocol-between-client-and-server/">
 
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
@@ -86,7 +86,7 @@ Today, let’s talk about the communication way of etcd inside the server and cl
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/helpers/jquery.fancybox-thumbs.min.css" integrity="sha256-SEa4XYAHihTcEP1f5gARTB2K26Uk8PsndQYHQC1f4jU=" crossorigin="anonymous" />
     
     
-    <link rel="stylesheet" href="https://pixeldin.github.io/css/style-qwvgrytlhpmhkj82t4ss9bygjnonvcnicxnmlqiwvstfkju0uynqoamj0jm.min.css" />
+    <link rel="stylesheet" href="https://pixelpig.space/css/style-qwvgrytlhpmhkj82t4ss9bygjnonvcnicxnmlqiwvstfkju0uynqoamj0jm.min.css" />
     
     
 
@@ -99,12 +99,12 @@ Today, let’s talk about the communication way of etcd inside the server and cl
       <header id="header" data-behavior="4">
   <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
   <div class="header-title">
-    <a class="header-title-link" href="https://pixeldin.github.io/en/">pixelpig.space</a>
+    <a class="header-title-link" href="https://pixelpig.space/en/">pixelpig.space</a>
   </div>
   
     
       <a class="header-right-picture "
-         href="https://pixeldin.github.io/#about">
+         href="https://pixelpig.space/#about">
     
     
     
@@ -120,7 +120,7 @@ Today, let’s talk about the communication way of etcd inside the server and cl
   <div class="sidebar-container">
     
       <div class="sidebar-profile">
-        <a href="https://pixeldin.github.io/#about">
+        <a href="https://pixelpig.space/#about">
           <img class="sidebar-profile-picture" src="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/pig.jpg" alt="Author&#39;s picture" />
         </a>
         <h4 class="sidebar-profile-name">pixelpig</h4>
@@ -133,7 +133,7 @@ Today, let’s talk about the communication way of etcd inside the server and cl
       
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="https://pixeldin.github.io/zh">
+      <a class="sidebar-button-link " href="https://pixelpig.space/zh">
     
       <i class="sidebar-button-icon fa fa-lg fa-language"></i>
       
@@ -143,7 +143,7 @@ Today, let’s talk about the communication way of etcd inside the server and cl
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="https://pixeldin.github.io/en/">
+      <a class="sidebar-button-link " href="https://pixelpig.space/en/">
     
       <i class="sidebar-button-icon fa fa-lg fa-home"></i>
       
@@ -153,7 +153,7 @@ Today, let’s talk about the communication way of etcd inside the server and cl
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="https://pixeldin.github.io/en/categories">
+      <a class="sidebar-button-link " href="https://pixelpig.space/en/categories">
     
       <i class="sidebar-button-icon fa fa-lg fa-bookmark"></i>
       
@@ -163,7 +163,7 @@ Today, let’s talk about the communication way of etcd inside the server and cl
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="https://pixeldin.github.io/en/tags">
+      <a class="sidebar-button-link " href="https://pixelpig.space/en/tags">
     
       <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
       
@@ -173,7 +173,7 @@ Today, let’s talk about the communication way of etcd inside the server and cl
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="https://pixeldin.github.io/en/archives">
+      <a class="sidebar-button-link " href="https://pixelpig.space/en/archives">
     
       <i class="sidebar-button-icon fa fa-lg fa-archive"></i>
       
@@ -183,7 +183,7 @@ Today, let’s talk about the communication way of etcd inside the server and cl
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="https://pixeldin.github.io/en/#about">
+      <a class="sidebar-button-link " href="https://pixelpig.space/en/#about">
     
       <i class="sidebar-button-icon fa fa-lg fa-question-circle"></i>
       
@@ -253,9 +253,9 @@ Today, let’s talk about the communication way of etcd inside the server and cl
   
     <span>in</span>
     
-      <a class="category-link" href="https://pixeldin.github.io/en/categories/go">Go</a>, 
+      <a class="category-link" href="https://pixelpig.space/en/categories/go">Go</a>, 
     
-      <a class="category-link" href="https://pixeldin.github.io/en/categories/backend">backend</a>
+      <a class="category-link" href="https://pixelpig.space/en/categories/backend">backend</a>
     
   
 
@@ -615,11 +615,11 @@ If you are interested, you can choose to cut in from a certain level of code fol
                   <div class="post-footer-tags">
                     <span class="text-color-light text-small">TAGGED IN</span><br/>
                     
-  <a class="tag tag--primary tag--small" href="https://pixeldin.github.io/en/tags/raft/">raft</a>
+  <a class="tag tag--primary tag--small" href="https://pixelpig.space/en/tags/raft/">raft</a>
 
-  <a class="tag tag--primary tag--small" href="https://pixeldin.github.io/en/tags/etcd/">etcd</a>
+  <a class="tag tag--primary tag--small" href="https://pixelpig.space/en/tags/etcd/">etcd</a>
 
-  <a class="tag tag--primary tag--small" href="https://pixeldin.github.io/en/tags/distributed-systems/">distributed systems</a>
+  <a class="tag tag--primary tag--small" href="https://pixelpig.space/en/tags/distributed-systems/">distributed systems</a>
 
                   </div>
                 
@@ -632,7 +632,7 @@ If you are interested, you can choose to cut in from a certain level of code fol
           
             <li class="post-action">
               
-                <a class="post-action-btn btn btn--default tooltip--top" href="https://pixeldin.github.io/en/2023/02/talk-about-typescripts-interface/" data-tooltip="Talk about TypeScript&#39;s interface">
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://pixelpig.space/en/2023/02/talk-about-typescripts-interface/" data-tooltip="Talk about TypeScript&#39;s interface">
               
                   <i class="fa fa-angle-left"></i>
                   <span class="hide-xs hide-sm text-small icon-ml">NEXT</span>
@@ -640,7 +640,7 @@ If you are interested, you can choose to cut in from a certain level of code fol
             </li>
             <li class="post-action">
               
-                <a class="post-action-btn btn btn--default tooltip--top" href="https://pixeldin.github.io/en/2022/06/talk-about-etcd-part2-the-raft-consistency-protocol/" data-tooltip="Talk about etcd (Part2): the raft consistency protocol">
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://pixelpig.space/en/2022/06/talk-about-etcd-part2-the-raft-consistency-protocol/" data-tooltip="Talk about etcd (Part2): the raft consistency protocol">
               
                   <span class="hide-xs hide-sm text-small icon-mr">PREVIOUS</span>
                   <i class="fa fa-angle-right"></i>
@@ -690,7 +690,7 @@ If you are interested, you can choose to cut in from a certain level of code fol
           
             <li class="post-action">
               
-                <a class="post-action-btn btn btn--default tooltip--top" href="https://pixeldin.github.io/en/2023/02/talk-about-typescripts-interface/" data-tooltip="Talk about TypeScript&#39;s interface">
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://pixelpig.space/en/2023/02/talk-about-typescripts-interface/" data-tooltip="Talk about TypeScript&#39;s interface">
               
                   <i class="fa fa-angle-left"></i>
                   <span class="hide-xs hide-sm text-small icon-ml">NEXT</span>
@@ -698,7 +698,7 @@ If you are interested, you can choose to cut in from a certain level of code fol
             </li>
             <li class="post-action">
               
-                <a class="post-action-btn btn btn--default tooltip--top" href="https://pixeldin.github.io/en/2022/06/talk-about-etcd-part2-the-raft-consistency-protocol/" data-tooltip="Talk about etcd (Part2): the raft consistency protocol">
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://pixelpig.space/en/2022/06/talk-about-etcd-part2-the-raft-consistency-protocol/" data-tooltip="Talk about etcd (Part2): the raft consistency protocol">
               
                   <span class="hide-xs hide-sm text-small icon-mr">PREVIOUS</span>
                   <i class="fa fa-angle-right"></i>
@@ -783,7 +783,7 @@ If you are interested, you can choose to cut in from a certain level of code fol
 <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.7/js/jquery.fancybox.min.js" integrity="sha256-GEAnjcTqVP+vBp3SSc8bEDQqvWAZMiHyUSIorrWwH50=" crossorigin="anonymous"></script>
 
 
-<script src="https://pixeldin.github.io/js/script-0w8lsjkqkmgcwwmpghswuivbbbc4ghmfi8t2mn0xl0kqmiy2wucu0zovfp7b.min.js"></script>
+<script src="https://pixelpig.space/js/script-0w8lsjkqkmgcwwmpghswuivbbbc4ghmfi8t2mn0xl0kqmiy2wucu0zovfp7b.min.js"></script>
 
 
 <script lang="javascript">

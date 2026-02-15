@@ -15,8 +15,8 @@
 <meta property="og:type" content="article">
 <meta property="og:title" content="简述 Java线程池以及使用">
 <meta name="twitter:title" content="简述 Java线程池以及使用">
-<meta property="og:url" content="https://pixeldin.github.io/zh/2019/07/%E7%AE%80%E8%BF%B0-java%E7%BA%BF%E7%A8%8B%E6%B1%A0%E4%BB%A5%E5%8F%8A%E4%BD%BF%E7%94%A8/">
-<meta property="twitter:url" content="https://pixeldin.github.io/zh/2019/07/%E7%AE%80%E8%BF%B0-java%E7%BA%BF%E7%A8%8B%E6%B1%A0%E4%BB%A5%E5%8F%8A%E4%BD%BF%E7%94%A8/">
+<meta property="og:url" content="https://pixelpig.space/zh/2019/07/%E7%AE%80%E8%BF%B0-java%E7%BA%BF%E7%A8%8B%E6%B1%A0%E4%BB%A5%E5%8F%8A%E4%BD%BF%E7%94%A8/">
+<meta property="twitter:url" content="https://pixelpig.space/zh/2019/07/%E7%AE%80%E8%BF%B0-java%E7%BA%BF%E7%A8%8B%E6%B1%A0%E4%BB%A5%E5%8F%8A%E4%BD%BF%E7%94%A8/">
 <meta property="og:site_name" content="pixelpig.space">
 <meta property="og:description" content="线程池可以避免频繁创建销毁线程，提高性能。常见如数据库的连接池。">
 <meta name="twitter:description" content="线程池可以避免频繁创建销毁线程，提高性能。常见如数据库的连接池。">
@@ -70,7 +70,7 @@
 
     
 
-    <link rel="canonical" href="https://pixeldin.github.io/zh/2019/07/%E7%AE%80%E8%BF%B0-java%E7%BA%BF%E7%A8%8B%E6%B1%A0%E4%BB%A5%E5%8F%8A%E4%BD%BF%E7%94%A8/">
+    <link rel="canonical" href="https://pixelpig.space/zh/2019/07/%E7%AE%80%E8%BF%B0-java%E7%BA%BF%E7%A8%8B%E6%B1%A0%E4%BB%A5%E5%8F%8A%E4%BD%BF%E7%94%A8/">
 
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
@@ -78,7 +78,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/helpers/jquery.fancybox-thumbs.min.css" integrity="sha256-SEa4XYAHihTcEP1f5gARTB2K26Uk8PsndQYHQC1f4jU=" crossorigin="anonymous" />
     
     
-    <link rel="stylesheet" href="https://pixeldin.github.io/css/style-qwvgrytlhpmhkj82t4ss9bygjnonvcnicxnmlqiwvstfkju0uynqoamj0jm.min.css" />
+    <link rel="stylesheet" href="https://pixelpig.space/css/style-qwvgrytlhpmhkj82t4ss9bygjnonvcnicxnmlqiwvstfkju0uynqoamj0jm.min.css" />
     
     
 
@@ -91,12 +91,12 @@
       <header id="header" data-behavior="4">
   <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
   <div class="header-title">
-    <a class="header-title-link" href="https://pixeldin.github.io/zh/">pixelpig.space</a>
+    <a class="header-title-link" href="https://pixelpig.space/zh/">pixelpig.space</a>
   </div>
   
     
       <a class="header-right-picture "
-         href="https://pixeldin.github.io/#about">
+         href="https://pixelpig.space/#about">
     
     
     
@@ -112,7 +112,7 @@
   <div class="sidebar-container">
     
       <div class="sidebar-profile">
-        <a href="https://pixeldin.github.io/#about">
+        <a href="https://pixelpig.space/#about">
           <img class="sidebar-profile-picture" src="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/pig.jpg" alt="作者的图片" />
         </a>
         <h4 class="sidebar-profile-name">pixelpig</h4>
@@ -125,7 +125,7 @@
       
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="https://pixeldin.github.io/en">
+      <a class="sidebar-button-link " href="https://pixelpig.space/en">
     
       <i class="sidebar-button-icon fa fa-lg fa-language"></i>
       
@@ -135,7 +135,7 @@
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="https://pixeldin.github.io/zh/">
+      <a class="sidebar-button-link " href="https://pixelpig.space/zh/">
     
       <i class="sidebar-button-icon fa fa-lg fa-home"></i>
       
@@ -145,7 +145,7 @@
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="https://pixeldin.github.io/zh/categories">
+      <a class="sidebar-button-link " href="https://pixelpig.space/zh/categories">
     
       <i class="sidebar-button-icon fa fa-lg fa-bookmark"></i>
       
@@ -155,7 +155,7 @@
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="https://pixeldin.github.io/zh/tags">
+      <a class="sidebar-button-link " href="https://pixelpig.space/zh/tags">
     
       <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
       
@@ -165,7 +165,7 @@
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="https://pixeldin.github.io/zh/archives">
+      <a class="sidebar-button-link " href="https://pixelpig.space/zh/archives">
     
       <i class="sidebar-button-icon fa fa-lg fa-archive"></i>
       
@@ -175,7 +175,7 @@
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="https://pixeldin.github.io/zh/#about">
+      <a class="sidebar-button-link " href="https://pixelpig.space/zh/#about">
     
       <i class="sidebar-button-icon fa fa-lg fa-question-circle"></i>
       
@@ -235,9 +235,9 @@
   
     <span>发布在</span>
     
-      <a class="category-link" href="https://pixeldin.github.io/zh/categories/java">Java</a>, 
+      <a class="category-link" href="https://pixelpig.space/zh/categories/java">Java</a>, 
     
-      <a class="category-link" href="https://pixeldin.github.io/zh/categories/%e5%b9%b6%e5%8f%91">并发</a>
+      <a class="category-link" href="https://pixelpig.space/zh/categories/%e5%b9%b6%e5%8f%91">并发</a>
     
   
 
@@ -560,7 +560,7 @@ public class MutilThreadTask {
                   <div class="post-footer-tags">
                     <span class="text-color-light text-small">标签</span><br/>
                     
-  <a class="tag tag--primary tag--small" href="https://pixeldin.github.io/zh/tags/%E7%BA%BF%E7%A8%8B/">线程</a>
+  <a class="tag tag--primary tag--small" href="https://pixelpig.space/zh/tags/%E7%BA%BF%E7%A8%8B/">线程</a>
 
                   </div>
                 
@@ -573,7 +573,7 @@ public class MutilThreadTask {
           
             <li class="post-action">
               
-                <a class="post-action-btn btn btn--default tooltip--top" href="https://pixeldin.github.io/zh/2019/08/%E6%B5%85%E8%B0%88-java%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/" data-tooltip="浅谈 Java单例模式">
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://pixelpig.space/zh/2019/08/%E6%B5%85%E8%B0%88-java%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/" data-tooltip="浅谈 Java单例模式">
               
                   <i class="fa fa-angle-left"></i>
                   <span class="hide-xs hide-sm text-small icon-ml">下一篇</span>
@@ -581,7 +581,7 @@ public class MutilThreadTask {
             </li>
             <li class="post-action">
               
-                <a class="post-action-btn btn btn--default tooltip--top" href="https://pixeldin.github.io/zh/2019/03/java%E5%8F%8D%E5%B0%84%E6%9C%BA%E5%88%B6%E5%92%8C%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F%E7%9A%84%E5%BA%94%E7%94%A8/" data-tooltip="Java反射机制和代理模式的应用">
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://pixelpig.space/zh/2019/03/java%E5%8F%8D%E5%B0%84%E6%9C%BA%E5%88%B6%E5%92%8C%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F%E7%9A%84%E5%BA%94%E7%94%A8/" data-tooltip="Java反射机制和代理模式的应用">
               
                   <span class="hide-xs hide-sm text-small icon-mr">上一篇</span>
                   <i class="fa fa-angle-right"></i>
@@ -624,7 +624,7 @@ public class MutilThreadTask {
           
             <li class="post-action">
               
-                <a class="post-action-btn btn btn--default tooltip--top" href="https://pixeldin.github.io/zh/2019/08/%E6%B5%85%E8%B0%88-java%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/" data-tooltip="浅谈 Java单例模式">
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://pixelpig.space/zh/2019/08/%E6%B5%85%E8%B0%88-java%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/" data-tooltip="浅谈 Java单例模式">
               
                   <i class="fa fa-angle-left"></i>
                   <span class="hide-xs hide-sm text-small icon-ml">下一篇</span>
@@ -632,7 +632,7 @@ public class MutilThreadTask {
             </li>
             <li class="post-action">
               
-                <a class="post-action-btn btn btn--default tooltip--top" href="https://pixeldin.github.io/zh/2019/03/java%E5%8F%8D%E5%B0%84%E6%9C%BA%E5%88%B6%E5%92%8C%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F%E7%9A%84%E5%BA%94%E7%94%A8/" data-tooltip="Java反射机制和代理模式的应用">
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://pixelpig.space/zh/2019/03/java%E5%8F%8D%E5%B0%84%E6%9C%BA%E5%88%B6%E5%92%8C%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F%E7%9A%84%E5%BA%94%E7%94%A8/" data-tooltip="Java反射机制和代理模式的应用">
               
                   <span class="hide-xs hide-sm text-small icon-mr">上一篇</span>
                   <i class="fa fa-angle-right"></i>
@@ -710,7 +710,7 @@ public class MutilThreadTask {
 <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.7/js/jquery.fancybox.min.js" integrity="sha256-GEAnjcTqVP+vBp3SSc8bEDQqvWAZMiHyUSIorrWwH50=" crossorigin="anonymous"></script>
 
 
-<script src="https://pixeldin.github.io/js/script-0w8lsjkqkmgcwwmpghswuivbbbc4ghmfi8t2mn0xl0kqmiy2wucu0zovfp7b.min.js"></script>
+<script src="https://pixelpig.space/js/script-0w8lsjkqkmgcwwmpghswuivbbbc4ghmfi8t2mn0xl0kqmiy2wucu0zovfp7b.min.js"></script>
 
 
 <script lang="javascript">

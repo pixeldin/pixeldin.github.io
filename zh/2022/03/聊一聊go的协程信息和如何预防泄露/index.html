@@ -15,8 +15,8 @@
 <meta property="og:type" content="article">
 <meta property="og:title" content="聊一聊Go的协程信息和如何预防泄露">
 <meta name="twitter:title" content="聊一聊Go的协程信息和如何预防泄露">
-<meta property="og:url" content="https://pixeldin.github.io/zh/2022/03/%E8%81%8A%E4%B8%80%E8%81%8Ago%E7%9A%84%E5%8D%8F%E7%A8%8B%E4%BF%A1%E6%81%AF%E5%92%8C%E5%A6%82%E4%BD%95%E9%A2%84%E9%98%B2%E6%B3%84%E9%9C%B2/">
-<meta property="twitter:url" content="https://pixeldin.github.io/zh/2022/03/%E8%81%8A%E4%B8%80%E8%81%8Ago%E7%9A%84%E5%8D%8F%E7%A8%8B%E4%BF%A1%E6%81%AF%E5%92%8C%E5%A6%82%E4%BD%95%E9%A2%84%E9%98%B2%E6%B3%84%E9%9C%B2/">
+<meta property="og:url" content="https://pixelpig.space/zh/2022/03/%E8%81%8A%E4%B8%80%E8%81%8Ago%E7%9A%84%E5%8D%8F%E7%A8%8B%E4%BF%A1%E6%81%AF%E5%92%8C%E5%A6%82%E4%BD%95%E9%A2%84%E9%98%B2%E6%B3%84%E9%9C%B2/">
+<meta property="twitter:url" content="https://pixelpig.space/zh/2022/03/%E8%81%8A%E4%B8%80%E8%81%8Ago%E7%9A%84%E5%8D%8F%E7%A8%8B%E4%BF%A1%E6%81%AF%E5%92%8C%E5%A6%82%E4%BD%95%E9%A2%84%E9%98%B2%E6%B3%84%E9%9C%B2/">
 <meta property="og:site_name" content="pixelpig.space">
 <meta property="og:description" content="协程在Go里面是一个常见的概念，伴随着go程序的生命周期开始至结束。今天来聊一聊Go的协程泄露。">
 <meta name="twitter:description" content="协程在Go里面是一个常见的概念，伴随着go程序的生命周期开始至结束。今天来聊一聊Go的协程泄露。">
@@ -75,7 +75,7 @@
 
     
 
-    <link rel="canonical" href="https://pixeldin.github.io/zh/2022/03/%E8%81%8A%E4%B8%80%E8%81%8Ago%E7%9A%84%E5%8D%8F%E7%A8%8B%E4%BF%A1%E6%81%AF%E5%92%8C%E5%A6%82%E4%BD%95%E9%A2%84%E9%98%B2%E6%B3%84%E9%9C%B2/">
+    <link rel="canonical" href="https://pixelpig.space/zh/2022/03/%E8%81%8A%E4%B8%80%E8%81%8Ago%E7%9A%84%E5%8D%8F%E7%A8%8B%E4%BF%A1%E6%81%AF%E5%92%8C%E5%A6%82%E4%BD%95%E9%A2%84%E9%98%B2%E6%B3%84%E9%9C%B2/">
 
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
@@ -83,7 +83,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/helpers/jquery.fancybox-thumbs.min.css" integrity="sha256-SEa4XYAHihTcEP1f5gARTB2K26Uk8PsndQYHQC1f4jU=" crossorigin="anonymous" />
     
     
-    <link rel="stylesheet" href="https://pixeldin.github.io/css/style-qwvgrytlhpmhkj82t4ss9bygjnonvcnicxnmlqiwvstfkju0uynqoamj0jm.min.css" />
+    <link rel="stylesheet" href="https://pixelpig.space/css/style-qwvgrytlhpmhkj82t4ss9bygjnonvcnicxnmlqiwvstfkju0uynqoamj0jm.min.css" />
     
     
 
@@ -96,12 +96,12 @@
       <header id="header" data-behavior="4">
   <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
   <div class="header-title">
-    <a class="header-title-link" href="https://pixeldin.github.io/zh/">pixelpig.space</a>
+    <a class="header-title-link" href="https://pixelpig.space/zh/">pixelpig.space</a>
   </div>
   
     
       <a class="header-right-picture "
-         href="https://pixeldin.github.io/#about">
+         href="https://pixelpig.space/#about">
     
     
     
@@ -117,7 +117,7 @@
   <div class="sidebar-container">
     
       <div class="sidebar-profile">
-        <a href="https://pixeldin.github.io/#about">
+        <a href="https://pixelpig.space/#about">
           <img class="sidebar-profile-picture" src="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/pig.jpg" alt="作者的图片" />
         </a>
         <h4 class="sidebar-profile-name">pixelpig</h4>
@@ -130,7 +130,7 @@
       
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="https://pixeldin.github.io/en">
+      <a class="sidebar-button-link " href="https://pixelpig.space/en">
     
       <i class="sidebar-button-icon fa fa-lg fa-language"></i>
       
@@ -140,7 +140,7 @@
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="https://pixeldin.github.io/zh/">
+      <a class="sidebar-button-link " href="https://pixelpig.space/zh/">
     
       <i class="sidebar-button-icon fa fa-lg fa-home"></i>
       
@@ -150,7 +150,7 @@
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="https://pixeldin.github.io/zh/categories">
+      <a class="sidebar-button-link " href="https://pixelpig.space/zh/categories">
     
       <i class="sidebar-button-icon fa fa-lg fa-bookmark"></i>
       
@@ -160,7 +160,7 @@
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="https://pixeldin.github.io/zh/tags">
+      <a class="sidebar-button-link " href="https://pixelpig.space/zh/tags">
     
       <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
       
@@ -170,7 +170,7 @@
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="https://pixeldin.github.io/zh/archives">
+      <a class="sidebar-button-link " href="https://pixelpig.space/zh/archives">
     
       <i class="sidebar-button-icon fa fa-lg fa-archive"></i>
       
@@ -180,7 +180,7 @@
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="https://pixeldin.github.io/zh/#about">
+      <a class="sidebar-button-link " href="https://pixelpig.space/zh/#about">
     
       <i class="sidebar-button-icon fa fa-lg fa-question-circle"></i>
       
@@ -240,9 +240,9 @@
   
     <span>发布在</span>
     
-      <a class="category-link" href="https://pixeldin.github.io/zh/categories/go">Go</a>, 
+      <a class="category-link" href="https://pixelpig.space/zh/categories/go">Go</a>, 
     
-      <a class="category-link" href="https://pixeldin.github.io/zh/categories/%e5%90%8e%e7%ab%af">后端</a>
+      <a class="category-link" href="https://pixelpig.space/zh/categories/%e5%90%8e%e7%ab%af">后端</a>
     
   
 
@@ -256,7 +256,7 @@
 <p><img alt="协程通信" src="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/blog/road.PNG"></p>
 <h2 id="前言">前言</h2>
 <p>协程在Go里面是一个常见的概念，伴随着go程序的生命周期开始至结束。今天来聊一聊Go的协程泄露。<br>
-关于协程的底层概念，GMP模型等，之前在前面博客已经作过分析，感兴趣可以看下之前的文章<a href="https://pixeldin.github.io/zh/2020/10/%E8%81%8A%E4%B8%80%E8%81%8A%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%BA%BF%E7%A8%8B%E8%B0%83%E5%BA%A6%E4%B8%8Ego%E5%8D%8F%E7%A8%8B/">聊一聊操作系统线程调度与Go协程</a></p>
+关于协程的底层概念，GMP模型等，之前在前面博客已经作过分析，感兴趣可以看下之前的文章<a href="https://pixelpig.space/zh/2020/10/%E8%81%8A%E4%B8%80%E8%81%8A%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%BA%BF%E7%A8%8B%E8%B0%83%E5%BA%A6%E4%B8%8Ego%E5%8D%8F%E7%A8%8B/">聊一聊操作系统线程调度与Go协程</a></p>
 <h2 id="泄露案例">泄露案例</h2>
 <p>关于协程泄露很常见的原因在于，有时候我们常常会忽略问题，直到资源负载异常才引起总是。
 之前排除生产环境异常的时候，曾经遇到过go程序内存泄露的场景，内存泄漏和协程泄露有很大关系，本质上都是资源不回收导致的。这里简单还原一下现场，细节已经经过删减，大概形式如下：</p>
@@ -637,9 +637,9 @@
                   <div class="post-footer-tags">
                     <span class="text-color-light text-small">标签</span><br/>
                     
-  <a class="tag tag--primary tag--small" href="https://pixeldin.github.io/zh/tags/%E5%8D%8F%E7%A8%8B/">协程</a>
+  <a class="tag tag--primary tag--small" href="https://pixelpig.space/zh/tags/%E5%8D%8F%E7%A8%8B/">协程</a>
 
-  <a class="tag tag--primary tag--small" href="https://pixeldin.github.io/zh/tags/debug/">debug</a>
+  <a class="tag tag--primary tag--small" href="https://pixelpig.space/zh/tags/debug/">debug</a>
 
                   </div>
                 
@@ -652,7 +652,7 @@
           
             <li class="post-action">
               
-                <a class="post-action-btn btn btn--default tooltip--top" href="https://pixeldin.github.io/zh/2022/04/%E8%81%8A%E4%B8%80%E8%81%8Ago%E7%9A%84%E5%8E%9F%E7%94%9F%E9%AB%98%E6%80%A7%E8%83%BD%E5%AF%B9%E8%B1%A1%E5%A4%8D%E7%94%A8%E6%B1%A0sync.pool/" data-tooltip="聊一聊Go的原生高性能对象复用池sync.Pool">
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://pixelpig.space/zh/2022/04/%E8%81%8A%E4%B8%80%E8%81%8Ago%E7%9A%84%E5%8E%9F%E7%94%9F%E9%AB%98%E6%80%A7%E8%83%BD%E5%AF%B9%E8%B1%A1%E5%A4%8D%E7%94%A8%E6%B1%A0sync.pool/" data-tooltip="聊一聊Go的原生高性能对象复用池sync.Pool">
               
                   <i class="fa fa-angle-left"></i>
                   <span class="hide-xs hide-sm text-small icon-ml">下一篇</span>
@@ -660,7 +660,7 @@
             </li>
             <li class="post-action">
               
-                <a class="post-action-btn btn btn--default tooltip--top" href="https://pixeldin.github.io/zh/2022/02/%E8%81%8A%E4%B8%80%E8%81%8Ago%E5%AE%9E%E7%8E%B0%E7%9A%84%E6%8E%A5%E5%8F%A3%E7%86%94%E6%96%AD%E5%99%A8-circuit-breaker/" data-tooltip="聊一聊Go实现的接口熔断器: Circuit Breaker">
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://pixelpig.space/zh/2022/02/%E8%81%8A%E4%B8%80%E8%81%8Ago%E5%AE%9E%E7%8E%B0%E7%9A%84%E6%8E%A5%E5%8F%A3%E7%86%94%E6%96%AD%E5%99%A8-circuit-breaker/" data-tooltip="聊一聊Go实现的接口熔断器: Circuit Breaker">
               
                   <span class="hide-xs hide-sm text-small icon-mr">上一篇</span>
                   <i class="fa fa-angle-right"></i>
@@ -710,7 +710,7 @@
           
             <li class="post-action">
               
-                <a class="post-action-btn btn btn--default tooltip--top" href="https://pixeldin.github.io/zh/2022/04/%E8%81%8A%E4%B8%80%E8%81%8Ago%E7%9A%84%E5%8E%9F%E7%94%9F%E9%AB%98%E6%80%A7%E8%83%BD%E5%AF%B9%E8%B1%A1%E5%A4%8D%E7%94%A8%E6%B1%A0sync.pool/" data-tooltip="聊一聊Go的原生高性能对象复用池sync.Pool">
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://pixelpig.space/zh/2022/04/%E8%81%8A%E4%B8%80%E8%81%8Ago%E7%9A%84%E5%8E%9F%E7%94%9F%E9%AB%98%E6%80%A7%E8%83%BD%E5%AF%B9%E8%B1%A1%E5%A4%8D%E7%94%A8%E6%B1%A0sync.pool/" data-tooltip="聊一聊Go的原生高性能对象复用池sync.Pool">
               
                   <i class="fa fa-angle-left"></i>
                   <span class="hide-xs hide-sm text-small icon-ml">下一篇</span>
@@ -718,7 +718,7 @@
             </li>
             <li class="post-action">
               
-                <a class="post-action-btn btn btn--default tooltip--top" href="https://pixeldin.github.io/zh/2022/02/%E8%81%8A%E4%B8%80%E8%81%8Ago%E5%AE%9E%E7%8E%B0%E7%9A%84%E6%8E%A5%E5%8F%A3%E7%86%94%E6%96%AD%E5%99%A8-circuit-breaker/" data-tooltip="聊一聊Go实现的接口熔断器: Circuit Breaker">
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://pixelpig.space/zh/2022/02/%E8%81%8A%E4%B8%80%E8%81%8Ago%E5%AE%9E%E7%8E%B0%E7%9A%84%E6%8E%A5%E5%8F%A3%E7%86%94%E6%96%AD%E5%99%A8-circuit-breaker/" data-tooltip="聊一聊Go实现的接口熔断器: Circuit Breaker">
               
                   <span class="hide-xs hide-sm text-small icon-mr">上一篇</span>
                   <i class="fa fa-angle-right"></i>
@@ -803,7 +803,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.7/js/jquery.fancybox.min.js" integrity="sha256-GEAnjcTqVP+vBp3SSc8bEDQqvWAZMiHyUSIorrWwH50=" crossorigin="anonymous"></script>
 
 
-<script src="https://pixeldin.github.io/js/script-0w8lsjkqkmgcwwmpghswuivbbbc4ghmfi8t2mn0xl0kqmiy2wucu0zovfp7b.min.js"></script>
+<script src="https://pixelpig.space/js/script-0w8lsjkqkmgcwwmpghswuivbbbc4ghmfi8t2mn0xl0kqmiy2wucu0zovfp7b.min.js"></script>
 
 
 <script lang="javascript">

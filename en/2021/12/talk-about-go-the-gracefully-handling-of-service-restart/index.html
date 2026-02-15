@@ -15,8 +15,8 @@
 <meta property="og:type" content="article">
 <meta property="og:title" content="Talk about Go: The gracefully handling of service restart">
 <meta name="twitter:title" content="Talk about Go: The gracefully handling of service restart">
-<meta property="og:url" content="https://pixeldin.github.io/en/2021/12/talk-about-go-the-gracefully-handling-of-service-restart/">
-<meta property="twitter:url" content="https://pixeldin.github.io/en/2021/12/talk-about-go-the-gracefully-handling-of-service-restart/">
+<meta property="og:url" content="https://pixelpig.space/en/2021/12/talk-about-go-the-gracefully-handling-of-service-restart/">
+<meta property="twitter:url" content="https://pixelpig.space/en/2021/12/talk-about-go-the-gracefully-handling-of-service-restart/">
 <meta property="og:site_name" content="pixelpig.space">
 <meta property="og:description" content="Last time we talked about graceful shutdown of Go programs, today we will talk about graceful restarts.">
 <meta name="twitter:description" content="Last time we talked about graceful shutdown of Go programs, today we will talk about graceful restarts.">
@@ -79,7 +79,7 @@
 
     
 
-    <link rel="canonical" href="https://pixeldin.github.io/en/2021/12/talk-about-go-the-gracefully-handling-of-service-restart/">
+    <link rel="canonical" href="https://pixelpig.space/en/2021/12/talk-about-go-the-gracefully-handling-of-service-restart/">
 
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
@@ -87,7 +87,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/helpers/jquery.fancybox-thumbs.min.css" integrity="sha256-SEa4XYAHihTcEP1f5gARTB2K26Uk8PsndQYHQC1f4jU=" crossorigin="anonymous" />
     
     
-    <link rel="stylesheet" href="https://pixeldin.github.io/css/style-qwvgrytlhpmhkj82t4ss9bygjnonvcnicxnmlqiwvstfkju0uynqoamj0jm.min.css" />
+    <link rel="stylesheet" href="https://pixelpig.space/css/style-qwvgrytlhpmhkj82t4ss9bygjnonvcnicxnmlqiwvstfkju0uynqoamj0jm.min.css" />
     
     
 
@@ -100,12 +100,12 @@
       <header id="header" data-behavior="4">
   <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
   <div class="header-title">
-    <a class="header-title-link" href="https://pixeldin.github.io/en/">pixelpig.space</a>
+    <a class="header-title-link" href="https://pixelpig.space/en/">pixelpig.space</a>
   </div>
   
     
       <a class="header-right-picture "
-         href="https://pixeldin.github.io/#about">
+         href="https://pixelpig.space/#about">
     
     
     
@@ -121,7 +121,7 @@
   <div class="sidebar-container">
     
       <div class="sidebar-profile">
-        <a href="https://pixeldin.github.io/#about">
+        <a href="https://pixelpig.space/#about">
           <img class="sidebar-profile-picture" src="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/pig.jpg" alt="Author&#39;s picture" />
         </a>
         <h4 class="sidebar-profile-name">pixelpig</h4>
@@ -134,7 +134,7 @@
       
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="https://pixeldin.github.io/zh">
+      <a class="sidebar-button-link " href="https://pixelpig.space/zh">
     
       <i class="sidebar-button-icon fa fa-lg fa-language"></i>
       
@@ -144,7 +144,7 @@
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="https://pixeldin.github.io/en/">
+      <a class="sidebar-button-link " href="https://pixelpig.space/en/">
     
       <i class="sidebar-button-icon fa fa-lg fa-home"></i>
       
@@ -154,7 +154,7 @@
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="https://pixeldin.github.io/en/categories">
+      <a class="sidebar-button-link " href="https://pixelpig.space/en/categories">
     
       <i class="sidebar-button-icon fa fa-lg fa-bookmark"></i>
       
@@ -164,7 +164,7 @@
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="https://pixeldin.github.io/en/tags">
+      <a class="sidebar-button-link " href="https://pixelpig.space/en/tags">
     
       <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
       
@@ -174,7 +174,7 @@
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="https://pixeldin.github.io/en/archives">
+      <a class="sidebar-button-link " href="https://pixelpig.space/en/archives">
     
       <i class="sidebar-button-icon fa fa-lg fa-archive"></i>
       
@@ -184,7 +184,7 @@
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="https://pixeldin.github.io/en/#about">
+      <a class="sidebar-button-link " href="https://pixelpig.space/en/#about">
     
       <i class="sidebar-button-icon fa fa-lg fa-question-circle"></i>
       
@@ -254,9 +254,9 @@
   
     <span>in</span>
     
-      <a class="category-link" href="https://pixeldin.github.io/en/categories/go">Go</a>, 
+      <a class="category-link" href="https://pixelpig.space/en/categories/go">Go</a>, 
     
-      <a class="category-link" href="https://pixeldin.github.io/en/categories/microservice">microservice</a>
+      <a class="category-link" href="https://pixelpig.space/en/categories/microservice">microservice</a>
     
   
 
@@ -468,13 +468,13 @@ First of all, it literally means <strong>reuse</strong>. The specific concepts a
                   <div class="post-footer-tags">
                     <span class="text-color-light text-small">TAGGED IN</span><br/>
                     
-  <a class="tag tag--primary tag--small" href="https://pixeldin.github.io/en/tags/talk-about-go/">Talk about Go</a>
+  <a class="tag tag--primary tag--small" href="https://pixelpig.space/en/tags/talk-about-go/">Talk about Go</a>
 
-  <a class="tag tag--primary tag--small" href="https://pixeldin.github.io/en/tags/microservice/">microservice</a>
+  <a class="tag tag--primary tag--small" href="https://pixelpig.space/en/tags/microservice/">microservice</a>
 
-  <a class="tag tag--primary tag--small" href="https://pixeldin.github.io/en/tags/ha/">HA</a>
+  <a class="tag tag--primary tag--small" href="https://pixelpig.space/en/tags/ha/">HA</a>
 
-  <a class="tag tag--primary tag--small" href="https://pixeldin.github.io/en/tags/process-communication/">process communication</a>
+  <a class="tag tag--primary tag--small" href="https://pixelpig.space/en/tags/process-communication/">process communication</a>
 
                   </div>
                 
@@ -487,7 +487,7 @@ First of all, it literally means <strong>reuse</strong>. The specific concepts a
           
             <li class="post-action">
               
-                <a class="post-action-btn btn btn--default tooltip--top" href="https://pixeldin.github.io/en/2022/02/talk-about-go-network-programming-about-grouping-and-unpacking-in-tcp-flow/" data-tooltip="Talk about Go: Network programming about grouping and unpacking in TCP flow">
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://pixelpig.space/en/2022/02/talk-about-go-network-programming-about-grouping-and-unpacking-in-tcp-flow/" data-tooltip="Talk about Go: Network programming about grouping and unpacking in TCP flow">
               
                   <i class="fa fa-angle-left"></i>
                   <span class="hide-xs hide-sm text-small icon-ml">NEXT</span>
@@ -495,7 +495,7 @@ First of all, it literally means <strong>reuse</strong>. The specific concepts a
             </li>
             <li class="post-action">
               
-                <a class="post-action-btn btn btn--default tooltip--top" href="https://pixeldin.github.io/en/2021/11/talk-about-go-the-gracefully-handling-of-service-shutdown/" data-tooltip="Talk about Go: The gracefully handling of service shutdown">
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://pixelpig.space/en/2021/11/talk-about-go-the-gracefully-handling-of-service-shutdown/" data-tooltip="Talk about Go: The gracefully handling of service shutdown">
               
                   <span class="hide-xs hide-sm text-small icon-mr">PREVIOUS</span>
                   <i class="fa fa-angle-right"></i>
@@ -545,7 +545,7 @@ First of all, it literally means <strong>reuse</strong>. The specific concepts a
           
             <li class="post-action">
               
-                <a class="post-action-btn btn btn--default tooltip--top" href="https://pixeldin.github.io/en/2022/02/talk-about-go-network-programming-about-grouping-and-unpacking-in-tcp-flow/" data-tooltip="Talk about Go: Network programming about grouping and unpacking in TCP flow">
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://pixelpig.space/en/2022/02/talk-about-go-network-programming-about-grouping-and-unpacking-in-tcp-flow/" data-tooltip="Talk about Go: Network programming about grouping and unpacking in TCP flow">
               
                   <i class="fa fa-angle-left"></i>
                   <span class="hide-xs hide-sm text-small icon-ml">NEXT</span>
@@ -553,7 +553,7 @@ First of all, it literally means <strong>reuse</strong>. The specific concepts a
             </li>
             <li class="post-action">
               
-                <a class="post-action-btn btn btn--default tooltip--top" href="https://pixeldin.github.io/en/2021/11/talk-about-go-the-gracefully-handling-of-service-shutdown/" data-tooltip="Talk about Go: The gracefully handling of service shutdown">
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://pixelpig.space/en/2021/11/talk-about-go-the-gracefully-handling-of-service-shutdown/" data-tooltip="Talk about Go: The gracefully handling of service shutdown">
               
                   <span class="hide-xs hide-sm text-small icon-mr">PREVIOUS</span>
                   <i class="fa fa-angle-right"></i>
@@ -638,7 +638,7 @@ First of all, it literally means <strong>reuse</strong>. The specific concepts a
 <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.7/js/jquery.fancybox.min.js" integrity="sha256-GEAnjcTqVP+vBp3SSc8bEDQqvWAZMiHyUSIorrWwH50=" crossorigin="anonymous"></script>
 
 
-<script src="https://pixeldin.github.io/js/script-0w8lsjkqkmgcwwmpghswuivbbbc4ghmfi8t2mn0xl0kqmiy2wucu0zovfp7b.min.js"></script>
+<script src="https://pixelpig.space/js/script-0w8lsjkqkmgcwwmpghswuivbbbc4ghmfi8t2mn0xl0kqmiy2wucu0zovfp7b.min.js"></script>
 
 
 <script lang="javascript">

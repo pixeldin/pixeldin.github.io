@@ -15,8 +15,8 @@
 <meta property="og:type" content="article">
 <meta property="og:title" content="聊一聊Go网络编程(二)--TCP连接管理">
 <meta name="twitter:title" content="聊一聊Go网络编程(二)--TCP连接管理">
-<meta property="og:url" content="https://pixeldin.github.io/zh/2021/05/%E8%81%8A%E4%B8%80%E8%81%8Ago%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B%E4%BA%8C--tcp%E8%BF%9E%E6%8E%A5%E7%AE%A1%E7%90%86/">
-<meta property="twitter:url" content="https://pixeldin.github.io/zh/2021/05/%E8%81%8A%E4%B8%80%E8%81%8Ago%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B%E4%BA%8C--tcp%E8%BF%9E%E6%8E%A5%E7%AE%A1%E7%90%86/">
+<meta property="og:url" content="https://pixelpig.space/zh/2021/05/%E8%81%8A%E4%B8%80%E8%81%8Ago%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B%E4%BA%8C--tcp%E8%BF%9E%E6%8E%A5%E7%AE%A1%E7%90%86/">
+<meta property="twitter:url" content="https://pixelpig.space/zh/2021/05/%E8%81%8A%E4%B8%80%E8%81%8Ago%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B%E4%BA%8C--tcp%E8%BF%9E%E6%8E%A5%E7%AE%A1%E7%90%86/">
 <meta property="og:site_name" content="pixelpig.space">
 <meta property="og:description" content="上一篇我们聊到在Go中是如何发起一个TCP连接的，以及列举一个全双工的Demo，这次接着填补上一节留下的坑，连接池管理。">
 <meta name="twitter:description" content="上一篇我们聊到在Go中是如何发起一个TCP连接的，以及列举一个全双工的Demo，这次接着填补上一节留下的坑，连接池管理。">
@@ -75,7 +75,7 @@
 
     
 
-    <link rel="canonical" href="https://pixeldin.github.io/zh/2021/05/%E8%81%8A%E4%B8%80%E8%81%8Ago%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B%E4%BA%8C--tcp%E8%BF%9E%E6%8E%A5%E7%AE%A1%E7%90%86/">
+    <link rel="canonical" href="https://pixelpig.space/zh/2021/05/%E8%81%8A%E4%B8%80%E8%81%8Ago%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B%E4%BA%8C--tcp%E8%BF%9E%E6%8E%A5%E7%AE%A1%E7%90%86/">
 
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
@@ -83,7 +83,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/helpers/jquery.fancybox-thumbs.min.css" integrity="sha256-SEa4XYAHihTcEP1f5gARTB2K26Uk8PsndQYHQC1f4jU=" crossorigin="anonymous" />
     
     
-    <link rel="stylesheet" href="https://pixeldin.github.io/css/style-qwvgrytlhpmhkj82t4ss9bygjnonvcnicxnmlqiwvstfkju0uynqoamj0jm.min.css" />
+    <link rel="stylesheet" href="https://pixelpig.space/css/style-qwvgrytlhpmhkj82t4ss9bygjnonvcnicxnmlqiwvstfkju0uynqoamj0jm.min.css" />
     
     
 
@@ -96,12 +96,12 @@
       <header id="header" data-behavior="4">
   <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
   <div class="header-title">
-    <a class="header-title-link" href="https://pixeldin.github.io/zh/">pixelpig.space</a>
+    <a class="header-title-link" href="https://pixelpig.space/zh/">pixelpig.space</a>
   </div>
   
     
       <a class="header-right-picture "
-         href="https://pixeldin.github.io/#about">
+         href="https://pixelpig.space/#about">
     
     
     
@@ -117,7 +117,7 @@
   <div class="sidebar-container">
     
       <div class="sidebar-profile">
-        <a href="https://pixeldin.github.io/#about">
+        <a href="https://pixelpig.space/#about">
           <img class="sidebar-profile-picture" src="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/pig.jpg" alt="作者的图片" />
         </a>
         <h4 class="sidebar-profile-name">pixelpig</h4>
@@ -130,7 +130,7 @@
       
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="https://pixeldin.github.io/en">
+      <a class="sidebar-button-link " href="https://pixelpig.space/en">
     
       <i class="sidebar-button-icon fa fa-lg fa-language"></i>
       
@@ -140,7 +140,7 @@
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="https://pixeldin.github.io/zh/">
+      <a class="sidebar-button-link " href="https://pixelpig.space/zh/">
     
       <i class="sidebar-button-icon fa fa-lg fa-home"></i>
       
@@ -150,7 +150,7 @@
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="https://pixeldin.github.io/zh/categories">
+      <a class="sidebar-button-link " href="https://pixelpig.space/zh/categories">
     
       <i class="sidebar-button-icon fa fa-lg fa-bookmark"></i>
       
@@ -160,7 +160,7 @@
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="https://pixeldin.github.io/zh/tags">
+      <a class="sidebar-button-link " href="https://pixelpig.space/zh/tags">
     
       <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
       
@@ -170,7 +170,7 @@
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="https://pixeldin.github.io/zh/archives">
+      <a class="sidebar-button-link " href="https://pixelpig.space/zh/archives">
     
       <i class="sidebar-button-icon fa fa-lg fa-archive"></i>
       
@@ -180,7 +180,7 @@
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="https://pixeldin.github.io/zh/#about">
+      <a class="sidebar-button-link " href="https://pixelpig.space/zh/#about">
     
       <i class="sidebar-button-icon fa fa-lg fa-question-circle"></i>
       
@@ -240,9 +240,9 @@
   
     <span>发布在</span>
     
-      <a class="category-link" href="https://pixeldin.github.io/zh/categories/go">Go</a>, 
+      <a class="category-link" href="https://pixelpig.space/zh/categories/go">Go</a>, 
     
-      <a class="category-link" href="https://pixeldin.github.io/zh/categories/%e7%bd%91%e7%bb%9c%e7%bc%96%e7%a8%8b">网络编程</a>
+      <a class="category-link" href="https://pixelpig.space/zh/categories/%e7%bd%91%e7%bb%9c%e7%bc%96%e7%a8%8b">网络编程</a>
     
   
 
@@ -602,9 +602,9 @@
                   <div class="post-footer-tags">
                     <span class="text-color-light text-small">标签</span><br/>
                     
-  <a class="tag tag--primary tag--small" href="https://pixeldin.github.io/zh/tags/tcp/">TCP</a>
+  <a class="tag tag--primary tag--small" href="https://pixelpig.space/zh/tags/tcp/">TCP</a>
 
-  <a class="tag tag--primary tag--small" href="https://pixeldin.github.io/zh/tags/%E8%BF%9E%E6%8E%A5%E6%B1%A0/">连接池</a>
+  <a class="tag tag--primary tag--small" href="https://pixelpig.space/zh/tags/%E8%BF%9E%E6%8E%A5%E6%B1%A0/">连接池</a>
 
                   </div>
                 
@@ -617,7 +617,7 @@
           
             <li class="post-action">
               
-                <a class="post-action-btn btn btn--default tooltip--top" href="https://pixeldin.github.io/zh/2021/06/%E8%81%8A%E4%B8%80%E8%81%8Ago%E5%AE%9E%E7%8E%B0%E7%9A%84%E5%A4%9A%E5%8D%8F%E7%A8%8B%E4%B8%8B%E8%BD%BD%E5%99%A8-gopeed-core/" data-tooltip="聊一聊Go实现的多协程下载器: gopeed-core">
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://pixelpig.space/zh/2021/06/%E8%81%8A%E4%B8%80%E8%81%8Ago%E5%AE%9E%E7%8E%B0%E7%9A%84%E5%A4%9A%E5%8D%8F%E7%A8%8B%E4%B8%8B%E8%BD%BD%E5%99%A8-gopeed-core/" data-tooltip="聊一聊Go实现的多协程下载器: gopeed-core">
               
                   <i class="fa fa-angle-left"></i>
                   <span class="hide-xs hide-sm text-small icon-ml">下一篇</span>
@@ -625,7 +625,7 @@
             </li>
             <li class="post-action">
               
-                <a class="post-action-btn btn btn--default tooltip--top" href="https://pixeldin.github.io/zh/2021/05/%E8%81%8A%E4%B8%80%E8%81%8Ago%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B%E4%B8%80--tcp%E9%80%9A%E4%BF%A1/" data-tooltip="聊一聊Go网络编程(一)--TCP通信">
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://pixelpig.space/zh/2021/05/%E8%81%8A%E4%B8%80%E8%81%8Ago%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B%E4%B8%80--tcp%E9%80%9A%E4%BF%A1/" data-tooltip="聊一聊Go网络编程(一)--TCP通信">
               
                   <span class="hide-xs hide-sm text-small icon-mr">上一篇</span>
                   <i class="fa fa-angle-right"></i>
@@ -668,7 +668,7 @@
           
             <li class="post-action">
               
-                <a class="post-action-btn btn btn--default tooltip--top" href="https://pixeldin.github.io/zh/2021/06/%E8%81%8A%E4%B8%80%E8%81%8Ago%E5%AE%9E%E7%8E%B0%E7%9A%84%E5%A4%9A%E5%8D%8F%E7%A8%8B%E4%B8%8B%E8%BD%BD%E5%99%A8-gopeed-core/" data-tooltip="聊一聊Go实现的多协程下载器: gopeed-core">
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://pixelpig.space/zh/2021/06/%E8%81%8A%E4%B8%80%E8%81%8Ago%E5%AE%9E%E7%8E%B0%E7%9A%84%E5%A4%9A%E5%8D%8F%E7%A8%8B%E4%B8%8B%E8%BD%BD%E5%99%A8-gopeed-core/" data-tooltip="聊一聊Go实现的多协程下载器: gopeed-core">
               
                   <i class="fa fa-angle-left"></i>
                   <span class="hide-xs hide-sm text-small icon-ml">下一篇</span>
@@ -676,7 +676,7 @@
             </li>
             <li class="post-action">
               
-                <a class="post-action-btn btn btn--default tooltip--top" href="https://pixeldin.github.io/zh/2021/05/%E8%81%8A%E4%B8%80%E8%81%8Ago%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B%E4%B8%80--tcp%E9%80%9A%E4%BF%A1/" data-tooltip="聊一聊Go网络编程(一)--TCP通信">
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://pixelpig.space/zh/2021/05/%E8%81%8A%E4%B8%80%E8%81%8Ago%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B%E4%B8%80--tcp%E9%80%9A%E4%BF%A1/" data-tooltip="聊一聊Go网络编程(一)--TCP通信">
               
                   <span class="hide-xs hide-sm text-small icon-mr">上一篇</span>
                   <i class="fa fa-angle-right"></i>
@@ -754,7 +754,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.7/js/jquery.fancybox.min.js" integrity="sha256-GEAnjcTqVP+vBp3SSc8bEDQqvWAZMiHyUSIorrWwH50=" crossorigin="anonymous"></script>
 
 
-<script src="https://pixeldin.github.io/js/script-0w8lsjkqkmgcwwmpghswuivbbbc4ghmfi8t2mn0xl0kqmiy2wucu0zovfp7b.min.js"></script>
+<script src="https://pixelpig.space/js/script-0w8lsjkqkmgcwwmpghswuivbbbc4ghmfi8t2mn0xl0kqmiy2wucu0zovfp7b.min.js"></script>
 
 
 <script lang="javascript">

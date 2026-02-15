@@ -15,8 +15,8 @@
 <meta property="og:type" content="article">
 <meta property="og:title" content="聊一聊网络编程TCP流的组包拆包">
 <meta name="twitter:title" content="聊一聊网络编程TCP流的组包拆包">
-<meta property="og:url" content="https://pixeldin.github.io/zh/2022/02/%E8%81%8A%E4%B8%80%E8%81%8A%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8Btcp%E6%B5%81%E7%9A%84%E7%BB%84%E5%8C%85%E6%8B%86%E5%8C%85/">
-<meta property="twitter:url" content="https://pixeldin.github.io/zh/2022/02/%E8%81%8A%E4%B8%80%E8%81%8A%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8Btcp%E6%B5%81%E7%9A%84%E7%BB%84%E5%8C%85%E6%8B%86%E5%8C%85/">
+<meta property="og:url" content="https://pixelpig.space/zh/2022/02/%E8%81%8A%E4%B8%80%E8%81%8A%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8Btcp%E6%B5%81%E7%9A%84%E7%BB%84%E5%8C%85%E6%8B%86%E5%8C%85/">
+<meta property="twitter:url" content="https://pixelpig.space/zh/2022/02/%E8%81%8A%E4%B8%80%E8%81%8A%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8Btcp%E6%B5%81%E7%9A%84%E7%BB%84%E5%8C%85%E6%8B%86%E5%8C%85/">
 <meta property="og:site_name" content="pixelpig.space">
 <meta property="og:description" content="众所周知，包体传输是网络通信中不可或缺的一部分，无论是应用层HTTP包的header或者body，还是传输层TCP的流式数据，都是对数据的分组与拆解。">
 <meta name="twitter:description" content="众所周知，包体传输是网络通信中不可或缺的一部分，无论是应用层HTTP包的header或者body，还是传输层TCP的流式数据，都是对数据的分组与拆解。">
@@ -73,7 +73,7 @@
 
     
 
-    <link rel="canonical" href="https://pixeldin.github.io/zh/2022/02/%E8%81%8A%E4%B8%80%E8%81%8A%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8Btcp%E6%B5%81%E7%9A%84%E7%BB%84%E5%8C%85%E6%8B%86%E5%8C%85/">
+    <link rel="canonical" href="https://pixelpig.space/zh/2022/02/%E8%81%8A%E4%B8%80%E8%81%8A%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8Btcp%E6%B5%81%E7%9A%84%E7%BB%84%E5%8C%85%E6%8B%86%E5%8C%85/">
 
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
@@ -81,7 +81,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/helpers/jquery.fancybox-thumbs.min.css" integrity="sha256-SEa4XYAHihTcEP1f5gARTB2K26Uk8PsndQYHQC1f4jU=" crossorigin="anonymous" />
     
     
-    <link rel="stylesheet" href="https://pixeldin.github.io/css/style-qwvgrytlhpmhkj82t4ss9bygjnonvcnicxnmlqiwvstfkju0uynqoamj0jm.min.css" />
+    <link rel="stylesheet" href="https://pixelpig.space/css/style-qwvgrytlhpmhkj82t4ss9bygjnonvcnicxnmlqiwvstfkju0uynqoamj0jm.min.css" />
     
     
 
@@ -94,12 +94,12 @@
       <header id="header" data-behavior="4">
   <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
   <div class="header-title">
-    <a class="header-title-link" href="https://pixeldin.github.io/zh/">pixelpig.space</a>
+    <a class="header-title-link" href="https://pixelpig.space/zh/">pixelpig.space</a>
   </div>
   
     
       <a class="header-right-picture "
-         href="https://pixeldin.github.io/#about">
+         href="https://pixelpig.space/#about">
     
     
     
@@ -115,7 +115,7 @@
   <div class="sidebar-container">
     
       <div class="sidebar-profile">
-        <a href="https://pixeldin.github.io/#about">
+        <a href="https://pixelpig.space/#about">
           <img class="sidebar-profile-picture" src="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/pig.jpg" alt="作者的图片" />
         </a>
         <h4 class="sidebar-profile-name">pixelpig</h4>
@@ -128,7 +128,7 @@
       
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="https://pixeldin.github.io/en">
+      <a class="sidebar-button-link " href="https://pixelpig.space/en">
     
       <i class="sidebar-button-icon fa fa-lg fa-language"></i>
       
@@ -138,7 +138,7 @@
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="https://pixeldin.github.io/zh/">
+      <a class="sidebar-button-link " href="https://pixelpig.space/zh/">
     
       <i class="sidebar-button-icon fa fa-lg fa-home"></i>
       
@@ -148,7 +148,7 @@
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="https://pixeldin.github.io/zh/categories">
+      <a class="sidebar-button-link " href="https://pixelpig.space/zh/categories">
     
       <i class="sidebar-button-icon fa fa-lg fa-bookmark"></i>
       
@@ -158,7 +158,7 @@
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="https://pixeldin.github.io/zh/tags">
+      <a class="sidebar-button-link " href="https://pixelpig.space/zh/tags">
     
       <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
       
@@ -168,7 +168,7 @@
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="https://pixeldin.github.io/zh/archives">
+      <a class="sidebar-button-link " href="https://pixelpig.space/zh/archives">
     
       <i class="sidebar-button-icon fa fa-lg fa-archive"></i>
       
@@ -178,7 +178,7 @@
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="https://pixeldin.github.io/zh/#about">
+      <a class="sidebar-button-link " href="https://pixelpig.space/zh/#about">
     
       <i class="sidebar-button-icon fa fa-lg fa-question-circle"></i>
       
@@ -238,9 +238,9 @@
   
     <span>发布在</span>
     
-      <a class="category-link" href="https://pixeldin.github.io/zh/categories/go">Go</a>, 
+      <a class="category-link" href="https://pixelpig.space/zh/categories/go">Go</a>, 
     
-      <a class="category-link" href="https://pixeldin.github.io/zh/categories/%e7%bd%91%e7%bb%9c%e7%bc%96%e7%a8%8b">网络编程</a>
+      <a class="category-link" href="https://pixelpig.space/zh/categories/%e7%bd%91%e7%bb%9c%e7%bc%96%e7%a8%8b">网络编程</a>
     
   
 
@@ -501,7 +501,7 @@
                   <div class="post-footer-tags">
                     <span class="text-color-light text-small">标签</span><br/>
                     
-  <a class="tag tag--primary tag--small" href="https://pixeldin.github.io/zh/tags/tcp/">TCP</a>
+  <a class="tag tag--primary tag--small" href="https://pixelpig.space/zh/tags/tcp/">TCP</a>
 
                   </div>
                 
@@ -514,7 +514,7 @@
           
             <li class="post-action">
               
-                <a class="post-action-btn btn btn--default tooltip--top" href="https://pixeldin.github.io/zh/2022/02/%E8%81%8A%E4%B8%80%E8%81%8Ago%E5%AE%9E%E7%8E%B0%E7%9A%84%E6%8E%A5%E5%8F%A3%E7%86%94%E6%96%AD%E5%99%A8-circuit-breaker/" data-tooltip="聊一聊Go实现的接口熔断器: Circuit Breaker">
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://pixelpig.space/zh/2022/02/%E8%81%8A%E4%B8%80%E8%81%8Ago%E5%AE%9E%E7%8E%B0%E7%9A%84%E6%8E%A5%E5%8F%A3%E7%86%94%E6%96%AD%E5%99%A8-circuit-breaker/" data-tooltip="聊一聊Go实现的接口熔断器: Circuit Breaker">
               
                   <i class="fa fa-angle-left"></i>
                   <span class="hide-xs hide-sm text-small icon-ml">下一篇</span>
@@ -522,7 +522,7 @@
             </li>
             <li class="post-action">
               
-                <a class="post-action-btn btn btn--default tooltip--top" href="https://pixeldin.github.io/zh/2021/12/%E8%81%8A%E4%B8%80%E8%81%8Ago%E6%9C%8D%E5%8A%A1%E7%9A%84%E4%BC%98%E9%9B%85%E5%A4%84%E7%90%86%E4%BA%8C--%E4%BC%98%E9%9B%85%E9%87%8D%E5%90%AF/" data-tooltip="聊一聊Go服务的优雅处理(二)--优雅重启">
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://pixelpig.space/zh/2021/12/%E8%81%8A%E4%B8%80%E8%81%8Ago%E6%9C%8D%E5%8A%A1%E7%9A%84%E4%BC%98%E9%9B%85%E5%A4%84%E7%90%86%E4%BA%8C--%E4%BC%98%E9%9B%85%E9%87%8D%E5%90%AF/" data-tooltip="聊一聊Go服务的优雅处理(二)--优雅重启">
               
                   <span class="hide-xs hide-sm text-small icon-mr">上一篇</span>
                   <i class="fa fa-angle-right"></i>
@@ -565,7 +565,7 @@
           
             <li class="post-action">
               
-                <a class="post-action-btn btn btn--default tooltip--top" href="https://pixeldin.github.io/zh/2022/02/%E8%81%8A%E4%B8%80%E8%81%8Ago%E5%AE%9E%E7%8E%B0%E7%9A%84%E6%8E%A5%E5%8F%A3%E7%86%94%E6%96%AD%E5%99%A8-circuit-breaker/" data-tooltip="聊一聊Go实现的接口熔断器: Circuit Breaker">
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://pixelpig.space/zh/2022/02/%E8%81%8A%E4%B8%80%E8%81%8Ago%E5%AE%9E%E7%8E%B0%E7%9A%84%E6%8E%A5%E5%8F%A3%E7%86%94%E6%96%AD%E5%99%A8-circuit-breaker/" data-tooltip="聊一聊Go实现的接口熔断器: Circuit Breaker">
               
                   <i class="fa fa-angle-left"></i>
                   <span class="hide-xs hide-sm text-small icon-ml">下一篇</span>
@@ -573,7 +573,7 @@
             </li>
             <li class="post-action">
               
-                <a class="post-action-btn btn btn--default tooltip--top" href="https://pixeldin.github.io/zh/2021/12/%E8%81%8A%E4%B8%80%E8%81%8Ago%E6%9C%8D%E5%8A%A1%E7%9A%84%E4%BC%98%E9%9B%85%E5%A4%84%E7%90%86%E4%BA%8C--%E4%BC%98%E9%9B%85%E9%87%8D%E5%90%AF/" data-tooltip="聊一聊Go服务的优雅处理(二)--优雅重启">
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://pixelpig.space/zh/2021/12/%E8%81%8A%E4%B8%80%E8%81%8Ago%E6%9C%8D%E5%8A%A1%E7%9A%84%E4%BC%98%E9%9B%85%E5%A4%84%E7%90%86%E4%BA%8C--%E4%BC%98%E9%9B%85%E9%87%8D%E5%90%AF/" data-tooltip="聊一聊Go服务的优雅处理(二)--优雅重启">
               
                   <span class="hide-xs hide-sm text-small icon-mr">上一篇</span>
                   <i class="fa fa-angle-right"></i>
@@ -651,7 +651,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.7/js/jquery.fancybox.min.js" integrity="sha256-GEAnjcTqVP+vBp3SSc8bEDQqvWAZMiHyUSIorrWwH50=" crossorigin="anonymous"></script>
 
 
-<script src="https://pixeldin.github.io/js/script-0w8lsjkqkmgcwwmpghswuivbbbc4ghmfi8t2mn0xl0kqmiy2wucu0zovfp7b.min.js"></script>
+<script src="https://pixelpig.space/js/script-0w8lsjkqkmgcwwmpghswuivbbbc4ghmfi8t2mn0xl0kqmiy2wucu0zovfp7b.min.js"></script>
 
 
 <script lang="javascript">
