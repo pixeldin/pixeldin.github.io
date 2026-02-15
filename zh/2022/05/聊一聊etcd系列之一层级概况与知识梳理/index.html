@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="zh-cn">
-  <head>
+  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
     
     <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="generator" content="Hugo 0.80.0 with theme Tranquilpeak 0.4.8-BETA">
+<meta name="generator" content="Hugo 0.139.0 with theme Tranquilpeak 0.4.8-BETA">
 <meta name="author" content="pixelpig">
 <meta name="keywords" content="">
 <meta name="description" content="etcd在微服务领域使用场景十分普遍，经常用于作为一个注册中心，提供服务注册与发现。本系列将聊一聊etcd解决了什么问题、它是如何解决的角度来逐步分析。">
@@ -15,8 +15,8 @@
 <meta property="og:type" content="article">
 <meta property="og:title" content="聊一聊etcd系列之一：层级概况与知识梳理">
 <meta name="twitter:title" content="聊一聊etcd系列之一：层级概况与知识梳理">
-<meta property="og:url" content="/zh/2022/05/%E8%81%8A%E4%B8%80%E8%81%8Aetcd%E7%B3%BB%E5%88%97%E4%B9%8B%E4%B8%80%E5%B1%82%E7%BA%A7%E6%A6%82%E5%86%B5%E4%B8%8E%E7%9F%A5%E8%AF%86%E6%A2%B3%E7%90%86/">
-<meta property="twitter:url" content="/zh/2022/05/%E8%81%8A%E4%B8%80%E8%81%8Aetcd%E7%B3%BB%E5%88%97%E4%B9%8B%E4%B8%80%E5%B1%82%E7%BA%A7%E6%A6%82%E5%86%B5%E4%B8%8E%E7%9F%A5%E8%AF%86%E6%A2%B3%E7%90%86/">
+<meta property="og:url" content="//localhost:1313/zh/2022/05/%E8%81%8A%E4%B8%80%E8%81%8Aetcd%E7%B3%BB%E5%88%97%E4%B9%8B%E4%B8%80%E5%B1%82%E7%BA%A7%E6%A6%82%E5%86%B5%E4%B8%8E%E7%9F%A5%E8%AF%86%E6%A2%B3%E7%90%86/">
+<meta property="twitter:url" content="//localhost:1313/zh/2022/05/%E8%81%8A%E4%B8%80%E8%81%8Aetcd%E7%B3%BB%E5%88%97%E4%B9%8B%E4%B8%80%E5%B1%82%E7%BA%A7%E6%A6%82%E5%86%B5%E4%B8%8E%E7%9F%A5%E8%AF%86%E6%A2%B3%E7%90%86/">
 <meta property="og:site_name" content="pixelpig.space">
 <meta property="og:description" content="etcd在微服务领域使用场景十分普遍，经常用于作为一个注册中心，提供服务注册与发现。本系列将聊一聊etcd解决了什么问题、它是如何解决的角度来逐步分析。">
 <meta name="twitter:description" content="etcd在微服务领域使用场景十分普遍，经常用于作为一个注册中心，提供服务注册与发现。本系列将聊一聊etcd解决了什么问题、它是如何解决的角度来逐步分析。">
@@ -77,7 +77,7 @@
 
     
 
-    <link rel="canonical" href="/zh/2022/05/%E8%81%8A%E4%B8%80%E8%81%8Aetcd%E7%B3%BB%E5%88%97%E4%B9%8B%E4%B8%80%E5%B1%82%E7%BA%A7%E6%A6%82%E5%86%B5%E4%B8%8E%E7%9F%A5%E8%AF%86%E6%A2%B3%E7%90%86/">
+    <link rel="canonical" href="//localhost:1313/zh/2022/05/%E8%81%8A%E4%B8%80%E8%81%8Aetcd%E7%B3%BB%E5%88%97%E4%B9%8B%E4%B8%80%E5%B1%82%E7%BA%A7%E6%A6%82%E5%86%B5%E4%B8%8E%E7%9F%A5%E8%AF%86%E6%A2%B3%E7%90%86/">
 
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
@@ -85,12 +85,10 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/helpers/jquery.fancybox-thumbs.min.css" integrity="sha256-SEa4XYAHihTcEP1f5gARTB2K26Uk8PsndQYHQC1f4jU=" crossorigin="anonymous" />
     
     
-    <link rel="stylesheet" href="/css/style-qwvgrytlhpmhkj82t4ss9bygjnonvcnicxnmlqiwvstfkju0uynqoamj0jm.min.css" />
+    <link rel="stylesheet" href="//localhost:1313/css/style-qwvgrytlhpmhkj82t4ss9bygjnonvcnicxnmlqiwvstfkju0uynqoamj0jm.min.css" />
     
     
 
-    
-      
     
     
   </head>
@@ -100,12 +98,12 @@
       <header id="header" data-behavior="4">
   <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
   <div class="header-title">
-    <a class="header-title-link" href="/zh/">pixelpig.space</a>
+    <a class="header-title-link" href="//localhost:1313/zh/">pixelpig.space</a>
   </div>
   
     
       <a class="header-right-picture "
-         href="/#about">
+         href="//localhost:1313/#about">
     
     
     
@@ -121,7 +119,7 @@
   <div class="sidebar-container">
     
       <div class="sidebar-profile">
-        <a href="/#about">
+        <a href="//localhost:1313/#about">
           <img class="sidebar-profile-picture" src="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/pig.jpg" alt="作者的图片" />
         </a>
         <h4 class="sidebar-profile-name">pixelpig</h4>
@@ -134,7 +132,7 @@
       
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="/en">
+      <a class="sidebar-button-link " href="//localhost:1313/en">
     
       <i class="sidebar-button-icon fa fa-lg fa-language"></i>
       
@@ -144,7 +142,7 @@
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="/zh/">
+      <a class="sidebar-button-link " href="//localhost:1313/zh/">
     
       <i class="sidebar-button-icon fa fa-lg fa-home"></i>
       
@@ -154,7 +152,7 @@
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="/zh/categories">
+      <a class="sidebar-button-link " href="//localhost:1313/zh/categories">
     
       <i class="sidebar-button-icon fa fa-lg fa-bookmark"></i>
       
@@ -164,7 +162,7 @@
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="/zh/tags">
+      <a class="sidebar-button-link " href="//localhost:1313/zh/tags">
     
       <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
       
@@ -174,7 +172,7 @@
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="/zh/archives">
+      <a class="sidebar-button-link " href="//localhost:1313/zh/archives">
     
       <i class="sidebar-button-icon fa fa-lg fa-archive"></i>
       
@@ -184,7 +182,7 @@
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="/zh/#about">
+      <a class="sidebar-button-link " href="//localhost:1313/zh/#about">
     
       <i class="sidebar-button-icon fa fa-lg fa-question-circle"></i>
       
@@ -244,9 +242,9 @@
   
     <span>发布在</span>
     
-      <a class="category-link" href="/zh/categories/go">Go</a>, 
+      <a class="category-link" href="//localhost:1313/zh/categories/go">Go</a>, 
     
-      <a class="category-link" href="/zh/categories/%e5%90%8e%e7%ab%af">后端</a>
+      <a class="category-link" href="//localhost:1313/zh/categories/%e5%90%8e%e7%ab%af">后端</a>
     
   
 
@@ -257,7 +255,7 @@
           <div class="post-content markdown" itemprop="articleBody">
             <div class="main-content-wrap">
               <p>etcd在微服务领域使用场景十分普遍，经常用于作为一个注册中心，提供服务注册与发现。本系列将聊一聊etcd解决了什么问题、它是如何解决的角度来逐步分析。</p>
-<p><img src="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/blog/etcd/raft/etcd-tree.png" alt="etcd-cover-tree"></p>
+<p><img alt="etcd-cover-tree" src="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/blog/etcd/raft/etcd-tree.png"></p>
 <h2 id="前言">前言</h2>
 <p>etcd在微服务领域使用场景十分普遍，经常用于作为一个注册中心，提供服务注册与发现常见的比如K8S框架就以etcd作为基础组件进行内部交互。近期在梳理etcd的一些内部结构与依赖组件，发现其背后有广泛的技术栈，这里分享总结一些技术细节作为沉淀。</p>
 <h2 id="它解决了什么问题">它解决了什么问题</h2>
@@ -275,7 +273,7 @@
 <p>提到分布式存储，分布式协议自然是离不开的，etcd底层依靠<strong>raft</strong>一致性算法保障一致性，采用<strong>选举策略</strong>定期更新各个节点当前状态。</p>
 <h3 id="通信方式">通信方式</h3>
 <p>etcd节点间通信方式是经过更新迭代的(v2-&gt;v3)，v2使用HTTP/1.X协议，基于RESTful API通信；v3在兼容v2的基础上增加了HTTP/2.x grpc协议的支持，在多路复用的场景提升了传输效率，基于<a href="https://etcd.io/docs/v3.5/learning/design-client/">Stream API</a>长连接进行活性检测。<br>
-<img src="https://etcd.io/docs/v3.5/learning/img/client-balancer-figure-06.png" alt="image">
+<img alt="image" src="https://etcd.io/docs/v3.5/learning/img/client-balancer-figure-06.png">
 此外，etcd还暴露了友好API屏蔽底层的复杂的应用程序逻辑，提供多台物理机的一个逻辑集群视图。</p>
 <h3 id="数据存储">数据存储</h3>
 <p>关于etcd数据的底层存储，主要依赖于预写日志(WAL)以及BoltDB存储引擎来实现，所有数据在提交之前会保障写入WAL做数据持久化，BoltDB的细节实现将会在后续系列展开细说，大概用到这几个技术点：</p>
@@ -287,7 +285,7 @@
 <p>其中etcd花了大量的篇幅来做节点的多版本控制(<strong>MVCC</strong>)，依赖的是底层B+树和内存B树结构的索引映射，它们之间是如何关联的将在后面另起篇幅展开聊聊。</p>
 <h2 id="脉络图">脉络图</h2>
 <p>关于etcd整个技术栈其实可以纵横扩展，这里梳理了一张脉络图，这个系列会结合这个脑图进行开展，大家也可以结合自己感兴趣的点进行深入接触。
-<img src="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/blog/etcd/raft/s0-%E8%84%91%E5%9B%BE.png" alt="image"></p>
+<img alt="image" src="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/blog/etcd/raft/s0-%E8%84%91%E5%9B%BE.png"></p>
 <h2 id="参考链接">参考链接</h2>
 <ul>
 <li>etcd文档<br>
@@ -308,11 +306,11 @@
                   <div class="post-footer-tags">
                     <span class="text-color-light text-small">标签</span><br/>
                     
-  <a class="tag tag--primary tag--small" href="/zh/tags/raft/">raft</a>
+  <a class="tag tag--primary tag--small" href="//localhost:1313/zh/tags/raft/">raft</a>
 
-  <a class="tag tag--primary tag--small" href="/zh/tags/etcd/">etcd</a>
+  <a class="tag tag--primary tag--small" href="//localhost:1313/zh/tags/etcd/">etcd</a>
 
-  <a class="tag tag--primary tag--small" href="/zh/tags/%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F/">分布式系统</a>
+  <a class="tag tag--primary tag--small" href="//localhost:1313/zh/tags/%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F/">分布式系统</a>
 
                   </div>
                 
@@ -325,7 +323,7 @@
           
             <li class="post-action">
               
-                <a class="post-action-btn btn btn--default tooltip--top" href="/zh/2022/06/%E8%81%8A%E4%B8%80%E8%81%8Aetcd%E7%B3%BB%E5%88%97%E4%B9%8B%E4%BA%8Craft%E4%B8%80%E8%87%B4%E6%80%A7%E5%8D%8F%E8%AE%AE/" data-tooltip="聊一聊etcd系列之二：raft一致性协议">
+                <a class="post-action-btn btn btn--default tooltip--top" href="//localhost:1313/zh/2022/06/%E8%81%8A%E4%B8%80%E8%81%8Aetcd%E7%B3%BB%E5%88%97%E4%B9%8B%E4%BA%8Craft%E4%B8%80%E8%87%B4%E6%80%A7%E5%8D%8F%E8%AE%AE/" data-tooltip="聊一聊etcd系列之二：raft一致性协议">
               
                   <i class="fa fa-angle-left"></i>
                   <span class="hide-xs hide-sm text-small icon-ml">下一篇</span>
@@ -333,7 +331,7 @@
             </li>
             <li class="post-action">
               
-                <a class="post-action-btn btn btn--default tooltip--top" href="/zh/2022/04/%E8%81%8A%E4%B8%80%E8%81%8Ago%E7%9A%84%E5%8E%9F%E7%94%9F%E9%AB%98%E6%80%A7%E8%83%BD%E5%AF%B9%E8%B1%A1%E5%A4%8D%E7%94%A8%E6%B1%A0sync.pool/" data-tooltip="聊一聊Go的原生高性能对象复用池sync.Pool">
+                <a class="post-action-btn btn btn--default tooltip--top" href="//localhost:1313/zh/2022/04/%E8%81%8A%E4%B8%80%E8%81%8Ago%E7%9A%84%E5%8E%9F%E7%94%9F%E9%AB%98%E6%80%A7%E8%83%BD%E5%AF%B9%E8%B1%A1%E5%A4%8D%E7%94%A8%E6%B1%A0sync.pool/" data-tooltip="聊一聊Go的原生高性能对象复用池sync.Pool">
               
                   <span class="hide-xs hide-sm text-small icon-mr">上一篇</span>
                   <i class="fa fa-angle-right"></i>
@@ -370,7 +368,7 @@
         </article>
         <footer id="footer" class="main-content-wrap">
   <span class="copyrights">
-    &copy; 2025 <a href="https://github.com/pixeldin">pixeldin</a>. All Rights Reserved
+    &copy; 2026 <a href="https://github.com/pixeldin">pixeldin</a>. All Rights Reserved
   </span>
 </footer>
 
@@ -383,7 +381,7 @@
           
             <li class="post-action">
               
-                <a class="post-action-btn btn btn--default tooltip--top" href="/zh/2022/06/%E8%81%8A%E4%B8%80%E8%81%8Aetcd%E7%B3%BB%E5%88%97%E4%B9%8B%E4%BA%8Craft%E4%B8%80%E8%87%B4%E6%80%A7%E5%8D%8F%E8%AE%AE/" data-tooltip="聊一聊etcd系列之二：raft一致性协议">
+                <a class="post-action-btn btn btn--default tooltip--top" href="//localhost:1313/zh/2022/06/%E8%81%8A%E4%B8%80%E8%81%8Aetcd%E7%B3%BB%E5%88%97%E4%B9%8B%E4%BA%8Craft%E4%B8%80%E8%87%B4%E6%80%A7%E5%8D%8F%E8%AE%AE/" data-tooltip="聊一聊etcd系列之二：raft一致性协议">
               
                   <i class="fa fa-angle-left"></i>
                   <span class="hide-xs hide-sm text-small icon-ml">下一篇</span>
@@ -391,7 +389,7 @@
             </li>
             <li class="post-action">
               
-                <a class="post-action-btn btn btn--default tooltip--top" href="/zh/2022/04/%E8%81%8A%E4%B8%80%E8%81%8Ago%E7%9A%84%E5%8E%9F%E7%94%9F%E9%AB%98%E6%80%A7%E8%83%BD%E5%AF%B9%E8%B1%A1%E5%A4%8D%E7%94%A8%E6%B1%A0sync.pool/" data-tooltip="聊一聊Go的原生高性能对象复用池sync.Pool">
+                <a class="post-action-btn btn btn--default tooltip--top" href="//localhost:1313/zh/2022/04/%E8%81%8A%E4%B8%80%E8%81%8Ago%E7%9A%84%E5%8E%9F%E7%94%9F%E9%AB%98%E6%80%A7%E8%83%BD%E5%AF%B9%E8%B1%A1%E5%A4%8D%E7%94%A8%E6%B1%A0sync.pool/" data-tooltip="聊一聊Go的原生高性能对象复用池sync.Pool">
               
                   <span class="hide-xs hide-sm text-small icon-mr">上一篇</span>
                   <i class="fa fa-angle-right"></i>
@@ -476,7 +474,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.7/js/jquery.fancybox.min.js" integrity="sha256-GEAnjcTqVP+vBp3SSc8bEDQqvWAZMiHyUSIorrWwH50=" crossorigin="anonymous"></script>
 
 
-<script src="/js/script-0w8lsjkqkmgcwwmpghswuivbbbc4ghmfi8t2mn0xl0kqmiy2wucu0zovfp7b.min.js"></script>
+<script src="//localhost:1313/js/script-0w8lsjkqkmgcwwmpghswuivbbbc4ghmfi8t2mn0xl0kqmiy2wucu0zovfp7b.min.js"></script>
 
 
 <script lang="javascript">

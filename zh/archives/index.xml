@@ -2,9 +2,10 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Archives on pixelpig.space</title>
-    <link>/zh/archives/</link>
+    <link>//localhost:1313/zh/archives/</link>
     <description>Recent content in Archives on pixelpig.space</description>
-    <generator>Hugo -- gohugo.io</generator>
-    <language>zh-cn</language><atom:link href="/zh/archives/index.xml" rel="self" type="application/rss+xml" />
+    <generator>Hugo</generator>
+    <language>zh-cn</language>
+    <atom:link href="//localhost:1313/zh/archives/index.xml" rel="self" type="application/rss+xml" />
   </channel>
 </rss>

@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en-us">
-  <head>
+  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
     
     <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="generator" content="Hugo 0.80.0 with theme Tranquilpeak 0.4.8-BETA">
+<meta name="generator" content="Hugo 0.139.0 with theme Tranquilpeak 0.4.8-BETA">
 <meta name="author" content="pixelpig">
 <meta name="keywords" content="">
 <meta name="description" content="线程池可以避免频繁创建销毁线程，提高性能。常见如数据库的连接池。">
@@ -15,8 +15,8 @@
 <meta property="og:type" content="article">
 <meta property="og:title" content="简述 Java线程池以及使用">
 <meta name="twitter:title" content="简述 Java线程池以及使用">
-<meta property="og:url" content="/en/2019/07/%E7%AE%80%E8%BF%B0-java%E7%BA%BF%E7%A8%8B%E6%B1%A0%E4%BB%A5%E5%8F%8A%E4%BD%BF%E7%94%A8/">
-<meta property="twitter:url" content="/en/2019/07/%E7%AE%80%E8%BF%B0-java%E7%BA%BF%E7%A8%8B%E6%B1%A0%E4%BB%A5%E5%8F%8A%E4%BD%BF%E7%94%A8/">
+<meta property="og:url" content="//localhost:1313/en/2019/07/%E7%AE%80%E8%BF%B0-java%E7%BA%BF%E7%A8%8B%E6%B1%A0%E4%BB%A5%E5%8F%8A%E4%BD%BF%E7%94%A8/">
+<meta property="twitter:url" content="//localhost:1313/en/2019/07/%E7%AE%80%E8%BF%B0-java%E7%BA%BF%E7%A8%8B%E6%B1%A0%E4%BB%A5%E5%8F%8A%E4%BD%BF%E7%94%A8/">
 <meta property="og:site_name" content="pixelpig.space">
 <meta property="og:description" content="线程池可以避免频繁创建销毁线程，提高性能。常见如数据库的连接池。">
 <meta name="twitter:description" content="线程池可以避免频繁创建销毁线程，提高性能。常见如数据库的连接池。">
@@ -70,7 +70,7 @@
 
     
 
-    <link rel="canonical" href="/en/2019/07/%E7%AE%80%E8%BF%B0-java%E7%BA%BF%E7%A8%8B%E6%B1%A0%E4%BB%A5%E5%8F%8A%E4%BD%BF%E7%94%A8/">
+    <link rel="canonical" href="//localhost:1313/en/2019/07/%E7%AE%80%E8%BF%B0-java%E7%BA%BF%E7%A8%8B%E6%B1%A0%E4%BB%A5%E5%8F%8A%E4%BD%BF%E7%94%A8/">
 
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
@@ -78,12 +78,10 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/helpers/jquery.fancybox-thumbs.min.css" integrity="sha256-SEa4XYAHihTcEP1f5gARTB2K26Uk8PsndQYHQC1f4jU=" crossorigin="anonymous" />
     
     
-    <link rel="stylesheet" href="/css/style-qwvgrytlhpmhkj82t4ss9bygjnonvcnicxnmlqiwvstfkju0uynqoamj0jm.min.css" />
+    <link rel="stylesheet" href="//localhost:1313/css/style-qwvgrytlhpmhkj82t4ss9bygjnonvcnicxnmlqiwvstfkju0uynqoamj0jm.min.css" />
     
     
 
-    
-      
     
     
   </head>
@@ -93,12 +91,12 @@
       <header id="header" data-behavior="4">
   <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
   <div class="header-title">
-    <a class="header-title-link" href="/en/">pixelpig.space</a>
+    <a class="header-title-link" href="//localhost:1313/en/">pixelpig.space</a>
   </div>
   
     
       <a class="header-right-picture "
-         href="/#about">
+         href="//localhost:1313/#about">
     
     
     
@@ -114,7 +112,7 @@
   <div class="sidebar-container">
     
       <div class="sidebar-profile">
-        <a href="/#about">
+        <a href="//localhost:1313/#about">
           <img class="sidebar-profile-picture" src="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/pig.jpg" alt="Author&#39;s picture" />
         </a>
         <h4 class="sidebar-profile-name">pixelpig</h4>
@@ -127,7 +125,7 @@
       
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="/zh">
+      <a class="sidebar-button-link " href="//localhost:1313/zh">
     
       <i class="sidebar-button-icon fa fa-lg fa-language"></i>
       
@@ -137,7 +135,7 @@
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="/en/">
+      <a class="sidebar-button-link " href="//localhost:1313/en/">
     
       <i class="sidebar-button-icon fa fa-lg fa-home"></i>
       
@@ -147,7 +145,7 @@
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="/en/categories">
+      <a class="sidebar-button-link " href="//localhost:1313/en/categories">
     
       <i class="sidebar-button-icon fa fa-lg fa-bookmark"></i>
       
@@ -157,7 +155,7 @@
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="/en/tags">
+      <a class="sidebar-button-link " href="//localhost:1313/en/tags">
     
       <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
       
@@ -167,7 +165,7 @@
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="/en/archives">
+      <a class="sidebar-button-link " href="//localhost:1313/en/archives">
     
       <i class="sidebar-button-icon fa fa-lg fa-archive"></i>
       
@@ -177,7 +175,7 @@
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="/en/#about">
+      <a class="sidebar-button-link " href="//localhost:1313/en/#about">
     
       <i class="sidebar-button-icon fa fa-lg fa-question-circle"></i>
       
@@ -247,9 +245,9 @@
   
     <span>in</span>
     
-      <a class="category-link" href="/en/categories/java">Java</a>, 
+      <a class="category-link" href="//localhost:1313/en/categories/java">Java</a>, 
     
-      <a class="category-link" href="/en/categories/%e5%b9%b6%e5%8f%91">并发</a>
+      <a class="category-link" href="//localhost:1313/en/categories/%e5%b9%b6%e5%8f%91">并发</a>
     
   
 
@@ -288,7 +286,7 @@ About Callable的返回值，可以使用Future或者FutureTask来获取。</li>
 <p>底部实现<strong>RunnableFuture</strong>接口，而<strong>RunnableFuture</strong>继承了<strong>Future</strong>和<strong>Runnable</strong>
 所以<strong>FutureTask</strong>同样具备上述5个方法。
 参考部分源码：</p>
-<pre><code>/**
+<pre tabindex="0"><code>/**
      * Creates a {@code FutureTask} that will, upon running, execute the
      * given {@code Callable}.
      *
@@ -309,7 +307,7 @@ About Callable的返回值，可以使用Future或者FutureTask来获取。</li>
      *
      * @param runnable the runnable task
      * @param result the result to return on successful completion. If
-     * you don't need a particular result, consider using
+     * you don&#39;t need a particular result, consider using
      * constructions of the form:
      * {@code Future&lt;?&gt; f = new FutureTask&lt;Void&gt;(runnable, null)}
      * @throws NullPointerException if the runnable is null
@@ -324,7 +322,7 @@ About Callable的返回值，可以使用Future或者FutureTask来获取。</li>
 <li>后者传入参数<strong>Runnable</strong>和<strong>Result</strong>,如果执行成功，返回<strong>Result</strong></li>
 </ol>
 <h3 id="futuretask和callable实现创建线程的demo">Futuretask和Callable实现创建线程的Demo</h3>
-<pre><code>import java.util.concurrent.Callable;
+<pre tabindex="0"><code>import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.FutureTask;
 
@@ -337,7 +335,7 @@ public class CallableThread {
 		while (true) {
 			if (result.isDone()) {
 				try {
-					System.out.println(&quot;Call执行结束:&quot;+result.get());
+					System.out.println(&#34;Call执行结束:&#34;+result.get());
 					break;
 				} catch (InterruptedException | ExecutionException e) {
 					e.printStackTrace();
@@ -351,7 +349,7 @@ class ThreadCall implements Callable&lt;String&gt;{
 
 	@Override
 	public String call() throws Exception {
-		return &quot;为Java打Call！&quot;;
+		return &#34;为Java打Call！&#34;;
 	}
 	
 }
@@ -373,7 +371,7 @@ Call执行结束:为Java打Call！</p>
 指定按照设置的时间周期执行任务，池中线程数量根据参数<strong>corePoolSize</strong>决定，即时有线程空闲状态也不会撤销。</li>
 </ul>
 <h4 id="demo">Demo:</h4>
-<pre><code>package com.dd.code.ThreadByCallable;
+<pre tabindex="0"><code>package com.dd.code.ThreadByCallable;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -401,13 +399,12 @@ class ThreadPoolDemo implements Runnable{
 	
 	@Override
 	public void run() {
-		System.out.println(&quot;当前线程号：&quot;+Thread.currentThread().getName() + &quot;，i = &quot; + i++);
+		System.out.println(&#34;当前线程号：&#34;+Thread.currentThread().getName() + &#34;，i = &#34; + i++);
 	}
 	
 }
-
 </code></pre><p>执行结果：</p>
-<pre><code>当前线程号：pool-1-thread-3，i = 2
+<pre tabindex="0"><code>当前线程号：pool-1-thread-3，i = 2
 当前线程号：pool-1-thread-5，i = 3
 当前线程号：pool-1-thread-1，i = 0
 当前线程号：pool-1-thread-2，i = 1
@@ -417,7 +414,6 @@ class ThreadPoolDemo implements Runnable{
 当前线程号：pool-1-thread-3，i = 8
 当前线程号：pool-1-thread-2，i = 7
 当前线程号：pool-1-thread-1，i = 9
-
 </code></pre><p>可以看到，尽管分配10个任务给线程池，然而我们初始化5个固定线程的线程池，所以线程池执行的所在进程号不会超过5，而且可以看出在<strong>newFixedThreadPool</strong>中线程的调度是随机的。</p>
 <hr>
 <h4 id="线程池多任务计算">线程池多任务计算</h4>
@@ -428,11 +424,11 @@ class ThreadPoolDemo implements Runnable{
 <li>创建所需线程池，返回执行器[<strong>ExecutorService</strong>]<strong>executor</strong></li>
 <li>使用<strong>FutureTask</strong>构造方法传入需要计算的<strong>Callable</strong>实例化创建<strong>FutureTask</strong></li>
 <li>调用执行器<strong>executor</strong>的方法<strong>executor.execute(futuretask);</strong></li>
-<li>创建**<code>List&lt;FutureTask&gt;</code>**将执行的**futuretask**添加到List中，方便后续取值。
+<li>创建**<code>List&lt;FutureTask&gt;</code><strong>将执行的</strong>futuretask**添加到List中，方便后续取值。
 ####示例：
-**下面模拟一个计算延迟操作，我们来看看多线程和单线程执行的效率对比**</li>
+<strong>下面模拟一个计算延迟操作，我们来看看多线程和单线程执行的效率对比</strong></li>
 </ol>
-<pre><code>package com.dd.code.ThreadByCallable;
+<pre tabindex="0"><code>package com.dd.code.ThreadByCallable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -479,13 +475,13 @@ public class MutilThreadTask {
 		
 		long t1  = System.currentTimeMillis();
 		//使用单线程进行计算
-		System.out.println(&quot;累加结果:&quot; + SumWithOneThread(uidList));
-		System.out.println(&quot;常规计算时间:&quot;+(System.currentTimeMillis()-t1));
+		System.out.println(&#34;累加结果:&#34; + SumWithOneThread(uidList));
+		System.out.println(&#34;常规计算时间:&#34;+(System.currentTimeMillis()-t1));
 		
 		long t2  = System.currentTimeMillis();
 		//创建10个线程的线程池参与运算
-		System.out.println(&quot;累加结果:&quot; + SumWithMutilThread(uidList,10));
-		System.out.println(&quot;线程池计算时间:&quot;+(System.currentTimeMillis()-t2));
+		System.out.println(&#34;累加结果:&#34; + SumWithMutilThread(uidList,10));
+		System.out.println(&#34;线程池计算时间:&#34;+(System.currentTimeMillis()-t2));
 	}
 	
 	static Long SumWithOneThread(List&lt;Long&gt; uidList){
@@ -550,16 +546,15 @@ public class MutilThreadTask {
 	}
 
 }
-
 </code></pre><p>执行结果：</p>
-<pre><code>累加结果:2000
+<pre tabindex="0"><code>累加结果:2000
 常规计算时间:10035
 累加结果:2000
 线程池计算时间:1020
 </code></pre><h4 id="效率对比">效率对比</h4>
 <p>果然，使用线程池创建多个线程计算效率快了许多，但是使用多线程就一定快吗?
 我们稍作修改一下方法的参数，只给FutureTask分配5个任务[区别于之前的100个任务]，并且将模拟计算时间修改为1毫秒[区别于之前的100毫秒]，再看看执行结果。</p>
-<pre><code>累加结果:100
+<pre tabindex="0"><code>累加结果:100
 常规计算时间:6
 累加结果:100
 线程池计算时间:24
@@ -575,7 +570,7 @@ public class MutilThreadTask {
                   <div class="post-footer-tags">
                     <span class="text-color-light text-small">TAGGED IN</span><br/>
                     
-  <a class="tag tag--primary tag--small" href="/en/tags/%E7%BA%BF%E7%A8%8B/">线程</a>
+  <a class="tag tag--primary tag--small" href="//localhost:1313/en/tags/%E7%BA%BF%E7%A8%8B/">线程</a>
 
                   </div>
                 
@@ -588,7 +583,7 @@ public class MutilThreadTask {
           
             <li class="post-action">
               
-                <a class="post-action-btn btn btn--default tooltip--top" href="/en/2019/08/%E6%B5%85%E8%B0%88-java%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/" data-tooltip="浅谈 Java单例模式">
+                <a class="post-action-btn btn btn--default tooltip--top" href="//localhost:1313/en/2019/08/%E6%B5%85%E8%B0%88-java%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/" data-tooltip="浅谈 Java单例模式">
               
                   <i class="fa fa-angle-left"></i>
                   <span class="hide-xs hide-sm text-small icon-ml">NEXT</span>
@@ -596,7 +591,7 @@ public class MutilThreadTask {
             </li>
             <li class="post-action">
               
-                <a class="post-action-btn btn btn--default tooltip--top" href="/en/2019/03/java%E5%8F%8D%E5%B0%84%E6%9C%BA%E5%88%B6%E5%92%8C%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F%E7%9A%84%E5%BA%94%E7%94%A8/" data-tooltip="Java反射机制和代理模式的应用">
+                <a class="post-action-btn btn btn--default tooltip--top" href="//localhost:1313/en/2019/03/java%E5%8F%8D%E5%B0%84%E6%9C%BA%E5%88%B6%E5%92%8C%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F%E7%9A%84%E5%BA%94%E7%94%A8/" data-tooltip="Java反射机制和代理模式的应用">
               
                   <span class="hide-xs hide-sm text-small icon-mr">PREVIOUS</span>
                   <i class="fa fa-angle-right"></i>
@@ -626,7 +621,7 @@ public class MutilThreadTask {
         </article>
         <footer id="footer" class="main-content-wrap">
   <span class="copyrights">
-    &copy; 2025 <a href="https://github.com/pixeldin">pixeldin</a>. All Rights Reserved
+    &copy; 2026 <a href="https://github.com/pixeldin">pixeldin</a>. All Rights Reserved
   </span>
 </footer>
 
@@ -639,7 +634,7 @@ public class MutilThreadTask {
           
             <li class="post-action">
               
-                <a class="post-action-btn btn btn--default tooltip--top" href="/en/2019/08/%E6%B5%85%E8%B0%88-java%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/" data-tooltip="浅谈 Java单例模式">
+                <a class="post-action-btn btn btn--default tooltip--top" href="//localhost:1313/en/2019/08/%E6%B5%85%E8%B0%88-java%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/" data-tooltip="浅谈 Java单例模式">
               
                   <i class="fa fa-angle-left"></i>
                   <span class="hide-xs hide-sm text-small icon-ml">NEXT</span>
@@ -647,7 +642,7 @@ public class MutilThreadTask {
             </li>
             <li class="post-action">
               
-                <a class="post-action-btn btn btn--default tooltip--top" href="/en/2019/03/java%E5%8F%8D%E5%B0%84%E6%9C%BA%E5%88%B6%E5%92%8C%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F%E7%9A%84%E5%BA%94%E7%94%A8/" data-tooltip="Java反射机制和代理模式的应用">
+                <a class="post-action-btn btn btn--default tooltip--top" href="//localhost:1313/en/2019/03/java%E5%8F%8D%E5%B0%84%E6%9C%BA%E5%88%B6%E5%92%8C%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F%E7%9A%84%E5%BA%94%E7%94%A8/" data-tooltip="Java反射机制和代理模式的应用">
               
                   <span class="hide-xs hide-sm text-small icon-mr">PREVIOUS</span>
                   <i class="fa fa-angle-right"></i>
@@ -725,7 +720,7 @@ public class MutilThreadTask {
 <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.7/js/jquery.fancybox.min.js" integrity="sha256-GEAnjcTqVP+vBp3SSc8bEDQqvWAZMiHyUSIorrWwH50=" crossorigin="anonymous"></script>
 
 
-<script src="/js/script-0w8lsjkqkmgcwwmpghswuivbbbc4ghmfi8t2mn0xl0kqmiy2wucu0zovfp7b.min.js"></script>
+<script src="//localhost:1313/js/script-0w8lsjkqkmgcwwmpghswuivbbbc4ghmfi8t2mn0xl0kqmiy2wucu0zovfp7b.min.js"></script>
 
 
 <script lang="javascript">

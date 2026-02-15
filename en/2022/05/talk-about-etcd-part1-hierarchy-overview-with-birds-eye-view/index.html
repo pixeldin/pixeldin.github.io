@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en-us">
-  <head>
+  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
     
     <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="generator" content="Hugo 0.80.0 with theme Tranquilpeak 0.4.8-BETA">
+<meta name="generator" content="Hugo 0.139.0 with theme Tranquilpeak 0.4.8-BETA">
 <meta name="author" content="pixelpig">
 <meta name="keywords" content="">
 <meta name="description" content="etcd is very common in the field of microservices. This series will talk about what problems etcd solves and how it solves it for a step-by-step analysis.">
@@ -15,8 +15,8 @@
 <meta property="og:type" content="article">
 <meta property="og:title" content="Talk about etcd (Part1): Hierarchy Overview with bird&#39;s eye view">
 <meta name="twitter:title" content="Talk about etcd (Part1): Hierarchy Overview with bird&#39;s eye view">
-<meta property="og:url" content="/en/2022/05/talk-about-etcd-part1-hierarchy-overview-with-birds-eye-view/">
-<meta property="twitter:url" content="/en/2022/05/talk-about-etcd-part1-hierarchy-overview-with-birds-eye-view/">
+<meta property="og:url" content="//localhost:1313/en/2022/05/talk-about-etcd-part1-hierarchy-overview-with-birds-eye-view/">
+<meta property="twitter:url" content="//localhost:1313/en/2022/05/talk-about-etcd-part1-hierarchy-overview-with-birds-eye-view/">
 <meta property="og:site_name" content="pixelpig.space">
 <meta property="og:description" content="etcd is very common in the field of microservices. This series will talk about what problems etcd solves and how it solves it for a step-by-step analysis.">
 <meta name="twitter:description" content="etcd is very common in the field of microservices. This series will talk about what problems etcd solves and how it solves it for a step-by-step analysis.">
@@ -77,7 +77,7 @@
 
     
 
-    <link rel="canonical" href="/en/2022/05/talk-about-etcd-part1-hierarchy-overview-with-birds-eye-view/">
+    <link rel="canonical" href="//localhost:1313/en/2022/05/talk-about-etcd-part1-hierarchy-overview-with-birds-eye-view/">
 
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
@@ -85,12 +85,10 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/helpers/jquery.fancybox-thumbs.min.css" integrity="sha256-SEa4XYAHihTcEP1f5gARTB2K26Uk8PsndQYHQC1f4jU=" crossorigin="anonymous" />
     
     
-    <link rel="stylesheet" href="/css/style-qwvgrytlhpmhkj82t4ss9bygjnonvcnicxnmlqiwvstfkju0uynqoamj0jm.min.css" />
+    <link rel="stylesheet" href="//localhost:1313/css/style-qwvgrytlhpmhkj82t4ss9bygjnonvcnicxnmlqiwvstfkju0uynqoamj0jm.min.css" />
     
     
 
-    
-      
     
     
   </head>
@@ -100,12 +98,12 @@
       <header id="header" data-behavior="4">
   <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
   <div class="header-title">
-    <a class="header-title-link" href="/en/">pixelpig.space</a>
+    <a class="header-title-link" href="//localhost:1313/en/">pixelpig.space</a>
   </div>
   
     
       <a class="header-right-picture "
-         href="/#about">
+         href="//localhost:1313/#about">
     
     
     
@@ -121,7 +119,7 @@
   <div class="sidebar-container">
     
       <div class="sidebar-profile">
-        <a href="/#about">
+        <a href="//localhost:1313/#about">
           <img class="sidebar-profile-picture" src="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/pig.jpg" alt="Author&#39;s picture" />
         </a>
         <h4 class="sidebar-profile-name">pixelpig</h4>
@@ -134,7 +132,7 @@
       
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="/zh">
+      <a class="sidebar-button-link " href="//localhost:1313/zh">
     
       <i class="sidebar-button-icon fa fa-lg fa-language"></i>
       
@@ -144,7 +142,7 @@
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="/en/">
+      <a class="sidebar-button-link " href="//localhost:1313/en/">
     
       <i class="sidebar-button-icon fa fa-lg fa-home"></i>
       
@@ -154,7 +152,7 @@
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="/en/categories">
+      <a class="sidebar-button-link " href="//localhost:1313/en/categories">
     
       <i class="sidebar-button-icon fa fa-lg fa-bookmark"></i>
       
@@ -164,7 +162,7 @@
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="/en/tags">
+      <a class="sidebar-button-link " href="//localhost:1313/en/tags">
     
       <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
       
@@ -174,7 +172,7 @@
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="/en/archives">
+      <a class="sidebar-button-link " href="//localhost:1313/en/archives">
     
       <i class="sidebar-button-icon fa fa-lg fa-archive"></i>
       
@@ -184,7 +182,7 @@
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="/en/#about">
+      <a class="sidebar-button-link " href="//localhost:1313/en/#about">
     
       <i class="sidebar-button-icon fa fa-lg fa-question-circle"></i>
       
@@ -254,9 +252,9 @@
   
     <span>in</span>
     
-      <a class="category-link" href="/en/categories/go">Go</a>, 
+      <a class="category-link" href="//localhost:1313/en/categories/go">Go</a>, 
     
-      <a class="category-link" href="/en/categories/backend">backend</a>
+      <a class="category-link" href="//localhost:1313/en/categories/backend">backend</a>
     
   
 
@@ -267,7 +265,7 @@
           <div class="post-content markdown" itemprop="articleBody">
             <div class="main-content-wrap">
               <p>etcd is very common in the field of microservices. This series will talk about what problems etcd solves and how it solves it for a step-by-step analysis.</p>
-<p><img src="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/blog/etcd/raft/etcd-tree.png" alt="etcd-cover-tree"></p>
+<p><img alt="etcd-cover-tree" src="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/blog/etcd/raft/etcd-tree.png"></p>
 <h2 id="foreword">Foreword</h2>
 <p>etcd is very common in the field of microservices. It is often used as a registry to provide service registration and discovery. For example, the K8S framework uses etcd as the basic component for internal interaction. Recently, I have been sorting out some internal structures and dependent components of etcd. Today, let&rsquo;s take a look at the global perspective and talk about some technology stacks of etcd.</p>
 <h2 id="what-problem-does-it-solve">What problem does it solve</h2>
@@ -285,7 +283,7 @@
 <p>When it comes to distributed storage, distributed protocols are naturally inseparable. The bottom layer of etcd relies on the <strong>raft</strong> consensus algorithm to ensure consistency, and adopts the <strong>election strategy</strong> to regularly update the current status of each node.</p>
 <h3 id="way-of-communication">Way of communication</h3>
 <p>The communication method between etcd nodes is updated and iterative (v2-&gt;v3). v2 uses HTTP/1.X protocol and communicates based on RESTful API; v3 adds HTTP/2.x grpc protocol support on the basis of compatibility with v2. In the multiplexing scenario, the transmission efficiency is improved, based on <a href="https://etcd.io/docs/v3.5/learning/design-client/">Stream API</a> with long connection for activity detection.<br>
-<img src="https://etcd.io/docs/v3.5/learning/img/client-balancer-figure-06.png" alt="image">
+<img alt="image" src="https://etcd.io/docs/v3.5/learning/img/client-balancer-figure-06.png">
 In addition, etcd exposes a friendly API to shield the underlying complex application logic and provide a logical cluster view of multiple physical machines.</p>
 <h3 id="data-storage">Data Storage</h3>
 <p>Regarding the underlying storage of etcd data, it mainly relies on the write-ahead log (WAL) and the BoltDB storage engine. All data will be guaranteed to be written to the WAL for data persistence before submission. The detailed implementation of BoltDB will be elaborated in the subsequent series, with these technical points:</p>
@@ -297,7 +295,7 @@ In addition, etcd exposes a friendly API to shield the underlying complex applic
 <p>Among them, etcd spends a lot of space on multi-version control of nodes (<strong>MVCC</strong>), which depends on the index mapping of the underlying B+ tree and the memory B-tree structure. How they are related will be discussed later in this series.</p>
 <h2 id="mindmap">Mindmap</h2>
 <p>The entire technology stack of etcd can actually be expanded vertically and horizontally. Here is a diagram of the context. This series will be carried out in conjunction with this brain map. You can also make in-depth contact with the points of interest.
-<img src="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/blog/etcd/raft/en-etcd-mind.png" alt="mindmap"></p>
+<img alt="mindmap" src="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/blog/etcd/raft/en-etcd-mind.png"></p>
 <h2 id="reference-link">Reference link</h2>
 <ul>
 <li>etcd docs<br>
@@ -318,11 +316,11 @@ In addition, etcd exposes a friendly API to shield the underlying complex applic
                   <div class="post-footer-tags">
                     <span class="text-color-light text-small">TAGGED IN</span><br/>
                     
-  <a class="tag tag--primary tag--small" href="/en/tags/raft/">raft</a>
+  <a class="tag tag--primary tag--small" href="//localhost:1313/en/tags/raft/">raft</a>
 
-  <a class="tag tag--primary tag--small" href="/en/tags/etcd/">etcd</a>
+  <a class="tag tag--primary tag--small" href="//localhost:1313/en/tags/etcd/">etcd</a>
 
-  <a class="tag tag--primary tag--small" href="/en/tags/distributed-systems/">distributed systems</a>
+  <a class="tag tag--primary tag--small" href="//localhost:1313/en/tags/distributed-systems/">distributed systems</a>
 
                   </div>
                 
@@ -335,7 +333,7 @@ In addition, etcd exposes a friendly API to shield the underlying complex applic
           
             <li class="post-action">
               
-                <a class="post-action-btn btn btn--default tooltip--top" href="/en/2022/06/talk-about-etcd-part2-the-raft-consistency-protocol/" data-tooltip="Talk about etcd (Part2): the raft consistency protocol">
+                <a class="post-action-btn btn btn--default tooltip--top" href="//localhost:1313/en/2022/06/talk-about-etcd-part2-the-raft-consistency-protocol/" data-tooltip="Talk about etcd (Part2): the raft consistency protocol">
               
                   <i class="fa fa-angle-left"></i>
                   <span class="hide-xs hide-sm text-small icon-ml">NEXT</span>
@@ -343,7 +341,7 @@ In addition, etcd exposes a friendly API to shield the underlying complex applic
             </li>
             <li class="post-action">
               
-                <a class="post-action-btn btn btn--default tooltip--top" href="/en/2022/04/talk-about-go-a-high-performance-pool-for-reusing-object-sync.pool/" data-tooltip="Talk about Go: A high performance pool for reusing object - Sync.Pool">
+                <a class="post-action-btn btn btn--default tooltip--top" href="//localhost:1313/en/2022/04/talk-about-go-a-high-performance-pool-for-reusing-object-sync.pool/" data-tooltip="Talk about Go: A high performance pool for reusing object - Sync.Pool">
               
                   <span class="hide-xs hide-sm text-small icon-mr">PREVIOUS</span>
                   <i class="fa fa-angle-right"></i>
@@ -380,7 +378,7 @@ In addition, etcd exposes a friendly API to shield the underlying complex applic
         </article>
         <footer id="footer" class="main-content-wrap">
   <span class="copyrights">
-    &copy; 2025 <a href="https://github.com/pixeldin">pixeldin</a>. All Rights Reserved
+    &copy; 2026 <a href="https://github.com/pixeldin">pixeldin</a>. All Rights Reserved
   </span>
 </footer>
 
@@ -393,7 +391,7 @@ In addition, etcd exposes a friendly API to shield the underlying complex applic
           
             <li class="post-action">
               
-                <a class="post-action-btn btn btn--default tooltip--top" href="/en/2022/06/talk-about-etcd-part2-the-raft-consistency-protocol/" data-tooltip="Talk about etcd (Part2): the raft consistency protocol">
+                <a class="post-action-btn btn btn--default tooltip--top" href="//localhost:1313/en/2022/06/talk-about-etcd-part2-the-raft-consistency-protocol/" data-tooltip="Talk about etcd (Part2): the raft consistency protocol">
               
                   <i class="fa fa-angle-left"></i>
                   <span class="hide-xs hide-sm text-small icon-ml">NEXT</span>
@@ -401,7 +399,7 @@ In addition, etcd exposes a friendly API to shield the underlying complex applic
             </li>
             <li class="post-action">
               
-                <a class="post-action-btn btn btn--default tooltip--top" href="/en/2022/04/talk-about-go-a-high-performance-pool-for-reusing-object-sync.pool/" data-tooltip="Talk about Go: A high performance pool for reusing object - Sync.Pool">
+                <a class="post-action-btn btn btn--default tooltip--top" href="//localhost:1313/en/2022/04/talk-about-go-a-high-performance-pool-for-reusing-object-sync.pool/" data-tooltip="Talk about Go: A high performance pool for reusing object - Sync.Pool">
               
                   <span class="hide-xs hide-sm text-small icon-mr">PREVIOUS</span>
                   <i class="fa fa-angle-right"></i>
@@ -486,7 +484,7 @@ In addition, etcd exposes a friendly API to shield the underlying complex applic
 <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.7/js/jquery.fancybox.min.js" integrity="sha256-GEAnjcTqVP+vBp3SSc8bEDQqvWAZMiHyUSIorrWwH50=" crossorigin="anonymous"></script>
 
 
-<script src="/js/script-0w8lsjkqkmgcwwmpghswuivbbbc4ghmfi8t2mn0xl0kqmiy2wucu0zovfp7b.min.js"></script>
+<script src="//localhost:1313/js/script-0w8lsjkqkmgcwwmpghswuivbbbc4ghmfi8t2mn0xl0kqmiy2wucu0zovfp7b.min.js"></script>
 
 
 <script lang="javascript">
