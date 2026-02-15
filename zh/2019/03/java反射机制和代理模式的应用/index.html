@@ -80,7 +80,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/helpers/jquery.fancybox-thumbs.min.css" integrity="sha256-SEa4XYAHihTcEP1f5gARTB2K26Uk8PsndQYHQC1f4jU=" crossorigin="anonymous" />
     
     
-    <link rel="stylesheet" href="https://pixelpig.space/css/style-qwvgrytlhpmhkj82t4ss9bygjnonvcnicxnmlqiwvstfkju0uynqoamj0jm.min.css" />
+    <link rel="stylesheet" href="/css/style-qwvgrytlhpmhkj82t4ss9bygjnonvcnicxnmlqiwvstfkju0uynqoamj0jm.min.css" />
     
     
 
@@ -93,12 +93,12 @@
       <header id="header" data-behavior="4">
   <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
   <div class="header-title">
-    <a class="header-title-link" href="https://pixelpig.space/zh/">pixelpig.space</a>
+    <a class="header-title-link" href="/zh/">pixelpig.space</a>
   </div>
   
     
       <a class="header-right-picture "
-         href="https://pixelpig.space/#about">
+         href="/#about">
     
     
     
@@ -114,7 +114,7 @@
   <div class="sidebar-container">
     
       <div class="sidebar-profile">
-        <a href="https://pixelpig.space/#about">
+        <a href="/#about">
           <img class="sidebar-profile-picture" src="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/pig.jpg" alt="作者的图片" />
         </a>
         <h4 class="sidebar-profile-name">pixelpig</h4>
@@ -127,7 +127,7 @@
       
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="https://pixelpig.space/en">
+      <a class="sidebar-button-link " href="/en">
     
       <i class="sidebar-button-icon fa fa-lg fa-language"></i>
       
@@ -137,7 +137,7 @@
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="https://pixelpig.space/zh/">
+      <a class="sidebar-button-link " href="/zh/">
     
       <i class="sidebar-button-icon fa fa-lg fa-home"></i>
       
@@ -147,7 +147,7 @@
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="https://pixelpig.space/zh/categories">
+      <a class="sidebar-button-link " href="/zh/categories">
     
       <i class="sidebar-button-icon fa fa-lg fa-bookmark"></i>
       
@@ -157,7 +157,7 @@
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="https://pixelpig.space/zh/tags">
+      <a class="sidebar-button-link " href="/zh/tags">
     
       <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
       
@@ -167,7 +167,7 @@
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="https://pixelpig.space/zh/archives">
+      <a class="sidebar-button-link " href="/zh/archives">
     
       <i class="sidebar-button-icon fa fa-lg fa-archive"></i>
       
@@ -177,7 +177,7 @@
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="https://pixelpig.space/zh/#about">
+      <a class="sidebar-button-link " href="/zh/#about">
     
       <i class="sidebar-button-icon fa fa-lg fa-question-circle"></i>
       
@@ -237,11 +237,11 @@
   
     <span>发布在</span>
     
-      <a class="category-link" href="https://pixelpig.space/zh/categories/java">Java</a>, 
+      <a class="category-link" href="/zh/categories/java">Java</a>, 
     
-      <a class="category-link" href="https://pixelpig.space/zh/categories/%e5%8f%8d%e5%b0%84">反射</a>, 
+      <a class="category-link" href="/zh/categories/%e5%8f%8d%e5%b0%84">反射</a>, 
     
-      <a class="category-link" href="https://pixelpig.space/zh/categories/%e4%bb%a3%e7%90%86%e6%a8%a1%e5%bc%8f">代理模式</a>
+      <a class="category-link" href="/zh/categories/%e4%bb%a3%e7%90%86%e6%a8%a1%e5%bc%8f">代理模式</a>
     
   
 
@@ -444,7 +444,7 @@ System.out.println(s);//Student [age=0, name=null]
     }
 </code></pre><p>其中的<strong>newInstance()<strong>方法对调用类的构造方法进行检测，如果不存在无参构造器，则会抛出</strong>Can not call newInstance() on the Class for java.lang.Class</strong>异常。</p>
 <h5 id="getdeclaredconstructorclass--parametertypes构造获取实例化对象">getDeclaredConstructor(Class … parameterTypes)构造获取实例化对象</h5>
-<p>那如果Student不存在无参构造器，那么可以用public Constructor<!-- raw HTML omitted -->[] getConstructors()返回有参构造方法</p>
+<p>那如果Student不存在无参构造器，那么可以用public Constructor<T>[] getConstructors()返回有参构造方法</p>
 <pre tabindex="0"><code>//调用有参构造方法
 Constructor&lt;Student&gt; con = clazz.getConstructor(int.class,String.class);
 Student s2 = (Student) con.newInstance(24,&#34;pixelpig&#34;);
@@ -644,7 +644,7 @@ public Object invoke(Object proxy, Method method, Object[] args)
 	Object returnVal = method.invoke(obj, args);
 	return returnVal;
 }
-</code></pre><p><strong>invoke</strong>的作用相当于前面<!-- raw HTML omitted -->静态代理<!-- raw HTML omitted -->的<strong>Action</strong>(<strong>ProductFood</strong>、<strong>ProductPhone</strong>)。让代理对象调用的invoke其实是调用传入对象（kfc工厂、Google工厂）的内部<strong>Action</strong>。</p>
+</code></pre><p><strong>invoke</strong>的作用相当于前面<u>静态代理</u>的<strong>Action</strong>(<strong>ProductFood</strong>、<strong>ProductPhone</strong>)。让代理对象调用的invoke其实是调用传入对象（kfc工厂、Google工厂）的内部<strong>Action</strong>。</p>
 <h4 id="调用代码">调用代码：</h4>
 <ol>
 <li>实例化被代理对象
@@ -808,7 +808,7 @@ method2：样品测试=====
                   <div class="post-footer-tags">
                     <span class="text-color-light text-small">标签</span><br/>
                     
-  <a class="tag tag--primary tag--small" href="https://pixelpig.space/zh/tags/%E5%90%8E%E7%AB%AF/">后端</a>
+  <a class="tag tag--primary tag--small" href="/zh/tags/%E5%90%8E%E7%AB%AF/">后端</a>
 
                   </div>
                 
@@ -821,7 +821,7 @@ method2：样品测试=====
           
             <li class="post-action">
               
-                <a class="post-action-btn btn btn--default tooltip--top" href="https://pixelpig.space/zh/2019/07/%E7%AE%80%E8%BF%B0-java%E7%BA%BF%E7%A8%8B%E6%B1%A0%E4%BB%A5%E5%8F%8A%E4%BD%BF%E7%94%A8/" data-tooltip="简述 Java线程池以及使用">
+                <a class="post-action-btn btn btn--default tooltip--top" href="/zh/2019/07/%E7%AE%80%E8%BF%B0-java%E7%BA%BF%E7%A8%8B%E6%B1%A0%E4%BB%A5%E5%8F%8A%E4%BD%BF%E7%94%A8/" data-tooltip="简述 Java线程池以及使用">
               
                   <i class="fa fa-angle-left"></i>
                   <span class="hide-xs hide-sm text-small icon-ml">下一篇</span>
@@ -872,7 +872,7 @@ method2：样品测试=====
           
             <li class="post-action">
               
-                <a class="post-action-btn btn btn--default tooltip--top" href="https://pixelpig.space/zh/2019/07/%E7%AE%80%E8%BF%B0-java%E7%BA%BF%E7%A8%8B%E6%B1%A0%E4%BB%A5%E5%8F%8A%E4%BD%BF%E7%94%A8/" data-tooltip="简述 Java线程池以及使用">
+                <a class="post-action-btn btn btn--default tooltip--top" href="/zh/2019/07/%E7%AE%80%E8%BF%B0-java%E7%BA%BF%E7%A8%8B%E6%B1%A0%E4%BB%A5%E5%8F%8A%E4%BD%BF%E7%94%A8/" data-tooltip="简述 Java线程池以及使用">
               
                   <i class="fa fa-angle-left"></i>
                   <span class="hide-xs hide-sm text-small icon-ml">下一篇</span>
@@ -958,7 +958,7 @@ method2：样品测试=====
 <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.7/js/jquery.fancybox.min.js" integrity="sha256-GEAnjcTqVP+vBp3SSc8bEDQqvWAZMiHyUSIorrWwH50=" crossorigin="anonymous"></script>
 
 
-<script src="https://pixelpig.space/js/script-0w8lsjkqkmgcwwmpghswuivbbbc4ghmfi8t2mn0xl0kqmiy2wucu0zovfp7b.min.js"></script>
+<script src="/js/script-0w8lsjkqkmgcwwmpghswuivbbbc4ghmfi8t2mn0xl0kqmiy2wucu0zovfp7b.min.js"></script>
 
 
 <script lang="javascript">

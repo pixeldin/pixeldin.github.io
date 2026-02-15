@@ -80,7 +80,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/helpers/jquery.fancybox-thumbs.min.css" integrity="sha256-SEa4XYAHihTcEP1f5gARTB2K26Uk8PsndQYHQC1f4jU=" crossorigin="anonymous" />
     
     
-    <link rel="stylesheet" href="https://pixelpig.space/css/style-qwvgrytlhpmhkj82t4ss9bygjnonvcnicxnmlqiwvstfkju0uynqoamj0jm.min.css" />
+    <link rel="stylesheet" href="/css/style-qwvgrytlhpmhkj82t4ss9bygjnonvcnicxnmlqiwvstfkju0uynqoamj0jm.min.css" />
     
     
 
@@ -93,12 +93,12 @@
       <header id="header" data-behavior="4">
   <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
   <div class="header-title">
-    <a class="header-title-link" href="https://pixelpig.space/en/">pixelpig.space</a>
+    <a class="header-title-link" href="/en/">pixelpig.space</a>
   </div>
   
     
       <a class="header-right-picture "
-         href="https://pixelpig.space/#about">
+         href="/#about">
     
     
     
@@ -114,7 +114,7 @@
   <div class="sidebar-container">
     
       <div class="sidebar-profile">
-        <a href="https://pixelpig.space/#about">
+        <a href="/#about">
           <img class="sidebar-profile-picture" src="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/pig.jpg" alt="Author&#39;s picture" />
         </a>
         <h4 class="sidebar-profile-name">pixelpig</h4>
@@ -127,7 +127,7 @@
       
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="https://pixelpig.space/zh">
+      <a class="sidebar-button-link " href="/zh">
     
       <i class="sidebar-button-icon fa fa-lg fa-language"></i>
       
@@ -137,7 +137,7 @@
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="https://pixelpig.space/en/">
+      <a class="sidebar-button-link " href="/en/">
     
       <i class="sidebar-button-icon fa fa-lg fa-home"></i>
       
@@ -147,7 +147,7 @@
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="https://pixelpig.space/en/categories">
+      <a class="sidebar-button-link " href="/en/categories">
     
       <i class="sidebar-button-icon fa fa-lg fa-bookmark"></i>
       
@@ -157,7 +157,7 @@
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="https://pixelpig.space/en/tags">
+      <a class="sidebar-button-link " href="/en/tags">
     
       <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
       
@@ -167,7 +167,7 @@
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="https://pixelpig.space/en/archives">
+      <a class="sidebar-button-link " href="/en/archives">
     
       <i class="sidebar-button-icon fa fa-lg fa-archive"></i>
       
@@ -177,7 +177,7 @@
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="https://pixelpig.space/en/#about">
+      <a class="sidebar-button-link " href="/en/#about">
     
       <i class="sidebar-button-icon fa fa-lg fa-question-circle"></i>
       
@@ -247,11 +247,11 @@
   
     <span>in</span>
     
-      <a class="category-link" href="https://pixelpig.space/en/categories/go">Go</a>, 
+      <a class="category-link" href="/en/categories/go">Go</a>, 
     
-      <a class="category-link" href="https://pixelpig.space/en/categories/network">Network</a>, 
+      <a class="category-link" href="/en/categories/network">Network</a>, 
     
-      <a class="category-link" href="https://pixelpig.space/en/categories/tcp">TCP</a>
+      <a class="category-link" href="/en/categories/tcp">TCP</a>
     
   
 
@@ -294,7 +294,7 @@ There are two trigger conditions to wake up a waiting coroutine:
 </li>
 </ul>
 <p><strong>Code example</strong><br>
-Here we use two coroutines, the coroutine whose id is <!-- raw HTML omitted --> executes first, and releases the mutex when the condition is not allowed, and waits for wake-up, which is implemented in the function <code>ForWhileSignal()</code>.</p>
+Here we use two coroutines, the coroutine whose id is <G-waiting side> executes first, and releases the mutex when the condition is not allowed, and waits for wake-up, which is implemented in the function <code>ForWhileSignal()</code>.</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">ForWhileSignal</span>(<span style="color:#a6e22e">sig</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">signal</span>, <span style="color:#a6e22e">gid</span> <span style="color:#66d9ef">string</span>, <span style="color:#a6e22e">mutx</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">sync</span>.<span style="color:#a6e22e">Mutex</span>, <span style="color:#a6e22e">cd</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">sync</span>.<span style="color:#a6e22e">Cond</span>) {
 </span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">mutx</span>.<span style="color:#a6e22e">Lock</span>()
 </span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">defer</span> <span style="color:#66d9ef">func</span>() {
@@ -310,7 +310,7 @@ Here we use two coroutines, the coroutine whose id is <!-- raw HTML omitted --> 
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Print</span>(<span style="color:#a6e22e">gid</span> <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34; notify! \n&#34;</span>)
 </span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>the other side, id as <!-- raw HTML omitted --> will wakes the waiting side up, which is implemented in the <code>Condition()</code> function</p>
+</span></span></code></pre></div><p>the other side, id as <G-notify> will wakes the waiting side up, which is implemented in the <code>Condition()</code> function</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">Condition</span>(<span style="color:#a6e22e">sig</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">signal</span>, <span style="color:#a6e22e">gid</span> <span style="color:#66d9ef">string</span>, <span style="color:#a6e22e">mutx</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">sync</span>.<span style="color:#a6e22e">Mutex</span>, <span style="color:#a6e22e">cd</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">sync</span>.<span style="color:#a6e22e">Cond</span>) {
 </span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">mutx</span>.<span style="color:#a6e22e">Lock</span>()
 </span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">defer</span> <span style="color:#66d9ef">func</span>() {
@@ -602,7 +602,7 @@ I have a deeper understanding of Go&rsquo;s concurrency philosophy: &ldquo;<em>D
                   <div class="post-footer-tags">
                     <span class="text-color-light text-small">TAGGED IN</span><br/>
                     
-  <a class="tag tag--primary tag--small" href="https://pixelpig.space/en/tags/talk-about-go/">Talk about Go</a>
+  <a class="tag tag--primary tag--small" href="/en/tags/talk-about-go/">Talk about Go</a>
 
                   </div>
                 
@@ -615,7 +615,7 @@ I have a deeper understanding of Go&rsquo;s concurrency philosophy: &ldquo;<em>D
           
             <li class="post-action">
               
-                <a class="post-action-btn btn btn--default tooltip--top" href="https://pixelpig.space/en/2021/06/%E8%81%8A%E4%B8%80%E8%81%8Ago%E5%AE%9E%E7%8E%B0%E7%9A%84%E5%A4%9A%E5%8D%8F%E7%A8%8B%E4%B8%8B%E8%BD%BD%E5%99%A8-gopeed-core/" data-tooltip="聊一聊Go实现的多协程下载器: gopeed-core">
+                <a class="post-action-btn btn btn--default tooltip--top" href="/en/2021/06/%E8%81%8A%E4%B8%80%E8%81%8Ago%E5%AE%9E%E7%8E%B0%E7%9A%84%E5%A4%9A%E5%8D%8F%E7%A8%8B%E4%B8%8B%E8%BD%BD%E5%99%A8-gopeed-core/" data-tooltip="聊一聊Go实现的多协程下载器: gopeed-core">
               
                   <i class="fa fa-angle-left"></i>
                   <span class="hide-xs hide-sm text-small icon-ml">NEXT</span>
@@ -623,7 +623,7 @@ I have a deeper understanding of Go&rsquo;s concurrency philosophy: &ldquo;<em>D
             </li>
             <li class="post-action">
               
-                <a class="post-action-btn btn btn--default tooltip--top" href="https://pixelpig.space/en/2021/05/talk-about-go-network-programming--tcp-communication/" data-tooltip="Talk about Go: Network programming--TCP Communication">
+                <a class="post-action-btn btn btn--default tooltip--top" href="/en/2021/05/talk-about-go-network-programming--tcp-communication/" data-tooltip="Talk about Go: Network programming--TCP Communication">
               
                   <span class="hide-xs hide-sm text-small icon-mr">PREVIOUS</span>
                   <i class="fa fa-angle-right"></i>
@@ -666,7 +666,7 @@ I have a deeper understanding of Go&rsquo;s concurrency philosophy: &ldquo;<em>D
           
             <li class="post-action">
               
-                <a class="post-action-btn btn btn--default tooltip--top" href="https://pixelpig.space/en/2021/06/%E8%81%8A%E4%B8%80%E8%81%8Ago%E5%AE%9E%E7%8E%B0%E7%9A%84%E5%A4%9A%E5%8D%8F%E7%A8%8B%E4%B8%8B%E8%BD%BD%E5%99%A8-gopeed-core/" data-tooltip="聊一聊Go实现的多协程下载器: gopeed-core">
+                <a class="post-action-btn btn btn--default tooltip--top" href="/en/2021/06/%E8%81%8A%E4%B8%80%E8%81%8Ago%E5%AE%9E%E7%8E%B0%E7%9A%84%E5%A4%9A%E5%8D%8F%E7%A8%8B%E4%B8%8B%E8%BD%BD%E5%99%A8-gopeed-core/" data-tooltip="聊一聊Go实现的多协程下载器: gopeed-core">
               
                   <i class="fa fa-angle-left"></i>
                   <span class="hide-xs hide-sm text-small icon-ml">NEXT</span>
@@ -674,7 +674,7 @@ I have a deeper understanding of Go&rsquo;s concurrency philosophy: &ldquo;<em>D
             </li>
             <li class="post-action">
               
-                <a class="post-action-btn btn btn--default tooltip--top" href="https://pixelpig.space/en/2021/05/talk-about-go-network-programming--tcp-communication/" data-tooltip="Talk about Go: Network programming--TCP Communication">
+                <a class="post-action-btn btn btn--default tooltip--top" href="/en/2021/05/talk-about-go-network-programming--tcp-communication/" data-tooltip="Talk about Go: Network programming--TCP Communication">
               
                   <span class="hide-xs hide-sm text-small icon-mr">PREVIOUS</span>
                   <i class="fa fa-angle-right"></i>
@@ -752,7 +752,7 @@ I have a deeper understanding of Go&rsquo;s concurrency philosophy: &ldquo;<em>D
 <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.7/js/jquery.fancybox.min.js" integrity="sha256-GEAnjcTqVP+vBp3SSc8bEDQqvWAZMiHyUSIorrWwH50=" crossorigin="anonymous"></script>
 
 
-<script src="https://pixelpig.space/js/script-0w8lsjkqkmgcwwmpghswuivbbbc4ghmfi8t2mn0xl0kqmiy2wucu0zovfp7b.min.js"></script>
+<script src="/js/script-0w8lsjkqkmgcwwmpghswuivbbbc4ghmfi8t2mn0xl0kqmiy2wucu0zovfp7b.min.js"></script>
 
 
 <script lang="javascript">
