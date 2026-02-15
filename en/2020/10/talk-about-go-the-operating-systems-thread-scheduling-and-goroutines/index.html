@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en-us">
-  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+  <head>
     
     <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -17,8 +17,8 @@ Every task running on our computer is resource allocation at the operating syste
 <meta property="og:type" content="article">
 <meta property="og:title" content="Talk about Go: The operating system&#39;s thread scheduling and Goroutines">
 <meta name="twitter:title" content="Talk about Go: The operating system&#39;s thread scheduling and Goroutines">
-<meta property="og:url" content="//localhost:1313/en/2020/10/talk-about-go-the-operating-systems-thread-scheduling-and-goroutines/">
-<meta property="twitter:url" content="//localhost:1313/en/2020/10/talk-about-go-the-operating-systems-thread-scheduling-and-goroutines/">
+<meta property="og:url" content="https://pixeldin.github.io/en/2020/10/talk-about-go-the-operating-systems-thread-scheduling-and-goroutines/">
+<meta property="twitter:url" content="https://pixeldin.github.io/en/2020/10/talk-about-go-the-operating-systems-thread-scheduling-and-goroutines/">
 <meta property="og:site_name" content="pixelpig.space">
 <meta property="og:description" content="
 Every task running on our computer is resource allocation at the operating system level. From starting a process to creating a thread, with a fixed number of cores, multiple threads execute concurrently.">
@@ -79,7 +79,7 @@ Every task running on our computer is resource allocation at the operating syste
 
     
 
-    <link rel="canonical" href="//localhost:1313/en/2020/10/talk-about-go-the-operating-systems-thread-scheduling-and-goroutines/">
+    <link rel="canonical" href="https://pixeldin.github.io/en/2020/10/talk-about-go-the-operating-systems-thread-scheduling-and-goroutines/">
 
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
@@ -87,7 +87,7 @@ Every task running on our computer is resource allocation at the operating syste
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/helpers/jquery.fancybox-thumbs.min.css" integrity="sha256-SEa4XYAHihTcEP1f5gARTB2K26Uk8PsndQYHQC1f4jU=" crossorigin="anonymous" />
     
     
-    <link rel="stylesheet" href="//localhost:1313/css/style-qwvgrytlhpmhkj82t4ss9bygjnonvcnicxnmlqiwvstfkju0uynqoamj0jm.min.css" />
+    <link rel="stylesheet" href="https://pixeldin.github.io/css/style-qwvgrytlhpmhkj82t4ss9bygjnonvcnicxnmlqiwvstfkju0uynqoamj0jm.min.css" />
     
     
 
@@ -100,12 +100,12 @@ Every task running on our computer is resource allocation at the operating syste
       <header id="header" data-behavior="4">
   <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
   <div class="header-title">
-    <a class="header-title-link" href="//localhost:1313/en/">pixelpig.space</a>
+    <a class="header-title-link" href="https://pixeldin.github.io/en/">pixelpig.space</a>
   </div>
   
     
       <a class="header-right-picture "
-         href="//localhost:1313/#about">
+         href="https://pixeldin.github.io/#about">
     
     
     
@@ -121,7 +121,7 @@ Every task running on our computer is resource allocation at the operating syste
   <div class="sidebar-container">
     
       <div class="sidebar-profile">
-        <a href="//localhost:1313/#about">
+        <a href="https://pixeldin.github.io/#about">
           <img class="sidebar-profile-picture" src="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/pig.jpg" alt="Author&#39;s picture" />
         </a>
         <h4 class="sidebar-profile-name">pixelpig</h4>
@@ -134,7 +134,7 @@ Every task running on our computer is resource allocation at the operating syste
       
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="//localhost:1313/zh">
+      <a class="sidebar-button-link " href="https://pixeldin.github.io/zh">
     
       <i class="sidebar-button-icon fa fa-lg fa-language"></i>
       
@@ -144,7 +144,7 @@ Every task running on our computer is resource allocation at the operating syste
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="//localhost:1313/en/">
+      <a class="sidebar-button-link " href="https://pixeldin.github.io/en/">
     
       <i class="sidebar-button-icon fa fa-lg fa-home"></i>
       
@@ -154,7 +154,7 @@ Every task running on our computer is resource allocation at the operating syste
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="//localhost:1313/en/categories">
+      <a class="sidebar-button-link " href="https://pixeldin.github.io/en/categories">
     
       <i class="sidebar-button-icon fa fa-lg fa-bookmark"></i>
       
@@ -164,7 +164,7 @@ Every task running on our computer is resource allocation at the operating syste
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="//localhost:1313/en/tags">
+      <a class="sidebar-button-link " href="https://pixeldin.github.io/en/tags">
     
       <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
       
@@ -174,7 +174,7 @@ Every task running on our computer is resource allocation at the operating syste
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="//localhost:1313/en/archives">
+      <a class="sidebar-button-link " href="https://pixeldin.github.io/en/archives">
     
       <i class="sidebar-button-icon fa fa-lg fa-archive"></i>
       
@@ -184,7 +184,7 @@ Every task running on our computer is resource allocation at the operating syste
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="//localhost:1313/en/#about">
+      <a class="sidebar-button-link " href="https://pixeldin.github.io/en/#about">
     
       <i class="sidebar-button-icon fa fa-lg fa-question-circle"></i>
       
@@ -254,11 +254,11 @@ Every task running on our computer is resource allocation at the operating syste
   
     <span>in</span>
     
-      <a class="category-link" href="//localhost:1313/en/categories/go">Go</a>, 
+      <a class="category-link" href="https://pixeldin.github.io/en/categories/go">Go</a>, 
     
-      <a class="category-link" href="//localhost:1313/en/categories/os">OS</a>, 
+      <a class="category-link" href="https://pixeldin.github.io/en/categories/os">OS</a>, 
     
-      <a class="category-link" href="//localhost:1313/en/categories/backend">backend</a>
+      <a class="category-link" href="https://pixeldin.github.io/en/categories/backend">backend</a>
     
   
 
@@ -511,7 +511,7 @@ Ardanlabs excellent series:<br>
                   <div class="post-footer-tags">
                     <span class="text-color-light text-small">TAGGED IN</span><br/>
                     
-  <a class="tag tag--primary tag--small" href="//localhost:1313/en/tags/goroutine/">Goroutine</a>
+  <a class="tag tag--primary tag--small" href="https://pixeldin.github.io/en/tags/goroutine/">Goroutine</a>
 
                   </div>
                 
@@ -524,7 +524,7 @@ Ardanlabs excellent series:<br>
           
             <li class="post-action">
               
-                <a class="post-action-btn btn btn--default tooltip--top" href="//localhost:1313/en/2021/01/go%E5%8D%8F%E7%A8%8B%E9%97%B4%E9%80%9A%E4%BF%A1%E4%B9%8B%E7%94%9F%E4%BA%A7%E8%80%85-%E6%B6%88%E8%B4%B9%E8%80%85%E6%A8%A1%E5%9E%8B/" data-tooltip="Go协程间通信之生产者-消费者模型">
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://pixeldin.github.io/en/2021/01/go%E5%8D%8F%E7%A8%8B%E9%97%B4%E9%80%9A%E4%BF%A1%E4%B9%8B%E7%94%9F%E4%BA%A7%E8%80%85-%E6%B6%88%E8%B4%B9%E8%80%85%E6%A8%A1%E5%9E%8B/" data-tooltip="Go协程间通信之生产者-消费者模型">
               
                   <i class="fa fa-angle-left"></i>
                   <span class="hide-xs hide-sm text-small icon-ml">NEXT</span>
@@ -532,7 +532,7 @@ Ardanlabs excellent series:<br>
             </li>
             <li class="post-action">
               
-                <a class="post-action-btn btn btn--default tooltip--top" href="//localhost:1313/en/2020/06/%E8%81%8A%E4%B8%80%E8%81%8Ago%E7%9A%84context%E4%B8%8A%E4%B8%8B%E6%96%87/" data-tooltip="聊一聊Go的Context上下文">
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://pixeldin.github.io/en/2020/06/%E8%81%8A%E4%B8%80%E8%81%8Ago%E7%9A%84context%E4%B8%8A%E4%B8%8B%E6%96%87/" data-tooltip="聊一聊Go的Context上下文">
               
                   <span class="hide-xs hide-sm text-small icon-mr">PREVIOUS</span>
                   <i class="fa fa-angle-right"></i>
@@ -582,7 +582,7 @@ Ardanlabs excellent series:<br>
           
             <li class="post-action">
               
-                <a class="post-action-btn btn btn--default tooltip--top" href="//localhost:1313/en/2021/01/go%E5%8D%8F%E7%A8%8B%E9%97%B4%E9%80%9A%E4%BF%A1%E4%B9%8B%E7%94%9F%E4%BA%A7%E8%80%85-%E6%B6%88%E8%B4%B9%E8%80%85%E6%A8%A1%E5%9E%8B/" data-tooltip="Go协程间通信之生产者-消费者模型">
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://pixeldin.github.io/en/2021/01/go%E5%8D%8F%E7%A8%8B%E9%97%B4%E9%80%9A%E4%BF%A1%E4%B9%8B%E7%94%9F%E4%BA%A7%E8%80%85-%E6%B6%88%E8%B4%B9%E8%80%85%E6%A8%A1%E5%9E%8B/" data-tooltip="Go协程间通信之生产者-消费者模型">
               
                   <i class="fa fa-angle-left"></i>
                   <span class="hide-xs hide-sm text-small icon-ml">NEXT</span>
@@ -590,7 +590,7 @@ Ardanlabs excellent series:<br>
             </li>
             <li class="post-action">
               
-                <a class="post-action-btn btn btn--default tooltip--top" href="//localhost:1313/en/2020/06/%E8%81%8A%E4%B8%80%E8%81%8Ago%E7%9A%84context%E4%B8%8A%E4%B8%8B%E6%96%87/" data-tooltip="聊一聊Go的Context上下文">
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://pixeldin.github.io/en/2020/06/%E8%81%8A%E4%B8%80%E8%81%8Ago%E7%9A%84context%E4%B8%8A%E4%B8%8B%E6%96%87/" data-tooltip="聊一聊Go的Context上下文">
               
                   <span class="hide-xs hide-sm text-small icon-mr">PREVIOUS</span>
                   <i class="fa fa-angle-right"></i>
@@ -675,7 +675,7 @@ Ardanlabs excellent series:<br>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.7/js/jquery.fancybox.min.js" integrity="sha256-GEAnjcTqVP+vBp3SSc8bEDQqvWAZMiHyUSIorrWwH50=" crossorigin="anonymous"></script>
 
 
-<script src="//localhost:1313/js/script-0w8lsjkqkmgcwwmpghswuivbbbc4ghmfi8t2mn0xl0kqmiy2wucu0zovfp7b.min.js"></script>
+<script src="https://pixeldin.github.io/js/script-0w8lsjkqkmgcwwmpghswuivbbbc4ghmfi8t2mn0xl0kqmiy2wucu0zovfp7b.min.js"></script>
 
 
 <script lang="javascript">

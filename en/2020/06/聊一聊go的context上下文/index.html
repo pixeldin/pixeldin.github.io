@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en-us">
-  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+  <head>
     
     <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -15,8 +15,8 @@
 <meta property="og:type" content="article">
 <meta property="og:title" content="聊一聊Go的Context上下文">
 <meta name="twitter:title" content="聊一聊Go的Context上下文">
-<meta property="og:url" content="//localhost:1313/en/2020/06/%E8%81%8A%E4%B8%80%E8%81%8Ago%E7%9A%84context%E4%B8%8A%E4%B8%8B%E6%96%87/">
-<meta property="twitter:url" content="//localhost:1313/en/2020/06/%E8%81%8A%E4%B8%80%E8%81%8Ago%E7%9A%84context%E4%B8%8A%E4%B8%8B%E6%96%87/">
+<meta property="og:url" content="https://pixeldin.github.io/en/2020/06/%E8%81%8A%E4%B8%80%E8%81%8Ago%E7%9A%84context%E4%B8%8A%E4%B8%8B%E6%96%87/">
+<meta property="twitter:url" content="https://pixeldin.github.io/en/2020/06/%E8%81%8A%E4%B8%80%E8%81%8Ago%E7%9A%84context%E4%B8%8A%E4%B8%8B%E6%96%87/">
 <meta property="og:site_name" content="pixelpig.space">
 <meta property="og:description" content="前面在“聊一聊http框架httprouter”的时候，提到了上下文的概念">
 <meta name="twitter:description" content="前面在“聊一聊http框架httprouter”的时候，提到了上下文的概念">
@@ -71,7 +71,7 @@
 
     
 
-    <link rel="canonical" href="//localhost:1313/en/2020/06/%E8%81%8A%E4%B8%80%E8%81%8Ago%E7%9A%84context%E4%B8%8A%E4%B8%8B%E6%96%87/">
+    <link rel="canonical" href="https://pixeldin.github.io/en/2020/06/%E8%81%8A%E4%B8%80%E8%81%8Ago%E7%9A%84context%E4%B8%8A%E4%B8%8B%E6%96%87/">
 
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
@@ -79,7 +79,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/helpers/jquery.fancybox-thumbs.min.css" integrity="sha256-SEa4XYAHihTcEP1f5gARTB2K26Uk8PsndQYHQC1f4jU=" crossorigin="anonymous" />
     
     
-    <link rel="stylesheet" href="//localhost:1313/css/style-qwvgrytlhpmhkj82t4ss9bygjnonvcnicxnmlqiwvstfkju0uynqoamj0jm.min.css" />
+    <link rel="stylesheet" href="https://pixeldin.github.io/css/style-qwvgrytlhpmhkj82t4ss9bygjnonvcnicxnmlqiwvstfkju0uynqoamj0jm.min.css" />
     
     
 
@@ -92,12 +92,12 @@
       <header id="header" data-behavior="4">
   <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
   <div class="header-title">
-    <a class="header-title-link" href="//localhost:1313/en/">pixelpig.space</a>
+    <a class="header-title-link" href="https://pixeldin.github.io/en/">pixelpig.space</a>
   </div>
   
     
       <a class="header-right-picture "
-         href="//localhost:1313/#about">
+         href="https://pixeldin.github.io/#about">
     
     
     
@@ -113,7 +113,7 @@
   <div class="sidebar-container">
     
       <div class="sidebar-profile">
-        <a href="//localhost:1313/#about">
+        <a href="https://pixeldin.github.io/#about">
           <img class="sidebar-profile-picture" src="https://pixelpig-1253685321.cos.ap-guangzhou.myqcloud.com/pig.jpg" alt="Author&#39;s picture" />
         </a>
         <h4 class="sidebar-profile-name">pixelpig</h4>
@@ -126,7 +126,7 @@
       
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="//localhost:1313/zh">
+      <a class="sidebar-button-link " href="https://pixeldin.github.io/zh">
     
       <i class="sidebar-button-icon fa fa-lg fa-language"></i>
       
@@ -136,7 +136,7 @@
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="//localhost:1313/en/">
+      <a class="sidebar-button-link " href="https://pixeldin.github.io/en/">
     
       <i class="sidebar-button-icon fa fa-lg fa-home"></i>
       
@@ -146,7 +146,7 @@
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="//localhost:1313/en/categories">
+      <a class="sidebar-button-link " href="https://pixeldin.github.io/en/categories">
     
       <i class="sidebar-button-icon fa fa-lg fa-bookmark"></i>
       
@@ -156,7 +156,7 @@
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="//localhost:1313/en/tags">
+      <a class="sidebar-button-link " href="https://pixeldin.github.io/en/tags">
     
       <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
       
@@ -166,7 +166,7 @@
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="//localhost:1313/en/archives">
+      <a class="sidebar-button-link " href="https://pixeldin.github.io/en/archives">
     
       <i class="sidebar-button-icon fa fa-lg fa-archive"></i>
       
@@ -176,7 +176,7 @@
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="//localhost:1313/en/#about">
+      <a class="sidebar-button-link " href="https://pixeldin.github.io/en/#about">
     
       <i class="sidebar-button-icon fa fa-lg fa-question-circle"></i>
       
@@ -246,7 +246,7 @@
   
     <span>in</span>
     
-      <a class="category-link" href="//localhost:1313/en/categories/go">Go</a>
+      <a class="category-link" href="https://pixeldin.github.io/en/categories/go">Go</a>
     
   
 
@@ -544,7 +544,7 @@ Context&rsquo;s methods may be called by multiple goroutines simultaneously.<br>
                   <div class="post-footer-tags">
                     <span class="text-color-light text-small">TAGGED IN</span><br/>
                     
-  <a class="tag tag--primary tag--small" href="//localhost:1313/en/tags/gin/">Gin</a>
+  <a class="tag tag--primary tag--small" href="https://pixeldin.github.io/en/tags/gin/">Gin</a>
 
                   </div>
                 
@@ -557,7 +557,7 @@ Context&rsquo;s methods may be called by multiple goroutines simultaneously.<br>
           
             <li class="post-action">
               
-                <a class="post-action-btn btn btn--default tooltip--top" href="//localhost:1313/en/2020/10/talk-about-go-the-operating-systems-thread-scheduling-and-goroutines/" data-tooltip="Talk about Go: The operating system&#39;s thread scheduling and Goroutines">
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://pixeldin.github.io/en/2020/10/talk-about-go-the-operating-systems-thread-scheduling-and-goroutines/" data-tooltip="Talk about Go: The operating system&#39;s thread scheduling and Goroutines">
               
                   <i class="fa fa-angle-left"></i>
                   <span class="hide-xs hide-sm text-small icon-ml">NEXT</span>
@@ -565,7 +565,7 @@ Context&rsquo;s methods may be called by multiple goroutines simultaneously.<br>
             </li>
             <li class="post-action">
               
-                <a class="post-action-btn btn btn--default tooltip--top" href="//localhost:1313/en/2020/04/%E8%81%8A%E4%B8%80%E8%81%8A%E5%A0%86%E6%A0%88%E4%B8%8Ego%E8%AF%AD%E8%A8%80%E7%9A%84%E6%8C%87%E9%92%88/" data-tooltip="聊一聊堆、栈与Go语言的指针">
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://pixeldin.github.io/en/2020/04/%E8%81%8A%E4%B8%80%E8%81%8A%E5%A0%86%E6%A0%88%E4%B8%8Ego%E8%AF%AD%E8%A8%80%E7%9A%84%E6%8C%87%E9%92%88/" data-tooltip="聊一聊堆、栈与Go语言的指针">
               
                   <span class="hide-xs hide-sm text-small icon-mr">PREVIOUS</span>
                   <i class="fa fa-angle-right"></i>
@@ -608,7 +608,7 @@ Context&rsquo;s methods may be called by multiple goroutines simultaneously.<br>
           
             <li class="post-action">
               
-                <a class="post-action-btn btn btn--default tooltip--top" href="//localhost:1313/en/2020/10/talk-about-go-the-operating-systems-thread-scheduling-and-goroutines/" data-tooltip="Talk about Go: The operating system&#39;s thread scheduling and Goroutines">
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://pixeldin.github.io/en/2020/10/talk-about-go-the-operating-systems-thread-scheduling-and-goroutines/" data-tooltip="Talk about Go: The operating system&#39;s thread scheduling and Goroutines">
               
                   <i class="fa fa-angle-left"></i>
                   <span class="hide-xs hide-sm text-small icon-ml">NEXT</span>
@@ -616,7 +616,7 @@ Context&rsquo;s methods may be called by multiple goroutines simultaneously.<br>
             </li>
             <li class="post-action">
               
-                <a class="post-action-btn btn btn--default tooltip--top" href="//localhost:1313/en/2020/04/%E8%81%8A%E4%B8%80%E8%81%8A%E5%A0%86%E6%A0%88%E4%B8%8Ego%E8%AF%AD%E8%A8%80%E7%9A%84%E6%8C%87%E9%92%88/" data-tooltip="聊一聊堆、栈与Go语言的指针">
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://pixeldin.github.io/en/2020/04/%E8%81%8A%E4%B8%80%E8%81%8A%E5%A0%86%E6%A0%88%E4%B8%8Ego%E8%AF%AD%E8%A8%80%E7%9A%84%E6%8C%87%E9%92%88/" data-tooltip="聊一聊堆、栈与Go语言的指针">
               
                   <span class="hide-xs hide-sm text-small icon-mr">PREVIOUS</span>
                   <i class="fa fa-angle-right"></i>
@@ -694,7 +694,7 @@ Context&rsquo;s methods may be called by multiple goroutines simultaneously.<br>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.7/js/jquery.fancybox.min.js" integrity="sha256-GEAnjcTqVP+vBp3SSc8bEDQqvWAZMiHyUSIorrWwH50=" crossorigin="anonymous"></script>
 
 
-<script src="//localhost:1313/js/script-0w8lsjkqkmgcwwmpghswuivbbbc4ghmfi8t2mn0xl0kqmiy2wucu0zovfp7b.min.js"></script>
+<script src="https://pixeldin.github.io/js/script-0w8lsjkqkmgcwwmpghswuivbbbc4ghmfi8t2mn0xl0kqmiy2wucu0zovfp7b.min.js"></script>
 
 
 <script lang="javascript">
