@@ -2,6 +2,74 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
+    <loc>https://pixelpig.space/zh/cv/about-pixelpig/</loc>
+    <lastmod>2025-12-12T01:11:49+08:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en-us"
+                href="https://pixelpig.space/en/cv/about-pixelpig/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh-cn"
+                href="https://pixelpig.space/zh/cv/about-pixelpig/"
+                />
+  </url><url>
+    <loc>https://pixelpig.space/zh/tags/cv/</loc>
+    <lastmod>2025-12-12T01:11:49+08:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en-us"
+                href="https://pixelpig.space/en/tags/cv/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh-cn"
+                href="https://pixelpig.space/zh/tags/cv/"
+                />
+  </url><url>
+    <loc>https://pixelpig.space/zh/cv/</loc>
+    <lastmod>2025-12-12T01:11:49+08:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en-us"
+                href="https://pixelpig.space/en/cv/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh-cn"
+                href="https://pixelpig.space/zh/cv/"
+                />
+  </url><url>
+    <loc>https://pixelpig.space/zh/</loc>
+    <lastmod>2025-12-12T01:11:49+08:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en-us"
+                href="https://pixelpig.space/en/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh-cn"
+                href="https://pixelpig.space/zh/"
+                />
+  </url><url>
+    <loc>https://pixelpig.space/zh/tags/</loc>
+    <lastmod>2025-12-12T01:11:49+08:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en-us"
+                href="https://pixelpig.space/en/tags/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh-cn"
+                href="https://pixelpig.space/zh/tags/"
+                />
+  </url><url>
+    <loc>https://pixelpig.space/zh/tags/%E7%AE%80%E5%8E%86/</loc>
+    <lastmod>2025-12-12T01:11:49+08:00</lastmod>
+  </url><url>
     <loc>https://pixelpig.space/zh/categories/</loc>
     <lastmod>2023-04-14T00:00:00+00:00</lastmod>
     <xhtml:link
@@ -41,19 +109,6 @@
                 href="https://pixelpig.space/zh/categories/javascript/"
                 />
   </url><url>
-    <loc>https://pixelpig.space/zh/</loc>
-    <lastmod>2023-04-14T00:00:00+00:00</lastmod>
-    <xhtml:link
-                rel="alternate"
-                hreflang="en-us"
-                href="https://pixelpig.space/en/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="zh-cn"
-                href="https://pixelpig.space/zh/"
-                />
-  </url><url>
     <loc>https://pixelpig.space/zh/post/</loc>
     <lastmod>2023-04-14T00:00:00+00:00</lastmod>
     <xhtml:link
@@ -65,19 +120,6 @@
                 rel="alternate"
                 hreflang="zh-cn"
                 href="https://pixelpig.space/zh/post/"
-                />
-  </url><url>
-    <loc>https://pixelpig.space/zh/tags/</loc>
-    <lastmod>2023-04-14T00:00:00+00:00</lastmod>
-    <xhtml:link
-                rel="alternate"
-                hreflang="en-us"
-                href="https://pixelpig.space/en/tags/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="zh-cn"
-                href="https://pixelpig.space/zh/tags/"
                 />
   </url><url>
     <loc>https://pixelpig.space/zh/tags/typescript/</loc>
